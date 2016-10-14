@@ -1,0 +1,24 @@
+---
+- name: Create tmp template directory
+  file: path=/tmp/templates_out/nodepool/etc/nodepool state=directory
+
+- name: Write out nodepool config templates
+  template:
+    dest: /tmp/templates_out/nodepool/etc/nodepool/{{ item }}
+    src: templates/etc/nodepool/{{ item }}.j2
+  with_items:
+    - nodepool.yaml
+    - secure.conf
+
+- name: Create nodepool database
+  become: yes
+  mysql_db: name=nodepool state=present
+
+- name: Create nodepool database user
+  become: yes
+  mysql_user:
+    name: "{{ secrets.nodepool_db_user }}"
+    password: "{{ secrets.nodepool_db_password }}"
+    host: "%"
+    priv: "nodepool.*:ALL"
+    state: "present"

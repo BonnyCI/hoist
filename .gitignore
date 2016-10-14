@@ -1,1 +1,4 @@
+tmp/
 upstream_roles/
+secrets.yml
+site.retry

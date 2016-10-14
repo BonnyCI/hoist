@@ -1,18 +1,57 @@
 ---
+
+# The ansible-role-zuul + ansible-role-nodepool roles manage config
+# as static files and require you to write out your own template, then
+# override the src location for file copys.  We can hopefully fix this there
+# to allow this playbook to manage templates easier.
+- name: foo
+  hosts: localhost
+  tags: ['write_configs']
+  tasks:
+    - name: create out dirs
+      file:
+        path: "tmp/template_out/{{ item }}/etc/{{ item }}"
+        state: directory
+      with_items:
+        - nodepool
+        - zuul
+
+    - name: write configs
+      template:
+        src: "{{ item.p }}/etc/{{ item.p }}/{{ item.f }}.j2"
+        dest: "tmp/template_out/{{ item.p }}/etc/{{ item.p }}/{{ item.f }}"
+      with_items:
+        - { p: 'zuul', f: 'zuul.conf' }
+        - { p: 'nodepool', f: 'nodepool.yaml' }
+        - { p: 'nodepool', f: 'secure.conf' }
+
+
 - name: Common task for all nodes
   hosts: all
   become: yes
-  vars:
-    pip_install_method: installer
   roles:
     - role: common
+      tags: ['common']
+
+- name: Install mysql
+  hosts: mysql
+  become: yes
+  roles:
+    - role: mysql
+      tags: ['mysql']
 
 - name: Install zuul
   hosts: zuul
+  vars_files:
+    - vars/zuul.yml
   roles:
-    - zuul
+    - role: zuul
+      tags: ['zuul']
 
-- name: Install zuul
+- name: Install nodepool
   hosts: nodepool
+  vars_files:
+    - vars/nodepool.yml
   roles:
-    - nodepool
+    - role: nodepool
+      tags: ['nodepool']
