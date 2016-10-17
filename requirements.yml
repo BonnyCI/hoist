@@ -3,10 +3,8 @@
 
 - src: https://git.openstack.org/openstack/ansible-role-nodepool
   scm: git
-  name: nodepool
   version: master
 
 - src: https://git.openstack.org/openstack/ansible-role-zuul
   scm: git
-  name: zuul
   version: master

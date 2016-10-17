@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+[database]
+dburi = mysql+pymysql://{{ secrets.nodepool_db_user }}:{{ secrets.nodepool_db_password }}@localhost/nodepool
