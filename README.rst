@@ -17,6 +17,11 @@ Running
     10.0.0.241
     END
 
+OR
+
+Add dns entries for nodepool and zuul (possibly using /etc/hosts) and use the
+inventory file at `inventory/hosts`.
+
 2. Setup a secrets yaml (see secrets.yml.example). TODO: Store these somewhere
 sane.
 

@@ -1,0 +1,6 @@
+hdcltl-bastion ansible_ssh_host=9.70.213.207 ansible_ssh_user=ubuntu
+contrasjc-bastion ansible_ssh_host=169.45.113.62 ansible_ssh_user=ibmcloud
+
+[bastion]
+contrasjc-bastion
+hdcltl-bastion
