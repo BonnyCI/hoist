@@ -7,6 +7,12 @@
      - python-mysqldb
      - libmysqlclient-dev
 
+ - name: Start + enable the mysql service
+   service:
+     name: mysql
+     state: started
+     enabled: true
+
  - name: Update MySQL root password for all root accounts
    mysql_user: name=root host={{ item }} password={{ secrets.db_password }} state=present
    with_items:
@@ -16,7 +22,10 @@
      - localhost
 
  - name: Copy the root credentials as .my.cnf file
-   template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+   template:
+     src: root.cnf.j2
+     dest: ~/.my.cnf
+     mode: 0600
 
  - name: Ensure Anonymous user(s) are not in the database
    mysql_user: name='' host={{ item }} state=absent
@@ -25,6 +34,6 @@
      - "{{ ansible_hostname }}"
 
  - name: Remove the test database
-   mysql_db: name=test state=absent
-   notify:
-     - Restart MySQL
+   mysql_db:
+     name: test
+     state: absent

@@ -39,19 +39,17 @@
   roles:
     - role: mysql
       tags: ['mysql']
+    - role: databases
+      tags: ['mysql']
 
 - name: Install zuul
   hosts: zuul
-  vars_files:
-    - vars/zuul.yml
   roles:
     - role: zuul
       tags: ['zuul']
 
 - name: Install nodepool
   hosts: nodepool
-  vars_files:
-    - vars/nodepool.yml
   roles:
     - role: nodepool
       tags: ['nodepool']

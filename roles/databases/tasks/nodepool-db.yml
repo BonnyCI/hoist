@@ -1,0 +1,15 @@
+---
+- name: Create nodepool database
+  become: yes
+  mysql_db:
+    name: nodepool
+    state: present
+
+- name: Create nodepool database user
+  become: yes
+  mysql_user:
+    name: "{{ secrets.nodepool_db_user }}"
+    password: "{{ secrets.nodepool_db_password }}"
+    host: "%"
+    priv: "nodepool.*:ALL"
+    state: "present"
