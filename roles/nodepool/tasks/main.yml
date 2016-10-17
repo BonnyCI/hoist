@@ -1,4 +1,28 @@
 ---
+- name: install required packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - debootstrap
+    - qemu-utils
+
+- name: install nodepool sudoers file (for DIB builds)
+  become: yes
+  copy:
+    dest: /etc/sudoers.d/99_nodepool_suoders
+    mode: 0400
+    owner: root
+    content: "nodepool ALL=(ALL) NOPASSWD:ALL"
+
+- name: ensure image build directory
+  become: yes
+  file:
+    path: /opt/nodepool/images
+    state: directory
+    owner: nodepool
+    group: nodepool
+
 - name: create ~/.openstack
   become: yes
   file:

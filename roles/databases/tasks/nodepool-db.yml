@@ -8,8 +8,8 @@
 - name: Create nodepool database user
   become: yes
   mysql_user:
-    name: "{{ secrets.nodepool_db_user }}"
-    password: "{{ secrets.nodepool_db_password }}"
+    name: "{{ secrets.nodepool.db_user }}"
+    password: "{{ secrets.nodepool.db_password }}"
     host: "%"
     priv: "nodepool.*:ALL"
     state: "present"
