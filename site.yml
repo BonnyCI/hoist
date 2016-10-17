@@ -29,27 +29,26 @@
 - name: Common task for all nodes
   hosts: all
   become: yes
+  tags: ['common']
   roles:
     - role: common
-      tags: ['common']
 
 - name: Install mysql
   hosts: mysql
   become: yes
+  tags: ['mysql']
   roles:
     - role: mysql
-      tags: ['mysql']
     - role: databases
-      tags: ['mysql']
 
 - name: Install zuul
   hosts: zuul
+  tags: ['zuul']
   roles:
     - role: zuul
-      tags: ['zuul']
 
 - name: Install nodepool
   hosts: nodepool
+  tags: ['nodepool']
   roles:
     - role: nodepool
-      tags: ['nodepool']
