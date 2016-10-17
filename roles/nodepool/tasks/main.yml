@@ -1,0 +1,17 @@
+---
+- name: create ~/.openstack
+  become: yes
+  file:
+    path: /var/lib/nodepool/.config/openstack
+    state: directory
+    owner: nodepool
+    group: nodepool
+
+- name: create clouds.yaml
+  become: yes
+  copy:
+    dest: /var/lib/nodepool/.config/openstack/clouds.yaml
+    content: "{{ secrets.nodepool.providers | to_nice_yaml }}"
+    owner: nodepool
+    group: nodepool
+    mode: 0400
