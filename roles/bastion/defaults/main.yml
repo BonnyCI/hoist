@@ -1,0 +1,9 @@
+bastion_users:
+  - clint
+  - greghaynes
+  - jamie
+  - nibz
+  - olaph
+  - pschwartz
+bastion_sudo_users: "{{ bastion_users }}"
+bastion_remove_users: []
