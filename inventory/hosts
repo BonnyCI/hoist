@@ -3,3 +3,6 @@ zuul
 
 [nodepool]
 nodepool
+
+[mysql]
+mysql
