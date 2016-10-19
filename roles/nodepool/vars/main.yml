@@ -1,2 +1,2 @@
-nodepool_file_nodepool_yaml_src: tmp/template_out/nodepool/etc/nodepool/nodepool.yaml
-nodepool_file_secure_conf_src: tmp/template_out/nodepool/etc/nodepool/secure.conf
+nodepool_file_nodepool_yaml_src: roles/nodepool/templates/etc/nodepool/nodepool.yaml.j2
+nodepool_file_secure_conf_src: roles/nodepool/templates/etc/nodepool/secure.conf.j2
