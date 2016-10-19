@@ -6,6 +6,7 @@
     - debootstrap
     - qemu-utils
     - curl
+    - uuid-runtime
 
 - name: install nodepool sudoers file (for DIB builds)
   become: yes
