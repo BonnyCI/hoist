@@ -1,6 +1,0 @@
-# vim: set syntax=apache2
-<Directory /var/www/html/cron-logs>
-    Options +Indexes
-    Order deny, allow
-    Allow from all
-</Directory>
