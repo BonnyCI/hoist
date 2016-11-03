@@ -6,5 +6,6 @@ bastion_users:
   - nibz
   - olaph
   - pschwartz
+  - doc
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users: []
