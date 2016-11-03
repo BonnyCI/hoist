@@ -1,0 +1,32 @@
+- name: Add github.ibm.com known hosts
+  known_hosts:
+    path: /etc/ssh/ssh_known_hosts
+    name: github.ibm.com
+    state: present
+    key: "{{ item }}"
+  with_items:
+    - "github.ibm.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1K6pnwsCh8hFCqvzWkb1y3ajXervgfokIdZ/VIURIItVBIINtH5Ynupt2cLLBMYysYjR1I/P4VNZf7bX+HejjJqMf92psXQ1VToyKeNZ+i01CrhZko11157veidnMwVmKoCIdrKpsLgqthJ6kXLrTqaVIQ1sh3lKZ0tFRsqgiwNbstwhRZe/MyUoDuzHZQPooxsiy5dBO+LpkovCShwVfZ3380UyAfScPrUZcX2zY/qmGDz4puXOWj/CQupoe76JoVenfwrjfTw2I+GoPxpZK6R47akoAekCO+Dw8VW4NnTDR6L7eGkclltQSC7HQ9MiFDB4Z49ONWQwotLdttDr5"
+    - "github.ibm.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC1Sg96+K5rc8ZTYhidXI1Q6qUBRgrC51I2pUop4xo4keH8r/5V1W+z2dZNKZsVLW12ulIAe9yorXt2MrI8V0XE="
+
+- name: link access user's deploy key to root's .ssh
+  file:
+    state: link
+    src: ~{{ ansible_ssh_user }}/.ssh/{{ item }}
+    dest: ~/.ssh/{{ item }}
+  with_items:
+    - id_rsa.pub
+    - id_rsa
+
+- name: Ensure source dir
+  file:
+    path: /opt/source
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Download SeedCI from github.ibm.com
+  git:
+    repo: git@github.ibm.com:OpenStackInnovation/SeedCI
+    dest: /opt/source/SeedCI
+    update: true

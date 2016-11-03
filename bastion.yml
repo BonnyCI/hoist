@@ -3,3 +3,9 @@
   become: true
   roles:
     - bastion
+    - common
+    - seed-ci
+    - role: cron-ansible
+      system_ansible_root: /opt/source/SeedCI
+      system_ansible_playbook: bastion.yml
+      system_ansible_inventory: /etc/ansible/hosts

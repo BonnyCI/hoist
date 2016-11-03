@@ -1,5 +1,4 @@
----
 dependencies:
-- role: pip
-  pip_install_method: installer
-  pip_install_url: https://bootstrap.pypa.io/get-pip.py
+  - role: pip
+    pip_install_method: installer
+    pip_install_url: "https://bootstrap.pypa.io/get-pip.py"

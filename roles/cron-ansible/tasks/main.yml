@@ -1,0 +1,50 @@
+- name: Install deps
+  apt:
+    name: "{{ item }}"
+    state: installed
+    update_cache: true
+  with_items:
+    - run-one
+    - apache2
+
+- name: Ensure cron log path
+  file:
+    state: directory
+    path: /var/www/html/cron-logs
+    mode: 0755
+    owner: root
+    group: www-data
+
+- name: Install config for viewing logs
+  copy:
+    src: etc/apache2/sites-enabled/cron-logs
+    dest: /etc/apache2/sites-enabled/cron-logs
+  notify: reload apache
+
+- name: Enable mime_magic
+  apache2_module:
+    name: mime_magic
+    state: present
+  notify: restart apache
+
+- name: Install config file
+  template:
+    src: etc/default/system-ansible
+    dest: /etc/default/system-ansible
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Install system-ansible.sh
+  copy:
+    src: usr/local/bin/system-ansible.sh
+    dest: /usr/local/bin/system-ansible.sh
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Cron system ansible
+  cron:
+    name: "system ansible"
+    minute: "*/15"
+    job: "/usr/local/bin/system-ansible.sh"
