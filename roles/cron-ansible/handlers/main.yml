@@ -1,0 +1,5 @@
+- name: reload apache
+  command: apachectl graceful
+
+- name: restart apache
+  command: apachectl restart

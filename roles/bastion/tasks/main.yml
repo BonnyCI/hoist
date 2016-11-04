@@ -25,3 +25,21 @@
 - name: Add SSH key
   copy: src={{ item }}.authorized_keys dest=~{{ item }}/.ssh/authorized_keys owner={{ item }} group={{ item }} mode=0664
   with_items: "{{ bastion_users }}"
+
+- name: Make sure everyone is in AllowUsers
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^AllowUsers"
+    state: absent
+  notify: restart sshd
+
+- name: Self reference in default ansible inventory
+  copy:
+    content: |
+      [bastion]
+      localhost
+    dest: /etc/ansible/hosts
+    owner: root
+    group: root
+    mode: 0600
+
