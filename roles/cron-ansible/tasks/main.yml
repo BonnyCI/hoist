@@ -17,8 +17,8 @@
 
 - name: Install config for viewing logs
   copy:
-    src: etc/apache2/sites-enabled/cron-logs
-    dest: /etc/apache2/sites-enabled/cron-logs
+    src: etc/apache2/sites-enabled/cron-logs.conf
+    dest: /etc/apache2/sites-enabled/cron-logs.conf
   notify: reload apache
 
 - name: Enable mime_magic
