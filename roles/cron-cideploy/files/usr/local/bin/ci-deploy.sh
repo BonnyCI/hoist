@@ -16,6 +16,8 @@ set -u
 logtag=$(basename $ANSIBLE_PLAYBOOK)_$(date +%Y%m%m%H%M%S)
 
 cd $ANSIBLE_ROOT
-git pull
-ansible-galaxy install -r requirements.yml
-ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK >> /var/www/html/cron-logs/cideploy_$logtag.log 2>&1
+trap "rm -f /var/www/html/cron-logs/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/ansible_${playbook}_latest.log" EXIT
+
+git pull >> $logfile 2>&1
+ansible-galaxy install -r requirements.yml >> $logfile 2>&1
+ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK >> /var/www/html/cron-logs/cideploy_$logtag.log >> $logfile 2>&1
