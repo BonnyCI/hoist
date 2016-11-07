@@ -1,0 +1,43 @@
+- name: Create resources
+  hosts: bastion
+  become: true
+  tasks:
+    - name: create keys
+      os_keypair:
+        cloud: "{{ os_cloud }}"
+        state: present
+        name: "{{ item.name }}"
+        public_key_file: "{{ item.public_key_file }}"
+      with_items: "{{ keys }}"
+
+    - name: create servers
+      os_server:
+        cloud: "{{ os_cloud }}"
+        name: "{{ item.name }}.portbleu.com"
+        state: present
+        region_name: RegionOne
+        security_groups: default
+        flavor: m1.medium
+        image: "{{ item.image | default('ubuntu-16.04-py27') }}"
+        auto_ip: yes
+        key_name: "{{ item.key_name | default('root-contrasjc-bastion') }}"
+        nics: "{{ item.nics | default([{'net-name': 'internal'}]) }}"
+      with_items: "{{ servers }}"
+
+    - name: download dynamic inventory script
+      get_url:
+        url: https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/openstack.py
+        dest: /opt/openstack-inventory.py
+        mode: 755
+
+  vars:
+    os_cloud: contra-sjc
+
+    keys:
+      - name: root-contrasjc-bastion
+        public_key_file: /root/.ssh/id_rsa.pub
+
+    servers:
+      - name: merger01
+      - name: zuul
+      - name: nodepool
