@@ -3,13 +3,13 @@
     src: ansible-runner-config
     dest: /etc/default/{{ ansible_runner_config_env }}
     mode: 0600
-    owner: root
-    group: root
+    owner: {{ ansible_runner_user }}
+    group: {{ ansible_runner_user }}
 
 - name: Install ansible-runner.sh
   copy:
-    src: usr/local/bin/ansible-runner.sh
-    dest: /usr/local/bin/ansible-runner.sh
+    src: usr/local/bin/ansible-runner
+    dest: /usr/local/bin/ansible-runner
     mode: 0755
     owner: root
     group: root
