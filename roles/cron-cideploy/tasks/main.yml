@@ -8,5 +8,5 @@
 - name: Download SeedCI from github.ibm.com
   git:
     repo: git@github.ibm.com:OpenStackInnovation/SeedCI
-    dest: {{ cideploy_ansible_root }}
+    dest: "{{ cideploy_ansible_root }}"
     update: true
