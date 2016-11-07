@@ -1,13 +1,13 @@
 ---
 - name: Common task for all nodes
-  hosts: all
+  hosts: nodepool.portbleu.com,zuul.portbleu.com,merger01.portbleu.com
   become: yes
   tags: ['common']
   roles:
     - role: common
 
 - name: Install mysql
-  hosts: mysql
+  hosts: zuul.portbleu.com
   become: yes
   tags: ['mysql']
   roles:
@@ -15,13 +15,13 @@
     - role: databases
 
 - name: Install zuul
-  hosts: zuul
+  hosts: zuul.portbleu.com
   tags: ['zuul']
   roles:
     - role: zuul
 
 - name: Install nodepool
-  hosts: nodepool
+  hosts: nodepool.portbleu.com
   tags: ['nodepool']
   roles:
     - role: nodepool

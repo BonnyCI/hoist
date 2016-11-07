@@ -12,4 +12,4 @@
     - role: cron-cideploy
       ansible_root: /opt/source/cideploy_SeedCI
       ansible_playbook: site.yml
-      ansible_inventory: /etc/ansible/hosts
+      ansible_inventory: /opt/openstack-inventory.py
