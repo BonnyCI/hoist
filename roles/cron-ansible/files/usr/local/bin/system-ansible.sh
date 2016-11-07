@@ -13,7 +13,7 @@ set +u
 . /opt/ansible/bin/activate
 set -u
 
-logtag=$(basename $SYS_ANSIBLE_PLAYBOOK)_$(date +%Y%m%m%H%M%S)
+logtag=$(basename $SYS_ANSIBLE_PLAYBOOK)_$(date +%Y%m%d%H%M%S)
 
 cd $SYS_ANSIBLE_ROOT
 git pull
