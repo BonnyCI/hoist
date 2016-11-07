@@ -17,5 +17,5 @@ logtag=$(basename $SYS_ANSIBLE_PLAYBOOK)_$(date +%Y%m%m%H%M%S)
 
 cd $SYS_ANSIBLE_ROOT
 git pull
-ansible-galaxy install -r requirements.txt
+ansible-galaxy install -r requirements.yml
 ansible-playbook -i $SYS_ANSIBLE_INVENTORY $SYS_ANSIBLE_PLAYBOOK >> /var/www/html/cron-logs/ansible_$logtag.log 2>&1
