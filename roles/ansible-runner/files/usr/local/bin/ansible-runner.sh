@@ -19,6 +19,8 @@ logfile="/var/www/html/cron-logs/ansible_${playbook}_$(date +%Y%m%d%H%M%S).log"
 cd $ANSIBLE_ROOT
 trap "rm -f /var/www/html/cron-logs/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/ansible_${playbook}_latest.log" EXIT
 
+date >> $logfile 2>&1
 git pull >> $logfile 2>&1
 ansible-galaxy install -r requirements.yml >> $logfile 2>&1
 ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK >> $logfile 2>&1
+date >> $logfile 2>&1
