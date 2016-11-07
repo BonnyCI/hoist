@@ -9,6 +9,7 @@ bastion_users:
   - olaph
   - pschwartz
   - rmoe
+  - bradonk
   - doc
   - cideploy
 bastion_sudo_users: "{{ bastion_users }}"
