@@ -1,3 +1,11 @@
+- name: Ensure cron log path
+  file:
+    state: directory
+    path: /var/www/html/cron-logs/cideploy
+    mode: 0755
+    owner: cideploy
+    group: www-data
+
 - name: Cron ci deploy
   cron:
     name: "deploy CI"
