@@ -4,8 +4,8 @@ set -eu
 
 . /etc/default/system-ansible
 
-if [[ -z "${SYS_ANSIBLE_SERIALIZED:-}" ]] ; then
-    export SYS_ANSIBLE_SERIALIZED=1
+if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
+    export ANSIBLE_SERIALIZED=1
     exec run-one $0 "$@"
 fi
 
@@ -13,9 +13,9 @@ set +u
 . /opt/ansible/bin/activate
 set -u
 
-logtag=$(basename $SYS_ANSIBLE_PLAYBOOK)_$(date +%Y%m%m%H%M%S)
+logtag=$(basename $ANSIBLE_PLAYBOOK)_$(date +%Y%m%m%H%M%S)
 
-cd $SYS_ANSIBLE_ROOT
+cd $ANSIBLE_ROOT
 git pull
 ansible-galaxy install -r requirements.yml
-ansible-playbook -i $SYS_ANSIBLE_INVENTORY $SYS_ANSIBLE_PLAYBOOK >> /var/www/html/cron-logs/cideploy_$logtag.log 2>&1
+ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK >> /var/www/html/cron-logs/cideploy_$logtag.log 2>&1

@@ -10,3 +10,6 @@
       system_ansible_playbook: bastion.yml
       system_ansible_inventory: /etc/ansible/hosts
     - role: cron-cideploy
+      system_ansible_root: /opt/source/SeedCI
+      system_ansible_playbook: site.yml
+      system_ansible_inventory: /etc/ansible/hosts
