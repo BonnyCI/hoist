@@ -14,8 +14,7 @@ set +u
 set -u
 
 playbook=$(basename $SYS_ANSIBLE_PLAYBOOK)
-timestamp=$(date +%Y%m%d%H%M%S)
-logfile="/var/www/html/cron-logs/ansible_${playbook}_${timestamp}.log"
+logfile="/var/www/html/cron-logs/ansible_${playbook}_$(date +%Y%m%d%H%M%S).log"
 
 cd $SYS_ANSIBLE_ROOT
 git pull
