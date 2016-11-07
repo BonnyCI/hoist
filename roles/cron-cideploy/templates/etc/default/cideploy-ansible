@@ -1,0 +1,3 @@
+ANSIBLE_ROOT={{ cideploy_ansible_root }}
+ANSIBLE_PLAYBOOK={{ cideploy_ansible_playbook }}
+ANSIBLE_INVENTORY={{ cideploy_ansible_inventory }}
