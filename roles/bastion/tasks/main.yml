@@ -37,7 +37,7 @@
   copy:
     content: |
       [bastion]
-      localhost connection=local
+      localhost ansible_connection=local
     dest: /etc/ansible/hosts
     owner: root
     group: root
