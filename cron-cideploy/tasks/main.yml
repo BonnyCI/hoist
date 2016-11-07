@@ -1,0 +1,14 @@
+- name: Install ci-deploy.sh
+  copy:
+    src: usr/local/bin/ci-deploy.sh
+    dest: /usr/local/bin/ci-deploy.sh
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Cron ci deploy
+  cron:
+    name: "deploy CI"
+    minute: "*/15"
+    user: cideploy
+    job: "/usr/local/bin/ci-deploy.sh"

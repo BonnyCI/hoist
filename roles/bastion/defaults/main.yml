@@ -9,5 +9,6 @@ bastion_users:
   - olaph
   - pschwartz
   - doc
+  - cideploy
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users: []
