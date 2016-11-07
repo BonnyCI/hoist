@@ -8,6 +8,7 @@
     - "github.ibm.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1K6pnwsCh8hFCqvzWkb1y3ajXervgfokIdZ/VIURIItVBIINtH5Ynupt2cLLBMYysYjR1I/P4VNZf7bX+HejjJqMf92psXQ1VToyKeNZ+i01CrhZko11157veidnMwVmKoCIdrKpsLgqthJ6kXLrTqaVIQ1sh3lKZ0tFRsqgiwNbstwhRZe/MyUoDuzHZQPooxsiy5dBO+LpkovCShwVfZ3380UyAfScPrUZcX2zY/qmGDz4puXOWj/CQupoe76JoVenfwrjfTw2I+GoPxpZK6R47akoAekCO+Dw8VW4NnTDR6L7eGkclltQSC7HQ9MiFDB4Z49ONWQwotLdttDr5"
     - "github.ibm.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC1Sg96+K5rc8ZTYhidXI1Q6qUBRgrC51I2pUop4xo4keH8r/5V1W+z2dZNKZsVLW12ulIAe9yorXt2MrI8V0XE="
 
+# currently this is running as root, and this will clobber the root keys. Should run when ansible_ssh_user != root.
 - name: link access user's deploy key to root's .ssh
   file:
     state: link
@@ -16,6 +17,7 @@
   with_items:
     - id_rsa.pub
     - id_rsa
+  when: false
 
 - name: Ensure source dir
   file:
