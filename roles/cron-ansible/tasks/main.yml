@@ -10,7 +10,7 @@
 - name: Ensure cron log path
   file:
     state: directory
-    path: /var/www/html/cron-logs
+    path: /var/www/html/cron-logs/system-ansible
     mode: 0755
     owner: root
     group: www-data

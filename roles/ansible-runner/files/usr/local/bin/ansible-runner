@@ -17,7 +17,7 @@ playbook=$(basename $ANSIBLE_PLAYBOOK)
 logfile="/var/www/html/cron-logs/ansible_${playbook}_$(date +%Y%m%d%H%M%S).log"
 
 cd $ANSIBLE_ROOT
-trap "rm -f /var/www/html/cron-logs/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/ansible_${playbook}_latest.log" EXIT
+trap "rm -f /var/www/html/cron-logs/$1/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/$1/ansible_${playbook}_latest.log" EXIT
 
 date >> $logfile 2>&1
 git pull >> $logfile 2>&1
