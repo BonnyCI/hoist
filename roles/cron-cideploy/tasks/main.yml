@@ -1,25 +1,9 @@
-- name: Install config file
-  template:
-    src: etc/default/cideploy-ansible
-    dest: /etc/default/cideploy-ansible
-    mode: 0600
-    owner: cideploy
-    group: cideploy
-
-- name: Install ci-deploy.sh
-  copy:
-    src: usr/local/bin/ci-deploy.sh
-    dest: /usr/local/bin/ci-deploy.sh
-    mode: 0755
-    owner: cideploy
-    group: cideploy
-
 - name: Cron ci deploy
   cron:
     name: "deploy CI"
     minute: "*/15"
     user: cideploy
-    job: "/usr/local/bin/ci-deploy.sh"
+    job: "/usr/local/bin/ansible-runner ci-deploy"
 
 - name: Download SeedCI from github.ibm.com
   git:

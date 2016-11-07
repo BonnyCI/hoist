@@ -1,0 +1,15 @@
+- name: Install config file
+  template:
+    src: ansible-runner-config
+    dest: /etc/default/{{ ansible_runner_config_env }}
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Install ansible-runner.sh
+  copy:
+    src: usr/local/bin/ansible-runner.sh
+    dest: /usr/local/bin/ansible-runner.sh
+    mode: 0755
+    owner: root
+    group: root

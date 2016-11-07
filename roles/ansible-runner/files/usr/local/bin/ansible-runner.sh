@@ -2,7 +2,7 @@
 # Runs system wide ansible configured in /etc
 set -eu
 
-. /etc/default/system-ansible
+. /etc/default/$1
 
 if [[ -z "${SYS_ANSIBLE_SERIALIZED:-}" ]] ; then
     export SYS_ANSIBLE_SERIALIZED=1
