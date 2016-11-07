@@ -2,7 +2,7 @@
 
 set -eu
 
-. /etc/default/system-ansible
+. /etc/default/cideploy-ansible
 
 if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
     export ANSIBLE_SERIALIZED=1
