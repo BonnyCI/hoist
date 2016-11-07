@@ -17,8 +17,8 @@ playbook=$(basename $SYS_ANSIBLE_PLAYBOOK)
 logfile="/var/www/html/cron-logs/ansible_${playbook}_$(date +%Y%m%d%H%M%S).log"
 
 cd $SYS_ANSIBLE_ROOT
-git pull
-ansible-galaxy install -r requirements.yml
+git pull >> $logfile 2>&1
+ansible-galaxy install -r requirements.yml >> $logfile 2>&1
 ansible-playbook -i $SYS_ANSIBLE_INVENTORY $SYS_ANSIBLE_PLAYBOOK >> $logfile 2>&1
 
 rm -f /var/www/html/cron-logs/ansible_${playbook}_latest.log
