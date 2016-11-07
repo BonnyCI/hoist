@@ -1,3 +1,0 @@
-SYS_ANSIBLE_ROOT={{ system_ansible_root }}
-SYS_ANSIBLE_PLAYBOOK={{ system_ansible_playbook }}
-SYS_ANSIBLE_INVENTORY={{ system_ansible_inventory }}

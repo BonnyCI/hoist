@@ -6,10 +6,10 @@
     - common
     - seed-ci
     - role: cron-ansible
-      system_ansible_root: /opt/source/SeedCI
-      system_ansible_playbook: bastion.yml
-      system_ansible_inventory: /etc/ansible/hosts
+      ansible_root: /opt/source/SeedCI
+      ansible_playbook: bastion.yml
+      ansible_inventory: /etc/ansible/hosts
     - role: cron-cideploy
-      cideploy_ansible_root: /opt/source/cideploy_SeedCI
-      cideploy_ansible_playbook: site.yml
-      cideploy_ansible_inventory: /etc/ansible/hosts
+      ansible_root: /opt/source/cideploy_SeedCI
+      ansible_playbook: site.yml
+      ansible_inventory: /etc/ansible/hosts
