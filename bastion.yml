@@ -12,6 +12,6 @@
       ansible_runner_user: root
     - role: cron-cideploy
       ansible_root: /opt/source/cideploy_SeedCI
-      ansible_playbook: site.yml
+      ansible_playbook: install-ci.yml
       ansible_inventory: /opt/openstack-inventory.py
       ansible_runner_user: cideploy
