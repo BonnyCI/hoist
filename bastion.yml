@@ -15,3 +15,4 @@
       ansible_playbook: site.yml
       ansible_inventory: /opt/openstack-inventory.py
       ansible_runner_user: cideploy
+      ansible_ssh_user: ubuntu

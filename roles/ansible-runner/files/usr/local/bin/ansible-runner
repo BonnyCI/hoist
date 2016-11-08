@@ -26,7 +26,11 @@ date 2>&1 | tee $logfile
 basename "$logfile" | tee -a $logfile
 git pull 2>&1 | tee -a $logfile
 ansible-galaxy install -r requirements.yml | tee -a $logfile
-ansible-playbook -i $ANSIBLE_INVENTORY $@ $ANSIBLE_PLAYBOOK | tee -a $logfile
+args="$@"
+if [ -n "$ANSIBLE_SSH_USER" ]; then
+    args="$args -e ansible_ssh_user=$ANSIBLE_SSH_USER"
+fi
+ansible-playbook -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK | tee -a $logfile
 date | tee -a $logfile
 
 # Remove > 10 days old
