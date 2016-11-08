@@ -31,4 +31,4 @@
   cron:
     name: "system ansible"
     minute: "*/15"
-    job: "/usr/local/bin/ansible-runner.sh system-ansible"
+    job: "/usr/local/bin/ansible-runner system-ansible"
