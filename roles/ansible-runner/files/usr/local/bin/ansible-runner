@@ -24,3 +24,7 @@ git pull >> $logfile 2>&1
 ansible-galaxy install -r requirements.yml >> $logfile 2>&1
 ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK >> $logfile 2>&1
 date >> $logfile 2>&1
+
+# Remove > 10 days old
+RMLOG=/var/www/html/cron-logs/removal_$logtag.log
+find /var/www/html/cron-logs -type f -name '*.log' -mtime 10 -exec rm -f {} \; > $RMLOG 2>&1
