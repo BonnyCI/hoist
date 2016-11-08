@@ -24,15 +24,15 @@ cd $ANSIBLE_ROOT
 trap "rm -f /var/www/html/cron-logs/$env/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/$env/ansible_${playbook}_latest.log" EXIT
 
 date 2>&1 | tee $logfile
-basename "$logfile" | tee -a $logfile
+basename "$logfile" 2>&1 | tee -a $logfile
 git pull 2>&1 | tee -a $logfile
-ansible-galaxy install -r requirements.yml | tee -a $logfile
+ansible-galaxy install -r requirements.yml 2>&1 | tee -a $logfile
 args="$@"
 if [ -n "$ANSIBLE_SSH_USER" ]; then
     args="$args -e ansible_ssh_user=$ANSIBLE_SSH_USER"
 fi
-ansible-playbook -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK | tee -a $logfile
-date | tee -a $logfile
+ansible-playbook -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK 2>&1 | tee -a $logfile
+date 2>&1 | tee -a $logfile
 
 # Remove > 10 days old
 RMLOG=/var/www/html/cron-logs/$env/removal_${timestamp}.log
