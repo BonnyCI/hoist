@@ -15,7 +15,7 @@ set -u
 
 playbook=$(basename $ANSIBLE_PLAYBOOK)
 timestamp=$(date +%Y%m%d%H%M%S)
-logfile="/var/www/html/cron-logs/ansible_${playbook}_${timestamp}.log"
+logfile="/var/www/html/cron-logs/$1/ansible_${playbook}_${timestamp}.log"
 
 cd $ANSIBLE_ROOT
 trap "rm -f /var/www/html/cron-logs/$1/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/$1/ansible_${playbook}_latest.log" EXIT
