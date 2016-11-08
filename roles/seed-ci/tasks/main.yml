@@ -32,10 +32,3 @@
     repo: git@github.ibm.com:OpenStackInnovation/SeedCI
     dest: /opt/source/SeedCI
     update: true
-
-- name: set owner of seedci to cideploy user
-  file:
-    path: /opt/source/SeedCI
-    state: directory
-    owner: cideploy
-    recurse: yes
