@@ -2,7 +2,9 @@
 # Runs system wide ansible configured in /etc
 set -eu
 
-. /etc/default/$1
+env=$1
+shift
+. /etc/default/$env
 
 if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
     export ANSIBLE_SERIALIZED=1
@@ -15,18 +17,18 @@ set -u
 
 playbook=$(basename $ANSIBLE_PLAYBOOK)
 timestamp=$(date +%Y%m%d%H%M%S)
-logfile="/var/www/html/cron-logs/$1/ansible_${playbook}_${timestamp}.log"
+logfile="/var/www/html/cron-logs/$env/ansible_${playbook}_${timestamp}.log"
 
 cd $ANSIBLE_ROOT
-trap "rm -f /var/www/html/cron-logs/$1/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/$1/ansible_${playbook}_latest.log" EXIT
+trap "rm -f /var/www/html/cron-logs/$env/ansible_${playbook}_latest.log; ln -s $logfile /var/www/html/cron-logs/$env/ansible_${playbook}_latest.log" EXIT
 
 date 2>&1 | tee $logfile
 basename "$logfile" | tee -a $logfile
 git pull 2>&1 | tee -a $logfile
 ansible-galaxy install -r requirements.yml | tee -a $logfile
-ansible-playbook -i $ANSIBLE_INVENTORY $ANSIBLE_PLAYBOOK | tee -a $logfile
+ansible-playbook -i $ANSIBLE_INVENTORY $@ $ANSIBLE_PLAYBOOK | tee -a $logfile
 date | tee -a $logfile
 
 # Remove > 10 days old
-RMLOG=/var/www/html/cron-logs/$1/removal_${timestamp}.log
-find /var/www/html/cron-logs/$1 -type f -name '*.log' -mtime 10 -exec rm -f {} \; > $RMLOG 2>&1
+RMLOG=/var/www/html/cron-logs/$env/removal_${timestamp}.log
+find /var/www/html/cron-logs/$env -type f -name '*.log' -mtime 10 -exec rm -f {} \; > $RMLOG 2>&1
