@@ -3,13 +3,14 @@
 set -eu
 
 env=$1
-shift
 . /etc/default/$env
 
 if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
     export ANSIBLE_SERIALIZED=1
     exec run-one $0 "$@"
 fi
+
+shift
 
 set +u
 . /opt/ansible/bin/activate
