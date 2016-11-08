@@ -1,3 +1,4 @@
 ANSIBLE_ROOT={{ ansible_root }}
 ANSIBLE_PLAYBOOK={{ ansible_playbook }}
 ANSIBLE_INVENTORY={{ ansible_inventory }}
+ANSIBLE_SSH_USER={{ ansible_ssh_user|default('') }}
