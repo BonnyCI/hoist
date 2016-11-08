@@ -10,10 +10,12 @@
   cron:
     name: "deploy CI"
     minute: "*/15"
-    user: cideploy
+    user: "{{ ansible_runner_user }}"
     job: "/usr/local/bin/ansible-runner cideploy"
 
 - name: Download SeedCI from github.ibm.com
+  become: yes
+  become_user: cideploy
   git:
     repo: git@github.ibm.com:OpenStackInnovation/SeedCI
     dest: "{{ ansible_root }}"
