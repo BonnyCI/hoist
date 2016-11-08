@@ -20,7 +20,7 @@
         flavor: m1.medium
         image: "{{ item.image | default('ubuntu-16.04-py27') }}"
         auto_ip: yes
-        key_name: "{{ item.key_name | default('root-contrasjc-bastion') }}"
+        key_name: "{{ item.key_name | default('ci-deploy-contrasjc-bastion') }}"
         nics: "{{ item.nics | default([{'net-name': 'internal'}]) }}"
       with_items: "{{ servers }}"
 
@@ -36,6 +36,8 @@
     keys:
       - name: root-contrasjc-bastion
         public_key_file: /root/.ssh/id_rsa.pub
+      - name: ci-deploy-contrasjc-bastion
+        public_key_file: /home/cideploy/.ssh/id_rsa.pub
 
     servers:
       - name: merger01
