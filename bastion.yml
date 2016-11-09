@@ -15,4 +15,4 @@
       ansible_root: /home/cideploy/SeedCI
       ansible_inventory: /opt/openstack-inventory.py
       ansible_runner_user: cideploy
-      ansible_ssh_user: ubuntu
+      ansible_remote_user: ubuntu
