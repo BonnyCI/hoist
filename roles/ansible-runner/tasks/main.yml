@@ -34,6 +34,26 @@
     owner: "{{ ansible_runner_user }}"
     group: "{{ ansible_runner_user }}"
 
+- name: Install tailon log web tailer
+  pip:
+    virtualenv: /opt/tailon
+    name: tailon
+
+- name: Install tailon init
+  copy:
+    dest: /etc/systemd/system/tailon.service
+    src: etc/systemd/system/tailon.service
+
+- name: Install tailon apache config
+  copy:
+    src: etc/apache2/conf-enabled/tailon.conf
+    dest: /etc/apache2/conf-enabled/tailon.conf
+
+- name: Start tailon
+  service:
+    name: tailon
+    state: started
+
 - name: Install ansible-runner.sh
   copy:
     src: usr/local/bin/ansible-runner
