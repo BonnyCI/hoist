@@ -1,0 +1,12 @@
+[Unit]
+Description=tailon log viewer
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+ExecStart=/bin/sh -c "/opt/tailon/bin/tailon -r /cron-logs/live/ -f $(find /var/www/html/cron-logs/ -type f -name '*_current.log' -exec echo -n '{} ' \;)"
+
+[Install]
+WantedBy=multi-user.target

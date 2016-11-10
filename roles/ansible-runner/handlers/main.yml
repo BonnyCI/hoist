@@ -3,3 +3,8 @@
 
 - name: restart apache
   command: apachectl restart
+
+- name: restart tailon
+  service:
+    name: tailon
+    state: restarted
