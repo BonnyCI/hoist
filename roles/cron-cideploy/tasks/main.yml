@@ -11,7 +11,7 @@
     name: "deploy CI"
     minute: "*/15"
     user: "{{ ansible_runner_user }}"
-    job: "/usr/local/bin/ansible-runner cideploy"
+    job: "/usr/local/bin/ansible-runner cideploy -e @/home/{{ ansible_runner_user }}/secrets.yml"
 
 - name: Download SeedCI from github.ibm.com
   become: yes
