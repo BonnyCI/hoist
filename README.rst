@@ -1,5 +1,5 @@
 =======
-SeedCI
+Hoist
 =======
 
 Installer for running CI as a service.
@@ -39,7 +39,7 @@ To create a new bastion in a cloud for automating things follow these steps:
 
    $ ssh-keygen -t rsa -b 4096
 
-5. Add the deploy key to deploy keys on https://github.ibm.com/OpenStackInnovation/SeedCI
+5. Add the deploy key to deploy keys on https://github.com/BonnyCI/hoist
 
 6. Add the new bastion host to inventory/bastions
 
