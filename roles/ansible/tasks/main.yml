@@ -5,6 +5,7 @@
   with_items:
     - python-dev
     - libssl-dev
+    - virtualenv
 
 - name: Install ansible
   pip:
