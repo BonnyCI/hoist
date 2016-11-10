@@ -28,8 +28,8 @@
   with_items:
     - mime_magic
     - proxy_http
-
   notify: restart apache
+
 - name: Install config file
   template:
     src: ansible-runner-config
@@ -47,11 +47,13 @@
   copy:
     dest: /etc/systemd/system/tailon.service
     src: etc/systemd/system/tailon.service
+  notify: restart tailon
 
 - name: Install tailon apache config
   copy:
     src: etc/apache2/conf-enabled/tailon.conf
     dest: /etc/apache2/conf-enabled/tailon.conf
+  notify: reload apache
 
 - name: Start tailon
   service:
