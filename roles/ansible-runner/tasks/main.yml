@@ -7,14 +7,6 @@
     - run-one
     - apache2
 
-- name: Ensure cron log path
-  file:
-    state: directory
-    path: /var/www/html/cron-logs/system-ansible
-    mode: 0755
-    owner: root
-    group: www-data
-
 - name: Install config for viewing logs
   copy:
     src: etc/apache2/sites-enabled/cron-logs.conf
