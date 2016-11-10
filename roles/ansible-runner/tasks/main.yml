@@ -21,10 +21,14 @@
     dest: /etc/apache2/sites-enabled/cron-logs.conf
   notify: reload apache
 
-- name: Enable mime_magic
+- name: Enable apache modules
   apache2_module:
-    name: mime_magic
+    name: "{{ item }}"
     state: present
+  with_items:
+    - mime_magic
+    - proxy_http
+
   notify: restart apache
 - name: Install config file
   template:

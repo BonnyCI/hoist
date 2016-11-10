@@ -6,7 +6,7 @@ After=syslog.target network.target
 Type=simple
 User=www-data
 Group=www-data
-ExecStart=/bin/sh -c "/opt/tailon/bin/tailon -f /var/www/html/cron-logs/*current.log"
+ExecStart=/bin/sh -c "/opt/tailon/bin/tailon -f $(find /var/www/html/cron-logs/ -type f -name '*.log' -exec echo -n '{} ' \;)"
 
 [Install]
 WantedBy=multi-user.target
