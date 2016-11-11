@@ -12,5 +12,6 @@ bastion_users:
   - bradonk
   - doc
   - cideploy
+  - jkeating
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users: []
