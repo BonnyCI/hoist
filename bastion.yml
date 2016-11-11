@@ -4,7 +4,6 @@
   roles:
     - common
     - bastion
-    - seed-ci
     - role: cron-ansible
       ansible_root: /opt/source/hoist
       ansible_playbook: bastion.yml
