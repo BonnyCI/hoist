@@ -3,6 +3,7 @@
   become: true
   roles:
     - common
+    - dd-agent
     - bastion
     - seed-ci
     - role: cron-ansible

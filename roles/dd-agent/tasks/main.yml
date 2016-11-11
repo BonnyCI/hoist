@@ -1,0 +1,46 @@
+---
+- name: install dd repo key
+  apt_key:
+    id: C7A7DA52
+    keyserver: keyserver.ubuntu.com
+
+- name: install dd repo
+  apt_repository:
+    repo: "deb https://apt.datadoghq.com/ stable main"
+    update_cache: yes
+
+- name: install dependency packages
+  apt:
+    name: "{{ item }}"
+    state: installed
+    update_cache: yes
+    cache_valid_time: 30
+  with_items:
+    - apt-transport-https
+
+- name: install datadog agent package
+  apt:
+    name: datadog-agent
+    state: installed
+    update_cache: yes
+    cache_valid_time: 30
+  notify:
+    - restart dd-agent
+
+- name: configure datadog
+  template:
+    src: etc/dd-agent/datadog.conf
+    dest: /etc/dd-agent/datadog.conf
+    owner: dd-agent
+    group: root
+  notify:
+    - restart dd-agent
+
+# Flush handlers to avoid a start + restart scenario
+- meta: flush_handlers
+
+- name: start datadog agent
+  service:
+    name: datadog-agent
+    state: started
+    enabled: yes

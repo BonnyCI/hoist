@@ -5,6 +5,7 @@
   tags: ['common']
   roles:
     - role: common
+    - role: dd-agent
 
 - name: Install mysql
   hosts: zuul.portbleu.com
