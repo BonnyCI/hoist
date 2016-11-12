@@ -3,6 +3,7 @@
   become: true
   roles:
     - common
+    - dd-agent
     - bastion
     - role: cron-ansible
       ansible_root: /opt/source/hoist
