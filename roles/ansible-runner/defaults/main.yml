@@ -1,0 +1,3 @@
+ansible_runner_user: root
+ansible_runner_secrets_path: /etc/secrets.yml
+ansible_runner_virtualenv: /opt/ansible

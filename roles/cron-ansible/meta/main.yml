@@ -1,3 +1,0 @@
-dependencies:
-  - role: ansible-runner
-    ansible_runner_config_env: system-ansible

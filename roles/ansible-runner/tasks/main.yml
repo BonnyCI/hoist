@@ -4,8 +4,16 @@
     state: installed
     update_cache: true
   with_items:
-    - run-one
     - apache2
+    - python-dev
+    - libssl-dev
+    - python-virtualenv
+    - run-one
+
+- name: Install ansible
+  pip:
+    virtualenv: "{{ ansible_runner_virtualenv }}"
+    name: ansible
 
 - name: Install config for viewing logs
   copy:
@@ -25,10 +33,9 @@
 - name: Install config file
   template:
     src: ansible-runner-config
-    dest: /etc/default/{{ ansible_runner_config_env }}
+    dest: /etc/default/{{ ansible_runner_job }}
     mode: 0600
     owner: "{{ ansible_runner_user }}"
-    group: "{{ ansible_runner_user }}"
 
 - name: Install tailon log web tailer
   pip:
@@ -52,10 +59,68 @@
     name: tailon
     state: started
 
-- name: Install ansible-runner.sh
+- name: Install ansible-runner
   copy:
     src: usr/local/bin/ansible-runner
     dest: /usr/local/bin/ansible-runner
     mode: 0755
     owner: root
     group: root
+
+- name: Ensure source dir
+  file:
+    path: /opt/source
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Download source
+  git:
+    repo: "{{ ansible_runner_repo }}"
+    dest: "/opt/source/{{ ansible_runner_job }}"
+    update: true
+
+- name: Ensure cron log path
+  file:
+    state: directory
+    path: "/var/www/html/cron-logs/{{ ansible_runner_job }}"
+    mode: 0755
+    owner: "{{ ansible_runner_user }}"
+    group: www-data
+
+- name: check secrets exist
+  stat:
+    path: "{{ ansible_secrets_path }}"
+  register: ansible_secrets_path_stat
+
+- name: ensure secrets owner
+  file:
+    state: file
+    path: "{{ ansible_secrets_path }}"
+    mode: 0400
+    owner: root
+    group: root
+  when:
+    - ansible_secrets_path_stat.stat.exists
+    - ansible_secrets_path_stat.stat.isreg
+
+- name: ensure runner can read file
+  acl:
+    name: "{{ ansible_secrets_path }}"
+    entity: "{{ ansible_runner_user }}"
+    etype: user
+    follow: no
+    permissions: r
+    state: present
+  when:
+    - ansible_secrets_path_stat.stat.exists
+    - ansible_secrets_path_stat.stat.isreg
+    - ansible_runner_user != 'root'
+
+- name: Cron ci deploy
+  cron:
+    name: "ansible-runner deploy {{ ansible_runner_job }}"
+    minute: "{{ ansible_runner_minute | default(omit) }}"
+    user: "{{ ansible_runner_user }}"
+    job: "/usr/local/bin/ansible-runner {{ ansible_runner_job }} -e @{{ ansible_secrets_path }}"
