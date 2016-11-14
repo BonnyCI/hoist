@@ -36,5 +36,4 @@ ansible-playbook -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK 2>&1 | tee -a $lo
 date 2>&1 | tee -a $logfile
 
 # Remove > 10 days old
-RMLOG=/var/www/html/cron-logs/$env/removal_${timestamp}.log
-find /var/www/html/cron-logs/$env -type f -name '*.log' -mtime 10 -exec rm -f {} \; > $RMLOG 2>&1
+find /var/www/html/cron-logs/$env -type f -name '*.log' -mtime 10 -exec rm -f {} \;
