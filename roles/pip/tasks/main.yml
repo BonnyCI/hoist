@@ -1,0 +1,16 @@
+---
+- name: Create cache dir for pip downloads
+  file:
+    path: "{{ pip_cache_dir }}"
+    mode: 0755
+    state: directory
+
+- name: Download the Pip installer to /tmp
+  get_url:
+    url: "{{ pip_install_url }}"
+    dest: "{{ pip_cache_dir }}/get-pip.py"
+
+- name: Run get-pip.py to intall Pip
+  command: "python {{ pip_cache_dir }}/get-pip.py"
+  register: pip_command
+  changed_when: "'Requirement already up-to-date: pip' not in pip_command.stdout"
