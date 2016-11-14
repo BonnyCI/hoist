@@ -37,27 +37,11 @@
     mode: 0600
     owner: "{{ ansible_runner_user }}"
 
-- name: Install tailon log web tailer
-  pip:
-    virtualenv: /opt/tailon
-    name: tailon
-
-- name: Install tailon init
-  copy:
-    dest: /etc/systemd/system/tailon.service
-    src: etc/systemd/system/tailon.service
-  notify: restart tailon
-
 - name: Install tailon apache config
   copy:
     src: etc/apache2/conf-enabled/tailon.conf
     dest: /etc/apache2/conf-enabled/tailon.conf
   notify: reload apache
-
-- name: Start tailon
-  service:
-    name: tailon
-    state: started
 
 - name: Install ansible-runner
   copy:

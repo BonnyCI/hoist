@@ -1,0 +1,9 @@
+bind: {{ tailon_ip }}:{{ tailon_port }}
+allow-transfers: {{ tailon_allow_transfers }}
+follow-names: {{ tailon_follow_names }}
+relative-root: {{ tailon_relative_root }}
+tail-lines: {{ tailon_tail_lines }}
+wrap-lines: {{ tailon_wrap_lines }}
+
+{{ {'commands': tailon_commands} | to_nice_yaml }}
+{{ {'files': tailon_files} | to_nice_yaml }}

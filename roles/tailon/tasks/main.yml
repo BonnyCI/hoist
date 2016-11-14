@@ -1,0 +1,30 @@
+---
+- name: Install tailon log web tailer
+  pip:
+    virtualenv: "{{ tailon_virtualenv }}"
+    name: tailon
+
+- name: setup config dir
+  file:
+    state: directory
+    path: "{{ tailon_config_dir }}"
+
+- name: create config file
+  template:
+    src: config.yml
+    dest: "{{ tailon_config_dir }}/{{ tailon_name }}.yml"
+  notify: restart tailon
+
+- name: Install tailon init
+  template:
+    src: tailon.service
+    dest: /etc/systemd/system/tailon@.service
+  notify: restart tailon
+  register: tailon_init_file
+
+- name: enable tailon service
+  systemd:
+    name: "tailon@{{ tailon_name }}"
+    state: "{{ tailon_service_state }}"
+    enabled: "{{ tailon_service_enabled }}"
+    daemon_reload: "{{ tailon_init_file.changed }}"

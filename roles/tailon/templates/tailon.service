@@ -1,0 +1,13 @@
+[Unit]
+Description=tailon %i log viewer
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User={{ tailon_user }}
+Group={{ tailon_group }}
+ExecStart={{ tailon_virtualenv }}/bin/tailon -c {{ tailon_config_dir }}/%i.yml
+
+[Install]
+DefaultInstance=tailon
+WantedBy=multi-user.target

@@ -1,2 +1,8 @@
 dependencies:
   - pip
+  - role: tailon
+    tailon_ip: 127.0.0.1
+    tailon_relative_root: /cron-logs/live
+    tailon_files:
+      - "/var/www/html/cron-logs/**/*_current.log"
+
