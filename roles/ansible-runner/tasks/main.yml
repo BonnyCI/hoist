@@ -6,7 +6,6 @@
   with_items:
     - python-dev
     - libssl-dev
-    - python-virtualenv
     - run-one
 
 - name: Install ansible
