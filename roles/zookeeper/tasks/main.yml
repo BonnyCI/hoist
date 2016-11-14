@@ -1,0 +1,26 @@
+---
+- name: Install zookeeper packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - zookeeper
+    - zookeeperd
+
+- name: Deploy configuration files
+  template:
+    src: "{{ item }}"
+    dest: "{{ zookeeper_config_dir }}/{{ item }}"
+  with_items:
+    - myid
+    - zoo.cfg
+    - log4j.properties
+  notify: Restart zookeeper
+
+- meta: flush_handlers
+
+- name: Start service
+  service:
+    name: zookeeper
+    state: started
+    enabled: yes
