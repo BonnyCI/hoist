@@ -38,6 +38,7 @@
     name: "{{ item }}"
     state: present
   with_items:
+    - libffi-dev
     - libssl-dev
     - python-dev
 

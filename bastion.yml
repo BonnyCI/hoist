@@ -3,7 +3,8 @@
   become: true
   roles:
     - common
-    - dd-agent
+    - role: dd-agent
+      when: secrets is defined
     - bastion
     - role: ansible-runner
       ansible_runner_job: system-ansible
