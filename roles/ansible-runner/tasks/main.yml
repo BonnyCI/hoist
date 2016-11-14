@@ -53,19 +53,19 @@
 
 - name: check secrets exist
   stat:
-    path: "{{ ansible_secrets_path }}"
-  register: ansible_secrets_path_stat
+    path: "{{ ansible_runner_secrets_path }}"
+  register: ansible_runner_secrets_path_stat
 
 - name: ensure secrets owner
   file:
     state: file
-    path: "{{ ansible_secrets_path }}"
+    path: "{{ ansible_runner_secrets_path }}"
     mode: 0400
     owner: root
     group: root
   when:
-    - ansible_secrets_path_stat.stat.exists
-    - ansible_secrets_path_stat.stat.isreg
+    - ansible_runner_secrets_path_stat.stat.exists
+    - ansible_runner_secrets_path_stat.stat.isreg
 
 - name: ensure runner can read file
   acl:
@@ -76,8 +76,8 @@
     permissions: r
     state: present
   when:
-    - ansible_secrets_path_stat.stat.exists
-    - ansible_secrets_path_stat.stat.isreg
+    - ansible_runner_secrets_path_stat.stat.exists
+    - ansible_runner_secrets_path_stat.stat.isreg
     - ansible_runner_user != 'root'
 
 - name: Add ansible-runner cron job
@@ -85,4 +85,4 @@
     name: "ansible-runner deploy {{ ansible_runner_job }}"
     minute: "{{ ansible_runner_minute | default(omit) }}"
     user: "{{ ansible_runner_user }}"
-    job: "/usr/local/bin/ansible-runner {{ ansible_runner_job }} -e @{{ ansible_secrets_path }}"
+    job: "/usr/local/bin/ansible-runner {{ ansible_runner_job }} -e @{{ ansible_runner_secrets_path }}"
