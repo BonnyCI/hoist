@@ -8,7 +8,7 @@
     - role: cron-ansible
       ansible_root: /opt/source/hoist
       ansible_playbook: bastion.yml
-      ansible_inventory: /etc/ansible/hosts
+      ansible_inventory: /opt/source/hoist/inventory/bastion-localhost
       ansible_runner_user: root
     - role: cron-cideploy
       ansible_playbook: install-ci.yml
