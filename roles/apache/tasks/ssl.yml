@@ -1,0 +1,27 @@
+---
+- name: enable ssl mods
+  file:
+    src: "/etc/apache2/mods-available/{{ item }}"
+    dest: "/etc/apache2/mods-enabled/{{ item }}"
+    state: link
+  with_items:
+    - ssl.conf
+    - ssl.load
+    - socache_shmcb.load
+  notify: restart apache
+
+- name: set stapling files
+  copy:
+    src: stapling.conf
+    dest: /etc/apache2/conf-available/stapling.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart apache
+
+- name: enable stapling conf
+  file:
+    src: "/etc/apache2/conf-available/stapling.conf"
+    dest: "/etc/apache2/conf-enabled/stapling.conf"
+    state: link
+  notify: restart apache

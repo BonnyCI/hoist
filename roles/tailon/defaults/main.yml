@@ -1,0 +1,23 @@
+---
+tailon_name: tailon
+tailon_virtualenv: /opt/tailon
+tailon_config_dir: /etc/tailon
+tailon_user: www-data
+tailon_group: www-data
+
+tailon_ip: 0.0.0.0
+tailon_port: 8080
+tailon_allow_transfers: true
+tailon_follow_names: false
+tailon_relative_root:
+tailon_tail_lines: 10
+tailon_wrap_lines: true
+
+tailon_commands:
+  - tail
+  - grep
+
+tailon_files:
+
+tailon_service_state: started
+tailon_service_enabled: yes

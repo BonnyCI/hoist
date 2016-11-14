@@ -1,2 +1,18 @@
 dependencies:
-  - ansible
+  - pip
+  - role: tailon
+    tailon_ip: 127.0.0.1
+    tailon_port: 8080
+    tailon_relative_root: /cron-logs/live/
+    tailon_files:
+      - "/var/www/html/cron-logs/**/*_current.log"
+  - role: apache
+    apache_vhosts:
+      - name: tailon
+        document_root: /var/www/html/
+        document_root_options: +FollowSymLinks
+        vhost_extra: |
+          AddType text/plain .log
+          Redirect permanent /cron-logs/live /cron-logs/live/
+          ProxyPass "/cron-logs/live/" http://localhost:{{ tailon_port }}/cron-logs/live/
+

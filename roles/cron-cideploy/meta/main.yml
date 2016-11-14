@@ -1,4 +1,0 @@
-dependencies:
-  - ansible
-  - role: ansible-runner
-    ansible_runner_config_env: cideploy

@@ -1,0 +1,42 @@
+---
+- name: remove default sites
+  file:
+    path: "/etc/apache2/sites-enabled/000-default.conf"
+    state: absent
+  notify: restart apache
+
+- name: disable apache sites
+  file:
+    path: "/etc/apache2/sites-enabled/{{ item.name }}.conf"
+    state: absent
+  with_items: "{{ apache_vhosts }}"
+  when: (item.delete | default(false)) or not (item.enabled | default(true))
+  notify: restart apache
+
+- name: remove apache sites
+  file:
+    path: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    state: absent
+  with_items: "{{ apache_vhosts }}"
+  when: item.delete | default(false)
+  notify: restart apache
+
+- name: create apache vhosts
+  template:
+    src: vhost.conf
+    dest: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ apache_vhosts }}"
+  when: not (item.delete | default(false))
+  notify: restart apache
+
+- name: enable apache sites
+  file:
+    src: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    dest: "/etc/apache2/sites-enabled/{{ item.name }}.conf"
+    state: link
+  with_items: "{{ apache_vhosts }}"
+  when: item.enabled | default(true) and not (item.delete | default(false))
+  notify: restart apache
