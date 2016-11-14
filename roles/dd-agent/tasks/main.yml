@@ -27,6 +27,14 @@
   notify:
     - restart dd-agent
 
+# This is required to call datadog_monitor with ansible and later to use the
+# datadog callback for more integration into ansible runs
+# within datadog.
+- name: install datadog pip
+  pip:
+    name: datadog
+    virtualenv: /opt/datadog
+
 - name: configure datadog
   template:
     src: etc/dd-agent/datadog.conf
@@ -35,6 +43,24 @@
     group: root
   notify:
     - restart dd-agent
+
+- name: create fragments dir for assembling config
+  file:
+    path: "/etc/dd-agent/frags/{{ item }}"
+    state: directory
+    owner: dd-agent
+    group: root
+  with_items: "{{ dd_agent.frags }}"
+
+- name: drop base fragments
+  copy:
+    dest: /etc/dd-agent/frags/{{ item }}/0{{ item }}
+    src: etc/dd-agent/frags/{{ item }}/0{{ item }}
+    owner: dd-agent
+    group: root
+  with_items: "{{ dd_agent.frags }}"
+  notify:
+    - assemble dd-agent config frags
 
 # Flush handlers to avoid a start + restart scenario
 - meta: flush_handlers
