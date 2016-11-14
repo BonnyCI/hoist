@@ -7,6 +7,10 @@ dependencies:
     tailon_files:
       - "/var/www/html/cron-logs/**/*_current.log"
   - role: apache
+    apache_mods_enabled:
+      - proxy.conf
+      - proxy.load
+      - proxy_http.load
     apache_vhosts:
       - name: tailon
         document_root: /var/www/html/
