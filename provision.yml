@@ -4,7 +4,7 @@
     - os_server:
         name: contrasjc-bastion
         flavor: m1.medium
-        image: 7a8169b8-96d4-48ab-a607-34f79dea4156 # Ubuntu 14.04
+        image: ubuntu-16.04-py27
         key_name: default
         security_groups: default
         network: internal
@@ -14,7 +14,7 @@
     - os_server:
         name: hdcltl-bastion
         flavor: 2cpus-4GBram-40GBdisk
-        image: 471cc7b4-648a-4008-921e-ccdc881efdec # Ubuntu 14.04
+        image: ubuntu-16.04-py27
         key_name: default
         security_groups: default
         network: ibmcloud_network
