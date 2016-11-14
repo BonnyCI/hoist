@@ -1,0 +1,47 @@
+---
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apache2
+    - apache2-utils
+
+- name: enable apache mods
+  file:
+    src: "/etc/apache2/mods-available/{{ item }}"
+    dest: "/etc/apache2/mods-enabled/{{ item }}"
+    state: link
+  with_items: "{{ apache_mods_enabled }}"
+  notify: restart apache
+
+- name: disable apache mods
+  file:
+    path: "/etc/apache2/mods-enabled/{{ item }}"
+    state: absent
+  with_items: "{{ apache_mods_disabled }}"
+  notify: restart apache
+
+- name: stub ports file
+  copy:
+    src: ports.conf
+    dest: /etc/apache2/ports.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart apache
+
+- name: set-up ssl if any vhosts require it
+  include: ssl.yml
+  when:  "{{ apache_vhosts | selectattr('ssl', 'defined') | map(attribute='ssl') | sum }}"
+
+- name: set-up apache vhosts
+  include: vhosts.yml
+
+- meta: flush_handlers
+
+- name: start apache
+  service:
+    name: apache2
+    state: started
+    enabled: yes

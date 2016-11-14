@@ -4,7 +4,6 @@
     state: installed
     update_cache: true
   with_items:
-    - apache2
     - python-dev
     - libssl-dev
     - python-virtualenv
@@ -15,33 +14,12 @@
     virtualenv: "{{ ansible_runner_virtualenv }}"
     name: ansible
 
-- name: Install config for viewing logs
-  copy:
-    src: etc/apache2/sites-enabled/cron-logs.conf
-    dest: /etc/apache2/sites-enabled/cron-logs.conf
-  notify: reload apache
-
-- name: Enable apache modules
-  apache2_module:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - mime_magic
-    - proxy_http
-  notify: restart apache
-
 - name: Install config file
   template:
     src: ansible-runner-config
     dest: /etc/default/{{ ansible_runner_job }}
     mode: 0600
     owner: "{{ ansible_runner_user }}"
-
-- name: Install tailon apache config
-  copy:
-    src: etc/apache2/conf-enabled/tailon.conf
-    dest: /etc/apache2/conf-enabled/tailon.conf
-  notify: reload apache
 
 - name: Install ansible-runner
   copy:
