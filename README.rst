@@ -31,6 +31,8 @@ To create a new bastion in a cloud for automating things follow these steps:
 
 2. Add new bastion to provision.yml, adding a tag for the new cloud.
 
+   Bastion nodes should be Ubuntu Xenial 16.04
+
 3. Run this to just provision the new one.
 
    $ ansible-playbook -i localhost, provision.yml -t new_cloud_tag
