@@ -80,7 +80,7 @@
     - ansible_secrets_path_stat.stat.isreg
     - ansible_runner_user != 'root'
 
-- name: Cron ci deploy
+- name: Add ansible-runner cron job
   cron:
     name: "ansible-runner deploy {{ ansible_runner_job }}"
     minute: "{{ ansible_runner_minute | default(omit) }}"
