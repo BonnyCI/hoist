@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Jamie Lennox
+  description: Install pip from pypa.
+  company: IBM
+
+  license: Apache
+
+  # this is all we're using at the moment.
+  platforms:
+    - name: Ubuntu
+      versions:
+        - all
