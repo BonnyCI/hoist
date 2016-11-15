@@ -1,0 +1,10 @@
+---
+language: python
+python: "2.7"
+
+install:
+  - pip install ansible
+  - ansible-galaxy install -r requirements.yml
+
+script:
+  - ansible-playbook -i herp, bastion.yml install-ci.yml provision.yml --syntax-check
