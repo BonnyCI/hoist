@@ -42,6 +42,13 @@
     dest: "/opt/source/{{ ansible_runner_job }}"
     update: true
 
+- name: Set source directory owner
+  file:
+    state: directory
+    path: "/opt/source/{{ ansible_runner_job }}"
+    recurse: yes
+    owner: "{{ ansible_runner_user }}"
+
 - name: Ensure cron log path
   file:
     state: directory
