@@ -13,6 +13,28 @@
     virtualenv: "{{ ansible_runner_virtualenv }}"
     name: ansible
 
+- name: Create callback plugins path
+  file:
+    path: "{{ ansible_runner_virtualenv }}/plugins/callback"
+    state: directory
+    owner: "{{ ansible_runner_user }}"
+
+- block:
+  - name: Install datadog callback plugin
+    get_url:
+      url: "{{ datadog_callback_url }}"
+      dest: "{{ ansible_runner_virtualenv }}/plugins/callback/datadog_callback.py"
+      owner: "{{ ansible_runner_user }}"
+
+  - name: Install datadog callback configuration
+    copy:
+      dest: "{{ ansible_runner_virtualenv }}/plugins/callback/datadog_callback.yml"
+      content: "api_key: {{ secrets.datadog.api_key }}"
+      owner: "{{ ansible_runner_user }}"
+  when: datadog_enabled | default(True) | bool
+  tags:
+    - datadog
+
 - name: Install config file
   template:
     src: ansible-runner-config

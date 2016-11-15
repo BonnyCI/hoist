@@ -1,3 +1,4 @@
 ansible_runner_user: root
 ansible_runner_secrets_path: /etc/secrets.yml
 ansible_runner_virtualenv: /opt/ansible
+datadog_callback_url: https://raw.githubusercontent.com/DataDog/ansible-datadog-callback/master/datadog_callback.py
