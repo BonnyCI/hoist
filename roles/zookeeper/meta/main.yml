@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Jamie Lennox
+  description: Install and configure zookeeper
+  company: IBM
+
+  license: Apache
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+
