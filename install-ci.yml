@@ -13,6 +13,9 @@
   tags: ['mysql']
   roles:
     - role: mysql
+    - role: dd-mysql
+      tags:
+        - monitoring
     - role: databases
 
 - name: Install zuul

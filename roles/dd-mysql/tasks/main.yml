@@ -1,0 +1,19 @@
+---
+- name: Check mysqld process
+  copy:
+    src: etc/dd-agent/frags/process/mysql
+    dest: /etc/dd-agent/frags/process/mysql
+  notify:
+    - assemble dd-agent config frags
+
+- name: create monitor for mysqld process check
+  datadog_monitor:
+    api_key: "{{ secrets.datadog.api_key }}"
+    app_key: "{{ secrets.datadog.ansible_app_key }}"
+    name: mysqld process from ansible
+    state: present
+    type: "service check"
+    message: "mysql is down"
+    query: '"process.up".over("host:{{ ansible_hostname }}","process:mysql").last(3).count_by_status()'
+  vars:
+    ansible_python_interpreter: /opt/datadog/bin/python
