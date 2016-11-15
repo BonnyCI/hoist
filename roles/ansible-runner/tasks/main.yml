@@ -68,7 +68,7 @@
 
 - name: ensure runner can read file
   acl:
-    name: "{{ ansible_secrets_path }}"
+    name: "{{ ansible_runner_secrets_path }}"
     entity: "{{ ansible_runner_user }}"
     etype: user
     follow: no
