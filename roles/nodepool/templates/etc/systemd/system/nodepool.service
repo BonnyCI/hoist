@@ -1,0 +1,13 @@
+[Unit]
+Description={{ item }} Service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=nodepool
+Group=nodepool
+EnvironmentFile=-/etc/default/{{ item }}
+ExecStart=/bin/sh -c "${PREFIX}/bin/{{ item }} -d ${ARGS}"
+
+[Install]
+WantedBy=multi-user.target
