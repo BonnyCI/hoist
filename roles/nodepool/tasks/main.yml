@@ -1,5 +1,4 @@
 - name: install required packages
-  become: yes
   apt:
     name: "{{ item }}"
   with_items:
@@ -8,9 +7,22 @@
     - curl
     - uuid-runtime
     - parted
+    - libssl-dev
+    - python-dev
+    - libffi-dev
+
+- name: Create group.
+  group:
+    name: nodepool
+
+- name: Create user.
+  user:
+    createhome: yes
+    group: nodepool
+    home: /var/lib/nodepool
+    name: nodepool
 
 - name: install nodepool sudoers file (for DIB builds)
-  become: yes
   copy:
     dest: /etc/sudoers.d/99_nodepool_suoders
     mode: 0400
@@ -18,7 +30,6 @@
     content: "nodepool ALL=(ALL) NOPASSWD:ALL"
 
 - name: ensure image build directory
-  become: yes
   file:
     path: /opt/nodepool/images
     state: directory
@@ -26,7 +37,6 @@
     group: nodepool
 
 - name: create ~/.openstack
-  become: yes
   file:
     path: /var/lib/nodepool/.config/openstack
     state: directory
@@ -34,10 +44,90 @@
     group: nodepool
 
 - name: create clouds.yaml
-  become: yes
   copy:
     dest: /var/lib/nodepool/.config/openstack/clouds.yaml
     content: "{{ secrets.nodepool.providers | to_nice_yaml }}"
     owner: nodepool
     group: nodepool
     mode: 0400
+
+- name: Git clone nodepool
+  git:
+    dest: "{{ nodepool_source_dir }}"
+    repo: https://git.openstack.org/openstack-infra/nodepool
+    version: master
+
+- name: Install nodepool
+  pip:
+    extra_args: -U
+    name: "{{ nodepool_source_dir }}"
+    virtualenv: "{{ nodepool_venv_dir }}"
+  notify:
+    - Restart nodepool
+
+- name: Create nodepool dirs
+  file:
+    group: nodepool
+    owner: nodepool
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - /etc/nodepool
+    - /etc/nodepool/elements
+    - /etc/nodepool/scripts
+    - /var/log/nodepool
+
+- name: Write config
+  template:
+    src: "etc/nodepool/{{ item }}"
+    dest: "/etc/nodepool/{{ item }}"
+    owner: root
+    group: nodepool
+    mode: 0640
+  with_items:
+    - nodepool.yaml
+    - secure.conf
+  notify:
+    - Restart nodepool builder
+
+- name: Install init config
+  template:
+    src: etc/default/nodepool
+    dest: "/etc/default/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - nodepool-builder
+    - nodepool-deleter
+    - nodepool-launcher
+    - nodepoold
+
+- name: Install systemd unit file
+  template:
+    src: "etc/systemd/system/nodepool.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - nodepool-builder
+    - nodepool-deleter
+    - nodepool-launcher
+    - nodepoold
+  notify:
+    - Reload systemd units
+
+- meta: flush_handlers
+
+- name: Enable and start systemd service
+  service:
+    enabled: yes
+    state: running
+    service: "{{ item }}"
+  with_items:
+    - nodepool-builder
+    - nodepool-deleter
+    - nodepool-launcher
+    - nodepoold

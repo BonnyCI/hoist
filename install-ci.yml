@@ -26,6 +26,7 @@
 
 - name: Install nodepool
   hosts: nodepool.portbleu.com
+  become: yes
   tags: ['nodepool']
   roles:
     - role: nodepool
