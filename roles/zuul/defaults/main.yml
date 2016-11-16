@@ -1,0 +1,4 @@
+zuul_git_repo_url: https://git.openstack.org/openstack-infra/zuul
+zuul_git_branch: master
+zuul_venv_dir: /opt/venvs/zuul
+zuul_allow_restart_services: no

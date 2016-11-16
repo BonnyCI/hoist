@@ -1,3 +1,0 @@
-- src: https://git.openstack.org/openstack/ansible-role-zuul
-  scm: git
-  version: master

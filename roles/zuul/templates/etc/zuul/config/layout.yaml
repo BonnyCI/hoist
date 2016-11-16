@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+pipelines: []
+
+jobs: []
+
+projects: []
