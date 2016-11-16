@@ -1,0 +1,4 @@
+{% if item.value.init_config is not defined %}
+init_config:
+{% endif %}
+{{ item.value | to_nice_yaml(indent=2) }}

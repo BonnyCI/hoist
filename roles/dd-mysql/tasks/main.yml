@@ -1,11 +1,4 @@
 ---
-- name: Check mysqld process
-  copy:
-    src: etc/dd-agent/frags/process/mysql
-    dest: /etc/dd-agent/frags/process/mysql
-  notify:
-    - assemble dd-agent config frags
-
 - name: create monitor for mysqld process check
   datadog_monitor:
     api_key: "{{ secrets.datadog.api_key }}"

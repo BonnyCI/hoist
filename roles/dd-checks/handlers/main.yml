@@ -1,0 +1,13 @@
+---
+- name: assemble dd-agent config frags
+  assemble:
+    dest: "{{ datadog_check_dir }}/{{ item.type }}.yaml"
+    src: "{{ datadog_frag_dir }}/{{ item.type }}"
+    remote_src: yes
+  with_items: "{{ datadog_fragments | default([]) }}"
+  notify: restart dd-agent
+
+- name: restart dd-agent
+  service:
+    name: datadog-agent
+    state: restarted

@@ -1,0 +1,1 @@
+{{ fragment.init_config | to_nice_yaml(indent=2) | indent(2, indentfirst=true) }}

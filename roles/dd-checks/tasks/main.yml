@@ -1,0 +1,13 @@
+---
+- name: Setup datadog check
+  template:
+    src: check.yaml
+    dest: "{{ datadog_check_dir }}/{{ item.key }}.yaml"
+  with_dict: "{{ datadog_checks }}"
+  notify: restart dd-agent
+
+- name: Setup datadog fragment
+  include: fragment.yml
+  with_items: "{{ datadog_fragments }}"
+  loop_control:
+    loop_var: fragment

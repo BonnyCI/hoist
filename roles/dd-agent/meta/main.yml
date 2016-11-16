@@ -1,3 +1,5 @@
 ---
 dependencies:
-  - role: dd-common
+  - role: dd-checks
+    datadog_checks: {}
+    datadog_fragments: []

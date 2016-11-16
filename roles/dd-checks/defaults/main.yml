@@ -1,0 +1,5 @@
+---
+datadog_config_dir: /etc/dd-agent
+
+datadog_checks: {}
+datadog_fragments: []
