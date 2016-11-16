@@ -1,0 +1,8 @@
+---
+dependencies:
+  - role: dd-checks
+    datadog_checks:
+      zk:
+        instances:
+          - host: "{{ dd_zookeeper_host }}"
+            port: "{{ dd_zookeeper_port }}"
