@@ -27,6 +27,7 @@
     - role: dd-gearman
     - role: zuul
       zuul_gearman_server_start: false
+    - role: dd-zuul
 
 - name: Install nodepool
   hosts: nodepool.portbleu.com

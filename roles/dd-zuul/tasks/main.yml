@@ -1,0 +1,5 @@
+- name: install zuul check
+  copy:
+    src: zuul_server.py
+    dest: "{{ datadog_file_dir }}/zuul_server.py"
+  notify: restart dd-agent

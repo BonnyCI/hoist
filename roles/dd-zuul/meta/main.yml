@@ -1,0 +1,8 @@
+---
+dependencies:
+  - role: dd-checks
+    datadog_checks:
+      zuul_server:
+        instances:
+          - status_url: "{{ dd_zuul_status_url }}"
+
