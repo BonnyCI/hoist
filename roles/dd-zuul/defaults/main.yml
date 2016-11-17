@@ -1,0 +1,2 @@
+---
+dd_zuul_status_url: http://localhost:8001/status.json

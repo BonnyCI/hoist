@@ -1,3 +1,5 @@
 ---
+# we need to make the naming here more consistent
 datadog_check_dir: "{{ datadog_config_dir }}/conf.d"
+datadog_file_dir: "{{ datadog_config_dir }}/checks.d"
 datadog_frag_dir: "{{ datadog_config_dir }}/frag.d"
