@@ -13,5 +13,6 @@ bastion_users:
   - doc
   - cideploy
   - jkeating
+  - jesusaur
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users: []
