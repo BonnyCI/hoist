@@ -164,7 +164,6 @@ def get_host_groups_from_cloud(inventory):
                     append_hostvars(
                         hostvars, groups, server['id'], server,
                         namegroup=True)
-    groups['_meta'] = {'hostvars': hostvars}
     return groups
 
 
