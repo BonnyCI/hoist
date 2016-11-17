@@ -1,2 +1,3 @@
 nodepool_source_dir: /opt/source/nodepool
 nodepool_venv_dir: /opt/venvs/nodepool
+nodepool_mysql_host: localhost
