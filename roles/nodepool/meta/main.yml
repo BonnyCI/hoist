@@ -1,1 +1,7 @@
 ---
+dependencies:
+  - role: apache
+    apache_vhosts:
+      - name: nodepool
+        document_root: /var/log/nodepool/
+        document_root_options: +FollowSymLinks
