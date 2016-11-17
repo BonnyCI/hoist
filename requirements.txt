@@ -1,1 +1,4 @@
+# for datadog callback
 datadog
+# for ansible vault
+cryptography

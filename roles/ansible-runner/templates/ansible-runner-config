@@ -1,3 +1,6 @@
 ANSIBLE_PLAYBOOK={{ ansible_playbook }}
 ANSIBLE_INVENTORY={{ ansible_inventory }}
 ANSIBLE_SSH_USER={{ ansible_remote_user | default('') }}
+{% if ansible_runner_vault_password_file is defined %}
+ANSIBLE_VAULT_PASSWORD_FILE={{ ansible_runner_vault_password_file }}
+{% endif %}
