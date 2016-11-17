@@ -1,1 +1,2 @@
 nodepool_mysql_host: 192.168.3.164
+ansible_runner_vault_password_file: /etc/vault_pass.txt
