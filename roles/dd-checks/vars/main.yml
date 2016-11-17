@@ -1,0 +1,3 @@
+---
+datadog_check_dir: "{{ datadog_config_dir }}/conf.d"
+datadog_frag_dir: "{{ datadog_config_dir }}/frag.d"

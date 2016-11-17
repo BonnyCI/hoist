@@ -35,32 +35,23 @@
     name: datadog
     virtualenv: /opt/datadog
 
+- name: Ensure config directories
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items:
+    - "{{ datadog_config_dir }}"
+    - "{{ datadog_check_dir }}"
+    - "{{ datadog_frag_dir }}"
+
 - name: configure datadog
   template:
     src: etc/dd-agent/datadog.conf
-    dest: /etc/dd-agent/datadog.conf
+    dest: "{{ datadog_config_dir }}/datadog.conf"
     owner: dd-agent
     group: root
   notify:
     - restart dd-agent
-
-- name: create fragments dir for assembling config
-  file:
-    path: "/etc/dd-agent/frags/{{ item }}"
-    state: directory
-    owner: dd-agent
-    group: root
-  with_items: "{{ dd_agent.frags }}"
-
-- name: drop base fragments
-  copy:
-    dest: /etc/dd-agent/frags/{{ item }}/0{{ item }}
-    src: etc/dd-agent/frags/{{ item }}/0{{ item }}
-    owner: dd-agent
-    group: root
-  with_items: "{{ dd_agent.frags }}"
-  notify:
-    - assemble dd-agent config frags
 
 # Flush handlers to avoid a start + restart scenario
 - meta: flush_handlers

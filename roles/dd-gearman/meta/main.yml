@@ -1,0 +1,8 @@
+---
+dependencies:
+  - role: dd-checks
+    datadog_checks:
+      gearmand:
+        instances:
+          - server: "{{ dd_gearman_server }}"
+            port: "{{ dd_gearman_port }}"

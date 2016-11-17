@@ -1,0 +1,2 @@
+dd_zookeeper_host: localhost
+dd_zookeeper_port: 2181

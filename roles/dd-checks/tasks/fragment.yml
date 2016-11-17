@@ -1,0 +1,46 @@
+---
+- name: Ensure fragment directories
+  file:
+    state: directory
+    path: "{{ datadog_frag_dir }}/{{ fragment.type }}"
+
+# Create a 10-init-config and 30-instances that will ensure that assemble puts
+# together the components correctly.
+- name: Ensure base fragment layout
+  copy:
+    dest: "{{ datadog_frag_dir }}/{{ fragment.type }}/{{ item.key }}"
+    content: "{{ item.value }}\n"
+  with_dict:
+    "10-init_config.yaml": "init_config:"
+    "30-instances.yaml": "instances:"
+  notify: assemble dd-agent config frags
+
+# Create a 20-name file that contains the init_config configuration
+- name: Install fragment init_config
+  template:
+    dest: "{{ datadog_frag_dir }}/{{ fragment.type }}/20-{{ fragment.name }}.yaml"
+    src: 20-init_config.yaml
+  when: fragment.init_config is defined
+  notify: assemble dd-agent config frags
+
+- name: Remove old init_config
+  file:
+    path: "{{ datadog_frag_dir }}/{{ fragment.type }}/20-{{ fragment.name }}.yaml"
+    state: absent
+  when: fragment.init_config is not defined
+  notify: assemble dd-agent config frags
+
+# Create a 40-name file that contains the instances configuration
+- name: Install fragment instances
+  template:
+    dest: "{{ datadog_frag_dir }}/{{ fragment.type }}/40-{{ fragment.name }}.yaml"
+    src: 40-instances.yaml
+  when: fragment.instances is defined
+  notify: assemble dd-agent config frags
+
+- name: Remove old instances
+  file:
+    path: "{{ datadog_frag_dir }}/{{ fragment.type }}/40-{{ fragment.name }}.yaml"
+    state: absent
+  when: fragment.instances is not defined
+  notify: assemble dd-agent config frags

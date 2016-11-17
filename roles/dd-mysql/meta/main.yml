@@ -1,3 +1,9 @@
 ---
 dependencies:
-  - role: dd-common
+  - role: dd-checks
+    datadog_fragments:
+      - type: process
+        name: mysql
+        instances:
+          - name: mysql
+            search_string: ['mysqld']
