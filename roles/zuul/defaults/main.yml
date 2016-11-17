@@ -2,3 +2,10 @@ zuul_git_repo_url: https://git.openstack.org/openstack-infra/zuul
 zuul_git_branch: master
 zuul_venv_dir: /opt/venvs/zuul
 zuul_allow_restart_services: no
+
+zuul_gearman_server: 127.0.0.1
+zuul_gearman_port: 4730
+
+zuul_gearman_server_start: true
+zuul_gearman_server_log_config: /etc/zuul/gearman-logging.conf
+zuul_gearman_server_listen_address: 127.0.0.1
