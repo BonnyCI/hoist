@@ -1,0 +1,5 @@
+clouds_yaml_path: /etc/openstack/clouds.yaml
+clouds_yaml_owner: root
+clouds_yaml_group: "{{ clouds_yaml_owner }}"
+clouds_yaml_mode: 0400
+clouds: []

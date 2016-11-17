@@ -1,0 +1,6 @@
+dependencies:
+  - role: os-clouds
+    clouds_yaml_group: cideploy
+    clouds_yaml_mode: 0640
+    clouds:
+      - contra-sjc
