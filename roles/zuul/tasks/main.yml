@@ -1,0 +1,122 @@
+---
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - build-essential
+    - git
+    - python-dev
+
+- name: Create zuul user
+  user:
+    name: zuul
+    home: /var/lib/zuul
+    system: yes
+    state: present
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: zuul
+  items:
+    - /etc/zuul/config
+    - /var/lib/zuul
+    - /var/log/zuul
+
+- name: Create /opt/{source, venvs}
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  with_items:
+    - /opt/source
+    - "{{ zuul_venv_dir }}"
+
+- name: Checkout zuul
+  git:
+    dest: /opt/source/zuul
+    repo: "{{ zuul_git_repo_url }}"
+    version: "{{ zuul_git_branch }}"
+  register: zuul_git
+
+- name: Install zuul
+  pip:
+    extra_args: -U
+    name: /opt/source/zuul
+    virtualenv: "{{ zuul_venv_dir }}"
+  when: zuul_git.changed
+  notify: Restart zuul
+
+- name: Install missing pip dependencies
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version|default(omit) }}"
+    virtualenv: "{{ zuul_venv_dir }}"
+  with_items:
+    - { name: 'jenkins-job-builder', version: '1.6.1' }
+    - { name: 'pyzmq' }
+
+- name: Install zuul config
+  template:
+    src: etc/zuul/zuul.conf
+    dest: /etc/zuul/zuul.conf
+    owner: zuul
+  notify: Restart zuul
+
+- name: Install logging config
+  template:
+    src: "etc/zuul/logging.conf"
+    dest: "/etc/zuul/{{ item }}-logging.conf"
+    owner: zuul
+  with_items:
+    - gearman
+    - launcher
+    - merger
+    - server
+  notify: Restart zuul
+
+- name: Install layout.yaml
+  template:
+    src: etc/zuul/config/layout.yaml
+    dest: /etc/zuul/config/layout.yaml
+    owner: zuul
+  notify: Restart zuul
+
+- name: Install service environment configs
+  template:
+    src: etc/default/zuul
+    dest: /etc/default/{{ item }}
+  with_items:
+    - zuul-launcher
+    - zuul-merger
+    - zuul-server
+  notify: Restart zuul
+
+- name: Install systemd unit files
+  template:
+    src: etc/systemd/system/zuul.service
+    dest: /etc/systemd/system/{{ item }}.service
+  with_items:
+    - zuul-launcher
+    - zuul-merger
+    - zuul-server
+  notify:
+    - Reload systemd units
+    - Restart zuul
+
+- meta: flush_handlers
+
+- name: Enable zuul services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  items:
+    - zuul-launcher
+    - zuul-merger
+    - zuul-server

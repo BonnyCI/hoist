@@ -1,0 +1,13 @@
+---
+- name: Reload systemd units
+  command: systemctl daemon-reload
+
+- name: Restart zuul
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - zuul-launcher
+    - zuul-merger
+    - zuul-server
+  when: zuul_allow_restart_services | bool

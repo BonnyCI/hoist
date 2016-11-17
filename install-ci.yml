@@ -20,6 +20,7 @@
 
 - name: Install zuul
   hosts: zuul.portbleu.com
+  become: yes
   tags: ['zuul']
   roles:
     - role: zuul
