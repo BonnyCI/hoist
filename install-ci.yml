@@ -6,6 +6,8 @@
   roles:
     - role: common
     - role: dd-agent
+      tags:
+        - monitoring
 
 - name: Install mysql
   hosts: zuul.portbleu.com
@@ -25,9 +27,13 @@
   roles:
     - role: gearman
     - role: dd-gearman
+      tags:
+        - monitoring
     - role: zuul
       zuul_gearman_server_start: false
     - role: dd-zuul
+      tags:
+        - monitoring
 
 - name: Install nodepool
   hosts: nodepool.portbleu.com

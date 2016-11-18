@@ -4,6 +4,8 @@
   roles:
     - common
     - role: dd-agent
+      tags:
+        - monitoring
       when: secrets is defined
     - bastion
     - role: ansible-runner
