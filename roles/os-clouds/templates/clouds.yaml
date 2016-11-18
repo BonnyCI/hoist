@@ -1,0 +1,5 @@
+clouds:
+{% for cloud in clouds %}
+  {{ cloud }}:
+    {{ secrets.clouds[cloud] | to_nice_yaml(indent=2) | indent(4) }}
+{% endfor %}
