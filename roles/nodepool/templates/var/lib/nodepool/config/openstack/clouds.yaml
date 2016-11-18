@@ -1,0 +1,5 @@
+clouds:
+{% for provider in nodepool_providers %}
+  {{ provider.cloud }}:
+    {{ secrets.clouds[provider.cloud] | to_nice_yaml(indent=2) | indent(4) }}
+{% endfor %}

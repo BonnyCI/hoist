@@ -5,7 +5,3 @@ dependencies:
       - name: nodepool
         document_root: /var/log/nodepool/
         document_root_options: +FollowSymLinks
-  - role: os-clouds
-    clouds_yaml_owner: nodepool
-    clouds_yaml_path: /var/lib/nodepool/.config/openstack/clouds.yaml
-    clouds: "{{ nodepool_providers }}"

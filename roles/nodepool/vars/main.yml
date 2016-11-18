@@ -1,2 +1,0 @@
-nodepool_file_nodepool_yaml_src: roles/nodepool/templates/etc/nodepool/nodepool.yaml.j2
-nodepool_file_secure_conf_src: roles/nodepool/templates/etc/nodepool/secure.conf.j2

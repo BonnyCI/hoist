@@ -1,8 +1,54 @@
+---
 nodepool_source_dir: /opt/source/nodepool
 nodepool_venv_dir: /opt/venvs/nodepool
 nodepool_mysql_host: localhost
-nodepool_providers: []
 
 nodepool_statsd_enable: no
 nodepool_statsd_host: 127.0.0.1
 nodepool_statsd_port: 8125
+
+nodepool_gearman_servers:
+  - host: 127.0.0.1
+    port: 4730
+
+nodepool_diskimages:
+  - name: ubuntu-trusty
+    elements:
+      - ubuntu-minimal
+      - vm
+      - simple-init
+      - growroot
+    release: trusty
+  - name: ubuntu-xenial
+    elements:
+      - ubuntu-minimal
+      - vm
+      - simple-init
+      - growroot
+    release: xenial
+
+nodepool_labels:
+  - name: ubuntu-trusty
+    image: ubuntu-trusty
+    min-ready: 1
+    providers:
+      - name: cicloud
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud
+
+nodepool_providers:
+  - name: cicloud
+    cloud: contra-sjc
+    max-servers: 10
+    images:
+      - name: ubuntu-trusty
+        min-ram: 2048
+        diskimage: ubuntu-trusty
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa

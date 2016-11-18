@@ -43,5 +43,3 @@
   roles:
     - role: nodepool
       nodepool_statsd_enable: yes
-      nodepool_providers:
-        - cicloud
