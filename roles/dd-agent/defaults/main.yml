@@ -1,1 +1,3 @@
 ---
+datadog_use_dogstatsd: yes
+datadog_dogstatsd_port: 8125
