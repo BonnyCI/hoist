@@ -1,8 +1,10 @@
 # {{ ansible_managed }}
 
-PREFIX={{ nodepool_venv_dir }}
-
 {% if nodepool_statsd_enable %}
 STATSD_HOST={{ nodepool_statsd_host }}
 STATSD_PORT={{ nodepool_statsd_port }}
 {% endif %}
+
+PREFIX={{ nodepool_venv_dir }}
+VIRTUAL_ENV={{ nodepool_venv_dir }}
+PATH={{ nodepool_venv_dir }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
