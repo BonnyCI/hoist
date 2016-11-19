@@ -1,12 +1,8 @@
 ---
-- name: create monitor for mysqld process check
-  datadog_monitor:
-    api_key: "{{ secrets.datadog.api_key }}"
-    app_key: "{{ secrets.datadog.ansible_app_key }}"
-    name: mysqld process from ansible
+- name: datadog mysql user
+  mysql_user:
+    name: "{{ dd_mysql_user }}"
+    host: localhost
+    password: "{{ dd_mysql_password }}"
+    priv: "*.*:REPLICATION CLIENT,PROCESS/performance_schema.*:SELECT"
     state: present
-    type: "service check"
-    message: "mysql is down"
-    query: '"process.up".over("host:{{ ansible_hostname }}","process:mysql").last(3).count_by_status()'
-  vars:
-    ansible_python_interpreter: /opt/datadog/bin/python
