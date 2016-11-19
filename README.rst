@@ -29,11 +29,11 @@ To create a new bastion in a cloud for automating things follow these steps:
 
    Bastion nodes should be Ubuntu Xenial 16.04
 
-3. Run this to just provision the new one.
+3. Run this to just provision the new one::
 
    $ ansible-playbook -i localhost, provision.yml -t new_cloud_tag
 
-4. SSH into new cloud instance and create a github deploy key:
+4. SSH into new cloud instance and create a github deploy key::
 
    $ ssh-keygen -t rsa -b 4096
 
@@ -41,7 +41,7 @@ To create a new bastion in a cloud for automating things follow these steps:
 
 6. Add the new bastion host to inventory/bastions
 
-7. Run bastion.yml playbook:
+7. Run bastion.yml playbook::
 
    $ ansible-playbook -i inventory/bastions bastion.yml
 
