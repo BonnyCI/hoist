@@ -61,6 +61,14 @@
     - { name: 'jenkins-job-builder', version: '1.6.1' }
     - { name: 'pyzmq' }
 
+- name: Install statsd
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ zuul_venv_dir }}"
+  with_items:
+    - statsd
+  when: zuul_statsd_enable
+
 - name: Install zuul config
   template:
     src: etc/zuul/zuul.conf

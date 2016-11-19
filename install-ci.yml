@@ -31,6 +31,7 @@
         - monitoring
     - role: zuul
       zuul_gearman_server_start: false
+      zuul_statsd_enable: yes
     - role: dd-zuul
       tags:
         - monitoring
