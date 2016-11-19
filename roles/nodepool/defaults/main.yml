@@ -1,7 +1,13 @@
 ---
 nodepool_source_dir: /opt/source/nodepool
 nodepool_venv_dir: /opt/venvs/nodepool
+
 nodepool_mysql_host: localhost
+nodepool_mysql_user: nodepool
+nodepool_mysql_password: n0Dep001
+nodepool_mysql_db: nodepool
+
+nodepool_dburi: "mysql+pymysql://{{ nodepool_mysql_user }}:{{ nodepool_mysql_password }}@{{ nodepool_mysql_host }}/{{ nodepool_mysql_db }}"
 
 nodepool_statsd_enable: no
 nodepool_statsd_host: 127.0.0.1
