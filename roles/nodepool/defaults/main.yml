@@ -2,3 +2,7 @@ nodepool_source_dir: /opt/source/nodepool
 nodepool_venv_dir: /opt/venvs/nodepool
 nodepool_mysql_host: localhost
 nodepool_providers: []
+
+nodepool_statsd_enable: no
+nodepool_statsd_host: 127.0.0.1
+nodepool_statsd_port: 8125

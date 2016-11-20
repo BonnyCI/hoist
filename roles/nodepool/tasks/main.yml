@@ -50,6 +50,14 @@
   notify:
     - Restart nodepool
 
+- name: Install statsd
+  pip:
+    name: "{{ item }}"
+    virtualenv: "{{ nodepool_venv_dir }}"
+  with_items:
+    - statsd
+  when: nodepool_statsd_enable
+
 - name: Create nodepool dirs
   file:
     group: nodepool
