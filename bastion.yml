@@ -17,7 +17,7 @@
       ansible_runner_minute: "*/15"
     - role: ansible-runner
       ansible_playbook: install-ci.yml
-      ansible_inventory: /opt/source/cideploy/inventory/openstack.py
+      ansible_inventory: /opt/source/cideploy/inventory/ci
       ansible_runner_job: cideploy
       ansible_runner_user: cideploy
       ansible_remote_user: ubuntu
