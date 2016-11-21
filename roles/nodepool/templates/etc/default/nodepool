@@ -1,1 +1,8 @@
+# {{ ansible_managed }}
+
 PREFIX={{ nodepool_venv_dir }}
+
+{% if nodepool_statsd_enable %}
+STATSD_HOST={{ nodepool_statsd_host }}
+STATSD_PORT={{ nodepool_statsd_port }}
+{% endif %}
