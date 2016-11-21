@@ -1,9 +1,18 @@
 ---
 dependencies:
   - role: dd-checks
-    datadog_fragments:
-      - type: process
-        name: mysql
+    datadog_checks:
+      mysql:
         instances:
-          - name: mysql
-            search_string: ['mysqld']
+          - server: localhost
+            user: "{{ dd_mysql_user }}"
+            pass: "{{ dd_mysql_password }}"
+
+            options:
+              replication: "{{ dd_mysql_replication }}"
+              galera_cluster: "{{ dd_mysql_galera_cluster }}"
+              extra_status_metrics: "{{ dd_mysql_extra_status_metrics }}"
+              extra_innodb_metrics: "{{ dd_mysql_extra_innodb_metrics }}"
+              extra_performance_metrics: "{{ dd_mysql_extra_performance_metrics }}"
+              schema_size_metrics: "{{ dd_mysql_schema_size_metrics }}"
+              disable_innodb_metrics: "{{ dd_mysql_disable_innodb_metrics }}"
