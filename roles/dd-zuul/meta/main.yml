@@ -1,6 +1,20 @@
 ---
 dependencies:
   - role: dd-checks
+
+    datadog_fragments:
+      - type: process
+        name: zuul_launcher
+        instances:
+          - name: zuul_launcher
+            search_string: ['zuul-launcher']
+
+      - type: process
+        name: zuul_merger
+        instances:
+          - name: zuul_merger
+            search_string: ['zuul-merger']
+
     datadog_checks:
       zuul_server:
         instances:
