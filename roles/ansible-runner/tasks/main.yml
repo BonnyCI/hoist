@@ -95,7 +95,18 @@
     - ansible_runner_secrets_path_stat.stat.exists
     - ansible_runner_secrets_path_stat.stat.isreg
 
-- name: ensure runner can read file
+- name: ensure secrets base acl
+  acl:
+    name: "{{ ansible_runner_secrets_path }}"
+    etype: mask
+    permissions: r
+    follow: no
+    state: present
+  when:
+    - ansible_runner_secrets_path_stat.stat.exists
+    - ansible_runner_secrets_path_stat.stat.isreg
+
+- name: ensure runner can read secrets
   acl:
     name: "{{ ansible_runner_secrets_path }}"
     entity: "{{ ansible_runner_user }}"
@@ -114,7 +125,7 @@
       path: "{{ ansible_runner_vault_password_file }}"
     register: ansible_runner_vault_password_file_path_stat
 
-  - name: ensure secrets owner
+  - name: ensure vault password owner
     file:
       state: file
       path: "{{ ansible_runner_vault_password_file }}"
@@ -125,7 +136,18 @@
       - ansible_runner_vault_password_file_path_stat.stat.exists
       - ansible_runner_vault_password_file_path_stat.stat.isreg
 
-  - name: ensure runner can read file
+  - name: ensure vault password base acl
+    acl:
+      name: "{{ ansible_runner_vault_password_file }}"
+      etype: mask
+      permissions: r
+      follow: no
+      state: present
+    when:
+      - ansible_runner_vault_password_file_path_stat.stat.exists
+      - ansible_runner_vault_password_file_path_stat.stat.isreg
+
+  - name: ensure runner can read vault password
     acl:
       name: "{{ ansible_runner_vault_password_file }}"
       entity: "{{ ansible_runner_user }}"
