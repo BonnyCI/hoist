@@ -1,2 +1,16 @@
-nodepool_mysql_host: 192.168.3.164
 ansible_runner_vault_password_file: /etc/vault_pass.txt
+
+nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
+nodepool_gearman_servers:
+  - host: zuul.bonnyci-internal.portbleu.com
+    port: 4730
+
+zuul_gearman_server_start: false
+zuul_statsd_enable: yes
+zuul_connections:
+  portbleu:
+    driver: gerrit
+    port: 29418
+    server: review.portbleu.com
+    sshkey: /var/lib/zuul/.ssh/id_rsa
+    user: bonnyci
