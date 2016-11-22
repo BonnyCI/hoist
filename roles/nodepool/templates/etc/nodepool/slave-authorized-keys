@@ -1,0 +1,2 @@
+{{ secrets.ssh_keys.nodepool.public }}
+{{ secrets.ssh_keys.zuul.public }}

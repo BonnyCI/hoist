@@ -9,9 +9,15 @@
     - python-dev
     - libssl-dev
 
+- name: Create the zuul group
+  group:
+    name: zuul
+    state: present
+
 - name: Create zuul user
   user:
     name: zuul
+    group: zuul
     home: /var/lib/zuul
     system: yes
     state: present
@@ -22,10 +28,35 @@
     state: directory
     mode: 0755
     owner: zuul
+    group: zuul
   items:
     - /etc/zuul/config
-    - /var/lib/zuul
     - /var/log/zuul
+
+- name: Create zuul's ~/.ssh
+  file:
+  file:
+    path: /var/lib/zuul/.ssh/
+    state: directory
+    owner: zuul
+    group: zuul
+    mode: 0700
+
+- name: Install zuul private ssh key
+  copy:
+    dest: /var/lib/zuul/.ssh/id_rsa
+    content: "{{ secrets.ssh_keys.zuul.private }}"
+    owner: zuul
+    group: zuul
+    mode: 0600
+
+- name: Install zuul public ssh key
+  copy:
+    dest: /var/lib/zuul/.ssh/id_rsa.pub
+    content: "{{ secrets.ssh_keys.zuul.public }}"
+    owner: zuul
+    group: zuul
+    mode: 0644
 
 - name: Create /opt/{source, venvs}
   file:

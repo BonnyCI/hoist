@@ -30,7 +30,7 @@ nodepool_diskimages:
     release: xenial
     env-vars:
       DIB_DEV_USER_USERNAME: bonnyci
-      DIB_DEV_USER_AUTHORIZED_KEYS: /var/lib/nodepool/.ssh/id_rsa.pub
+      DIB_DEV_USER_AUTHORIZED_KEYS: /etc/nodepool/slave-authorized-keys
 
 nodepool_labels:
   - name: ubuntu-xenial

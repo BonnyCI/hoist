@@ -1,29 +1,73 @@
 - name: Add sudo group
-  group: name=sudo
+  group:
+    name: sudo
   when: "{{ bastion_sudo_users }}"
 
 - name: Ensure /etc/sudoers.d/ is included in /etc/sudoers
-  lineinfile: dest=/etc/sudoers line='#includedir /etc/sudoers.d' state=present validate='visudo -cf %s'
+  lineinfile:
+    dest: /etc/sudoers
+    line: '#includedir /etc/sudoers.d'
+    state: present
+    validate: 'visudo -cf %s'
   when: "{{ bastion_users }}"
 
 - name: Ensure sudo group has NOPASSWD sudo privileges
-  lineinfile: "dest=/etc/sudoers regexp='^%sudo' line='%sudo  ALL=(ALL:ALL) NOPASSWD:ALL' validate='visudo -cf %s'"
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: '^%sudo'
+    line: '%sudo  ALL=(ALL:ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
   when: "{{ bastion_sudo_users }}"
 
 - name: Add bastion_sudo_users to sudo group
-  user: name={{ item }} groups=sudo shell=/bin/bash
+  user:
+    name: "{{ item }}"
+    groups: sudo
+    shell: /bin/bash
   with_items: "{{ bastion_sudo_users }}"
 
 - name: Remove bastion_remove_users
-  user: name={{ item }} state=absent
+  user:
+    name: "{{ item }}"
+    state: absent
   with_items: "{{ bastion_remove_users }}"
 
 - name: Add .ssh
-  file: state=directory path=~{{ item }}/.ssh owner={{ item }} group={{ item }} mode=0700
+  file:
+    state: directory
+    path: "~{{ item }}/.ssh"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0700
   with_items: "{{ bastion_users }}"
 
-- name: Add SSH key
-  copy: src={{ item }}.authorized_keys dest=~{{ item }}/.ssh/authorized_keys owner={{ item }} group={{ item }} mode=0664
+- name: Add SSH public key to user's authorized_keys
+  copy:
+    src: "{{ item }}.authorized_keys"
+    dest: "~{{ item }}/.ssh/authorized_keys"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0664
+  with_items: "{{ bastion_users }}"
+
+- name: Install SSH private key to ~/.ssh/id_rsa
+  copy:
+    content: "{{ secrets.ssh_keys[item].private }}"
+    dest: "~{{ item }}/.ssh/id_rsa"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0600
+  when: secrets.ssh_keys.{{ item }}.private is defined
+  with_items: "{{ bastion_users }}"
+
+- name: Install SSH public key to ~/.ssh/id_rsa.pub
+  copy:
+    content: "{{ secrets.ssh_keys[item].public }}"
+    dest: "~{{ item }}/.ssh/id_rsa.pub"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0644
+  when: secrets.ssh_keys.{{ item }}.public is defined
   with_items: "{{ bastion_users }}"
 
 - name: Make sure everyone is in AllowUsers
