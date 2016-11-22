@@ -1,0 +1,25 @@
+bastion_clouds:
+  - bastioncloud
+
+datadog_enabled: no
+
+hoist_repo: /vagrant/.git
+
+nodepool_providers:
+  - name: cicloud
+    cloud: cicloud
+    max-servers: 10
+    images:
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+nodepool_mysql_host: zuul.vagrant
+nodepool_gearman_servers:
+  - host: zuul.vagrant
+    port: 4730
+
+zuul_statsd_enable: no
+zuul_connections:
+  github:
+    driver: github

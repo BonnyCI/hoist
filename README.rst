@@ -8,7 +8,7 @@ Running
 =======
 
 1. Add dns entries for nodepool and zuul (possibly using /etc/hosts) and use
-the inventory file at `inventory/hosts`.  Services may deployed onto one node
+the inventory file at `inventory/ci`.  Services may be deployed onto one node
 or across mulitple nodes.
 
 2. Setup a secrets yaml (see secrets.yml.example). TODO: Store these somewhere
@@ -50,3 +50,36 @@ After that the bastion should self-manage, and logs should be visible at http://
 Updating Secrets
 ================
 As we add or adjust secrets, we'll need to update the secrets file that lives on bastion hosts. As always, if introducing a new secret, update our example secrets file in this repo first. Then update the running bastion.
+
+
+Testing with Vagrant
+====================
+You can use vagrant to exercise the ansible paths for `bastion.yml` and `install-ci.yml`.
+
+First, install vagrant with the hostmanager and triggers plugins. The hostmanager
+plugin is used to manage /etc/hosts on the VMs, and the triggers plugin is
+used to run commands on the host after specified actions -- in our case to
+run commands in the bastion VM after actions to other VMs.::
+
+   $ sudo apt-get install vagrant
+   $ vagrant plugin install vagrant-hostmanager
+   $ vagrant plugin install vagrant-triggers
+
+To perform a full deploy::
+
+   $ vagrant up
+
+To redeploy just the nodepool VM::
+
+   $ vagrant destroy nodepool
+   $ vagrant up nodepool
+
+To inspect the zuul VM::
+
+   $ vagrant ssh zuul
+   $ # netstat, tcpdump, tail logs, etc.
+   $ logout
+
+To tear down the entire stack when you're done::
+
+   $ vagrant destroy
