@@ -13,3 +13,11 @@ zuul_gearman_server_listen_address: 127.0.0.1
 zuul_statsd_enable: no
 zuul_statsd_host: 127.0.0.1
 zuul_statsd_port: 8125
+
+zuul_connections:
+  gerrit:
+    driver: gerrit
+    port: 29418
+    server: 127.0.0.1
+    sshkey: /var/lib/zuul/.ssh/id_rsa
+    user: zuul
