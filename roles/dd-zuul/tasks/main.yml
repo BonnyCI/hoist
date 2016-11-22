@@ -9,7 +9,7 @@
     app_key: "{{ secrets.datadog.ansible_app_key }}"
     name: zuul merger count
     state: present
-    type: "service check"
+    type: "metric alert"
     message: "no zuul mergers"
     query: 'min(last_5m):avg:gearman.workers_by_task{host:zuul,task:merger:merge} < 1'
   vars:
