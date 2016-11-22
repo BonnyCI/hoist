@@ -1,6 +1,46 @@
 # {{ ansible_managed }}
 
-pipelines: []
+pipelines:
+  - name: check
+    manager: IndependentPipelineManager
+    precedence: normal
+    source: gerrit
+    trigger:
+      gerrit:
+        - event: patchset-created
+    success:
+      gerrit:
+        verified: 1
+    failure:
+     gerrit:
+        verified: -1
+
+  - name: gate
+    manager: DependentPipelineManager
+    precedence: high
+    source: gerrit
+    trigger:
+      gerrit:
+        - event: comment-added
+          approval:
+            - workflow: 1
+        - event: comment-added
+          approval:
+            - verified: 1
+    require:
+      approval:
+        - workflow: 1
+        - verified: 1
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 2
+        submit: true
+    failure:
+      gerrit:
+        verified: -2
 
 jobs: []
 
