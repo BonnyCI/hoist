@@ -16,6 +16,7 @@
   roles:
     - role: mysql
     - role: dd-mysql
+      dd_mysql_password: "{{ secrets.datadog.mysql_password }}"
       tags:
         - monitoring
     - role: databases
