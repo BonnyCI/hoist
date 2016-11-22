@@ -7,6 +7,14 @@
      - python-mysqldb
      - libmysqlclient-dev
 
+ - name: Install mysql.conf
+   template:
+     src: etc/mysql/mysql.conf.d/mysqld.cnf
+     dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+   notify: Restart MySQL
+
+ - meta: flush_handlers
+
  - name: Start + enable the mysql service
    service:
      name: mysql
