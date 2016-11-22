@@ -22,6 +22,21 @@
     home: /var/lib/nodepool
     name: nodepool
 
+- name: Ensure clouds.yaml directory
+  file:
+    path: /var/lib/nodepool/.config/openstack
+    state: directory
+    owner: nodepool
+    group: nodepool
+
+- name: Write clouds.yaml
+  template:
+    src: var/lib/nodepool/config/openstack/clouds.yaml
+    dest: /var/lib/nodepool/.config/openstack/clouds.yaml
+    owner: nodepool
+    group: nodepool
+    mode: 0600
+
 - name: install nodepool sudoers file (for DIB builds)
   copy:
     dest: /etc/sudoers.d/99_nodepool_suoders

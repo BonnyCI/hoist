@@ -50,5 +50,5 @@
   roles:
     - role: nodepool
       nodepool_statsd_enable: yes
-      nodepool_providers:
-        - cicloud
+      nodepool_mysql_user: "{{ secrets.nodepool.db_user }}"
+      nodepool_mysql_password: "{{ secrets.nodepool.db_password }}"

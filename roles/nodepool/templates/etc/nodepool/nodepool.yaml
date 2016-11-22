@@ -5,50 +5,16 @@ images-dir: /opt/nodepool/images
 script-dir: /etc/nodepool/scripts
 
 gearman-servers:
-  - host: 127.0.0.1
-    port: 4730
+{{ nodepool_gearman_servers | to_nice_yaml(indent=2) }}
 
 diskimages:
-  - name: ubuntu-trusty
-    elements:
-      - ubuntu-minimal
-      - vm
-      - simple-init
-      - growroot
-    release: trusty
-  - name: ubuntu-xenial
-    elements:
-      - ubuntu-minimal
-      - vm
-      - simple-init
-      - growroot
-    release: xenial
+{{ nodepool_diskimages | to_nice_yaml(indent=2) }}
 
 labels:
-  - name: ubuntu-trusty
-    image: ubuntu-trusty
-    min-ready: 1
-    providers:
-      - name: cicloud
-  - name: ubuntu-xenial
-    image: ubuntu-xenial
-    min-ready: 1
-    providers:
-      - name: cicloud
+{{ nodepool_labels | to_nice_yaml(indent=2) }}
 
 providers:
-  - name: cicloud
-    cloud: cicloud
-    max-servers: 10
-    images:
-      - name: ubuntu-trusty
-        min-ram: 2048
-        diskimage: ubuntu-trusty
-        private-key: /var/lib/nodepool/.ssh/id_rsa
-      - name: ubuntu-xenial
-        min-ram: 2048
-        diskimage: ubuntu-xenial
-        private-key: /var/lib/nodepool/.ssh/id_rsa
+{{ nodepool_providers | to_nice_yaml(indent=2) }}
 
 targets:
   - name: zuul
