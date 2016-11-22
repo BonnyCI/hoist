@@ -44,4 +44,14 @@ pipelines:
 
 jobs: []
 
-projects: []
+project-templates:
+  - name: noop-jobs
+    check:
+      - noop
+    gate:
+      - noop
+
+projects:
+  - name: doc
+    template:
+      - name: noop-jobs
