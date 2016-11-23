@@ -8,7 +8,7 @@ nodepool_gearman_servers:
 zuul_gearman_server_start: false
 zuul_statsd_enable: yes
 zuul_connections:
-  portbleu:
+  gerrit:
     driver: gerrit
     port: 29418
     server: review.portbleu.com
