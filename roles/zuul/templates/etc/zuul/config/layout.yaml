@@ -71,3 +71,7 @@ projects:
   - name: doc
     template:
       - name: noop-jobs
+
+  - name: BonnyCI/sandbox
+    check_github:
+      - noop
