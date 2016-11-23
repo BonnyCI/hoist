@@ -2,8 +2,19 @@
 language: python
 python: "2.7"
 
+sudo: required
+services:
+  - docker
+
+before_install:
+- docker pull ubuntu:xenial
+- docker run -d --name allinone --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro ubuntu:xenial systemd
+- docker exec -i allinone apt-get update
+- docker exec -i allinone apt-get install -y python-apt ca-certificates apt-transport-https sudo
+
 install:
   - pip install ansible
 
 script:
   - ansible-playbook -i herp, bastion.yml install-ci.yml provision.yml --syntax-check
+  - ansible-playbook -i inventory/allinone bastion.yml install-ci.yml -c docker -vv -e @secrets.yml.example -e ansible_become=no --skip-tags ddapi
