@@ -49,6 +49,9 @@ nodepool_providers:
   - name: cicloud
     cloud: contra-sjc
     max-servers: 10
+    networks:
+      - name: 'internal'
+        public: False
     images:
       - name: ubuntu-trusty
         min-ram: 2048
