@@ -15,6 +15,22 @@ pipelines:
      gerrit:
         verified: -1
 
+  - name: check_github
+    manager: IndependentPipelineManager
+    source: github
+    trigger:
+      github:
+        - event:
+            - pr-open
+            - pr-change
+            - pr-reopen
+    success:
+      github:
+        status: true
+    failure:
+      github:
+        status: true
+
   - name: gate
     manager: DependentPipelineManager
     precedence: high
