@@ -7,6 +7,7 @@
     - build-essential
     - git
     - python-dev
+    - libssl-dev
 
 - name: Create zuul user
   user:
