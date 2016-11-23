@@ -5,6 +5,11 @@ set -eu
 env=$1
 . /etc/default/$env
 
+if [ -f /etc/disable-ansible-runner-$env ]; then
+    echo "Environment $env is disabled by file."
+    exit 1
+fi
+
 if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
     export ANSIBLE_SERIALIZED=1
     exec run-one $0 "$@"
