@@ -16,3 +16,4 @@ bastion_users:
   - jesusaur
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users: []
+bastion_clouds: []

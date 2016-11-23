@@ -14,3 +14,6 @@ zuul_connections:
     server: review.portbleu.com
     sshkey: /var/lib/zuul/.ssh/id_rsa
     user: bonnyci
+
+bastion_clouds:
+  - contra-sjc

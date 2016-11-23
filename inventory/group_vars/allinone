@@ -1,0 +1,25 @@
+nodepool_mysql_host: localhost
+nodepool_gearman_servers:
+  - host: localhost
+    port: 4730
+nodepool_providers:
+  - name: cicloud
+    cloud: cicloud
+    max-servers: 10
+    images:
+      - name: ubuntu-trusty
+        min-ram: 2048
+        diskimage: ubuntu-trusty
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+zuul_connections: {}
+
+bastion_clouds:
+  - cicloud
+
+# commented out variable to show what one could point to with a -e argument
+# if they wanted to make use of an ssh-config file at execution time.
+# ansible_ssh_common_args: -F inventory/allinone-ssh-config

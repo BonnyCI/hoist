@@ -7,6 +7,8 @@
     - python-dev
     - libssl-dev
     - run-one
+    - git
+    - cron
 
 - name: Install ansible
   pip:
