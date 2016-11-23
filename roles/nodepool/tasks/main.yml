@@ -99,6 +99,19 @@
   notify:
     - Restart nodepool builder
 
+- name: Write logging config
+  template:
+    src: "etc/nodepool/logging.conf"
+    dest: "/etc/nodepool/{{ item }}_logging.conf"
+    owner: root
+    group: nodepool
+    mode: 0640
+  with_items:
+    - nodepool-builder
+    - nodepool-deleter
+    - nodepool-launcher
+    - nodepoold
+
 - name: Install init config
   template:
     src: etc/default/nodepool
