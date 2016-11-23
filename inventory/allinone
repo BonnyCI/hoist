@@ -1,0 +1,17 @@
+[allinone]
+allinone
+
+[bastion]
+allinone
+
+[nodepool]
+allinone
+
+[zuul]
+allinone
+
+[zuul_merger]
+allinone
+
+[mysql]
+allinone

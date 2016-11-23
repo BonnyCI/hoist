@@ -1,0 +1,13 @@
+# DO NOT COMMIT CHANGES TO THIS FILE
+# To protect yourself:
+#   git update-index --skip-worktree inventory/allinone-ssh-config
+# Undo it with:
+#   git update-index --no-skip-worktree inventory/allinone-ssh-config
+Host *
+  User ubuntu
+  ForwardAgent no
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+Host allinone
+#  Hostname 169.45.113.44
