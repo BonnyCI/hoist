@@ -12,7 +12,7 @@ pipelines:
       gerrit:
         verified: 1
     failure:
-     gerrit:
+      gerrit:
         verified: -1
 
   - name: check_github
@@ -70,10 +70,11 @@ project-templates:
       - noop
 
 projects:
-  - name: doc
-    template:
-      - name: noop-jobs
-
   - name: BonnyCI/sandbox
     check_github:
       - echo-true
+      - noop
+
+  - name: doc
+    template:
+      - name: noop-jobs
