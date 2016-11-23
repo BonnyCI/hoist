@@ -14,3 +14,4 @@
     query: 'min(last_5m):avg:gearman.workers_by_task{host:zuul,task:merger:merge} < 1'
   vars:
     ansible_python_interpreter: /opt/datadog/bin/python
+  tags: ddapi
