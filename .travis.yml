@@ -6,6 +6,13 @@ sudo: required
 services:
   - docker
 
+matrix:
+  fast_finish: true
+
+env:
+  - TEST_RUN="ansible-playbook -i herp, bastion.yml install-ci.yml provision.yml --syntax-check"
+  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml -c docker -vv -e @secrets.yml.example -e ansible_become=no --skip-tags ddapi"
+
 before_install:
 - docker pull ubuntu:xenial
 - docker run -d --name allinone --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro ubuntu:xenial systemd
@@ -15,6 +22,4 @@ before_install:
 install:
   - pip install ansible
 
-script:
-  - ansible-playbook -i herp, bastion.yml install-ci.yml provision.yml --syntax-check
-  - ansible-playbook -i inventory/allinone bastion.yml install-ci.yml -c docker -vv -e @secrets.yml.example -e ansible_become=no --skip-tags ddapi
+script: "$TEST_RUN"
