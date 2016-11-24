@@ -1,0 +1,66 @@
+---
+- name: Install deps
+  apt:
+    name: "{{ item }}"
+    state: installed
+    update_cache: true
+  with_items:
+    - git
+    - cron
+
+- name: Create source directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+  with_items:
+    - /opt/source
+    - /opt/venvs
+    - /etc/datadog-builder
+
+- name: create datadog-builder user
+  user:
+    name: datadog-builder
+    home: /var/lib/datadog-builder
+    state: present
+
+- name: Create datadog-builder secrets
+  copy:
+    dest: /etc/datadog-builder/datadog-secrets.yml
+    content: "{{ datadog_builder_secrets | default({}) | to_nice_yaml(indent=2) }}"
+    mode: 0600
+    owner: datadog-builder
+
+- name: Checkout datadog-builder
+  git:
+    dest: /opt/source/datadog-builder
+    repo: "{{ datadog_builder_git_repo_url }}"
+    version: "{{ datadog_builder_git_branch }}"
+    update: "{{ datadog_builder_git_update }}"
+  register: datadog_builder_git
+
+- name: Install datadog-builder
+  pip:
+    extra_args: -U
+    name: /opt/source/datadog-builder
+    virtualenv: /opt/venvs/datadog-builder
+  when: datadog_builder_git.changed
+
+- name: Update monitors repo
+  git:
+    dest: "{{ datadog_builder_monitor_dir }}"
+    repo: "{{ datadog_builder_monitor_url }}"
+    update: "{{ datadog_builder_monitor_update }}"
+    version: "{{ datadog_builder_monitor_branch }}"
+
+- name: Setup cron job
+  cron:
+    name: datadog-builder
+    user: datadog-builder
+    minute: "*/15"
+    job: >
+      /opt/venvs/datadog-builder/bin/datadog-builder
+      --auth-config /etc/datadog-builder/datadog-secrets.yml
+      update {{ datadog_builder_monitor_dir }}/{{ datadog_builder_monitor_file }}

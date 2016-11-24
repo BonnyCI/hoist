@@ -1,0 +1,4 @@
+---
+- include: datadog-builder.yml
+  tags:
+    - datadog-builder
