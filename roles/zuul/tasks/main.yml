@@ -94,7 +94,6 @@
     src: etc/zuul/config/layout.yaml
     dest: /etc/zuul/config/layout.yaml
     owner: zuul
-  notify: Restart zuul
 
 - name: Install job definitions
   copy:
