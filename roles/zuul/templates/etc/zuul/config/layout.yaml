@@ -76,4 +76,4 @@ projects:
 
   - name: BonnyCI/sandbox
     check_github:
-      - noop
+      - echo-true

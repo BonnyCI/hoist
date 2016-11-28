@@ -1,0 +1,6 @@
+job:
+  name: echo-true
+  node: 'ubuntu-xenial'
+
+  builders:
+    - shell: echo true
