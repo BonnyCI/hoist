@@ -27,9 +27,11 @@ pipelines:
     success:
       github:
         status: true
+        comment: true
     failure:
       github:
         status: true
+        comment: true
 
   - name: gate
     manager: DependentPipelineManager
