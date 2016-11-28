@@ -51,7 +51,7 @@ nodepool_providers:
     max-servers: 10
     networks:
       - name: 'internal'
-        public: False
+        public: True
     images:
       - name: ubuntu-trusty
         min-ram: 2048
