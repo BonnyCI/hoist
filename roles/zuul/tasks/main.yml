@@ -96,6 +96,13 @@
     owner: zuul
   notify: Restart zuul
 
+- name: Install job definitions
+  copy:
+    src: "{{ item }}"
+    dest: /var/lib/zuul/jobs/
+  with_fileglob:
+    - files/jobs/*
+ 
 - name: Install service environment configs
   template:
     src: etc/default/zuul
