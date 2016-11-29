@@ -27,6 +27,9 @@ nodepool_diskimages:
       - openssh-server
       - devuser
     release: xenial
+    env-vars:
+      DIB_DEV_USER_USERNAME: bonnyci
+      DIB_DEV_USER_AUTHORIZED_KEYS: /var/lib/nodepool/.ssh/id_rsa.pub
 
 nodepool_labels:
   - name: ubuntu-trusty
@@ -54,6 +57,3 @@ nodepool_providers:
         private-key: /var/lib/nodepool/.ssh/id_rsa
         user-home: /home/bonnyci
         username: bonnyci
-        env-vars:
-          DIB_DEV_USER_USERNAME: bonnyci
-          DIB_DEV_USER_AUTHORIZED_KEYS: /var/lib/nodepool/.ssh/id_rsa.pub
