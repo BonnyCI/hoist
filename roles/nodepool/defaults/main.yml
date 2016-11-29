@@ -18,14 +18,6 @@ nodepool_gearman_servers:
     port: 4730
 
 nodepool_diskimages:
-  - name: ubuntu-trusty
-    elements:
-      - ubuntu-minimal
-      - vm
-      - simple-init
-      - growroot
-      - openssh-server
-    release: trusty
   - name: ubuntu-xenial
     elements:
       - ubuntu-minimal
@@ -33,6 +25,7 @@ nodepool_diskimages:
       - simple-init
       - growroot
       - openssh-server
+      - devuser
     release: xenial
 
 nodepool_labels:
@@ -55,11 +48,12 @@ nodepool_providers:
       - name: 'sl-private-network-01'
         public: True
     images:
-      - name: ubuntu-trusty
-        min-ram: 2048
-        diskimage: ubuntu-trusty
-        private-key: /var/lib/nodepool/.ssh/id_rsa
       - name: ubuntu-xenial
         min-ram: 2048
         diskimage: ubuntu-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
+        user-home: /home/bonnyci
+        username: bonnyci
+        env-vars:
+          DIB_DEV_USER_USERNAME: bonnyci
+          DIB_DEV_USER_AUTHORIZED_KEYS: /var/lib/nodepool/.ssh/id_rsa.pub
