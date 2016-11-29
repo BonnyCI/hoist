@@ -115,19 +115,16 @@
 - name: Install init config
   template:
     src: etc/default/nodepool
-    dest: "/etc/default/{{ item }}"
+    dest: /etc/default/nodepool
     owner: root
     group: root
     mode: 0644
-  with_items:
-    - nodepool-builder
-    - nodepool-deleter
-    - nodepool-launcher
-    - nodepoold
+  notify:
+    - Restart nodepool
 
-- name: Install systemd unit file
-  template:
-    src: "etc/systemd/system/nodepool.service"
+- name: Install systemd unit files
+  copy:
+    src: "etc/systemd/system/{{ item }}.service"
     dest: "/etc/systemd/system/{{ item }}.service"
     owner: root
     group: root
@@ -139,6 +136,7 @@
     - nodepoold
   notify:
     - Reload systemd units
+    - Restart nodepool
 
 - meta: flush_handlers
 
