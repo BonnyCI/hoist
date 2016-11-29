@@ -1,6 +1,6 @@
-job:
-  name: echo-true
-  node: 'ubuntu-xenial'
+- job:
+    name: echo-true
+    node: 'ubuntu-xenial'
 
-  builders:
-    - shell: echo true
+    builders:
+      - shell: echo true
