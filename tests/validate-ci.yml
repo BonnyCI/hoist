@@ -1,0 +1,44 @@
+---
+- name: Validate mysql
+  hosts: mysql
+  tasks:
+    - name: mysql is running
+      command: pgrep -f /usr/sbin/mysql
+
+- name: Validate zuul
+  hosts: zuul
+  tasks:
+    - name: zuul services are running
+      command: pgrep -f {{ item }}
+      with_items:
+        - /opt/venvs/zuul/bin/zuul-server
+        - /opt/venvs/zuul/bin/zuul-merger
+        - /opt/venvs/zuul/bin/zuul-launcher
+
+    - name: gearman services are running
+      command: pgrep -f /usr/sbin/gearmand
+
+    - name: get gear status
+      shell: echo "status" | nc -w 1 127.0.0.1 4730
+      register: gearstat
+
+    - name: validate gear status
+      assert:
+        that:
+          - gearstat.stdout | search("node_assign:zuul")
+          - gearstat.stdout | search("merger:merge")
+          - gearstat.stdout | search("merger:update")
+
+- name: Validate nodepool
+  hosts: nodepool
+  tasks:
+    - name: nodepool services are running
+      command: pgrep -f /opt/venvs/nodepool/bin/nodepoold
+
+    - name: validate nodepool operation
+      command: /opt/venvs/nodepool/bin/nodepool {{ item }}
+      with_items:
+        - config-validate
+        - list
+        - job-list
+        - dib-image-list
