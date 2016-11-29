@@ -52,7 +52,7 @@ nodepool_providers:
     cloud: contra-sjc
     max-servers: 10
     networks:
-      - name: 'internal'
+      - name: 'sl-private-network-01'
         public: True
     images:
       - name: ubuntu-trusty
