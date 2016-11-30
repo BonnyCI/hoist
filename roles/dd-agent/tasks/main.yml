@@ -13,8 +13,6 @@
   apt:
     name: "{{ item }}"
     state: installed
-    update_cache: yes
-    cache_valid_time: 30
   with_items:
     - apt-transport-https
 
@@ -22,8 +20,6 @@
   apt:
     name: datadog-agent
     state: installed
-    update_cache: yes
-    cache_valid_time: 30
   notify:
     - restart dd-agent
 
