@@ -13,7 +13,7 @@
       ansible_playbook: bastion.yml
       ansible_inventory: /opt/source/system-ansible/inventory/bastion-localhost
       ansible_runner_user: root
-      ansible_runner_repo: https://github.com/BonnyCI/hoist.git
+      ansible_runner_repo: "https://{{ private_github_token }}@github.com/OpenStackInnovation/hoist"
       ansible_runner_minute: "*/15"
     - role: ansible-runner
       ansible_playbook: install-ci.yml
@@ -21,5 +21,5 @@
       ansible_runner_job: cideploy
       ansible_runner_user: cideploy
       ansible_remote_user: ubuntu
-      ansible_runner_repo: https://github.com/BonnyCI/hoist.git
+      ansible_runner_repo: "https://{{ private_github_token }}@github.com/OpenStackInnovation/hoist"
       ansible_runner_minute: "*/15"
