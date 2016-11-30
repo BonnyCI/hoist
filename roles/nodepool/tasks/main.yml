@@ -59,9 +59,9 @@
 
 - name: Install nodepool
   pip:
-    extra_args: -U
     name: "{{ nodepool_source_dir }}"
     virtualenv: "{{ nodepool_venv_dir }}"
+    state: latest
   notify:
     - Restart nodepool
 
