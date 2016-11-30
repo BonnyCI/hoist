@@ -26,6 +26,7 @@ nodepool_diskimages:
       - growroot
       - openssh-server
       - devuser
+      - bonnyci-nodepool
     release: xenial
     env-vars:
       DIB_DEV_USER_USERNAME: bonnyci
