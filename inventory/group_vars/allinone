@@ -7,10 +7,6 @@ nodepool_providers:
     cloud: cicloud
     max-servers: 10
     images:
-      - name: ubuntu-trusty
-        min-ram: 2048
-        diskimage: ubuntu-trusty
-        private-key: /var/lib/nodepool/.ssh/id_rsa
       - name: ubuntu-xenial
         min-ram: 2048
         diskimage: ubuntu-xenial
