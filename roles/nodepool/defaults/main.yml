@@ -33,11 +33,6 @@ nodepool_diskimages:
       DIB_DEV_USER_AUTHORIZED_KEYS: /var/lib/nodepool/.ssh/id_rsa.pub
 
 nodepool_labels:
-  - name: ubuntu-trusty
-    image: ubuntu-trusty
-    min-ready: 1
-    providers:
-      - name: cicloud
   - name: ubuntu-xenial
     image: ubuntu-xenial
     min-ready: 1
