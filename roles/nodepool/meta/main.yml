@@ -5,5 +5,3 @@ dependencies:
       - name: nodepool
         document_root: /var/log/nodepool/
         document_root_options: +FollowSymLinks
-  - role: os-clouds
-    clouds: "{{ nodepool_providers | map(attribute='name') | list }}"
