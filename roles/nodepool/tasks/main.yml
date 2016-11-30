@@ -56,14 +56,15 @@
     dest: "{{ nodepool_source_dir }}"
     repo: https://git.openstack.org/openstack-infra/nodepool
     version: master
+  register: nodepool_git
 
 - name: Install nodepool
   pip:
     name: "{{ nodepool_source_dir }}"
     virtualenv: "{{ nodepool_venv_dir }}"
     state: latest
-  notify:
-    - Restart nodepool
+  when: nodepool_git.changed
+  notify: Restart nodepool
 
 - name: Install statsd
   pip:
