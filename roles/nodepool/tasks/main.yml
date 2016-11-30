@@ -98,6 +98,13 @@
   with_items:
     - bonnyci-nodepool
 
+- name: set elements executable
+  file:
+    path: "/etc/nodepool/elements/{{ item }}"
+    mode: 0755
+  with_items:
+    - bonnyci-nodepool/finalise.d/99-nodepool-dir
+
 - name: Write config
   template:
     src: "etc/nodepool/{{ item }}"
