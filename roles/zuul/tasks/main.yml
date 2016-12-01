@@ -97,11 +97,9 @@
     owner: zuul
 
 - name: Install job definitions
-  copy:
-    src: "{{ item }}"
+  synchronize:
+    src: files/jobs/
     dest: /var/lib/zuul/jobs/
-  with_fileglob:
-    - files/jobs/*
  
 - name: Install service environment configs
   template:

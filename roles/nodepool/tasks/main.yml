@@ -87,24 +87,11 @@
     - /etc/nodepool/scripts
     - /var/log/nodepool
 
-# This should be maintained in a project-config repo. At very least this should
-# be a synchronize but that doesn't work in our docker based testing. Fudge it
-# for now.
+# This should be maintained in a project-config repo.
 - name: Copy elements
-  copy:
-    src: "files/etc/nodepool/elements/{{ item }}"
+  synchronize:
+    src: files/etc/nodepool/elements/
     dest: /etc/nodepool/elements/
-    owner: nodepool
-    group: nodepool
-  with_items:
-    - bonnyci-nodepool
-
-- name: set elements executable
-  file:
-    path: "/etc/nodepool/elements/{{ item }}"
-    mode: 0755
-  with_items:
-    - bonnyci-nodepool/finalise.d/99-nodepool-dir
 
 - name: Write config
   template:
