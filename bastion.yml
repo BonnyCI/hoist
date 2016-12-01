@@ -1,6 +1,18 @@
 - name: Configure bastion
   hosts: bastion
   become: true
+  pre_tasks:
+    - file:
+        path: /root/.ssh
+        state: directory
+        owner: root
+        mode: 0700
+
+    - known_hosts:
+        name: github.ibm.com
+        path: /root/.ssh/known_hosts
+        key: "{{ lookup('file', 'github.ibm.com.pubkey') }}"
+
   roles:
     - common
     - role: dd-agent
