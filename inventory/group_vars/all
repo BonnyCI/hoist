@@ -1,5 +1,3 @@
-ansible_runner_vault_password_file: /etc/vault_pass.txt
-
 nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com

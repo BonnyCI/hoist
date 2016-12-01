@@ -86,12 +86,6 @@
   secret_file_path: "{{ ansible_runner_secrets_path }}"
   secret_file_user: "{{ ansible_runner_user }}"
 
-- include: secret-file.yml
-  secret_file_type: vault password
-  secret_file_path: "{{ ansible_runner_vault_password_file }}"
-  secret_file_user: "{{ ansible_runner_user }}"
-  when: ansible_runner_vault_password_file is defined
-
 - name: Add ansible-runner cron job
   cron:
     name: "ansible-runner deploy {{ ansible_runner_job }}"
