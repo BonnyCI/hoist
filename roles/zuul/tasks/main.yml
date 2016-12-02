@@ -100,6 +100,8 @@
   synchronize:
     src: files/jobs/
     dest: /var/lib/zuul/jobs/
+    rsync_opts:
+      - "--chown=zuul:zuul"
  
 - name: Install service environment configs
   template:
