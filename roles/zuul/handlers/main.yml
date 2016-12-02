@@ -11,3 +11,7 @@
     - zuul-merger
     - zuul-server
   when: zuul_allow_restart_services | bool
+
+- name: Reload zuul-server
+  command: pkill --signal SIGHUP zuul-server
+  become: true
