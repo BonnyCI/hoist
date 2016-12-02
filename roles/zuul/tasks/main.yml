@@ -95,6 +95,7 @@
     src: etc/zuul/config/layout.yaml
     dest: /etc/zuul/config/layout.yaml
     owner: zuul
+  notify: Reload zuul-server
 
 - name: Install job definitions
   synchronize:
