@@ -24,6 +24,8 @@ pipelines:
             - pr-open
             - pr-change
             - pr-reopen
+        - event: pr-comment
+          comment: (?i)recheck
     start:
       github:
         status: true
