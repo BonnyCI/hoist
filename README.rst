@@ -14,13 +14,9 @@ or across mulitple nodes.
 2. Setup a secrets yaml (see secrets.yml.example). TODO: Store these somewhere
 sane.
 
-3. Encrypt secrets file with ansible-vault::
+3. Run playbook::
 
-    $ ansible-vault encrypt secrets.yml
-
-4. Run playbook::
-
-    $ ansible-playbook --ask-vault-pass -i hosts -e @secrets.yml site.yml
+    $ ansible-playbook -i hosts -e @secrets.yml site.yml
 
 Bastion
 =======
@@ -37,39 +33,20 @@ To create a new bastion in a cloud for automating things follow these steps:
 
    $ ansible-playbook -i localhost, provision.yml -t new_cloud_tag
 
-4. SSH to the new instance and put /etc/secrets.yml in place along with populating /etc/vault_pass.txt with the vault passphrase.
+4. SSH to the new instance and put /etc/secrets.yml in place.
 
 5. Set ownership on secrets files::
 
    $ sudo chown root.root /etc/secrets.yml
-   $ sudo chown root.root /etc/valut_pass.txt
 
 6. Add the new bastion host to inventory/bastions
 
 7. Run bastion.yml playbook::
 
-   $ ansible-playbook --ask-vault-pass -i inventory/bastions bastion.yml -e @secrets.yml
+   $ ansible-playbook -i inventory/bastions bastion.yml -e @secrets.yml
 
 After that the bastion should self-manage, and logs should be visible at http://<<bastion>>/cron-logs/
 
 Updating Secrets
 ================
-As we add or adjust secrets, we'll need to update the vault encrypted secrets file that lives on bastion hosts. Due to an [upstream Ansible bug] (https://github.com/ansible/ansible/issues/18537) we have to be careful about updating this file on live bastions, as we can easily wipe out the ACLs that have been put in place. As always, if introducing a new secret, update our example secrets file in this repo first. Then update the running bastion:
-
-1. Copy the live secrets file to your personal homedir::
-
-   $ sudo cp /etc/secrets.yml ~/
-
-2. Edit the local copy of the file with ansible-vault::
-
-    $ sudo /opt/ansible/bin/ansible-vault --vault-password-file /etc/vault_pass.txt edit secrets.yml
-
-3. Save and quit the editor
-
-4. Replace the live contents with the contents from the locally edited file::
-
-   $ sudo cat secrets.yml | sudo tee /etc/secrets.yml
-
-5. Delete local copy::
-
-   $ sudo rm ~/secrets.yml
+As we add or adjust secrets, we'll need to update the secrets file that lives on bastion hosts. As always, if introducing a new secret, update our example secrets file in this repo first. Then update the running bastion.

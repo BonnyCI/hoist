@@ -37,7 +37,7 @@ args="$@"
 if [ -n "$ANSIBLE_SSH_USER" ]; then
     args="$args -e ansible_ssh_user=$ANSIBLE_SSH_USER"
 fi
-ANSIBLE_VAULT_PASSWORD_FILE=$ANSIBLE_VAULT_PASSWORD_FILE ansible-playbook -vv -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK 2>&1 | tee -a $logfile
+ansible-playbook -vv -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK 2>&1 | tee -a $logfile
 date 2>&1 | tee -a $logfile
 
 # Remove > 10 days old
