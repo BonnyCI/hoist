@@ -92,6 +92,8 @@
   synchronize:
     src: files/etc/nodepool/elements/
     dest: /etc/nodepool/elements/
+    rsync_opts:
+      - "--chown=nodepool:nodepool"
 
 - name: Write config
   template:
