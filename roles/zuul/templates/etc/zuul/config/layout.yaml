@@ -24,10 +24,14 @@ pipelines:
             - pr-open
             - pr-change
             - pr-reopen
+    start:
+      github:
+        status: true
     success:
       github:
         status: true
         comment: true
+        merge: true
     failure:
       github:
         status: true
