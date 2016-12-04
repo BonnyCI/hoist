@@ -12,6 +12,10 @@ zuul_connections:
     server: review.portbleu.com
     sshkey: /var/lib/zuul/.ssh/id_rsa
     user: bonnyci
+  github:
+    driver: github
+    sshkey: /var/lib/zuul/.ssh/id_rsa
+    api_token: "{{ secrets.zuul_github_api_key }}"
 
 bastion_clouds:
   - contra-sjc
