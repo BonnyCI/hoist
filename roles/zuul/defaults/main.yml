@@ -21,3 +21,7 @@ zuul_connections:
     server: 127.0.0.1
     sshkey: /var/lib/zuul/.ssh/id_rsa
     user: zuul
+  github:
+    driver: github
+    sshkey: /var/lib/zuul/.ssh/id_rsa
+    api_token: "{{ secrets.zuul_github_api_key }}"
