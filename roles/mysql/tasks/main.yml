@@ -1,6 +1,16 @@
 ---
+ ### Update apt cache, but don't mark changed
+ # Works around Ansible 2.2 bug
+ # TODO: Remove with Ansible 2.3
+ - name: Update apt cache
+   apt:
+     update_cache: yes
+   register: apt_cache
+   changed_when: False
+   failed_when: "apt_cache.cache_updated != True"
+
  - name: Install the MySQL packages
-   apt: name={{ item }} state=installed update_cache=yes
+   apt: name={{ item }} state=installed
    with_items:
      - mysql-server
      - mysql-client
