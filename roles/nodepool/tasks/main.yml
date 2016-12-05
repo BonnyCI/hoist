@@ -22,6 +22,52 @@
     home: /var/lib/nodepool
     name: nodepool
 
+- name: Create nodepool dirs
+  file:
+    group: nodepool
+    owner: nodepool
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - /etc/nodepool
+    - /etc/nodepool/elements
+    - /etc/nodepool/scripts
+    - /opt/nodepool/images
+    - /var/log/nodepool
+
+- name: Create nodepool's ~/.ssh
+  file:
+    group: nodepool
+    owner: nodepool
+    state: directory
+    path: /var/lib/nodepool/.ssh/
+    mode: 0700
+
+- name: Install nodepool private ssh key
+  copy:
+    dest: /var/lib/nodepool/.ssh/id_rsa
+    content: "{{ secrets.ssh_keys.nodepool.private }}"
+    owner: nodepool
+    group: nodepool
+    mode: 0600
+
+- name: Install nodepool public ssh key
+  copy:
+    dest: /var/lib/nodepool/.ssh/id_rsa.pub
+    content: "{{ secrets.ssh_keys.nodepool.public }}"
+    owner: nodepool
+    group: nodepool
+    mode: 0644
+
+- name: Install nodepool slave authorized_keys
+  template:
+    src: etc/nodepool/slave-authorized-keys
+    dest: /etc/nodepool/slave-authorized-keys
+    owner: nodepool
+    group: nodepool
+    mode: 0644
+
 - name: Ensure clouds.yaml directory
   file:
     path: /var/lib/nodepool/.config/openstack
@@ -43,13 +89,6 @@
     mode: 0400
     owner: root
     content: "nodepool ALL=(ALL) NOPASSWD:ALL"
-
-- name: ensure image build directory
-  file:
-    path: /opt/nodepool/images
-    state: directory
-    owner: nodepool
-    group: nodepool
 
 - name: Git clone nodepool
   git:
@@ -73,19 +112,6 @@
   with_items:
     - statsd
   when: nodepool_statsd_enable
-
-- name: Create nodepool dirs
-  file:
-    group: nodepool
-    owner: nodepool
-    state: directory
-    path: "{{ item }}"
-    mode: 0755
-  with_items:
-    - /etc/nodepool
-    - /etc/nodepool/elements
-    - /etc/nodepool/scripts
-    - /var/log/nodepool
 
 # This should be maintained in a project-config repo.
 - name: Copy elements
