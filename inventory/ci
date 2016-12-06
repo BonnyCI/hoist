@@ -1,11 +1,11 @@
 [nodepool]
-nodepool.bonnyci.portbleu.com
+nodepool.bonnyci-internal.portbleu.com
 
 [zuul]
-zuul.bonnyci.portbleu.com
+zuul.bonnyci-internal.portbleu.com
 
 [zuul_merger]
-zm01.bonnyci.portbleu.com
+zm01.bonnyci-internal.portbleu.com
 
 [mysql]
-zuul.bonnyci.portbleu.com
+zuul.bonnyci-internal.portbleu.com
