@@ -4,10 +4,11 @@
     name: "{{ clouds_yaml_group }}"
     state: present
 
-- name: Ensure clouds.yaml owner exists
+- name: Ensure clouds.yaml owner exists and is a member of the group
   user:
     name: "{{ clouds_yaml_owner }}"
-    group: "{{ clouds_yaml_group }}"
+    groups: "{{ clouds_yaml_group }}"
+    append: true
     state: present
 
 - name: Ensure clouds.yaml directory
