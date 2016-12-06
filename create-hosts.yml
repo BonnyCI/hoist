@@ -22,8 +22,24 @@
         auto_ip: yes
         key_name: "{{ item.key_name | default('ci-deploy-contrasjc-bastion') }}"
         nics: "{{ item.nics | default([{'net-name': 'sl-private-network-01'}]) }}"
+        wait: yes
+      register: openstack_instances
       with_items: "{{ servers }}"
 
+    - name: wait for new hosts to respond to ssh
+      wait_for:
+        port: 22
+        host: "{{ item.openstack.public_v4 }}"
+        search_regex: OpenSSH
+      with_items: "{{ openstack_instances.results }}"
+
+    - name: ensure new servers are in known_hosts
+      lineinfile:
+        dest: /home/cideploy/.ssh/known_hosts
+        create: yes
+        state: present
+        line: "{{ lookup('pipe', 'ssh-keyscan -t rsa ' + item.openstack.public_v4) }}"
+      with_items: "{{ openstack_instances.results }}"
   vars:
     os_cloud: contra-sjc
 
