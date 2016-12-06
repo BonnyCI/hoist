@@ -1,0 +1,30 @@
+- name: Delete resources
+  hosts: bastion
+  become: true
+  tasks:
+    - name: delete keys
+      os_keypair:
+        cloud: "{{ os_cloud }}"
+        state: absent
+        name: "{{ item.name }}"
+      with_items: "{{ keys }}"
+
+    - name: delete servers
+      os_server:
+        cloud: "{{ os_cloud }}"
+        name: "{{ item.name }}.portbleu.com"
+        state: absent
+        region_name: RegionOne
+      with_items: "{{ servers }}"
+
+  vars:
+    os_cloud: contra-sjc
+
+    keys:
+      - name: root-contrasjc-bastion
+      - name: ci-deploy-contrasjc-bastion
+
+    servers:
+      - name: merger01
+      - name: zuul
+      - name: nodepool
