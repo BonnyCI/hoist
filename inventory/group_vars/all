@@ -8,7 +8,6 @@ zuul_statsd_enable: yes
 zuul_connections:
   github:
     driver: github
-    sshkey: /var/lib/zuul/.ssh/id_rsa
     api_token: "{{ secrets.zuul_github_api_key }}"
 
 bastion_clouds:
