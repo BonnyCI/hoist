@@ -18,17 +18,41 @@ pipelines:
     success:
       github:
         status: true
-        comment: true
-        merge: true
+        comment: false
     failure:
       github:
         status: true
         comment: true
+
+  - name: gate_github
+    manager: DependentPipelineManager
+    precedence: high
+    source: github
+    trigger:
+      github:
+        - event: pr-label
+          label: 'approved'
+    start:
+      github:
+        comment: true
+        label: '-approved'
+    success:
+      github:
+        comment: false
+        merge: true
+        label: 'approved'
+    failure:
+      github:
+        comment: true
+        label: '-approved'
 
 jobs: []
 
 projects:
   - name: BonnyCI/sandbox
     check_github:
+      - echo-true
+      - noop
+    gate_github:
       - echo-true
       - noop
