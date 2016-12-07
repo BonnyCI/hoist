@@ -50,6 +50,5 @@
         public_key_file: /home/cideploy/.ssh/id_rsa.pub
 
     servers:
-      - name: merger01
       - name: zuul
       - name: nodepool
