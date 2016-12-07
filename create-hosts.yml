@@ -26,6 +26,15 @@
       register: openstack_instances
       with_items: "{{ servers }}"
 
+    - name: associate floating ips
+      os_floating_ip:
+        cloud: "{{ os_cloud }}"
+        server: "{{ item.name }}.bonnyci-internal.portbleu.com"
+        floating_ip_address: "{{ item.public_address }}"
+        state: present
+      with_items: "{{ servers }}"
+      when: item.public_address is defined
+
     - name: wait for new hosts to respond to ssh
       wait_for:
         port: 22
@@ -51,4 +60,5 @@
 
     servers:
       - name: zuul
+        public_address: 169.45.113.36
       - name: nodepool
