@@ -1,4 +1,0 @@
----
-gearman_bind_address: localhost
-gearman_bind_port: 4730
-gearman_log_file: /var/log/gearman-job-server/gearman.log

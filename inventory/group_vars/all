@@ -3,7 +3,7 @@ nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730
 
-zuul_gearman_server_start: false
+zuul_gearman_server_start: true
 zuul_statsd_enable: yes
 zuul_connections:
   github:
