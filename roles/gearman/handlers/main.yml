@@ -1,8 +1,0 @@
----
-- name: Reload systemd units
-  command: systemctl daemon-reload
-
-- name: Restart gearman-job-server
-  service:
-    name: gearman-job-server
-    state: restarted

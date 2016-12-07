@@ -7,3 +7,4 @@
     - build-essential
     - jq
     - netcat
+    - net-tools

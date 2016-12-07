@@ -26,7 +26,6 @@
   become: yes
   tags: ['zuul']
   roles:
-    - role: gearman
     - role: dd-gearman
       tags:
         - monitoring
