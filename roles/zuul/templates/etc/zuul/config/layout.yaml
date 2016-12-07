@@ -36,15 +36,18 @@ pipelines:
       github:
         comment: true
         label: '-approved'
+        status: true
     success:
       github:
         comment: false
         merge: true
         label: 'approved'
+        status: true
     failure:
       github:
         comment: true
         label: '-approved'
+        status: true
 
 jobs: []
 
