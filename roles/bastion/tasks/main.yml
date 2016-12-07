@@ -19,11 +19,23 @@
     validate: 'visudo -cf %s'
   when: "{{ bastion_sudo_users }}"
 
+- name: Create bastion_users
+  user:
+    name: "{{ item }}"
+    shell: /bin/bash
+  with_items: "{{ bastion_users }}"
+
+- name: Create bastion_sudo_users
+  user:
+    name: "{{ item }}"
+    shell: /bin/bash
+  with_items: "{{ bastion_sudo_users }}"
+
 - name: Add bastion_sudo_users to sudo group
   user:
     name: "{{ item }}"
     groups: sudo
-    shell: /bin/bash
+    append: true
   with_items: "{{ bastion_sudo_users }}"
 
 - name: Remove bastion_remove_users
