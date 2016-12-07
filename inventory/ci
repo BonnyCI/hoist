@@ -4,8 +4,5 @@ nodepool.bonnyci-internal.portbleu.com
 [zuul]
 zuul.bonnyci-internal.portbleu.com
 
-[zuul_merger]
-zm01.bonnyci-internal.portbleu.com
-
 [mysql]
 zuul.bonnyci-internal.portbleu.com

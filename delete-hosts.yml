@@ -25,6 +25,5 @@
       - name: ci-deploy-contrasjc-bastion
 
     servers:
-      - name: merger01
       - name: zuul
       - name: nodepool
