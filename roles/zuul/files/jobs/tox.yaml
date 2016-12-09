@@ -1,0 +1,7 @@
+- job:
+    name: tox_py27
+    node: 'ubuntu-xenial'
+
+    builders:
+      - shell: pip install tox
+      - shell: tox -e py27
