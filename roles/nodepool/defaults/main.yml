@@ -26,6 +26,7 @@ nodepool_diskimages:
       - growroot
       - openssh-server
       - devuser
+      - pip-and-virtualenv
       - bonnyci-nodepool
     release: xenial
     env-vars:
