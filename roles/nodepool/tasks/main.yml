@@ -10,6 +10,7 @@
     - libssl-dev
     - python-dev
     - libffi-dev
+    - kpartx
 
 - name: Create group.
   group:
