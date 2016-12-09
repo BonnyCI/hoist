@@ -59,3 +59,9 @@ projects:
     gate_github:
       - echo-true
       - noop
+
+  - name: j2sol/giftwrap
+    check_github:
+      - tox_py27
+    gate_github:
+      - tox_py27
