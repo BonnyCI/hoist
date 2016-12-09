@@ -33,8 +33,7 @@
     - /etc/zuul/config
     - /var/log/zuul
 
-- name: Create zuul's ~/.ssh
-  file:
+- name: "Create zuul's ~/.ssh"
   file:
     path: /var/lib/zuul/.ssh/
     state: directory
