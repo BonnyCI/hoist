@@ -140,3 +140,12 @@
     state: present
   with_items:
     - shade
+
+- name: create jump scripts
+  template:
+    src: usr/local/bin/jump
+    dest: "/usr/local/bin/{{ item }}"
+    mode: "0755"
+  with_items:
+    - zuul
+    - nodepool
