@@ -1,4 +1,6 @@
 ---
+apache_vhosts: []
+
 apache_mods_enabled: []
 apache_mods_disabled: []
 
