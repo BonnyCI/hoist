@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sudo -i -u cideploy ssh ubuntu@{{ item }}.bonnyci-internal.portbleu.com
