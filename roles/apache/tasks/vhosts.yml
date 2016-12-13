@@ -21,6 +21,16 @@
   when: item.delete | default(false)
   notify: restart apache
 
+- name: create document root
+  file:
+    path: "{{ item.document_root }}"
+    state: directory
+    owner: "{{ item.document_root_owner | default(omit) }}"
+    group: "{{ item.document_root_group | default(omit) }}"
+    mode: "{{ item.document_root_mode | default(omit) }}"
+  with_items: "{{ apache_vhosts }}"
+  when: item.document_root is defined
+
 - name: create apache vhosts
   template:
     src: vhost.conf
