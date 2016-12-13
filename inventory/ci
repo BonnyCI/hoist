@@ -6,3 +6,6 @@ zuul.bonnyci-internal.portbleu.com
 
 [mysql]
 zuul.bonnyci-internal.portbleu.com
+
+[log]
+logs.bonnyci-internal.portbleu.com

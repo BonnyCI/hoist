@@ -1,0 +1,5 @@
+---
+dd_apache_status_url: http://localhost/server-status?auto
+dd_apache_disable_ssl_validation: false
+dd_apache_connect_timeout: 5
+dd_apache_receive_timeout: 15

@@ -1,0 +1,11 @@
+---
+dependencies:
+  - role: dd-checks
+
+    datadog_checks:
+      apache:
+        instances:
+          - apache_status_url: "{{ dd_apache_status_url }}"
+            disable_ssl_validation: "{{ dd_apache_disable_ssl_validation }}"
+            connect_timeout: "{{ dd_apache_connect_timeout }}"
+            receive_timeout: "{{ dd_apache_receive_timeout }}"

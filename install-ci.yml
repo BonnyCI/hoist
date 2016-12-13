@@ -43,3 +43,20 @@
       nodepool_statsd_enable: yes
       nodepool_mysql_user: "{{ secrets.nodepool.db_user }}"
       nodepool_mysql_password: "{{ secrets.nodepool.db_password }}"
+
+- name: Install logging
+  hosts: log
+  become: yes
+  tags: ['logs']
+  roles:
+    - role: apache
+      apache_vhosts:
+        - name: logs
+          server_name: logs.bonnyci.com
+          document_root: /var/www/bonny-logs
+          document_root_allow_override: None
+          document_root_mode: "0755"
+          document_root_options: "+Indexes +FollowSymLinks"
+    - role: dd-apache
+      tags:
+        - monitoring

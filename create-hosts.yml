@@ -2,6 +2,34 @@
   hosts: bastion
   become: true
   tasks:
+    - name: create security groups
+      os_security_group:
+        cloud: "{{ os_cloud }}"
+        state: present
+        name: "{{ item.name }}"
+        description: "{{ item.description | default(omit) }}"
+      with_items: "{{ security_groups | default([]) }}"
+
+    - name: create security group rules
+      os_security_group_rule:
+        cloud: "{{ os_cloud }}"
+        state: present
+        security_group: "{{ item.0.name }}"
+        direction: "{{ item.1.direction | default(omit) }}"
+        ethertype: "{{ item.1.ethertype | default(omit) }}"
+        protocol: "{{ item.1.protocol | default(omit) }}"
+        remote_group: "{{ item.1.remote_group | default(omit) }}"
+        remote_ip_prefix: "{{ item.1.remote_ip_prefix | default(omit) }}"
+        port_range_min: "{{ item.1.port_range_min | default(omit) }}"
+        port_range_max: "{{ item.1.port_range_max | default(omit) }}"
+        wait: yes
+
+      with_subelements:
+        - "{{ security_groups | default([]) }}"
+        - rules
+        - flags:
+            skip_missing: True
+
     - name: create keys
       os_keypair:
         cloud: "{{ os_cloud }}"
@@ -16,13 +44,13 @@
         name: "{{ item.name }}.bonnyci-internal.portbleu.com"
         state: present
         region_name: RegionOne
-        security_groups: default
         flavor: m1.medium
         image: "{{ item.image | default('ubuntu-16.04-py27') }}"
         auto_ip: yes
         key_name: "{{ item.key_name | default('ci-deploy-contrasjc-bastion') }}"
         nics: "{{ item.nics | default([{'net-name': 'sl-private-network-01'}]) }}"
         wait: yes
+        security_groups: "{{ item.security_groups | default('default') }}"
       register: openstack_instances
       with_items: "{{ servers }}"
 
@@ -52,6 +80,25 @@
   vars:
     os_cloud: contra-sjc
 
+    security_groups:
+      - name: ssh
+        rules:
+          - protocol: tcp
+            port_range_min: 22
+            port_range_max: 22
+
+      - name: http
+        rules:
+          - protocol: tcp
+            port_range_min: 80
+            port_range_max: 80
+
+      - name: https
+        rules:
+          - protocol: tcp
+            port_range_min: 443
+            port_range_max: 443
+
     keys:
       - name: root-contrasjc-bastion
         public_key_file: /root/.ssh/id_rsa.pub
@@ -62,3 +109,9 @@
       - name: zuul
         public_address: 169.45.113.36
       - name: nodepool
+      - name: logs
+        public_address: 169.45.113.51
+        security_groups:
+          - ssh
+          - http
+          - https
