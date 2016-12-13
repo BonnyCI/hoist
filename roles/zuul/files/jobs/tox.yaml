@@ -3,5 +3,6 @@
     node: 'ubuntu-xenial'
 
     builders:
+      - zuul-git-prep
       - shell: pip install tox
       - shell: tox -e py27
