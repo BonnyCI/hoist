@@ -1,6 +1,16 @@
 # Common file to be used across all jobs
 # macros, builders, etc..
 
+- publisher:
+    name: console-log
+    publishers:
+      - scp:
+          site: bonnyci-scp
+          files:
+            - target: 'logs/$LOG_PATH'
+              copy-console: true
+              copy-after-failure: true
+
 # This is the base builder to get source code from the project onto the builder
 # in the homedir of the user on the builder (so that all the code is available in pwd).
 # This all goes away in v3 which will push the code to the builder.

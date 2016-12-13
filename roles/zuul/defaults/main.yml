@@ -24,3 +24,9 @@ zuul_connections:
   github:
     driver: github
     api_token: "{{ secrets.zuul_github_api_key }}"
+
+zuul_sites:
+  bonnyci-scp:
+    host: logs.bonnyci.com
+    user: zuul
+    root: /var/www/bonny-logs
