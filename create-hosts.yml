@@ -62,3 +62,5 @@
       - name: zuul
         public_address: 169.45.113.36
       - name: nodepool
+      - name: logs
+        public_address: 169.45.113.51
