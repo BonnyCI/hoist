@@ -57,3 +57,6 @@
           document_root_allow_override: None
           document_root_mode: "0755"
           document_root_options: "+Indexes +FollowSymLinks"
+    - role: dd-apache
+      tags:
+        - monitoring
