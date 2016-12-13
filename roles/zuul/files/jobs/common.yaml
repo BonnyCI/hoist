@@ -30,4 +30,4 @@
               dest: .
           EOF
           /usr/zuul-env/bin/zuul-cloner -m $CLONEMAP --cache-dir /opt/git \
-              git://git.openstack.org $ZUUL_PROJECT
+              $ZUUL_URL $ZUUL_PROJECT
