@@ -8,7 +8,7 @@
           virtualenv venv
           source venv/bin/activate
           pip install tox
-          tox -e py27
+          tox -e py27,pep8
 
     publishers:
       - console-log
