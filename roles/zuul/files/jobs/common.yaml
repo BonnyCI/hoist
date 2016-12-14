@@ -39,5 +39,4 @@
             - name: $ZUUL_PROJECT
               dest: .
           EOF
-          /usr/zuul-env/bin/zuul-cloner -m $CLONEMAP --cache-dir /opt/git \
-              $ZUUL_URL $ZUUL_PROJECT
+          zuul-cloner https://github.com/ -m $CLONEMAP $ZUUL_PROJECT
