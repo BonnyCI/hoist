@@ -148,4 +148,26 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define :logs do |logs|
+    logs.vm.hostname = 'logs.vagrant'
+    logs.vm.network "private_network", ip: "10.0.0.103"
+
+    logs.vm.provider "virtualbox" do |v|
+      v.memory = '1024'
+    end
+
+    logs.vm.provision "shell", inline: INSTALL_PIP
+    logs.vm.provision "shell", inline: INJECT_CIDEPLOY_PUBKEY
+
+    logs.trigger.after [:up, :provision] do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@logs.vagrant true'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ansible-playbook -i /vagrant/inventory/vagrant /vagrant/install-ci.yml -e @/etc/secrets.yml --skip-tags monitoring --limit log'"
+    end
+
+    logs.trigger.after :destroy do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R logs.vagrant'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.102'"
+    end
+  end
+
 end

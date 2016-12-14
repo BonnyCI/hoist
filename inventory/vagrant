@@ -13,9 +13,13 @@ zm01.vagrant ansible_user=ubuntu
 [mysql]
 zuul.vagrant ansible_user=ubuntu
 
+[log]
+logs.vagrant ansible_user=ubuntu
+
 [vagrant:children]
 bastion
 zuul
 zuul_merger
 nodepool
 mysql
+log
