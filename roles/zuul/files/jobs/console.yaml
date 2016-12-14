@@ -1,9 +1,0 @@
-- publisher:
-    name: console-log
-    publishers:
-      - scp:
-          site: bonnyci-scp
-          files:
-            - target: 'logs/$LOG_PATH'
-              copy-console: true
-              copy-after-failure: true
