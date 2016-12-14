@@ -13,5 +13,8 @@ allinone
 [mysql]
 allinone
 
+[zookeeper]
+allinone
+
 [log]
 allinone
