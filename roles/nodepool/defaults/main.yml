@@ -17,6 +17,9 @@ nodepool_gearman_servers:
   - host: 127.0.0.1
     port: 4730
 
+nodepool_zmq_publishers:
+  - tcp://localhost:8888
+
 nodepool_diskimages:
   - name: ubuntu-xenial
     elements:
