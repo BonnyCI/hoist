@@ -34,6 +34,8 @@
       tags:
         - monitoring
     - role: apache
+      apache_mods_enabled:
+        - cgi.load
       apache_vhosts:
         - name: git
           server_name: zuul.bonnyci.portbleu.com
