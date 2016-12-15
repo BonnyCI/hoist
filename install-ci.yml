@@ -63,6 +63,8 @@
       nodepool_statsd_enable: yes
       nodepool_mysql_user: "{{ secrets.nodepool.db_user }}"
       nodepool_mysql_password: "{{ secrets.nodepool.db_password }}"
+      nodepool_zmq_publishers:
+        - tcp://zuul.bonnyci-internal.portbleu.com:8888
 
 - name: Install logging
   hosts: log

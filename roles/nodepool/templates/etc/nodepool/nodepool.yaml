@@ -16,6 +16,9 @@ labels:
 providers:
 {{ nodepool_providers | to_nice_yaml(indent=2) }}
 
+zmq-publishers:
+{{ nodepool_zmq_publishers | to_nice_yaml(indent=2) }}
+
 targets:
   - name: zuul
     assign-via-gearman: True
