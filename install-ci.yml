@@ -30,6 +30,7 @@
       tags:
         - monitoring
     - role: zuul
+      zuul_merger_url: http://zuul.bonnyci-internal.portbleu.com/p
     - role: dd-zuul
       tags:
         - monitoring
