@@ -1,4 +1,4 @@
-hoist_repo: git@github.ibm.com:OpenStackInnovation/hoist.git
+hoist_repo: https://github.com/BonnyCI/hoist.git
 
 nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
 nodepool_gearman_servers:
