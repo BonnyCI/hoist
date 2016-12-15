@@ -1,5 +1,8 @@
 # {{ ansible_managed }}
 
+includes:
+  - python-file: bonnyci_functions.py
+
 pipelines:
   - name: check_github
     manager: IndependentPipelineManager
@@ -49,7 +52,10 @@ pipelines:
         label: '-approved'
         status: true
 
-jobs: []
+jobs:
+  # every job invokes the set_node_options file in bonnyci_functions.py
+  - name: ^.*$
+    parameter-function: set_node_options
 
 projects:
   - name: BonnyCI/hoist

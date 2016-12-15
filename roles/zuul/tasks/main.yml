@@ -127,13 +127,20 @@
     owner: zuul
   notify: Reload zuul-server
 
+- name: install magic functions file
+  copy:
+    src: etc/zuul/config/bonnyci_functions.py
+    dest: /etc/zuul/config/bonnyci_functions.py
+    owner: zuul
+  notify: Reload zuul-server
+
 - name: Install job definitions
   synchronize:
     src: files/jobs/
     dest: /var/lib/zuul/jobs/
     rsync_opts:
       - "--chown=zuul:zuul"
- 
+
 - name: Install service environment configs
   template:
     src: etc/default/zuul
