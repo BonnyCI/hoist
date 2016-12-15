@@ -27,7 +27,7 @@ logfile="/var/www/html/cron-logs/$env/ansible_${playbook}_current.log"
 dst_logfile="/var/www/html/cron-logs/$env/ansible_${playbook}_${timestamp}.log"
 
 cd /opt/source/$env
-pip install -U -r requirements.txt
+sudo pip install -U -r requirements.txt
 trap "cp $logfile $dst_logfile; rm -f /var/www/html/cron-logs/$env/ansible_${playbook}_latest.log; ln -s $dst_logfile /var/www/html/cron-logs/$env/ansible_${playbook}_latest.log" EXIT
 
 date 2>&1 | tee $logfile
