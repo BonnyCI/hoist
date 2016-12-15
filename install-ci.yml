@@ -75,6 +75,12 @@
           document_root_allow_override: None
           document_root_mode: "0755"
           document_root_options: "+Indexes +FollowSymLinks"
+          vhost_extra: |
+            AddType text/plain .log
+            AddType text/plain .sh
+            AddType text/plain .yml
+            AddType text/plain .yaml
+
     - role: dd-apache
       tags:
         - monitoring
