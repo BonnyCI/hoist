@@ -3,3 +3,4 @@ upstream_roles/
 secrets.yml
 *.retry
 *.pyc
+.vagrant/
