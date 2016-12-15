@@ -83,3 +83,4 @@ To inspect the zuul VM::
 To tear down the entire stack when you're done::
 
    $ vagrant destroy
+   fix ci
