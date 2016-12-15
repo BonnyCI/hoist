@@ -18,7 +18,7 @@ env:
 
 before_install:
 - docker pull ubuntu:xenial
-- docker run -d --name allinone --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro -v $SSH_AUTH_SOCK:/ssh-agent --env SSH_AUTH_SOCK=/ssh-agent ubuntu:xenial systemd
+- docker run -d --name allinone --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro ubuntu:xenial systemd
 - docker exec -i allinone apt-get update
 - docker exec -i allinone apt-get install -y python-apt ca-certificates apt-transport-https sudo ssh
 
