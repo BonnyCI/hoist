@@ -88,4 +88,4 @@ To tear down the entire stack when you're done::
 Contributing
 ============
 
-See CONTRIBUTING.md in this repository
+See `CONTRIBUTING.md <CONTRIBUTING.md>`_ in this repository.

@@ -49,7 +49,7 @@ using your real name (sorry, no pseudonyms or anonymous contributions.)
 Git
 ---
 
-You can do this easily in git but using ``-s`` when you run ``git commit``
+You can do this easily in git by using ``-s`` when you run ``git commit``
 
 ```shell
 
