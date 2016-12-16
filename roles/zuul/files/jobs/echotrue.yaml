@@ -4,3 +4,6 @@
 
     builders:
       - shell: echo true
+
+    publishers:
+      - console-log
