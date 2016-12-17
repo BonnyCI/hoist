@@ -83,3 +83,9 @@ To inspect the zuul VM::
 To tear down the entire stack when you're done::
 
    $ vagrant destroy
+
+
+Contributing
+============
+
+See `CONTRIBUTING.md <CONTRIBUTING.md>`_ in this repository.
