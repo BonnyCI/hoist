@@ -52,6 +52,12 @@ pipelines:
 jobs: []
 
 projects:
+  - name: BonnyCI/hoist
+    check_github:
+      - echo-true
+    gate_github:
+      - echo-true
+
   - name: BonnyCI/sandbox
     check_github:
       - echo-true
