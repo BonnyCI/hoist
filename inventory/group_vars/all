@@ -12,5 +12,8 @@ zuul_connections:
     driver: github
     api_token: "{{ secrets.zuul_github_api_key }}"
 
+zuul_git_user_email: anne@bonnyci.org
+zuul_git_user_name: Anne Bonny
+
 bastion_clouds:
   - contra-sjc
