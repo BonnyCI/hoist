@@ -112,12 +112,6 @@
     mode: 0644
   when: knownhosts_stat.stat.exists == False
 
-- name: Install GHE host key in cideploy known_hosts
-  known_hosts:
-    name: github.ibm.com
-    path: /home/cideploy/.ssh/known_hosts
-    key: "{{ lookup('file', 'github.ibm.com.pubkey') }}"
-
 - name: Make sure everyone is in AllowUsers
   lineinfile:
     dest: /etc/ssh/sshd_config
