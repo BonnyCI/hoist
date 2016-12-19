@@ -2,6 +2,8 @@
 nodepool_source_dir: /opt/source/nodepool
 nodepool_venv_dir: /opt/venvs/nodepool
 
+nodepool_git_version: master
+
 nodepool_mysql_host: localhost
 nodepool_mysql_user: nodepool
 nodepool_mysql_password: n0Dep001
@@ -12,6 +14,10 @@ nodepool_dburi: "mysql+pymysql://{{ nodepool_mysql_user }}:{{ nodepool_mysql_pas
 nodepool_statsd_enable: no
 nodepool_statsd_host: 127.0.0.1
 nodepool_statsd_port: 8125
+
+nodepool_zookeeper_servers:
+  - host: 127.0.0.1
+    port: 2181
 
 nodepool_gearman_servers:
   - host: 127.0.0.1

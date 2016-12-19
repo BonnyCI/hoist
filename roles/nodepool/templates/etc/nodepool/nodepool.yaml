@@ -4,6 +4,9 @@ elements-dir: /etc/nodepool/elements
 images-dir: /opt/nodepool/images
 script-dir: /etc/nodepool/scripts
 
+zookeeper-servers:
+{{ nodepool_zookeeper_servers | to_nice_yaml(indent=2) }}
+
 gearman-servers:
 {{ nodepool_gearman_servers | to_nice_yaml(indent=2) }}
 

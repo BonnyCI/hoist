@@ -95,7 +95,7 @@
   git:
     dest: "{{ nodepool_source_dir }}"
     repo: https://git.openstack.org/openstack-infra/nodepool
-    version: "0.3.1"
+    version: "{{ nodepool_git_version }}"
   register: nodepool_git
 
 - name: Install nodepool
