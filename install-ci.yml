@@ -21,6 +21,16 @@
         - monitoring
     - role: databases
 
+- name: Install zookeeper
+  hosts: zookeeper
+  become: yes
+  tags: ['zookeeper']
+  roles:
+    - role: zookeeper
+    - role: dd-zookeeper
+      tags:
+        - monitoring
+
 - name: Install zuul
   hosts: zuul
   become: yes
@@ -66,6 +76,9 @@
       nodepool_mysql_password: "{{ secrets.nodepool.db_password }}"
       nodepool_zmq_publishers:
         - tcp://zuul.bonnyci-internal.portbleu.com:8888
+    - role: dd-nodepool
+      tags:
+        - monitoring
 
 - name: Install logging
   hosts: log

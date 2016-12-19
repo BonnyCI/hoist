@@ -33,7 +33,6 @@
   with_items:
     - /etc/nodepool
     - /etc/nodepool/elements
-    - /etc/nodepool/scripts
     - /opt/nodepool/images
     - /var/log/nodepool
 
@@ -95,7 +94,7 @@
   git:
     dest: "{{ nodepool_source_dir }}"
     repo: https://git.openstack.org/openstack-infra/nodepool
-    version: "0.3.1"
+    version: "{{ nodepool_git_version }}"
   register: nodepool_git
 
 - name: Install nodepool

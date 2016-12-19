@@ -17,6 +17,16 @@
     - log4j.properties
   notify: Restart zookeeper
 
+# this is not necessary, just useful to have
+- name: Link the zkCli
+  file:
+    src: "/usr/share/zookeeper/bin/{{ item }}"
+    dest: "/usr/bin/{{ item }}"
+    state: link
+  with_items:
+    - zkCli.sh
+    - zkEnv.sh
+
 - meta: flush_handlers
 
 - name: Start service
