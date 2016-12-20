@@ -7,7 +7,7 @@ Type=simple
 User=nodepool
 Group=nodepool
 EnvironmentFile=-/etc/default/nodepool
-ExecStart=/bin/sh -c "${PREFIX}/bin/nodepoold -d --no-builder --no-launches --no-images --no-webapp -l /etc/nodepool/nodepool-deleter_logging.conf"
+ExecStart=/bin/sh -c "${PREFIX}/bin/nodepoold -d --no-builder --no-launches --no-webapp -l /etc/nodepool/nodepool-deleter_logging.conf"
 
 [Install]
 WantedBy=multi-user.target
