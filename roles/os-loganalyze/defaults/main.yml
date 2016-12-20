@@ -1,0 +1,6 @@
+os_loganalyze_source_dir: /opt/source/os-loganalyze
+os_loganalyze_venv_dir: /opt/venv/os-loganalyze
+
+os_loganalyze_file_conditions: []
+os_loganalyze_git_version: master
+os_loganalyze_root_dir: '/var/www/bonnyci'

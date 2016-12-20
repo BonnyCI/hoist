@@ -1,6 +1,8 @@
 ---
 apache_vhosts: []
 
+apache_apt_install: []
+
 apache_mods_enabled: []
 apache_mods_disabled: []
 
