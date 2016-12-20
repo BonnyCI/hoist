@@ -1,0 +1,5 @@
+- name: install nodepool check
+  copy:
+    src: nodepool_server.py
+    dest: "{{ datadog_file_dir }}/nodepool_server.py"
+  notify: restart dd-agent
