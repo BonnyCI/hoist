@@ -90,6 +90,12 @@
     owner: root
     content: "nodepool ALL=(ALL) NOPASSWD:ALL"
 
+- name: Ensure latest diskimage-builder
+  pip:
+    name: diskimage-builder
+    virtualenv: "{{ nodepool_venv_dir }}"
+    state: latest
+
 - name: Git clone nodepool
   git:
     dest: "{{ nodepool_source_dir }}"
