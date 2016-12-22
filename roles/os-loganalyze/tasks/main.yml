@@ -1,0 +1,41 @@
+---
+- name: install required packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - build-essential
+    - libffi-dev
+    - libssl-dev
+    - python-dev
+    - git
+
+- name: create dirs
+  file:
+    state: directory
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - /etc/os_loganalyze/wsgi
+
+- name: create config files
+  template:
+    src: "etc/os_loganalyze/{{ item }}"
+    dest: "/etc/os_loganalyze/{{ item }}"
+  with_items:
+    - wsgi.conf
+    - file_conditions.yaml
+    - wsgi/os-loganalyze.py
+
+- name: git clone os_loganalyze
+  git:
+    dest: "{{ os_loganalyze_source_dir }}"
+    repo: https://git.openstack.org/openstack-infra/os-loganalyze
+    version: "{{ os_loganalyze_git_version }}"
+  register: os_loganalyze_git
+
+- name: install os_loganalyze
+  pip:
+    name: "{{ os_loganalyze_source_dir }}"
+    virtualenv: "{{ os_loganalyze_venv_dir }}"
+    state: latest
+  when: os_loganalyze_git.changed

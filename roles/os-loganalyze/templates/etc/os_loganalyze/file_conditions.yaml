@@ -1,0 +1,1 @@
+{{ {'conditions': os_loganalyze_file_conditions } | to_nice_yaml(indent=2) }}
