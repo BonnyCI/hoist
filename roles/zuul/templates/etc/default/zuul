@@ -1,7 +1,5 @@
 # {{ ansible_managed }}
 
-PREFIX={{ zuul_venv_dir }}
-
 PATH={{ zuul_venv_dir }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 {% if zuul_statsd_enable %}
 STATSD_HOST={{ zuul_statsd_host }}

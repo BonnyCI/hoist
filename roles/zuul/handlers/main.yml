@@ -2,6 +2,15 @@
 - name: Reload systemd units
   command: systemctl daemon-reload
 
+- name: check zuul-server is running
+  command: pgrep zuul-server
+  register: zuul_check_running
+  changed_when: false
+  failed_when: zuul_check_running.rc == 127
+  listen:
+    - Restart zuul
+    - Reload zuul-server
+
 - name: Restart zuul
   service:
     name: "{{ item }}"
@@ -10,9 +19,11 @@
     - zuul-launcher
     - zuul-merger
     - zuul-server
-  when: zuul_allow_restart_services | bool
+  when: zuul_check_running.rc == 0 and (zuul_allow_restart_services | bool)
+  register: zuul_restarted
 
 - name: Reload zuul-server
-  command: pkill --signal SIGHUP zuul-server
-  register: pkill
-  failed_when: pkill | failed and pkill.rc != 1
+  service:
+    name: zuul-server
+    state: reloaded
+  when: zuul_check_running.rc == 0 and (zuul_restarted is not defined or not zuul_restarted.changed)

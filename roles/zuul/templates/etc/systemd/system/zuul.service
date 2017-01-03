@@ -8,7 +8,7 @@ User=zuul
 Group=zuul
 LimitNOFILE=8192
 EnvironmentFile=-/etc/default/{{ item }}
-ExecStart=/bin/sh -c "${PREFIX}/bin/{{ item }} -d"
+ExecStart={{ zuul_venv_dir }}/bin/{{ item }} -d
 ExecReload=/bin/kill -HUP $MAINPID
 
 [Install]
