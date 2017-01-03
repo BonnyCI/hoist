@@ -21,10 +21,12 @@ pipelines:
     success:
       github:
         status: true
+        status_url: &log_link https://logs.bonnyci.com/{pipeline.name}/{change.project.name}/{change.number}/{item.enqueue_time}
         comment: false
     failure:
       github:
         status: true
+        status_url: *log_link
         comment: true
 
   - name: gate_github
@@ -46,11 +48,13 @@ pipelines:
         merge: true
         label: 'approved'
         status: true
+        status_url: *log_link
     failure:
       github:
         comment: true
         label: '-approved'
         status: true
+        status_url: *log_link
 
 jobs:
   # every job invokes the set_node_options file in bonnyci_functions.py
