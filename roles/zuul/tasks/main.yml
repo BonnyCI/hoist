@@ -140,6 +140,7 @@
     dest: /var/lib/zuul/jobs/
     rsync_opts:
       - "--chown=zuul:zuul"
+  notify: Reconfigure zuul-launcher
 
 - name: Install service environment configs
   template:

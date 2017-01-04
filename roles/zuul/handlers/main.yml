@@ -4,9 +4,9 @@
 
 - name: check zuul-server is running
   command: pgrep zuul-server
-  register: zuul_check_running
+  register: zuul_check_server
   changed_when: false
-  failed_when: zuul_check_running.rc == 127
+  failed_when: zuul_check_server.rc == 127
   listen:
     - Restart zuul
     - Reload zuul-server
@@ -19,11 +19,23 @@
     - zuul-launcher
     - zuul-merger
     - zuul-server
-  when: zuul_check_running.rc == 0 and (zuul_allow_restart_services | bool)
+  when: zuul_check_server.rc == 0 and (zuul_allow_restart_services | bool)
   register: zuul_restarted
 
 - name: Reload zuul-server
   service:
     name: zuul-server
     state: reloaded
-  when: zuul_check_running.rc == 0 and (zuul_restarted is not defined or not zuul_restarted.changed)
+  when: zuul_check_server.rc == 0 and (zuul_restarted is not defined or not zuul_restarted.changed)
+
+- name: check zuul-launcher is running
+  command: pgrep zuul-launcher
+  register: zuul_check_launcher
+  changed_when: false
+  failed_when: zuul_check_launcher.rc == 127
+  listen:
+    - Reconfigure zuul-launcher
+
+- name: Reconfigure zuul-launcher
+  command: /opt/venvs/zuul/bin/zuul-launcher reconfigure
+  when: zuul_check_launcher.rc == 0
