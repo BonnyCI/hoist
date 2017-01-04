@@ -41,6 +41,7 @@ nodepool_diskimages:
     env-vars:
       DIB_DEV_USER_USERNAME: bonnyci
       DIB_DEV_USER_AUTHORIZED_KEYS: /etc/nodepool/slave-authorized-keys
+      DIB_PYTHON_VERSION: 2
 
 nodepool_labels:
   - name: ubuntu-xenial
