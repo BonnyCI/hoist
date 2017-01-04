@@ -5,8 +5,10 @@
     builders:
       - zuul-git-prep
       - shell: |
-          virtualenv venv
-          source venv/bin/activate
+          tmpdir=$(mktemp -d)
+          trap "rm -rf $tmpdir" EXIT
+          virtualenv $tmpdir/venv
+          source $tmpdir/venv/bin/activate
           pip install tox
           tox -e py27,pep8
 
