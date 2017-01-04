@@ -23,4 +23,4 @@ set -e
 
 # Our use requires zuul be installed so that we can call zuul-cloner
 # The source is put in place by the source-repositories element.
-pip install /opt/zuul/
+pip2 install /opt/zuul/
