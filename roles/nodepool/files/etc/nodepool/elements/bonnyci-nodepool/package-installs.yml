@@ -1,4 +1,5 @@
 build-essential:
 python-dev:
+python3-dev:
 libssl-dev:
 libffi-dev:
