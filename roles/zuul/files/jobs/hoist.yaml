@@ -1,0 +1,17 @@
+- job:
+    name: ubuntu-hoist
+    node: 'ubuntu-hoist'
+
+    builders:
+      - zuul-git-prep
+      - shell: |
+          tmpdir=$(mktemp -d)
+          trap "rm -rf $tmpdir" EXIT
+          virtualenv $tmpdir/venv
+          source $tmpdir/venv/bin/activate
+          pip install ansible
+          pip install -r requirements.txt
+          # more to add here
+
+    publishers:
+      - console-log

@@ -32,7 +32,6 @@
     mode: 0755
   with_items:
     - /etc/nodepool
-    - /etc/nodepool/elements
     - /opt/nodepool/images
     - /var/log/nodepool
 
@@ -120,10 +119,10 @@
   when: nodepool_statsd_enable
 
 # This should be maintained in a project-config repo.
-- name: Copy elements
+- name: Copy nodepool configuration
   synchronize:
-    src: files/etc/nodepool/elements/
-    dest: /etc/nodepool/elements/
+    src: files/etc/nodepool/
+    dest: /etc/nodepool/
     rsync_opts:
       - "--chown=nodepool:nodepool"
 

@@ -64,7 +64,7 @@ jobs:
 projects:
   - name: BonnyCI/hoist
     check_github:
-      - echo-true
+      - ubuntu-hoist
     gate_github:
       - echo-true
 

@@ -50,6 +50,13 @@ nodepool_labels:
     min-ready: 1
     providers:
       - name: cicloud
+  - name: ubuntu-hoist
+    image: ubuntu-xenial
+    min-ready: 0
+    subnodes: 2
+    ready-script: subnode-ssh.sh
+    providers:
+      - name: cicloud
 
 nodepool_providers:
   - name: cicloud
