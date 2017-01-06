@@ -30,6 +30,9 @@ function primary_node {
     # install the ssh key into the user
     cp /etc/nodepool/id_rsa /etc/nodepool/id_rsa.pub ~/.ssh
     chmod 600 ~/.ssh/id_rsa ~/.ssh/id_rsa.pub
+
+    # put the subnodes into known_hosts
+    ssh-keyscan -H -f /etc/nodepool/sub_nodes >> ~/.ssh/known_hosts
 }
 
 
