@@ -1,0 +1,5 @@
+- src: geerlingguy.filebeat
+- src: geerlingguy.java
+- src: https://github.com/jesusaurus/ansible-role-logstash
+  version: arbitrary-outputs
+  name: geerlingguy.logstash
