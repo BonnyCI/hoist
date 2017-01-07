@@ -3,6 +3,9 @@ bastion_clouds:
 
 datadog_enabled: no
 
+filebeat_output_logstash_hosts:
+  - "monitor.vagrant:5044"
+
 hoist_repo: /vagrant/.git
 
 nodepool_providers:

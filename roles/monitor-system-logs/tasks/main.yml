@@ -1,0 +1,5 @@
+- name: Create logstash output dir
+  file:
+    path: /var/www/html/logstash
+    state: directory
+    owner: logstash

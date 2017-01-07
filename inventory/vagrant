@@ -13,9 +13,13 @@ zuul.vagrant ansible_user=ubuntu
 [log]
 logs.vagrant ansible_user=ubuntu
 
+[monitor]
+monitor.vagrant ansible_user=ubuntu
+
 [vagrant:children]
 bastion
 zuul
 nodepool
 mysql
 log
+monitor
