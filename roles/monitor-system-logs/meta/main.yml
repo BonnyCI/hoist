@@ -1,0 +1,31 @@
+dependencies:
+  - role: java
+  - role: logstash
+    logstash_monitor_local_syslog: false
+    logstash_outputs:
+      file:
+        path: '"/var/www/html/logstash/%{host}/%{source}"'
+        codec: 'line { format => "%{message}" }'
+  - role: tailon
+    tailon_ip: 127.0.0.1
+    tailon_port: 8080
+    tailon_relative_root: /tailon/
+    tailon_files:
+      - "/var/www/html/logstash/nodepool/var/log/nodepool/*log"
+      - "/var/www/html/logstash/zuul/var/log/zuul/*log"
+  - role: apache
+    apache_mods_enabled:
+      - proxy.conf
+      - proxy.load
+      - proxy_http.load
+    apache_vhosts:
+      - name: tailon
+        document_root: /var/www/html/
+        document_root_options: +FollowSymLinks
+        vhost_extra: |
+          AddType text/plain .log
+          Redirect permanent /tailon /tailon/
+          ProxyPass "/tailon/" http://localhost:{{ tailon_port }}/tailon/
+  - role: dd-apache
+    tags:
+      - monitoring

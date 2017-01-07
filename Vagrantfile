@@ -134,4 +134,27 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define :monitor do |monitor|
+    monitor.vm.hostname = 'monitor.vagrant'
+    monitor.vm.network "private_network", ip: "10.0.0.103"
+    monitor.vm.network "forwarded_port", guest: 80, host: 8083
+
+    monitor.vm.provider "virtualbox" do |v|
+      v.memory = '1024'
+    end
+
+    monitor.vm.provision "shell", path: "tools/install-pip.sh"
+    monitor.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
+
+    monitor.trigger.after [:up, :provision] do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@monitor.vagrant true'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit monitor'"
+    end
+
+    monitor.trigger.after :destroy do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R monitor.vagrant'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.103'"
+    end
+  end
+
 end

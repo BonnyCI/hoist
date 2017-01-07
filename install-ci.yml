@@ -55,6 +55,15 @@
       tags:
         - monitoring
 
+    - role: filebeat
+      filebeat_prospectors:
+        - input_type: log
+          paths:
+            - /var/log/zuul/gearman.log
+            - /var/log/zuul/launcher.log
+            - /var/log/zuul/merger.log
+            - /var/log/zuul/server.log
+
     - role: logrotate
       logrotate_configs:
         - name: zuul
@@ -74,11 +83,21 @@
     - role: nodepool
       nodepool_mysql_user: "{{ secrets.nodepool.db_user }}"
       nodepool_mysql_password: "{{ secrets.nodepool.db_password }}"
+
     - role: dd-nodepool
       tags:
         - monitoring
 
-- name: Install logging
+    - role: filebeat
+      filebeat_prospectors:
+        - input_type: log
+          paths:
+            - /var/log/nodepool/nodepool-builder.log
+            - /var/log/nodepool/nodepool-deleter.log
+            - /var/log/nodepool/nodepool-launcher.log
+            - /var/log/nodepool/nodepoold.log
+
+- name: Serve test-output logs
   hosts: log
   become: yes
   tags: ['logs']
@@ -95,3 +114,10 @@
     - role: dd-apache
       tags:
         - monitoring
+
+- name: Serve system logs
+  hosts: monitor
+  become: yes
+  tags: ['logs']
+  roles:
+    - role: monitor-system-logs
