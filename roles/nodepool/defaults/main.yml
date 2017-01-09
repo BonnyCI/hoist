@@ -35,6 +35,7 @@ nodepool_diskimages:
       - growroot
       - openssh-server
       - devuser
+      - haveged
       - pip-and-virtualenv
       - bonnyci-nodepool
     release: xenial
