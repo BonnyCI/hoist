@@ -11,9 +11,9 @@
           ls /etc/ssl/certs
           virtualenv $tmpdir/venv
           source $tmpdir/venv/bin/activate
-          pip install git+https://github.com/jamielennox/ansible.git@ssl-testing#egg=ansible
+          pip install git+https://github.com/jamielennox/ansible.git@ssl-exception-msg#egg=ansible
           pip install -r requirements.txt
-          ansible-playbook -i inventory/nodepool.py install-ci.yml --skip-tags monitoring -e @secrets.yml.example
+          ansible-playbook -vvvv -i inventory/nodepool.py install-ci.yml --skip-tags monitoring -e @secrets.yml.example
 
     publishers:
       - console-log
