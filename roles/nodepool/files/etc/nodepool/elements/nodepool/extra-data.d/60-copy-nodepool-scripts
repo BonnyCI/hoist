@@ -18,5 +18,11 @@ if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
 fi
 set -e
 
-# Copy the scripts from the nodepool script dir into the staging directory.
-cp -ar /etc/nodepool/scripts $TMP_HOOKS_PATH/nodepool-scripts
+mkdir -p $TMP_HOOKS_PATH/nodepool-scripts
+
+if [ -n $DIB_NODEPOOL_SCRIPT_DIR ]; then
+    # Copy the scripts from the nodepool script dir into the staging directory.
+    pushd $DIB_NODEPOOL_SCRIPT_DIR
+    cp -ar $DIB_NODEPOOL_SCRIPTS $TMP_HOOKS_PATH/nodepool-scripts/
+    popd
+fi
