@@ -7,11 +7,9 @@
       - shell: |
           tmpdir=$(mktemp -d)
           trap "rm -rf $tmpdir" EXIT
-          dpkg -s ca-certificates
-          ls /etc/ssl/certs
           virtualenv $tmpdir/venv
           source $tmpdir/venv/bin/activate
-          pip install git+https://github.com/jamielennox/ansible.git@ssl-exception-msg#egg=ansible
+          pip install ansible
           pip install -r requirements.txt
           ansible-playbook -vvvv -i inventory/nodepool.py install-ci.yml --skip-tags monitoring -e @secrets.yml.example
 
