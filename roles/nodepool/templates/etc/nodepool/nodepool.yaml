@@ -4,22 +4,22 @@ elements-dir: /etc/nodepool/elements
 images-dir: /opt/nodepool/images
 
 zookeeper-servers:
-{{ nodepool_zookeeper_servers | to_nice_yaml(indent=2) }}
+{{ nodepool_zookeeper_servers | to_nice_yaml(indent=2) | indent(2, True) }}
 
 gearman-servers:
-{{ nodepool_gearman_servers | to_nice_yaml(indent=2) }}
+{{ nodepool_gearman_servers | to_nice_yaml(indent=2) | indent(2, True) }}
 
 diskimages:
-{{ nodepool_diskimages | to_nice_yaml(indent=2) }}
+{{ nodepool_diskimages | to_nice_yaml(indent=2) | indent(2, True) }}
 
 labels:
-{{ nodepool_labels | to_nice_yaml(indent=2) }}
+{{ nodepool_labels | to_nice_yaml(indent=2) | indent(2, True) }}
 
 providers:
-{{ nodepool_providers | to_nice_yaml(indent=2) }}
+{{ nodepool_providers | to_nice_yaml(indent=2) | indent(2, True) }}
 
 zmq-publishers:
-{{ nodepool_zmq_publishers | to_nice_yaml(indent=2) }}
+{{ nodepool_zmq_publishers | to_nice_yaml(indent=2) | indent(2, True) }}
 
 targets:
   - name: zuul
