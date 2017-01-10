@@ -18,16 +18,7 @@ zuul_merger_url: 127.0.0.1
 zuul_git_user_name: user@domain.io
 zuul_git_user_email: My Name
 
-zuul_connections:
-  gerrit:
-    driver: gerrit
-    port: 29418
-    server: 127.0.0.1
-    sshkey: /var/lib/zuul/.ssh/id_rsa
-    user: zuul
-  github:
-    driver: github
-    api_token: "{{ secrets.zuul_github_api_key }}"
+zuul_connections: {}
 
 zuul_sites:
   bonnyci-scp:

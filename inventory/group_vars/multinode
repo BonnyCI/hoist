@@ -5,6 +5,9 @@ bastion_clouds:
 
 datadog_enabled: no
 
+nodepool_gearman_servers:
+  - host: "{{ zuul_ip }}"
+    port: 4730
 nodepool_providers:
   - name: cicloud
     cloud: cicloud
@@ -14,13 +17,13 @@ nodepool_providers:
         min-ram: 2048
         diskimage: ubuntu-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
-
 nodepool_mysql_host: "{{ zuul_ip }}"
-nodepool_gearman_servers:
-  - host: "{{ zuul_ip }}"
-    port: 4730
+nodepool_statsd_enable: no
+nodepool_zmq_publishers:
+  - "tcp://{{ zuul_ip }}:8888"
 
-zuul_statsd_enable: no
 zuul_connections:
   github:
     driver: github
+zuul_merger_url: "http://{{ zuul_ip }}/p"
+zuul_statsd_enable: no

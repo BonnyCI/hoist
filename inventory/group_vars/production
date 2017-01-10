@@ -1,12 +1,16 @@
 bastion_clouds:
   - contra-sjc
 
-nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730
+nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
+nodepool_statsd_enable: yes
+nodepool_zmq_publishers:
+  - tcp://zuul.bonnyci-internal.portbleu.com:8888
 
 zuul_connections:
   github:
     driver: github
     api_token: "{{ secrets.zuul_github_api_key }}"
+zuul_merger_url: http://zuul.bonnyci-internal.portbleu.com/p
