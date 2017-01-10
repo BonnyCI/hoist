@@ -7,7 +7,34 @@ bonnyci_zuul_apache_server_name: zuul.bonnyci.portbleu.com
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730
+nodepool_labels:
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud
+  - name: ubuntu-hoist
+    image: ubuntu-xenial
+    min-ready: 0
+    subnodes: 2
+    ready-script: subnode-ssh.sh
+    providers:
+      - name: cicloud
 nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
+nodepool_providers:
+  - name: cicloud
+    cloud: contra-sjc
+    max-servers: 10
+    networks:
+      - name: 'sl-private-network-01'
+        public: True
+    images:
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+        user-home: /home/bonnyci
+        username: bonnyci
 nodepool_statsd_enable: yes
 nodepool_zmq_publishers:
   - tcp://zuul.bonnyci-internal.portbleu.com:8888

@@ -11,6 +11,12 @@ datadog_enabled: no
 nodepool_gearman_servers:
   - host: "{{ zuul_ip }}"
     port: 4730
+nodepool_labels:
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud
 nodepool_providers:
   - name: cicloud
     cloud: cicloud
