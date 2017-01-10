@@ -39,10 +39,14 @@
     - role: dd-gearman
       tags:
         - monitoring
+
     - role: zuul
+      zuul_merger_git_dir: "{{ bonnyci_zuul_merger_git_dir }}"
+
     - role: dd-zuul
       tags:
         - monitoring
+
     - role: apache
       apache_mods_enabled: "{{ bonnyci_zuul_apache_mods_enabled }}"
       apache_vhosts: "{{ bonnyci_zuul_apache_vhosts }}"

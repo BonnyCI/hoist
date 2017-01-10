@@ -9,9 +9,11 @@ bonnyci_zuul_apache_vhosts:
          Require all granted
       </LocationMatch>
 
-      SetEnv GIT_PROJECT_ROOT /var/lib/zuul/git
+      SetEnv GIT_PROJECT_ROOT {{ bonnyci_zuul_merger_git_dir }}
       SetEnv GIT_HTTP_EXPORT_ALL 1
 
-      AliasMatch ^/p/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ /var/lib/zuul/git/$1
-      AliasMatch ^/p/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ /var/lib/zuul/git/$1
+      AliasMatch ^/p/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ {{ bonnyci_zuul_merger_git_dir }}/$1
+      AliasMatch ^/p/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ {{ bonnyci_zuul_merger_git_dir }}/$1
       ScriptAlias /p/ /usr/lib/git-core/git-http-backend/
+
+bonnyci_zuul_merger_git_dir: /var/lib/zuul/git
