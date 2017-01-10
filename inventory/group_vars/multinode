@@ -1,3 +1,5 @@
+zuul_ip: "{{ hostvars['zuul.multinode']['ansible_default_ipv4']['address'] }}"
+
 bastion_clouds:
   - bastioncloud
 
@@ -13,9 +15,9 @@ nodepool_providers:
         diskimage: ubuntu-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
 
-nodepool_mysql_host: zuul.multinode
+nodepool_mysql_host: "{{ zuul_ip }}"
 nodepool_gearman_servers:
-  - host: zuul.multinode
+  - host: "{{ zuul_ip }}"
     port: 4730
 
 zuul_statsd_enable: no
