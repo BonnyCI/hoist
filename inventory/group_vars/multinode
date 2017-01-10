@@ -4,6 +4,7 @@ bastion_clouds:
   - bastioncloud
 
 bonnyci_logs_apache_server_name: logs.multinode
+bonnyci_zuul_apache_server_name: zuul.multinode
 
 datadog_enabled: no
 

@@ -2,6 +2,7 @@ bastion_clouds:
   - contra-sjc
 
 bonnyci_logs_apache_server_name: logs.bonnyci.com
+bonnyci_zuul_apache_server_name: zuul.bonnyci.portbleu.com
 
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
