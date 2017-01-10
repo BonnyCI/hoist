@@ -3,6 +3,8 @@ zuul_ip: "{{ hostvars['zuul.multinode']['ansible_default_ipv4']['address'] }}"
 bastion_clouds:
   - bastioncloud
 
+bonnyci_logs_apache_server_name: logs.multinode
+
 datadog_enabled: no
 
 nodepool_gearman_servers:

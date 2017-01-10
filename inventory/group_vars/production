@@ -1,6 +1,8 @@
 bastion_clouds:
   - contra-sjc
 
+bonnyci_logs_apache_server_name: logs.bonnyci.com
+
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730
