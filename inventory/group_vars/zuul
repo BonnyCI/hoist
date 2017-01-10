@@ -1,0 +1,19 @@
+bonnyci_zuul_apache_mods_enabled:
+  - cgi.load
+
+bonnyci_zuul_apache_vhosts:
+  - name: git
+    server_name: "{{ bonnyci_zuul_apache_server_name | default('zuul') }}"
+    vhost_extra: |
+      <LocationMatch "^/p/">
+         Require all granted
+      </LocationMatch>
+
+      SetEnv GIT_PROJECT_ROOT {{ bonnyci_zuul_merger_git_dir }}
+      SetEnv GIT_HTTP_EXPORT_ALL 1
+
+      AliasMatch ^/p/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$ {{ bonnyci_zuul_merger_git_dir }}/$1
+      AliasMatch ^/p/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$ {{ bonnyci_zuul_merger_git_dir }}/$1
+      ScriptAlias /p/ /usr/lib/git-core/git-http-backend/
+
+bonnyci_zuul_merger_git_dir: /var/lib/zuul/git

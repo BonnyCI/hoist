@@ -65,11 +65,15 @@ def get_inventory(subnodes):
     if not subnodes:
         fail("No subnodes found in the file")
 
-    output['nodepool'] = {'hosts': ['nodepool']}
-    output['zookeeper'] = {'hosts': ['nodepool']}
-    output['zuul'] = {'hosts': ['zuul']}
-    output['mysql'] = {'hosts': ['zuul']}
-    #output['log'] = {'hosts': ['logs']}
+    output['nodepool'] = {'hosts': ['nodepool.multinode']}
+    output['zookeeper'] = {'hosts': ['nodepool.multinode']}
+    output['zuul'] = {'hosts': ['zuul.multinode']}
+    output['mysql'] = {'hosts': ['zuul.multinode']}
+    #output['log'] = {'hosts': ['logs.multinode']}
+    output['multinode'] = {'hosts': ['nodepool.multinode',
+                                     'zuul.multinode',
+                                     #'logs.multinode',
+                                     ]}
 
     return output
 
@@ -77,14 +81,13 @@ def get_inventory(subnodes):
 def get_variables(subnodes, host):
     output = {}
 
-    if host == 'nodepool':
+    if host == 'nodepool.multinode':
         output['ansible_host'] = subnodes[0]
-        output['zookeeper_myid'] = 1
 
-    elif host == 'zuul':
+    elif host == 'zuul.multinode':
         output['ansible_host'] = subnodes[1]
 
-    elif host == 'log':
+    elif host == 'log.multinode':
         output['ansible_host'] = subnodes[2]
 
     else:

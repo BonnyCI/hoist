@@ -1,0 +1,38 @@
+zuul_ip: "{{ hostvars['zuul.multinode']['ansible_default_ipv4']['address'] }}"
+
+bastion_clouds:
+  - bastioncloud
+
+bonnyci_logs_apache_server_name: logs.multinode
+bonnyci_zuul_apache_server_name: zuul.multinode
+
+datadog_enabled: no
+
+nodepool_gearman_servers:
+  - host: "{{ zuul_ip }}"
+    port: 4730
+nodepool_labels:
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud
+nodepool_providers:
+  - name: cicloud
+    cloud: cicloud
+    max-servers: 10
+    images:
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+nodepool_mysql_host: "{{ zuul_ip }}"
+nodepool_statsd_enable: no
+nodepool_zmq_publishers:
+  - "tcp://{{ zuul_ip }}:8888"
+
+zuul_connections:
+  github:
+    driver: github
+zuul_merger_url: "http://{{ zuul_ip }}/p"
+zuul_statsd_enable: no

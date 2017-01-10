@@ -1,0 +1,20 @@
+nodepool_diskimages:
+  - name: ubuntu-xenial
+    elements:
+      - ubuntu-minimal
+      - vm
+      - simple-init
+      - growroot
+      - openssh-server
+      - devuser
+      - haveged
+      - pip-and-virtualenv
+      - nodepool
+      - bonnyci-nodepool
+    release: xenial
+    env-vars:
+      DIB_DEV_USER_USERNAME: bonnyci
+      DIB_DEV_USER_AUTHORIZED_KEYS: /etc/nodepool/slave-authorized-keys
+      DIB_DEV_USER_PWDLESS_SUDO: 'Yes'
+      DIB_NODEPOOL_SCRIPT_DIR: /etc/nodepool/scripts
+      DIB_PYTHON_VERSION: '2'

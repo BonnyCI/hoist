@@ -26,52 +26,8 @@ nodepool_gearman_servers:
 nodepool_zmq_publishers:
   - tcp://localhost:8888
 
-nodepool_diskimages:
-  - name: ubuntu-xenial
-    elements:
-      - ubuntu-minimal
-      - vm
-      - simple-init
-      - growroot
-      - openssh-server
-      - devuser
-      - haveged
-      - pip-and-virtualenv
-      - nodepool
-      - bonnyci-nodepool
-    release: xenial
-    env-vars:
-      DIB_DEV_USER_USERNAME: bonnyci
-      DIB_DEV_USER_AUTHORIZED_KEYS: /etc/nodepool/slave-authorized-keys
-      DIB_DEV_USER_PWDLESS_SUDO: 'Yes'
-      DIB_NODEPOOL_SCRIPT_DIR: /etc/nodepool/scripts
-      DIB_PYTHON_VERSION: '2'
+nodepool_diskimages: []
 
-nodepool_labels:
-  - name: ubuntu-xenial
-    image: ubuntu-xenial
-    min-ready: 1
-    providers:
-      - name: cicloud
-  - name: ubuntu-hoist
-    image: ubuntu-xenial
-    min-ready: 0
-    subnodes: 2
-    ready-script: subnode-ssh.sh
-    providers:
-      - name: cicloud
+nodepool_labels: []
 
-nodepool_providers:
-  - name: cicloud
-    cloud: contra-sjc
-    max-servers: 10
-    networks:
-      - name: 'sl-private-network-01'
-        public: True
-    images:
-      - name: ubuntu-xenial
-        min-ram: 2048
-        diskimage: ubuntu-xenial
-        private-key: /var/lib/nodepool/.ssh/id_rsa
-        user-home: /home/bonnyci
-        username: bonnyci
+nodepool_providers: []
