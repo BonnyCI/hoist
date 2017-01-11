@@ -36,11 +36,11 @@
       command: pgrep -f /opt/venvs/nodepool/bin/nodepoold
 
     - name: validate nodepool operation
+      become: yes
+      become_user: nodepool
       command: /opt/venvs/nodepool/bin/nodepool {{ item }}
       with_items:
         - config-validate
         - list
         - job-list
         - dib-image-list
-      vars:
-        - ansible_user: nodepool

@@ -12,8 +12,8 @@ matrix:
 
 env:
   - TEST_RUN="ansible-playbook -i herp, bastion.yml install-ci.yml provision.yml tests/validate-ci.yml --syntax-check"
-  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example -e ansible_become=no --skip-tags ddapi"
-  - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example -e ansible_become=no --skip-tags ddapi"
+  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags ddapi"
+  - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags ddapi"
   - TEST_RUN="python test/layout-checks.py job-list.txt"
   - TEST_RUN="test/signed-off-by-test.sh"
 
