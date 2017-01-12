@@ -1,0 +1,33 @@
+- builder:
+    name: install-ansible
+    builders:
+      - shell: |
+          echo Installing ansible into /opt/venvs/ansible
+          echo Be sure to source /opt/venvs/ansible/bin/activate in
+          echo your builder step to use this virtualenv
+
+          virtualenv /opt/venvs/ansible
+          source /opt/venvs/ansible/bin/activate
+          pip install ansible
+
+          if test -r requirements.txt; do
+            pip install -r requirements.txt
+          fi
+
+          if test -r requirements.yml; do
+            ansible-galaxy install -r requirements.yml
+          fi
+
+- job:
+    name: ansible-syntax
+    node: 'ubuntu-xenial'
+
+    builders:
+      - zuul-git-prep
+      - install-ansible
+      - shell: |
+          source /opt/venvs/ansible/bin/activate
+          ansible-playbook -i /dev/null --syntax-check $(find . tests -maxdepth 1 -type f -name \*.yml -not -name .travis.yml)
+
+    publishers:
+      - console-log

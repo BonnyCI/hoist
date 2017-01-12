@@ -65,6 +65,7 @@ projects:
   - name: BonnyCI/hoist
     check_github:
       - ubuntu-hoist
+      - ansible-syntax
     gate_github:
       - echo-true
 
