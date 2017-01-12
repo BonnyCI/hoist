@@ -6,6 +6,10 @@
           echo Be sure to source /opt/venvs/ansible/bin/activate in
           echo your builder step to use this virtualenv
 
+          #TODO: bake this into the image
+          sudo mkdir /opt/venvs
+          sudo chown bonnyci /opt/venvs
+
           virtualenv /opt/venvs/ansible
           source /opt/venvs/ansible/bin/activate
           pip install ansible
