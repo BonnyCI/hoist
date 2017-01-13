@@ -12,3 +12,13 @@
 
     publishers:
       - console-log
+
+- job:
+    name: hoist-checks
+    node: 'ubuntu-xenial'
+
+    builders:
+      - zuul-git-prep
+      - shell: |
+          ./tests/signed-off-by-test.sh
+          python tests/layout-checks.py job-list.txt

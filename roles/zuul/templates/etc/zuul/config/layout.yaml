@@ -66,6 +66,7 @@ projects:
     check_github:
       - ubuntu-hoist
       - ansible-syntax
+      - hoist-checks
     gate_github:
       - echo-true
 
