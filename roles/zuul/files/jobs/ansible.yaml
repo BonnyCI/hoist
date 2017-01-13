@@ -14,11 +14,11 @@
           source /opt/venvs/ansible/bin/activate
           pip install ansible
 
-          if test -r requirements.txt; do
+          if test -r requirements.txt; then
             pip install -r requirements.txt
           fi
 
-          if test -r requirements.yml; do
+          if test -r requirements.yml; then
             ansible-galaxy install -r requirements.yml
           fi
 
