@@ -38,7 +38,7 @@ pipelines:
         - event: pr-label
           label: 'approved'
         - event: pr-comment
-          comment: (?i)gaterecheck
+          comment: (?i)gate-recheck
     start:
       github:
         comment: true
