@@ -15,6 +15,7 @@ env:
   - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags ddapi"
   - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags ddapi"
   - TEST_RUN="python tests/layout-checks.py job-list.txt"
+  - TEST_RUN="tests/shellcheck-test.sh"
   - TEST_RUN="tests/signed-off-by-test.sh"
 
 before_install:
