@@ -55,6 +55,17 @@
       tags:
         - monitoring
 
+    - role: logrotate
+      logrotate_configs:
+        - name: zuul
+          path: /var/log/zuul/*log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
 - name: Install nodepool
   hosts: nodepool
   become: yes
