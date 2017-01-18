@@ -88,4 +88,4 @@ To tear down the entire stack when you're done::
 Contributing
 ============
 
-See `CONTRIBUTING.md <CONTRIBUTING.md>`_ in this repository.
+See `our documentation on contributing <https://github.com/BonnyCI/lore/tree/master/contributing>`_.
