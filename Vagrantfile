@@ -128,31 +128,9 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.define :zm01 do |zm01|
-    zm01.vm.hostname = 'zm01.vagrant'
-    zm01.vm.network "private_network", ip: "10.0.0.102"
-
-    zm01.vm.provider "virtualbox" do |v|
-      v.memory = '1024'
-    end
-
-    zm01.vm.provision "shell", inline: INSTALL_PIP
-    zm01.vm.provision "shell", inline: INJECT_CIDEPLOY_PUBKEY
-
-    zm01.trigger.after [:up, :provision] do
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@zm01.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ansible-playbook -i /vagrant/inventory/vagrant /vagrant/install-ci.yml -e @/etc/secrets.yml --skip-tags monitoring --limit zuul_merger'"
-    end
-
-    zm01.trigger.after :destroy do
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R zm01.vagrant'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.102'"
-    end
-  end
-
   config.vm.define :logs do |logs|
     logs.vm.hostname = 'logs.vagrant'
-    logs.vm.network "private_network", ip: "10.0.0.103"
+    logs.vm.network "private_network", ip: "10.0.0.102"
 
     logs.vm.provider "virtualbox" do |v|
       v.memory = '1024'
@@ -168,7 +146,7 @@ Vagrant.configure(2) do |config|
 
     logs.trigger.after :destroy do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R logs.vagrant'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.103'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.102'"
     end
   end
 
