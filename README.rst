@@ -16,7 +16,7 @@ sane.
 
 3. Run playbook::
 
-    $ ansible-playbook -i hosts -e @secrets.yml site.yml
+    $ ansible-playbook -i hosts -e @secrets.yml install-ci.yml
 
 Bastion
 =======
