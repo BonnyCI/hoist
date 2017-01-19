@@ -80,6 +80,12 @@ To inspect the zuul VM::
    $ # netstat, tcpdump, tail logs, etc.
    $ logout
 
+To test changes to the zuul role::
+
+   $ vagrant ssh bastion
+   $ sudo -i -u cideploy
+   $ /vagrant/tools/vagrant-run-ansible.sh --limit zuul
+
 To tear down the entire stack when you're done::
 
    $ vagrant destroy

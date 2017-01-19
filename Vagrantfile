@@ -26,18 +26,6 @@ Vagrant.configure(2) do |config|
 
   config.vm.synced_folder ".", "/vagrant"
 
-  INSTALL_PIP = <<-SHELL
-    if ! which python ; then
-      apt-get update
-      apt-get -y install python
-    fi
-
-    if ! which pip ; then
-      wget -O get-pip.py https://bootstrap.pypa.io/get-pip.py
-      python get-pip.py
-    fi
-  SHELL
-
   config.vm.define :bastion do |bastion|
     bastion.vm.hostname = 'bastion.vagrant'
     bastion.vm.network "private_network", ip: "10.0.0.10"
@@ -48,7 +36,7 @@ Vagrant.configure(2) do |config|
 
     bastion.vm.network "forwarded_port", guest: 80, host: 8080
 
-    bastion.vm.provision "shell", inline: INSTALL_PIP
+    bastion.vm.provision "shell", path: "tools/install-pip.sh"
     bastion.vm.provision "shell", inline: <<-SHELL
       # Install some dependencies
       apt-get update
@@ -60,7 +48,13 @@ Vagrant.configure(2) do |config|
         rm /etc/secrets.yml
       fi
       cp /vagrant/secrets.yml.example /etc/secrets.yml
+
+      # disable cron runs, run ansible manually while testing
+      touch /etc/disable-ansible-runner-cideploy
+      touch /etc/disable-ansible-runner-system-ansible
     SHELL
+
+    bastion.vm.provision "shell", inline: "ansible-galaxy install --roles-path /vagrant/upstream_roles -r /vagrant/requirements.yml"
 
     bastion.vm.provision "ansible_local" do |ansible|
       ansible.inventory_path = "/vagrant/inventory/vagrant"
@@ -72,16 +66,6 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  INJECT_CIDEPLOY_PUBKEY = <<-SHELL
-    pip install shyaml
-    PUBKEY=$(cat /vagrant/secrets.yml.example | shyaml get-value secrets.ssh_keys.cideploy.public)
-    if grep -q "$PUBKEY" ~ubuntu/.ssh/authorized_keys ; then
-      echo Key already authorized
-    else
-      echo "\n$PUBKEY" >> ~ubuntu/.ssh/authorized_keys
-    fi
-  SHELL
-
   config.vm.define :zuul do |zuul|
     zuul.vm.hostname = 'zuul.vagrant'
     zuul.vm.network "private_network", ip: "10.0.0.100"
@@ -92,16 +76,17 @@ Vagrant.configure(2) do |config|
 
     zuul.vm.network "forwarded_port", guest: 4730, host: 4730
 
-    zuul.vm.provision "shell", inline: INSTALL_PIP
-    zuul.vm.provision "shell", inline: INJECT_CIDEPLOY_PUBKEY
+    zuul.vm.provision "shell", path: "tools/install-pip.sh"
+    zuul.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
 
     zuul.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@zuul.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ansible-playbook -i /vagrant/inventory/vagrant /vagrant/install-ci.yml -e @/etc/secrets.yml --skip-tags monitoring --limit zuul'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit zuul'"
     end
 
     zuul.trigger.after :destroy do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R zuul.vagrant'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.100'"
     end
   end
 
@@ -113,55 +98,34 @@ Vagrant.configure(2) do |config|
       v.memory = '1024'
     end
 
-    nodepool.vm.provision "shell", inline: INSTALL_PIP
-    nodepool.vm.provision "shell", inline: INJECT_CIDEPLOY_PUBKEY
+    nodepool.vm.provision "shell", path: "tools/install-pip.sh"
+    nodepool.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
 
     nodepool.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@nodepool.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ansible-playbook -i /vagrant/inventory/vagrant /vagrant/install-ci.yml -e @/etc/secrets.yml --skip-tags monitoring --limit nodepool'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit nodepool'"
     end
 
     nodepool.trigger.after :destroy do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R nodepool.vagrant'"
-    end
-  end
-
-  config.vm.define :zm01 do |zm01|
-    zm01.vm.hostname = 'zm01.vagrant'
-    zm01.vm.network "private_network", ip: "10.0.0.102"
-
-    zm01.vm.provider "virtualbox" do |v|
-      v.memory = '1024'
-    end
-
-    zm01.vm.provision "shell", inline: INSTALL_PIP
-    zm01.vm.provision "shell", inline: INJECT_CIDEPLOY_PUBKEY
-
-    zm01.trigger.after [:up, :provision] do
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@zm01.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ansible-playbook -i /vagrant/inventory/vagrant /vagrant/install-ci.yml -e @/etc/secrets.yml --skip-tags monitoring --limit zuul_merger'"
-    end
-
-    zm01.trigger.after :destroy do
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R zm01.vagrant'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.102'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.101'"
     end
   end
 
   config.vm.define :logs do |logs|
     logs.vm.hostname = 'logs.vagrant'
-    logs.vm.network "private_network", ip: "10.0.0.103"
+    logs.vm.network "private_network", ip: "10.0.0.102"
 
     logs.vm.provider "virtualbox" do |v|
       v.memory = '1024'
     end
 
-    logs.vm.provision "shell", inline: INSTALL_PIP
-    logs.vm.provision "shell", inline: INJECT_CIDEPLOY_PUBKEY
+    logs.vm.provision "shell", path: "tools/install-pip.sh"
+    logs.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
 
     logs.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@logs.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy ansible-playbook -i /vagrant/inventory/vagrant /vagrant/install-ci.yml -e @/etc/secrets.yml --skip-tags monitoring --limit log'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit log'"
     end
 
     logs.trigger.after :destroy do
