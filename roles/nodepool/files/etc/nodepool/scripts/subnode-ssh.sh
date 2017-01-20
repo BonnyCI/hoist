@@ -17,7 +17,7 @@
 # each other though. This script just copies the ssh keys from /etc/nodepool
 # into the appropriate authorized_keys and ssh directories.
 
-ROLE=`cat /etc/nodepool/role`
+ROLE=$(cat /etc/nodepool/role)
 
 
 function sub_node {
