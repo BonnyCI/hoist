@@ -8,7 +8,6 @@
       - install-ansible
       - shell: |
           source /opt/venvs/ansible/bin/activate
-          ansible-galaxy install -r requirements.yml
           ansible-playbook -i inventory/nodepool.py install-ci.yml --skip-tags monitoring -e @secrets.yml.example
           ansible-playbook -i inventory/nodepool.py  tests/validate-ci.yml
 

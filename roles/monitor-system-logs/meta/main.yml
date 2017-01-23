@@ -1,6 +1,6 @@
 dependencies:
-  - role: geerlingguy.java
-  - role: geerlingguy.logstash
+  - role: java
+  - role: logstash
     logstash_monitor_local_syslog: false
     logstash_outputs:
       file:

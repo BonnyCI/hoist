@@ -26,6 +26,5 @@ before_install:
 
 install:
   - pip install ansible
-  - ansible-galaxy install -r requirements.yml
 
 script: "$TEST_RUN"
