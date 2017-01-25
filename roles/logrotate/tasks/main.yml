@@ -1,0 +1,11 @@
+---
+- name: Install base package
+  apt:
+    name: logrotate
+    state: installed
+
+- name: Install config
+  template:
+    src: etc/logrotate.d/template.conf
+    dest: /etc/logrotate.d/{{ item.name }}
+  with_items: "{{ logrotate_configs }}"
