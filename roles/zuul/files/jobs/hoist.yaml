@@ -24,3 +24,6 @@
           python tests/layout-checks.py job-list.txt
           ./tests/shellcheck-test.sh
           ./tests/signed-off-by-test.sh
+
+    publishers:
+      - console-log
