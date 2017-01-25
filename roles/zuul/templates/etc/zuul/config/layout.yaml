@@ -39,6 +39,8 @@ pipelines:
           label: 'approved'
         - event: pr-comment
           comment: (?i)gate-recheck
+    require:
+      status: "anne-bonny:check_github:success"
     start:
       github:
         comment: true
