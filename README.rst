@@ -94,4 +94,4 @@ To tear down the entire stack when you're done::
 Contributing
 ============
 
-See `our documentation on contributing <https://github.com/BonnyCI/lore/tree/master/contributing>`_.
+See `our documentation on contributing <https://github.com/BonnyCI/lore/tree/master/developers/contributing>`_.
