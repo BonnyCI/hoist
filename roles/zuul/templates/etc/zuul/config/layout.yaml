@@ -74,12 +74,9 @@ projects:
 
   - name: BonnyCI/sandbox
     check_github:
-      - echo-true
-      - noop
+      - bonnyci-run-check
     gate_github:
-      - echo-true
-      - noop
-
+      - bonnyci-run-gate
   - name: BonnyCI/zuul
     check_github:
       - tox_py27

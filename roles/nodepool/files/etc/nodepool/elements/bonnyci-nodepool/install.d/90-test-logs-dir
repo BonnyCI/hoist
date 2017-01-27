@@ -1,5 +1,4 @@
 #!/bin/bash
-# Copyright (C) 2011-2013 OpenStack Foundation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,6 +20,8 @@ if [ "${DIB_DEBUG_TRACE:-0}" -gt 0 ]; then
 fi
 set -e
 
-# Our use requires zuul be installed so that we can call zuul-cloner
-# The source is put in place by the source-repositories element.
-pip2 install /opt/zuul/
+# Create a log directory for tests to stuff things to be archived by publisher.
+# This path is also set in the job definition and exported to in-repo test
+# scripts, at ./roles/zuul/files/jobs/bonnyci.yaml.
+mkdir -p /opt/bonnyci/logs
+chown bonnyci:bonnyci /opt/bonnyci/logs
