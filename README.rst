@@ -2,6 +2,11 @@
 Hoist
 =======
 
+|BuildStatus|_
+
+.. |BuildStatus| image:: https://travis-ci.org/BonnyCI/hoist.svg?branch=master
+.. _BuildStatus: https://travis-ci.org/BonnyCI/hoist
+
 Installer for running CI as a service.
 
 Running
