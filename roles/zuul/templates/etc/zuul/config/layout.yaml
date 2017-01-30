@@ -70,7 +70,7 @@ projects:
       - ansible-syntax
       - hoist-checks
     gate_github:
-      - echo-true
+      - ubuntu-hoist
 
   - name: BonnyCI/sandbox
     check_github:
