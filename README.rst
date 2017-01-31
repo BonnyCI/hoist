@@ -59,41 +59,7 @@ As we add or adjust secrets, we'll need to update the secrets file that lives on
 
 Testing with Vagrant
 ====================
-You can use vagrant to exercise the ansible paths for `bastion.yml` and `install-ci.yml`.
-
-First, install vagrant with the hostmanager and triggers plugins. The hostmanager
-plugin is used to manage /etc/hosts on the VMs, and the triggers plugin is
-used to run commands on the host after specified actions -- in our case to
-run commands in the bastion VM after actions to other VMs.::
-
-   $ sudo apt-get install vagrant
-   $ vagrant plugin install vagrant-hostmanager
-   $ vagrant plugin install vagrant-triggers
-
-To perform a full deploy::
-
-   $ vagrant up
-
-To redeploy just the nodepool VM::
-
-   $ vagrant destroy nodepool
-   $ vagrant up nodepool
-
-To inspect the zuul VM::
-
-   $ vagrant ssh zuul
-   $ # netstat, tcpdump, tail logs, etc.
-   $ logout
-
-To test changes to the zuul role::
-
-   $ vagrant ssh bastion
-   $ sudo -i -u cideploy
-   $ /vagrant/tools/vagrant-run-ansible.sh --limit zuul
-
-To tear down the entire stack when you're done::
-
-   $ vagrant destroy
+You can use vagrant to exercise the ansible paths for `bastion.yml` and `install-ci.yml`. See `our documentation on testing Hoist in Vagrant <https://github.com/BonnyCI/lore/tree/master/developers#virtual-machines>`_.
 
 
 Contributing
