@@ -72,6 +72,12 @@ projects:
     gate_github:
       - ubuntu-hoist
 
+  - name: BonnyCI/lore
+    check_github:
+      - lore
+    gate_github:
+      - lore
+
   - name: BonnyCI/sandbox
     check_github:
       - echo-true
