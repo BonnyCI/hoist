@@ -7,9 +7,10 @@
       - zuul-git-prep
       - install-ansible
       - shell: |
+          #!/bin/bash -ex
           source /opt/venvs/ansible/bin/activate
           ansible-playbook -i inventory/nodepool.py install-ci.yml --skip-tags monitoring -e @secrets.yml.example
-          ansible-playbook -i inventory/nodepool.py  tests/validate-ci.yml
+          ansible-playbook -i inventory/nodepool.py tests/validate-ci.yml
 
     publishers:
       - console-log
@@ -21,6 +22,7 @@
     builders:
       - zuul-git-prep
       - shell: |
+          #!/bin/bash -ex
           python tests/layout-checks.py job-list.txt
           ./tests/shellcheck-test.sh
           ./tests/signed-off-by-test.sh
