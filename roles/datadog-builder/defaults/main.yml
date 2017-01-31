@@ -1,0 +1,11 @@
+---
+datadog_builder_git_repo_url: https://github.com/bonnyci/datadog-builder
+datadog_builder_git_branch: master
+datadog_builder_git_update: yes
+
+datadog_builder_monitor_url: https://github.com/bonnyci/datadog-monitors
+datadog_builder_monitor_update: yes
+datadog_builder_monitor_branch: master
+datadog_builder_monitor_file: monitors.yml
+
+datadog_builder_secrets: {}
