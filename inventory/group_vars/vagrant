@@ -1,6 +1,10 @@
 bastion_clouds:
   - bastioncloud
 
+bonnyci_logs_apache_server_name: logs.vagrant
+bonnyci_system_logs_apache_server_name: monitor.vagrant
+bonnyci_zuul_apache_server_name: zuul.vagrant
+
 datadog_enabled: no
 
 filebeat_output_logstash_hosts:

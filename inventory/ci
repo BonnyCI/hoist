@@ -13,11 +13,7 @@ nodepool.bonnyci-internal.portbleu.com
 [log]
 logs.bonnyci-internal.portbleu.com
 
-[monitor]
-monitor.bonnyci-internal.portbleu.com
-
 [production]
 nodepool.bonnyci-internal.portbleu.com
 zuul.bonnyci-internal.portbleu.com
 logs.bonnyci-internal.portbleu.com
-monitor.bonnyci-internal.portbleu.com

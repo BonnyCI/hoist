@@ -31,7 +31,7 @@
       - install-ansible
       - shell: |
           source /opt/venvs/ansible/bin/activate
-          ansible-playbook -i /dev/null --syntax-check $(find . tests -maxdepth 1 -type f -name \*.yml -not -name .travis.yml -not -name requirements.yml)
+          ansible-playbook -i /dev/null --syntax-check $(find . tests -maxdepth 1 -type f -name \*.yml -not -name .travis.yml)
 
     publishers:
       - console-log

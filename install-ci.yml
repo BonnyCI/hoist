@@ -9,6 +9,26 @@
       tags:
         - monitoring
 
+- name: Log server
+  hosts: log
+  become: yes
+  tags: ['logs']
+  roles:
+    - role: os-loganalyze
+      os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}"
+      os_loganalyze_file_conditions: "{{ bonnyci_logs_loganalyze_file_conditions }}"
+
+    - role: monitor-system-logs
+
+    - role: apache
+      apache_apt_install: "{{ bonnyci_logs_apache_apt_install }}"
+      apache_mods_enabled: "{{ bonnyci_logs_apache_mods_install }}"
+      apache_vhosts: "{{ bonnyci_logs_apache_vhosts }}"
+
+    - role: dd-apache
+      tags:
+        - monitoring
+
 - name: Install mysql
   hosts: mysql
   become: yes
@@ -96,28 +116,3 @@
             - /var/log/nodepool/nodepool-deleter.log
             - /var/log/nodepool/nodepool-launcher.log
             - /var/log/nodepool/nodepoold.log
-
-- name: Serve test-output logs
-  hosts: log
-  become: yes
-  tags: ['logs']
-  roles:
-    - role: os-loganalyze
-      os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}"
-      os_loganalyze_file_conditions: "{{ bonnyci_logs_loganalyze_file_conditions }}"
-
-    - role: apache
-      apache_apt_install: "{{ bonnyci_logs_apache_apt_install }}"
-      apache_mods_enabled: "{{ bonnyci_logs_apache_mods_install }}"
-      apache_vhosts: "{{ bonnyci_logs_apache_vhosts }}"
-
-    - role: dd-apache
-      tags:
-        - monitoring
-
-- name: Serve system logs
-  hosts: monitor
-  become: yes
-  tags: ['logs']
-  roles:
-    - role: monitor-system-logs

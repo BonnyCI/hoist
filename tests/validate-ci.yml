@@ -44,3 +44,27 @@
         - list
         - job-list
         - dib-image-list
+
+- name: Validate log server
+  hosts: log
+  tasks:
+    - name: logstash is running on filebeat port
+      become: yes
+      become_user: logstash
+      shell: lsof -nPi :5044 | grep LISTEN
+
+    - name: copy example console log
+      become: yes
+      copy:
+        src: logs/example.log
+        dest: "{{ bonnyci_logs_root_dir}}/console.log"
+        mode: "0444"
+
+- name: Validate logs are served
+  hosts: localhost
+  tasks:
+    - name: test logs are served
+      shell: curl --fail {{ bonnyci_logs_apache_server_name }}/console.log
+
+    - name: system logs served
+      shell: curl --fail {{ bonnyci_system_logs_apache_server_name }}/system-logs/
