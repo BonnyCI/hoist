@@ -24,6 +24,11 @@ import sys
 
 import yaml
 
+# These pipelines are required to have at least one job per project
+REQUIRED_PIPELINES = [
+    'check_github',
+    'gate_github',
+]
 
 layout_yaml = 'roles/zuul/templates/etc/zuul/config/layout.yaml'
 layout = yaml.safe_load(open(layout_yaml))
@@ -119,9 +124,7 @@ def check_jobs(joblistfile):
     print("\nChecking job section regex expressions")
     print("======================================")
 
-    # The job-list.txt file is created by tox.ini and
-    # thus should exist if this is run from tox. If this is manually invoked
-    # the file might not exist, in that case skip the test.
+    # The job-list.txt file is created by tests/test-zuul-jobs.sh
     if not os.path.isfile(joblistfile):
         print("Job list file %s does not exist, not checking jobs section"
               % joblistfile)
@@ -139,6 +142,17 @@ def check_jobs(joblistfile):
             print ("Job %s has no attributes in job list" % jobs['name'])
             errors = True
 
+    for project in layout.get('projects', []):
+        for pipeline in layout.get('pipelines', []):
+            jobs = collect_pipeline_jobs(project, pipeline['name']) or []
+            missing = [j for j in jobs if j not in job_list and j != 'noop']
+            if missing:
+                print (
+                    'ERROR: Zuul project %s references non-existent job(s) in'
+                    ' pipeline %s: %s' % (project['name'], pipeline['name'],
+                                          ', '.join(missing))
+                )
+                errors = True
     return errors
 
 
@@ -165,37 +179,25 @@ def collect_pipeline_jobs(project, pipeline):
     return jobs
 
 
-def check_empty_check():
-    '''Check that each project has at least one check job'''
+def check_empty_pipeline(pipeline_name):
+    '''Check that each project has at least one job in specified pipeline'''
 
-    print("\nChecking for projects with no check jobs")
+    print("\nChecking for projects with no %s jobs" % pipeline_name)
     print("====================================")
 
     for project in layout['projects']:
-        # z/tempest is a fake project with no check queue
-        if project['name'] == 'z/tempest':
-            continue
-        check_jobs = collect_pipeline_jobs(project, 'check')
-        if not check_jobs:
-            print("Project %s has no check jobs" % project['name'])
+        pipeline_jobs = collect_pipeline_jobs(project, pipeline_name)
+        if not pipeline_jobs:
+            print(
+                "Project %s has no %s jobs" % (project['name'], pipeline_name)
+            )
             return True
 
     return False
 
 
-def check_empty_gate():
-    '''Check that each project has at least one gate job'''
-
-    print("\nChecking for projects with no gate jobs")
-    print("====================================")
-
-    for project in layout['projects']:
-        gate_jobs = collect_pipeline_jobs(project, 'gate')
-        if not gate_jobs:
-            print("Project %s has no gate jobs" % project['name'])
-            return True
-
-    return False
+def check_empty_pipelines():
+    return True in [check_empty_pipeline(p) for p in REQUIRED_PIPELINES]
 
 
 def check_mixed_noops():
@@ -283,11 +285,10 @@ def check_all():
     errors = check_projects_sorted()
     #errors = check_merge_template() or errors
     errors = check_formatting() or errors
-    #errors = check_empty_check() or errors
-    #errors = check_empty_gate() or errors
+    errors = check_empty_pipelines() or errors
     #errors = check_mixed_noops() or errors
     #errors = check_gerrit_zuul_projects() or errors
-    #errors = check_jobs(args.joblistfile) or errors
+    errors = check_jobs(args.joblistfile) or errors
 
     if errors:
         print("\nFound errors in layout.yaml!")

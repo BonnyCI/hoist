@@ -1,5 +1,6 @@
 # Ignore temporary files
 tmp/
+job-list.txt
 
 # Ignore Ansible files
 upstream_roles/
