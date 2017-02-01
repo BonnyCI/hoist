@@ -77,6 +77,17 @@
     - role: dd-nodepool
       tags:
         - monitoring
+    - role: logrotate
+      logrotate_configs:
+        - name: nodepool
+          path: /var/log/nodepool/*log
+          options:
+            - compress
+            - missingok
+            - rotate 10
+            - size 50M
+            - daily
+            - notifempty
 
 - name: Install logging
   hosts: log
