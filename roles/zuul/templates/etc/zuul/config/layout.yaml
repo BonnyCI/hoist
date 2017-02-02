@@ -14,7 +14,7 @@ pipelines:
             - pr-change
             - pr-reopen
         - event: pr-comment
-          comment: (?i)recheck
+          comment: (?i)^\s*recheck\s*$
     start:
       github:
         status: true
@@ -38,7 +38,7 @@ pipelines:
         - event: pr-label
           label: 'approved'
         - event: pr-comment
-          comment: (?i)gate-recheck
+          comment: (?i)^\s*gate-recheck\s*$
     require:
       status: "anne-bonny:check_github:success"
     start:
