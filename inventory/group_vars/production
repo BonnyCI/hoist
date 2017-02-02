@@ -10,12 +10,12 @@ nodepool_gearman_servers:
 nodepool_labels:
   - name: ubuntu-xenial
     image: ubuntu-xenial
-    min-ready: 1
+    min-ready: 2
     providers:
       - name: cicloud
   - name: ubuntu-hoist
     image: ubuntu-xenial
-    min-ready: 0
+    min-ready: 1
     subnodes: 3
     ready-script: subnode-ssh.sh
     providers:
