@@ -6,7 +6,8 @@
       - zuul-git-prep
       - shell: |
           #!/bin/bash -ex
-          sudo apt-get install -qq nodejs npm
+          sudo apt-get install -qq npm
+          sudo update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
           ./tests/markdownlint-cli-test.sh
           ./tests/textlint-test.sh
           ./tests/shellcheck-test.sh
