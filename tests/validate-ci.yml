@@ -5,13 +5,18 @@
     - name: mysql is running
       command: pgrep -f /usr/sbin/mysql
 
-- name: Validate zuul
-  hosts: zuul
+- name: Validate zuul services
+  hosts:
+    - zuul
+    - mergers
   tasks:
     - name: zuul services are running
       command: pgrep -f /opt/venvs/zuul/bin/{{ item }}
       with_items: "{{ zuul_components }}"
 
+- name: Validate gearman status
+  hosts: zuul
+  tasks:
     - name: gearman services are running
       shell: netstat -antlp | grep 4730
 

@@ -43,4 +43,5 @@ zuul_connections:
   github:
     driver: github
     api_token: "{{ secrets.zuul_github_api_key }}"
-zuul_merger_url: http://zuul.bonnyci-internal.portbleu.com/p
+zuul_merger_url: http://merger01.bonnyci-internal.portbleu.com/p
+zuul_gearman_server: zuul.bonnyci-internal.portbleu.com

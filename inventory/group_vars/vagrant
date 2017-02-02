@@ -1,6 +1,8 @@
 bastion_clouds:
   - bastioncloud
 
+bonnyci_zuul_apache_server_name: merger.vagrant
+
 datadog_enabled: no
 
 hoist_repo: /vagrant/.git
@@ -23,4 +25,5 @@ zuul_statsd_enable: no
 zuul_connections:
   github:
     driver: github
-zuul_merger_url: "http://zuul.vagrant/p"
+zuul_merger_url: "http://merger.vagrant/p"
+zuul_gearman_server: zuul.vagrant
