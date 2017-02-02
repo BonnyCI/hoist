@@ -23,6 +23,7 @@
       - zuul-git-prep
       - shell: |
           #!/bin/bash -ex
+          ./tests/test-zuul-jobs.sh job-list.txt
           python tests/layout-checks.py job-list.txt
           ./tests/shellcheck-test.sh
           ./tests/signed-off-by-test.sh
