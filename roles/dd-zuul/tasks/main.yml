@@ -3,15 +3,3 @@
     src: zuul_server.py
     dest: "{{ datadog_file_dir }}/zuul_server.py"
   notify: restart dd-agent
-- name: monitor zuul merger count
-  datadog_monitor:
-    api_key: "{{ secrets.datadog.api_key }}"
-    app_key: "{{ secrets.datadog.ansible_app_key }}"
-    name: zuul merger count
-    state: present
-    type: "metric alert"
-    message: "no zuul mergers"
-    query: 'min(last_5m):avg:gearman.workers_by_task{host:zuul,task:merger:merge} < 1'
-  vars:
-    ansible_python_interpreter: /opt/datadog/bin/python
-  tags: ddapi
