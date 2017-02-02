@@ -1,0 +1,14 @@
+- job:
+    name: lore
+    node: 'ubuntu-xenial'
+
+    builders:
+      - zuul-git-prep
+      - shell: |
+          #!/bin/bash -ex
+          ./tests/markdownlint-cli-test.sh
+          ./tests/textlint-test.sh
+          ./tests/shellcheck-test.sh
+          ./tests/signed-off-by-test.sh
+    publishers:
+      - console-log
