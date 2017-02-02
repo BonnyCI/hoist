@@ -6,8 +6,8 @@
       - zuul-git-prep
       - shell: |
           #!/bin/bash -ex
-          sudo apt-get install -qq npm
-          sudo update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+          curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+          sudo apt-get install -qq nodejs
           ./tests/markdownlint-cli-test.sh
           ./tests/textlint-test.sh
           ./tests/shellcheck-test.sh
