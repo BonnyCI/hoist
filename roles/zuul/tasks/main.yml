@@ -29,7 +29,7 @@
     mode: 0755
     owner: zuul
     group: zuul
-  items:
+  with_items:
     - /etc/zuul/config
     - /var/log/zuul
 
@@ -108,61 +108,33 @@
     owner: zuul
   notify: Restart zuul
 
-- name: Install logging config
-  template:
-    src: "etc/zuul/logging.conf"
-    dest: "/etc/zuul/{{ item }}-logging.conf"
-    owner: zuul
-  with_items:
-    - gearman
-    - launcher
-    - merger
-    - server
-  notify: Restart zuul
-
-- name: Install layout.yaml
-  template:
-    src: etc/zuul/config/layout.yaml
-    dest: /etc/zuul/config/layout.yaml
-    owner: zuul
-  notify: Reload zuul-server
-
-- name: install magic functions file
-  copy:
-    src: etc/zuul/config/bonnyci_functions.py
-    dest: /etc/zuul/config/bonnyci_functions.py
-    owner: zuul
-  notify: Reload zuul-server
-
-- name: Install job definitions
-  synchronize:
-    src: files/jobs/
-    dest: /var/lib/zuul/jobs/
-    rsync_opts:
-      - "--chown=zuul:zuul"
-  notify: Reconfigure zuul-launcher
-
 - name: Install service environment configs
   template:
     src: etc/default/zuul
     dest: /etc/default/{{ item }}
-  with_items:
-    - zuul-launcher
-    - zuul-merger
-    - zuul-server
+  with_items: "{{ zuul_components }}"
   notify: Restart zuul
 
 - name: Install systemd unit files
   template:
     src: etc/systemd/system/zuul.service
     dest: /etc/systemd/system/{{ item }}.service
-  with_items:
-    - zuul-launcher
-    - zuul-merger
-    - zuul-server
+  with_items: "{{ zuul_components }}"
   notify:
     - Reload systemd units
     - Restart zuul
+
+- name: Configure zuul-server
+  include: server.yml
+  when: "'zuul-server' in zuul_components"
+
+- name: Configure zuul-launcher
+  include: launcher.yml
+  when: "'zuul-launcher' in zuul_components"
+
+- name: Configure zuul-merger
+  include: merger.yml
+  when: "'zuul-merger' in zuul_components"
 
 - meta: flush_handlers
 
@@ -171,7 +143,4 @@
     name: "{{ item }}"
     state: started
     enabled: yes
-  items:
-    - zuul-launcher
-    - zuul-merger
-    - zuul-server
+  with_items: "{{ zuul_components }}"

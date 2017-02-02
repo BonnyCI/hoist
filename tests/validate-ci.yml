@@ -9,11 +9,8 @@
   hosts: zuul
   tasks:
     - name: zuul services are running
-      command: pgrep -f {{ item }}
-      with_items:
-        - /opt/venvs/zuul/bin/zuul-server
-        - /opt/venvs/zuul/bin/zuul-merger
-        - /opt/venvs/zuul/bin/zuul-launcher
+      command: pgrep -f /opt/venvs/zuul/bin/{{ item }}
+      with_items: "{{ zuul_components }}"
 
     - name: gearman services are running
       shell: netstat -antlp | grep 4730

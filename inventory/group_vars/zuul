@@ -17,3 +17,8 @@ bonnyci_zuul_apache_vhosts:
       ScriptAlias /p/ /usr/lib/git-core/git-http-backend/
 
 bonnyci_zuul_merger_git_dir: /var/lib/zuul/git
+
+zuul_components:
+  - zuul-launcher
+  - zuul-merger
+  - zuul-server
