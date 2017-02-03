@@ -15,10 +15,7 @@
   service:
     name: "{{ item }}"
     state: restarted
-  with_items:
-    - zuul-launcher
-    - zuul-merger
-    - zuul-server
+  with_items: "{{ zuul_components }}"
   when: zuul_check_server.rc == 0 and (zuul_allow_restart_services | bool)
   register: zuul_restarted
 

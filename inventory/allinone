@@ -10,6 +10,9 @@ allinone
 [zuul]
 allinone
 
+[mergers]
+allinone
+
 [mysql]
 allinone
 

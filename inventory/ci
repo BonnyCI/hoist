@@ -4,6 +4,9 @@ nodepool.bonnyci-internal.portbleu.com
 [zuul]
 zuul.bonnyci-internal.portbleu.com
 
+[mergers]
+merger01.bonnyci-internal.portbleu.com
+
 [mysql]
 zuul.bonnyci-internal.portbleu.com
 
@@ -16,4 +19,5 @@ logs.bonnyci-internal.portbleu.com
 [production]
 nodepool.bonnyci-internal.portbleu.com
 zuul.bonnyci-internal.portbleu.com
+merger01.bonnyci-internal.portbleu.com
 logs.bonnyci-internal.portbleu.com

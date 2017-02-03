@@ -1,0 +1,23 @@
+- name: Install logging config
+  template:
+    src: "etc/zuul/logging.conf"
+    dest: "/etc/zuul/{{ item }}-logging.conf"
+    owner: zuul
+  with_items:
+    - gearman
+    - server
+  notify: Restart zuul
+
+- name: Install layout.yaml
+  template:
+    src: etc/zuul/config/layout.yaml
+    dest: /etc/zuul/config/layout.yaml
+    owner: zuul
+  notify: Reload zuul-server
+
+- name: install magic functions file
+  copy:
+    src: etc/zuul/config/bonnyci_functions.py
+    dest: /etc/zuul/config/bonnyci_functions.py
+    owner: zuul
+  notify: Reload zuul-server

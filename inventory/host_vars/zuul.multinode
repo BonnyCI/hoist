@@ -1,5 +1,4 @@
-zookeeper_myid: 1
-
+#TODO(jesusaur): add merger.multinode subnode to ubuntu-hoist
 zuul_components:
   - zuul-launcher
   - zuul-merger

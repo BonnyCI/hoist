@@ -7,6 +7,9 @@ nodepool.vagrant ansible_user=ubuntu
 [zuul]
 zuul.vagrant ansible_user=ubuntu
 
+[mergers]
+merger.vagrant ansible_user=ubuntu
+
 [mysql]
 zuul.vagrant ansible_user=ubuntu
 
@@ -15,7 +18,8 @@ logs.vagrant ansible_user=ubuntu
 
 [vagrant:children]
 bastion
-zuul
-nodepool
-mysql
 log
+mergers
+mysql
+nodepool
+zuul

@@ -134,4 +134,26 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define :merger do |merger|
+    merger.vm.hostname = 'merger.vagrant'
+    merger.vm.network "private_network", ip: "10.0.0.103"
+
+    merger.vm.provider "virtualbox" do |v|
+      v.memory = '1024'
+    end
+
+    merger.vm.provision "shell", path: "tools/install-pip.sh"
+    merger.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
+
+    merger.trigger.after [:up, :provision] do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@merger.vagrant true'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit mergers'"
+    end
+
+    merger.trigger.after :destroy do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R merger.vagrant'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.103'"
+    end
+  end
+
 end

@@ -3,7 +3,7 @@ bonnyci_zuul_apache_mods_enabled:
 
 bonnyci_zuul_apache_vhosts:
   - name: git
-    server_name: "{{ bonnyci_zuul_apache_server_name | default('zuul') }}"
+    server_name: "{{ bonnyci_zuul_apache_server_name | default('merger') }}"
     vhost_extra: |
       <LocationMatch "^/p/">
          Require all granted
@@ -19,6 +19,4 @@ bonnyci_zuul_apache_vhosts:
 bonnyci_zuul_merger_git_dir: /var/lib/zuul/git
 
 zuul_components:
-  - zuul-launcher
   - zuul-merger
-  - zuul-server
