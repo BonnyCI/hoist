@@ -77,11 +77,9 @@ projects:
 
   - name: BonnyCI/hoist
     check_github:
-      - ubuntu-hoist
-      - ansible-syntax
-      - hoist-checks
+      - bonnyci-run-check-multinode
     gate_github:
-      - ubuntu-hoist
+      - bonnyci-run-gate-multinode
 
   - name: BonnyCI/sandbox
     check_github:
