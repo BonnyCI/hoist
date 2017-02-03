@@ -4,6 +4,7 @@
     node: 'ubuntu-hoist'
 
     builders:
+      - node-info
       - zuul-git-prep
       - install-ansible
       - shell: |
