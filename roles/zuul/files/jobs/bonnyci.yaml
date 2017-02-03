@@ -1,0 +1,49 @@
+- publisher:
+    name: bonnyci-logs
+    publishers:
+      - scp:
+          site: bonnyci-scp
+          files:
+            - target: 'logs/$LOG_PATH'
+              source: '/opt/bonnyci/logs/**'
+              keep-hierarchy: true
+              copy-after-failure: true
+
+- job-template:
+    name: 'bonnyci-run-{pipeline}'
+    id: 'bonnyci-run-pipeline-{pipeline}'
+    test_log_dir: /opt/bonnyci/logs/
+    builders:
+      - zuul-git-prep
+      - shell: |
+            #!/bin/bash -xe
+            if [[ ! -f .bonnyci/run.sh ]]; then
+                echo "ERROR: No test script found at .bonnyci/run.sh, skipping"
+                exit 1
+            elif [[ ! -x .bonnyci/run.sh ]]; then
+                echo "ERROR: Test script found at .bonnyci/run.sh but it is not executable"
+                exit 1
+            fi
+
+            export BONNYCI_TEST_PIPELINE={pipeline}
+            export BONNYCI_TEST_LOG_DIR={test_log_dir}
+
+            if ./.bonnyci/run.sh; then
+                echo ".bonnyci/run.sh test(s) passed :)"
+                exit 0
+            else
+                echo ".bonnyci/run.sh test(s) failed :("
+                exit 1
+            fi
+
+    publishers:
+      - console-log
+      - bonnyci-logs
+
+- project:
+    name: bonnyci-run-pipeline
+    jobs:
+        - 'bonnyci-run-pipeline-{pipeline}':
+            pipeline: check
+        - 'bonnyci-run-pipeline-{pipeline}':
+            pipeline: gate
