@@ -1,0 +1,18 @@
+dependencies:
+  - role: java
+  - role: logstash
+    logstash_monitor_local_syslog: false
+    logstash_outputs:
+      file:
+        path: '"/var/www/html/logstash/%{host}/%{source}"'
+        codec: 'line { format => "%{message}" }'
+  - role: tailon
+    tailon_ip: 127.0.0.1
+    tailon_port: 8080
+    tailon_relative_root: /system-logs/
+    tailon_files:
+      - "/var/www/html/logstash/nodepool/var/log/nodepool/*log"
+      - "/var/www/html/logstash/zuul/var/log/zuul/*log"
+  - role: dd-apache
+    tags:
+      - monitoring

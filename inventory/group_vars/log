@@ -2,6 +2,9 @@ bonnyci_logs_apache_apt_install:
   - libapache2-mod-wsgi
 
 bonnyci_logs_apache_mods_install:
+  - proxy.conf
+  - proxy.load
+  - proxy_http.load
   - rewrite.load
 
 bonnyci_logs_apache_vhosts:
@@ -68,6 +71,15 @@ bonnyci_logs_apache_vhosts:
       WSGIApplicationGroup %{GLOBAL}
 
       ServerSignature Off
+
+  - name: system-logs
+    server_name: "{{ bonnyci_system_logs_apache_server_name | default('monitor') }}"
+    document_root: /var/www/html/logstash
+    document_root_options: +FollowSymLinks
+    vhost_extra: |
+      AddType text/plain .log
+      Redirect permanent /system-logs /system-logs/
+      ProxyPass "/system-logs/" http://localhost:{{ tailon_port }}/system-logs/
 
 bonnyci_logs_loganalyze_file_conditions:
   - filename_pattern: ^.*\.txt(\.gz)?$

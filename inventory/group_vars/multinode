@@ -4,9 +4,13 @@ bastion_clouds:
   - bastioncloud
 
 bonnyci_logs_apache_server_name: logs.multinode
+bonnyci_system_logs_apache_server_name: monitor.multinode
 bonnyci_zuul_apache_server_name: zuul.multinode
 
 datadog_enabled: no
+
+filebeat_output_logstash_hosts:
+  - "monitor.multinode:5044"
 
 nodepool_gearman_servers:
   - host: "{{ zuul_ip }}"

@@ -10,6 +10,9 @@ zuul.vagrant ansible_user=ubuntu
 [mysql]
 zuul.vagrant ansible_user=ubuntu
 
+[zookeeper]
+nodepool.vagrant ansible_user=ubuntu
+
 [log]
 logs.vagrant ansible_user=ubuntu
 
@@ -17,5 +20,4 @@ logs.vagrant ansible_user=ubuntu
 bastion
 zuul
 nodepool
-mysql
 log
