@@ -20,5 +20,4 @@ bonnyci_zuul_merger_git_dir: /var/lib/zuul/git
 
 zuul_components:
   - zuul-launcher
-  - zuul-merger
   - zuul-server
