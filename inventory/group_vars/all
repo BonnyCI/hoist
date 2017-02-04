@@ -6,3 +6,5 @@ zuul_statsd_enable: yes
 
 zuul_git_user_email: anne@bonnyci.org
 zuul_git_user_name: Anne Bonny
+
+zuul_merger_url: "http://{{ ansible_nodename }}/p"

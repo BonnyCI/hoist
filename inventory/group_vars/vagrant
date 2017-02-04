@@ -25,5 +25,4 @@ zuul_statsd_enable: no
 zuul_connections:
   github:
     driver: github
-zuul_merger_url: "http://merger.vagrant/p"
 zuul_gearman_server: zuul.vagrant
