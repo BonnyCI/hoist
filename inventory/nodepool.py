@@ -88,7 +88,7 @@ def get_variables(subnodes, host):
     elif host == 'zuul.multinode':
         output['ansible_host'] = subnodes[1]
 
-    elif host == 'log.multinode':
+    elif host == 'logs.multinode':
         output['ansible_host'] = subnodes[2]
 
     else:
