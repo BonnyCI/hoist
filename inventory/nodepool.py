@@ -70,10 +70,10 @@ def get_inventory(subnodes):
     output['zuul'] = {'hosts': ['zuul.multinode']}
     output['mergers'] = {'hosts': ['zuul.multinode']}
     output['mysql'] = {'hosts': ['zuul.multinode']}
-    #output['log'] = {'hosts': ['logs.multinode']}
+    output['log'] = {'hosts': ['logs.multinode']}
     output['multinode'] = {'hosts': ['nodepool.multinode',
                                      'zuul.multinode',
-                                     #'logs.multinode',
+                                     'logs.multinode',
                                      ]}
 
     return output
