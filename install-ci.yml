@@ -71,8 +71,8 @@
       zuul_merger_git_dir: "{{ bonnyci_zuul_merger_git_dir }}"
 
     - role: apache
-      apache_mods_enabled: "{{ bonnyci_zuul_apache_mods_enabled }}"
-      apache_vhosts: "{{ bonnyci_zuul_apache_vhosts }}"
+      apache_mods_enabled: "{{ bonnyci_zuul_merger_apache_mods_enabled }}"
+      apache_vhosts: "{{ bonnyci_zuul_merger_apache_vhosts }}"
 
     - role: dd-apache
       tags:

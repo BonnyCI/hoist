@@ -1,9 +1,11 @@
-bonnyci_zuul_apache_mods_enabled:
+
+bonnyci_zuul_merger_apache_mods_enabled:
   - cgi.load
 
-bonnyci_zuul_apache_vhosts:
+bonnyci_zuul_merger_apache_vhosts:
   - name: git
     server_name: "{{ bonnyci_zuul_apache_server_name | default('merger') }}"
+    port: "{{ zuul_merger_apache_port }}"
     vhost_extra: |
       <LocationMatch "^/p/">
          Require all granted
