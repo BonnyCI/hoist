@@ -8,4 +8,4 @@ zuul_git_user_email: anne@bonnyci.org
 zuul_git_user_name: Anne Bonny
 
 zuul_merger_apache_port: 8858
-zuul_merger_url: "http://{{ ansible_nodename }}:{{ zuul_merger_apache_port }}/p"
+zuul_merger_url: "http://{{ inventory_hostname }}:{{ zuul_merger_apache_port }}/p"
