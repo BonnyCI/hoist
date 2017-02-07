@@ -1,14 +1,4 @@
 ---
-- name: Install required packages
-  apt:
-    name: "{{ item }}"
-    state: installed
-  with_items:
-    - build-essential
-    - git
-    - python-dev
-    - libssl-dev
-
 - name: Create the zuul group
   group:
     name: zuul
@@ -56,50 +46,6 @@
     owner: zuul
     group: zuul
     mode: 0644
-
-- name: Create /opt/{source, venvs}
-  file:
-    path: "{{ item }}"
-    state: directory
-    mode: 0755
-    owner: root
-    group: root
-  with_items:
-    - /opt/source
-    - "{{ zuul_venv_dir }}"
-
-- name: Checkout zuul
-  git:
-    dest: /opt/source/zuul
-    repo: "{{ zuul_git_repo_url }}"
-    version: "{{ zuul_git_branch }}"
-  register: zuul_git
-
-- name: Install zuul
-  pip:
-    extra_args: -U
-    name: /opt/source/zuul
-    virtualenv: "{{ zuul_venv_dir }}"
-  when: zuul_git.changed
-  notify: Restart zuul
-
-- name: Install missing pip dependencies
-  pip:
-    name: "{{ item.name }}"
-    version: "{{ item.version|default(omit) }}"
-    virtualenv: "{{ zuul_venv_dir }}"
-  with_items:
-    - { name: 'jenkins-job-builder', version: '1.6.1' }
-    - { name: 'pyzmq' }
-    - { name: 'ansible' }
-
-- name: Install statsd
-  pip:
-    name: "{{ item }}"
-    virtualenv: "{{ zuul_venv_dir }}"
-  with_items:
-    - statsd
-  when: zuul_statsd_enable
 
 - name: Install zuul config
   template:

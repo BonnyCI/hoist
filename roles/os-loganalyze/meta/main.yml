@@ -1,0 +1,6 @@
+---
+dependencies:
+  - role: python-app
+    name: os-loganalyze
+    python_app_git_repo: https://git.openstack.org/openstack-infra/os-loganalyze
+    python_app_git_version: "{{ os_loganalyze_git_version }}"

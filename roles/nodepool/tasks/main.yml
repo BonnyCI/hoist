@@ -7,9 +7,6 @@
     - curl
     - uuid-runtime
     - parted
-    - libssl-dev
-    - python-dev
-    - libffi-dev
     - kpartx
 
 - name: Create group.
@@ -88,35 +85,6 @@
     mode: 0400
     owner: root
     content: "nodepool ALL=(ALL) NOPASSWD:ALL"
-
-- name: Ensure latest diskimage-builder
-  pip:
-    name: diskimage-builder
-    virtualenv: "{{ nodepool_venv_dir }}"
-    state: latest
-
-- name: Git clone nodepool
-  git:
-    dest: "{{ nodepool_source_dir }}"
-    repo: https://git.openstack.org/openstack-infra/nodepool
-    version: "{{ nodepool_git_version }}"
-  register: nodepool_git
-
-- name: Install nodepool
-  pip:
-    name: "{{ nodepool_source_dir }}"
-    virtualenv: "{{ nodepool_venv_dir }}"
-    state: latest
-  when: nodepool_git.changed
-  notify: Restart nodepool
-
-- name: Install statsd
-  pip:
-    name: "{{ item }}"
-    virtualenv: "{{ nodepool_venv_dir }}"
-  with_items:
-    - statsd
-  when: nodepool_statsd_enable
 
 # This should be maintained in a project-config repo.
 - name: Copy nodepool configuration
