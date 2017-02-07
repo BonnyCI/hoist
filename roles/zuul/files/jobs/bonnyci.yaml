@@ -5,14 +5,13 @@
           site: bonnyci-scp
           files:
             - target: 'logs/$LOG_PATH'
-              source: '/opt/bonnyci/logs/**'
+              source: 'logs/**'
               keep-hierarchy: true
               copy-after-failure: true
 
 - job-template:
     name: 'bonnyci-run-{pipeline}'
     id: 'bonnyci-run-pipeline-{pipeline}'
-    test_log_dir: /opt/bonnyci/logs/
     builders:
       - zuul-git-prep
       - shell: |
@@ -26,7 +25,8 @@
             fi
 
             export BONNYCI_TEST_PIPELINE={pipeline}
-            export BONNYCI_TEST_LOG_DIR={test_log_dir}
+            export BONNYCI_TEST_LOG_DIR="$(pwd)/logs"
+            mkdir -p $BONNYCI_TEST_LOG_DIR
 
             if ./.bonnyci/run.sh; then
                 echo ".bonnyci/run.sh test(s) passed :)"
