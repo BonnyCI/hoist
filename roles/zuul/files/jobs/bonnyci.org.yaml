@@ -1,5 +1,5 @@
 - job:
-    name: lore
+    name: bonnyci.org
     node: 'ubuntu-xenial'
 
     builders:
