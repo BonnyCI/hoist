@@ -41,6 +41,12 @@ pipelines:
           comment: (?i)^\s*gate-recheck\s*$
     require:
       status: "anne-bonny:check_github:success"
+      approval:
+        - review: 2
+    reject:
+      approval:
+        - review: -2
+
     start:
       github:
         comment: true
