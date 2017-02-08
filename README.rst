@@ -60,9 +60,9 @@ As we add or adjust secrets, we'll need to update the secrets file that lives on
 Testing with Vagrant
 ====================
 
-See `our documentation on testing with vagrant <https://github.com/BonnyCI/lore/tree/master/developers#virtual-machines>`_.
+See `our documentation on testing with vagrant <http://bonnyci.org/lore/developers#virtual-machines>`_.
 
 Contributing
 ============
 
-See `our documentation on contributing <https://github.com/BonnyCI/lore/tree/master/developers/contributing>`_.
+See `our documentation on contributing <http://bonnyci.org/lore/developers/contributing>`_.
