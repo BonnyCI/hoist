@@ -3,22 +3,16 @@
   apt:
     name: "{{ item }}"
     state: installed
-    update_cache: true
   with_items:
-    - git
     - cron
 
 - name: Create source directories
   file:
-    path: "{{ item }}"
+    path: /etc/datadog-builder
     state: directory
     mode: 0755
     owner: root
     group: root
-  with_items:
-    - /opt/source
-    - /opt/venvs
-    - /etc/datadog-builder
 
 - name: create datadog-builder user
   user:
@@ -32,21 +26,6 @@
     content: "{{ datadog_builder_secrets | default({}) | to_nice_yaml(indent=2) }}"
     mode: 0600
     owner: datadog-builder
-
-- name: Checkout datadog-builder
-  git:
-    dest: /opt/source/datadog-builder
-    repo: "{{ datadog_builder_git_repo_url }}"
-    version: "{{ datadog_builder_git_branch }}"
-    update: "{{ datadog_builder_git_update }}"
-  register: datadog_builder_git
-
-- name: Install datadog-builder
-  pip:
-    extra_args: -U
-    name: /opt/source/datadog-builder
-    virtualenv: /opt/venvs/datadog-builder
-  when: datadog_builder_git.changed
 
 - name: Update monitors repo
   git:

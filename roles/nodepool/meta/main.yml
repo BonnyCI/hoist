@@ -5,3 +5,13 @@ dependencies:
       - name: nodepool
         document_root: /var/log/nodepool/
         document_root_options: +FollowSymLinks
+
+  - role: python-app
+    name: nodepool
+    python_app_pipdeps:
+      - name: diskimage-builder
+        state: latest
+      - name: statsd
+    python_app_git_repo: https://git.openstack.org/openstack-infra/nodepool
+    python_app_git_version: "{{ nodepool_git_version }}"
+    python_app_notify: Restart nodepool
