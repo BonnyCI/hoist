@@ -16,6 +16,9 @@ zuul.vagrant ansible_user=ubuntu
 [log]
 logs.vagrant ansible_user=ubuntu
 
+[monitoring]
+logs.vagrant ansible_user=ubuntu
+
 [vagrant:children]
 bastion
 log

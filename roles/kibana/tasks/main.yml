@@ -1,0 +1,22 @@
+---
+- name: Install Kibana.
+  package:
+    name: kibana
+    state: present
+
+- name: Copy Kibana configuration.
+  template:
+    src: etc/kibana/kibana.yml
+    dest: /etc/kibana/kibana.yml
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart kibana
+
+- meta: flush_handlers
+
+- name: Ensure Kibana is started and enabled at boot.
+  service:
+    name: kibana
+    state: started
+    enabled: yes

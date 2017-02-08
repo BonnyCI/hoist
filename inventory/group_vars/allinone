@@ -1,3 +1,5 @@
+elasticsearch_jvm_heap_size: 250m
+
 nodepool_mysql_host: localhost
 nodepool_gearman_servers:
   - host: localhost

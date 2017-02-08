@@ -8,6 +8,8 @@ bonnyci_zuul_apache_server_name: zuul.multinode
 
 datadog_enabled: no
 
+elasticsearch_jvm_heap_size: 250m
+
 nodepool_gearman_servers:
   - host: "{{ zuul_ip }}"
     port: 4730

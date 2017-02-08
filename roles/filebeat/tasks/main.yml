@@ -1,0 +1,52 @@
+---
+- name: Install Filebeat.
+  apt:
+    name: filebeat
+    state: present
+
+- name: Create Filebeat configuration directory
+  file:
+    path: "/etc/filebeat/conf.d"
+    state: directory
+
+- name: Copy Filebeat configuration.
+  template:
+    src: etc/filebeat/filebeat.yml
+    dest: "/etc/filebeat/filebeat.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart filebeat
+
+- name: Copy Filebeat prospectors
+  template:
+    src: etc/filebeat/conf.d/prospector.yml
+    dest: "/etc/filebeat/conf.d/{{ item.name | mandatory }}.yml"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart filebeat
+  with_items: "{{ filebeat_prospectors }}"
+
+- name: Ensure Filebeat SSL key pair directory exists.
+  file:
+    path: "{{ filebeat_ssl_dir }}"
+    state: directory
+  when: filebeat_ssl_key_file
+
+- name: Copy SSL key and cert for filebeat.
+  copy:
+    src: "{{ item }}"
+    dest: "{{ filebeat_ssl_dir }}/{{ item | basename }}"
+    mode: 0644
+  with_items:
+    - "{{ filebeat_ssl_key_file }}"
+    - "{{ filebeat_ssl_certificate_file }}"
+  notify: restart filebeat
+  when: filebeat_ssl_key_file and filebeat_ssl_certificate_file
+
+- name: Ensure Filebeat is started and enabled at boot.
+  service:
+    name: filebeat
+    state: started
+    enabled: yes

@@ -9,6 +9,18 @@
       tags:
         - monitoring
 
+- name: Install ELK
+  hosts: monitoring
+  become: yes
+  tags: ['elk']
+  roles:
+    - role: elasticsearch
+      tags: ['elasticsearch']
+    - role: logstash
+      tags: ['logstash']
+    - role: kibana
+      tags: ['kibana']
+
 - name: Install mysql
   hosts: mysql
   become: yes
@@ -60,6 +72,19 @@
             - daily
             - notifempty
 
+    - role: filebeat
+      tags: test1
+      filebeat_prospectors:
+        - name: zuul-server
+          prospectors:
+            - input_type: log
+              tags:
+                - python-logging
+                - zuul
+              paths:
+                - /var/log/zuul/launcher.log
+                - /var/log/zuul/server.log
+
 - name: Install zuul mergers
   hosts: mergers
   become: yes
@@ -89,6 +114,18 @@
             - daily
             - notifempty
 
+    - role: filebeat
+      filebeat_prospectors:
+        - name: zuul-merger
+          prospectors:
+            - input_type: log
+              tags:
+                - python-logging
+                - zuul
+                - zuul-merger
+              paths:
+                - /var/log/zuul/merger.log
+
 - name: Install nodepool
   hosts: nodepool
   become: yes
@@ -97,9 +134,11 @@
     - role: nodepool
       nodepool_mysql_user: "{{ secrets.nodepool.db_user }}"
       nodepool_mysql_password: "{{ secrets.nodepool.db_password }}"
+
     - role: dd-nodepool
       tags:
         - monitoring
+
     - role: logrotate
       logrotate_configs:
         - name: nodepool
@@ -111,6 +150,20 @@
             - size 50M
             - daily
             - notifempty
+
+    - role: filebeat
+      filebeat_prospectors:
+        - name: nodepool
+          prospectors:
+            - input_type: log
+              tags:
+                - python-logging
+                - nodepool
+              paths:
+                - /var/log/nodepool/nodepool-builder.log
+                - /var/log/nodepool/nodepool-deleter.log
+                - /var/log/nodepool/nodepool-launcher.log
+                - /var/log/nodepool/nodepoold.log
 
 - name: Install logging
   hosts: log

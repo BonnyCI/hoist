@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: elasticsearch-repo
+    elasticsearch_repo_install_java: yes

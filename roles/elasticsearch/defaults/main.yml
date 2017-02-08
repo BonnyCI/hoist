@@ -1,0 +1,8 @@
+---
+elasticsearch_network_host: 127.0.0.1
+elasticsearch_http_port: 9200
+elasticsearch_cluster_name: my-application
+
+# this could probably be dynamic based on the recommendations at:
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/heap-size.html
+elasticsearch_jvm_heap_size: 2g

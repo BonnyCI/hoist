@@ -4,6 +4,12 @@ bastion_clouds:
 bonnyci_logs_apache_server_name: logs.bonnyci.com
 bonnyci_zuul_apache_server_name: zuul.bonnyci.portbleu.com
 
+filebeat_output_logstash_hosts:
+  - "logs.bonnyci.com:5044"
+
+logstash_elasticsearch_hosts:
+  - "http://localhost:9200"
+
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730

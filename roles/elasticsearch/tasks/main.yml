@@ -1,0 +1,32 @@
+---
+- name: Install elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+
+- name: Configure Elasticsearch.
+  template:
+    src: "etc/elasticsearch/{{ item }}"
+    dest: "/etc/elasticsearch/{{ item }}"
+    owner: root
+    group: elasticsearch
+    mode: 0660
+  with_items:
+    - jvm.options
+    - elasticsearch.yml
+  notify: restart elasticsearch
+
+- meta: flush_handlers
+
+- name: Start Elasticsearch.
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes
+
+- name: Make sure Elasticsearch is running before proceeding.
+  wait_for:
+    host: "{{ elasticsearch_network_host }}"
+    port: "{{ elasticsearch_http_port }}"
+    delay: 3
+    timeout: 300

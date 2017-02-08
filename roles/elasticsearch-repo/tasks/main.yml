@@ -1,0 +1,23 @@
+---
+- name: Ensure https apt transport
+  apt:
+    name: apt-transport-https
+    state: present
+
+- name: Add Elasticsearch apt key.
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+
+- name: Add Elasticsearch repository.
+  apt_repository:
+    repo: 'deb https://artifacts.elastic.co/packages/5.x/apt stable main'
+    filename: elastic-5.x.list
+    state: present
+    update_cache: yes
+
+- name: Install java
+  apt:
+    pkg: openjdk-8-jdk
+    state: present
+  when: elasticsearch_repo_install_java

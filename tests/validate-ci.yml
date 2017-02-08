@@ -46,3 +46,17 @@
         - list
         - job-list
         - dib-image-list
+
+- name: Validate elasticsearch
+  hosts: monitoring
+  tasks:
+    - name: elasticsearch port open
+      uri:
+        url: http://localhost:9200/
+
+    - name: validate logstash config
+      become: yes
+      shell: >
+        /usr/share/logstash/bin/logstash
+        --path.settings /etc/logstash
+        --config.test_and_exit

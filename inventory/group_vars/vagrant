@@ -5,6 +5,8 @@ bonnyci_zuul_apache_server_name: merger.vagrant
 
 datadog_enabled: no
 
+elasticsearch_jvm_heap_size: 250m
+
 hoist_repo: /vagrant/.git
 
 nodepool_providers:
