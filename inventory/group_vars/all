@@ -9,3 +9,8 @@ zuul_git_user_name: Anne Bonny
 
 zuul_merger_apache_port: 8858
 zuul_merger_url: "http://{{ inventory_hostname }}:{{ zuul_merger_apache_port }}/p"
+
+zuul_connections:
+  github:
+    driver: github
+    api_token: "{{ secrets.zuul_github_api_key }}"
