@@ -1,3 +1,4 @@
+logs_ip: "{{ hostvars['logs.multinode']['ansible_default_ipv4']['address'] }}"
 zuul_ip: "{{ hostvars['zuul.multinode']['ansible_default_ipv4']['address'] }}"
 
 bastion_clouds:
@@ -9,6 +10,9 @@ bonnyci_zuul_apache_server_name: zuul.multinode
 datadog_enabled: no
 
 elasticsearch_jvm_heap_size: 250m
+
+filebeat_output_logstash_hosts:
+  - "{{ logs_ip }}:5044"
 
 nodepool_gearman_servers:
   - host: "{{ zuul_ip }}"

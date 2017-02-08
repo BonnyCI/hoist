@@ -7,6 +7,9 @@ datadog_enabled: no
 
 elasticsearch_jvm_heap_size: 250m
 
+filebeat_output_logstash_hosts:
+  - logs.vagrant:5044
+
 hoist_repo: /vagrant/.git
 
 nodepool_providers:

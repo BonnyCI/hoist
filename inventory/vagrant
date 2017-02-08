@@ -23,6 +23,7 @@ logs.vagrant ansible_user=ubuntu
 bastion
 log
 mergers
+monitoring
 mysql
 nodepool
 zuul
