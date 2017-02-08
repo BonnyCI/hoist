@@ -35,28 +35,31 @@ pipelines:
     source: github
     trigger:
       github:
-        - event: pr-label
-          label: 'approved'
+        - event: status
+          status: "anne-bonny:check_github:success"
+        - event: pr-review
+          state: 'approve'
         - event: pr-comment
           comment: (?i)^\s*gate-recheck\s*$
     require:
       status: "anne-bonny:check_github:success"
+      approval:
+        - review: 2
+    reject:
+      approval:
+        - review: -2
     start:
       github:
-        comment: true
-        label: '-approved'
         status: true
     success:
       github:
         comment: false
         merge: true
-        label: 'approved'
         status: true
         status_url: *log_link
     failure:
       github:
         comment: true
-        label: '-approved'
         status: true
         status_url: *log_link
 
