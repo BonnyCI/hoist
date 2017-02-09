@@ -1,1 +1,0 @@
-zuul_file_zuul_conf_src: roles/zuul/templates/etc/zuul/zuul.conf.j2
