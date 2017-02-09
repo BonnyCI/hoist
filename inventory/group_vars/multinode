@@ -31,8 +31,5 @@ nodepool_statsd_enable: no
 nodepool_zmq_publishers:
   - "tcp://{{ zuul_ip }}:8888"
 
-zuul_connections:
-  github:
-    driver: github
 zuul_merger_url: "http://{{ zuul_ip }}:{{ zuul_merger_apache_port }}/p"
 zuul_statsd_enable: no
