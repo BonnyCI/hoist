@@ -40,3 +40,19 @@
               dest: .
           EOF
           zuul-cloner https://github.com/ -m $CLONEMAP $ZUUL_PROJECT
+
+
+# This is a simple builder to output basic node debugging info.
+# It can be added to the beginning of a job to make debugging easier.
+- builder:
+    name: node-info
+    builders:
+      - shell: |
+        #!/bin/bash -e
+        if [ -r /etc/nodepool/sub_nodes ] ; then
+            echo "Subnode info:"
+            cat /etc/nodepool/sub_nodes
+        fi
+
+        echo "Current environment:"
+        env
