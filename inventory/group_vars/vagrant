@@ -22,7 +22,4 @@ nodepool_gearman_servers:
     port: 4730
 
 zuul_statsd_enable: no
-zuul_connections:
-  github:
-    driver: github
 zuul_gearman_server: zuul.vagrant
