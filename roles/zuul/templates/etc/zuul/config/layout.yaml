@@ -71,9 +71,9 @@ jobs:
 projects:
   - name: BonnyCI/bonnyci.org
     check_github:
-      - bonnyci.org
+      - bonnyci-run-check
     gate_github:
-      - bonnyci.org
+      - bonnyci-run-gate
 
   - name: BonnyCI/hoist
     check_github:
