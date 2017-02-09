@@ -37,6 +37,11 @@
     group: root
   notify: restart apache
 
+- name: Remove ubuntu's default welcome page
+  file:
+    path: /var/www/html/index.html
+    state: absent
+
 - name: set-up ssl if any vhosts require it
   include: ssl.yml
   when:  "{{ apache_vhosts | selectattr('ssl', 'defined') | map(attribute='ssl') | sum }}"
