@@ -75,6 +75,7 @@ Vagrant.configure(2) do |config|
     end
 
     zuul.vm.network "forwarded_port", guest: 4730, host: 4730
+    zuul.vm.network "forwarded_port", guest: 80, host: 8081
 
     zuul.vm.provision "shell", path: "tools/install-pip.sh"
     zuul.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"

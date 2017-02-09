@@ -49,6 +49,14 @@
       tags:
         - monitoring
 
+    - role: apache
+      apache_mods_enabled: "{{ bonnyci_zuul_status_apache_mods_enabled }}"
+      apache_vhosts: "{{ bonnyci_zuul_status_apache_vhosts }}"
+
+    - role: dd-apache
+      tags:
+        - monitoring
+
     - role: logrotate
       logrotate_configs:
         - name: zuul

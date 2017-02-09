@@ -14,9 +14,18 @@
       command: pgrep -f /opt/venvs/zuul/bin/{{ item }}
       with_items: "{{ zuul_components }}"
 
-- name: Validate gearman status
+- name: Validate zuul status
   hosts: zuul
   tasks:
+    - name: install curl
+      become: true
+      package:
+        name: curl
+        state: installed
+
+    - name: zuul webapp is running
+      shell: curl --fail localhost:8001/status.json
+
     - name: gearman services are running
       shell: netstat -antlp | grep 4730
 
