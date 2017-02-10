@@ -4,6 +4,9 @@ localhost ansible_connection=local
 [nodepool]
 nodepool.vagrant ansible_user=ubuntu
 
+[zookeeper]
+nodepool.vagrant ansible_user=ubuntu
+
 [zuul]
 zuul.vagrant ansible_user=ubuntu
 
