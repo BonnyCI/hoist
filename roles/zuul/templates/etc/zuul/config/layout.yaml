@@ -38,7 +38,7 @@ pipelines:
         - event: status
           status: "anne-bonny:check_github:success"
         - event: pr-review
-          state: 'approve'
+          state: 'approved'
         - event: pr-comment
           comment: (?i)^\s*gate-recheck\s*$
     require:
