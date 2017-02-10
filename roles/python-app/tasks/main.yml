@@ -41,3 +41,8 @@
     name: "{{ python_app_source_path }}/{{ name }}"
     virtualenv: "{{ python_app_venv_path }}/{{ name }}"
   when: python_app_git_checkout.changed
+
+- name: Set python-app facts
+  set_fact: >
+    {{ name | replace('-', '_') }}_venv_path={{ python_app_venv_path }}/{{ name }}
+    {{ name | replace('-', '_') }}_source_path={{ python_app_source_path }}/{{ name }}
