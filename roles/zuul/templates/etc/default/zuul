@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 
-PATH={{ zuul_venv_dir }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PATH={{ zuul_venv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 {% if zuul_statsd_enable %}
 STATSD_HOST={{ zuul_statsd_host }}
 STATSD_PORT={{ zuul_statsd_port }}
