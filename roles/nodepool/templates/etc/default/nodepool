@@ -5,6 +5,5 @@ STATSD_HOST={{ nodepool_statsd_host }}
 STATSD_PORT={{ nodepool_statsd_port }}
 {% endif %}
 
-PREFIX={{ nodepool_venv_path }}
 VIRTUAL_ENV={{ nodepool_venv_path }}
 PATH={{ nodepool_venv_path }}/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

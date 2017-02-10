@@ -131,7 +131,7 @@
     - Restart nodepool
 
 - name: Install systemd unit files
-  copy:
+  template:
     src: "etc/systemd/system/{{ item }}.service"
     dest: "/etc/systemd/system/{{ item }}.service"
     owner: root
