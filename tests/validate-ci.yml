@@ -54,9 +54,24 @@
       uri:
         url: http://localhost:9200/
 
+    - name: get elasticsearch health
+      uri:
+        url: http://localhost:9200/_cluster/health
+        return_content: yes
+      register: es_health
+
+    - name: validate elasticsearch health
+      assert:
+        that:
+          - (es_health.content|from_json)["status"] == "green"
+          - (es_health.content|from_json)["cluster_name"] == elasticsearch_cluster_name
+
     - name: validate logstash config
       become: yes
       shell: >
         /usr/share/logstash/bin/logstash
         --path.settings /etc/logstash
         --config.test_and_exit
+
+    - name: logstash filebeat_input port open
+      shell: netstat -plunt | grep 5044
