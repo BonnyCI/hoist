@@ -1,16 +1,19 @@
-bonnyci_zuul_status_apache_mods_enabled:
+bonnyci_zuul_webapp_apache_mods_enabled:
   - proxy.load
   - proxy_http.load
   - rewrite.load
 
-bonnyci_zuul_status_apache_vhosts:
+bonnyci_zuul_webapp_apache_vhosts:
   - name: status
-    server_name: "{{ bonnyci_zuul_status_apache_server_name | default('zuul') }}"
+    delete: true
+  - name: webapp
+    server_name: "{{ bonnyci_zuul_webapp_apache_server_name | default('zuul') }}"
     document_root: /opt/source/zuul/etc/status/public_html/
     vhost_extra: |
       RewriteEngine on
       RewriteRule ^/status.json$ http://127.0.0.1:8001/status.json [P]
       RewriteRule ^/status/(.*) http://127.0.0.1:8001/status/$1 [P]
+      RewriteRule ^/connection/github/payload$ http://127.0.0.1:8001/connection/github/payload [P]
 
 zuul_components:
   - zuul-launcher

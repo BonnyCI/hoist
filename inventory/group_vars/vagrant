@@ -2,7 +2,7 @@ bastion_clouds:
   - bastioncloud
 
 bonnyci_zuul_merger_apache_server_name: merger.vagrant
-bonnyci_zuul_status_apache_server_name: zuul.vagrant
+bonnyci_zuul_webapp_apache_server_name: zuul.vagrant
 
 datadog_enabled: no
 
