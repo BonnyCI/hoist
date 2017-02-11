@@ -20,6 +20,17 @@
         api_key: "{{ secrets.datadog.api_key }}"
         app_key: "{{ secrets.datadog.ansible_app_key }}"
       when: secrets is defined
+    - role: logrotate
+      logrotate_configs:
+        - name: datadog-builder
+          path: /var/log/datadog-builder/*log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+      when: secrets is defined
     - role: ansible-runner
       ansible_runner_job: system-ansible
       ansible_playbook: bastion.yml
