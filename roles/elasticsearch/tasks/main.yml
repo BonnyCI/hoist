@@ -30,3 +30,12 @@
     port: "{{ elasticsearch_http_port }}"
     delay: 3
     timeout: 300
+
+- name: Set index-level settings
+  when: elasticsearch_index_settings is defined
+  uri:
+    method: PUT
+    url: http://localhost:9200/_settings
+    body_format: json  # This will convert yaml data to a json string
+    body:
+      index: "{{ elasticsearch_index_settings }}"
