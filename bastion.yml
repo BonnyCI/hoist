@@ -23,7 +23,7 @@
     - role: ansible-runner
       ansible_runner_job: system-ansible
       ansible_playbook: bastion.yml
-      ansible_inventory: /opt/source/system-ansible/inventory/bastion-localhost
+      ansible_inventory: /opt/source/system-ansible/inventory/bastion-production
       ansible_runner_user: root
       ansible_runner_repo: "{{ hoist_repo }}"
       ansible_runner_minute: "*/15"
