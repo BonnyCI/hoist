@@ -43,18 +43,21 @@ Vagrant.configure(2) do |config|
       apt-get -y install build-essential python python-dev libffi-dev libssl-dev
       pip install ansible
 
-      # Move the example secrets file in place
+      # If there's no secrets.yml in the working directory, use the example file
+      if ! test -f /vagrant/secrets.yml ; then
+        cp /vagrant/secrets.yml.example /vagrant/secrets.yml
+      fi
+
+      # Create a symlink pointing at the live secrets.yml
       if test -f /etc/secrets.yml ; then
         rm /etc/secrets.yml
       fi
-      cp /vagrant/secrets.yml.example /etc/secrets.yml
+      ln -s /vagrant/secrets.yml /etc/secrets.yml
 
       # disable cron runs, run ansible manually while testing
       touch /etc/disable-ansible-runner-cideploy
       touch /etc/disable-ansible-runner-system-ansible
     SHELL
-
-    bastion.vm.provision "shell", inline: "ansible-galaxy install --roles-path /vagrant/upstream_roles -r /vagrant/requirements.yml"
 
     bastion.vm.provision "ansible_local" do |ansible|
       ansible.inventory_path = "/vagrant/inventory/vagrant"
