@@ -16,6 +16,8 @@
   roles:
     - role: elasticsearch
       tags: ['elasticsearch']
+      elasticsearch_index_settings:
+        number_of_replicas: 0
     - role: logstash
       tags: ['logstash']
     - role: kibana

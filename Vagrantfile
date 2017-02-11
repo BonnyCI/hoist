@@ -117,7 +117,7 @@ Vagrant.configure(2) do |config|
     logs.vm.network "private_network", ip: "10.0.0.102"
 
     logs.vm.provider "virtualbox" do |v|
-      v.memory = '1024'
+      v.memory = '2048'
     end
 
     logs.vm.provision "shell", path: "tools/install-pip.sh"
