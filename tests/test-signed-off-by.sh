@@ -4,6 +4,7 @@ success="true"
 
 for commit in $(git cherry master | cut -d " " -f 2)
 do
+    # test comment
     if ! git show -s "$commit" | grep -q 'Signed-off-by:'; then
         echo "Commit $commit doesn't have a Signed-off-by"
         git show "$commit"
