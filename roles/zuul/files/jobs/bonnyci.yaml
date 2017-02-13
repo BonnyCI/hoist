@@ -10,11 +10,11 @@
               copy-after-failure: true
 
 - job-template:
-    node: 'ubuntu-xenial'
     type: ''
 
     name: 'bonnyci-run-{pipeline}{type}'
     id: 'bonnyci-run-pipeline-{pipeline}'
+    node: '{node}'
     builders:
       - zuul-git-prep
       - shell: |
@@ -48,8 +48,10 @@
     jobs:
         - 'bonnyci-run-pipeline-{pipeline}':
             pipeline: check
+            node: 'ubuntu-xenial'
         - 'bonnyci-run-pipeline-{pipeline}':
             pipeline: gate
+            node: 'ubuntu-xenial'
         - 'bonnyci-run-pipeline-{pipeline}':
             pipeline: check
             node: 'ubuntu-hoist'
