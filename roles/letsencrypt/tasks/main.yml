@@ -1,0 +1,117 @@
+---
+- name: Install openssl
+  apt:
+    name: openssl
+    state: present
+
+- name: create webroot folder
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ letsencrypt_webroot }}/.well-known/acme-challenge"
+    - "{{ letsencrypt_account_key_path | dirname }}"
+    - "{{ letsencrypt_csr_path | dirname }}"
+    - "{{ letsencrypt_csr_config_path | dirname }}"
+    - "{{ letsencrypt_cert_path | dirname }}"
+    - "{{ letsencrypt_key_path | dirname }}"
+    - "{{ letsencrypt_cert_path | dirname }}"
+    - "{{ letsencrypt_chain_path | dirname }}"
+
+- name: Create CSR configuration
+  template:
+    src: openssl-req.conf
+    dest: "{{ letsencrypt_csr_config_path }}"
+    mode: "{{ letsencrypt_csr_mode }}"
+    owner: "{{ letsencrypt_csr_owner }}"
+  register: letsencrypt_create_csr
+
+- name: Check key exists
+  stat:
+    path: "{{ item }}"
+  register: letsencrypt_stat
+  with_items:
+    - "{{ letsencrypt_key_path }}"
+    - "{{ letsencrypt_csr_path }}"
+
+- name: Create CSR
+  command: >
+    openssl req -new -nodes -batch
+    -config {{ letsencrypt_csr_config_path }}
+    -out {{ letsencrypt_csr_path }}
+    {% if letsencrypt_stat.results.0.stat.exists %}
+    -key {{ letsencrypt_key_path }}
+    {% else %}
+    -keyout {{ letsencrypt_key_path }}
+    {% endif %}
+  register: letsencrypt_create_csr_command
+  failed_when: '"error" in letsencrypt_create_csr_command.stderr.lower()'
+  when: (not letsencrypt_stat.results.0.stat.exists) or
+        (not letsencrypt_stat.results.1.stat.exists) or
+        (letsencrypt_create_csr.changed | default(False))
+
+- name: set key owner
+  file:
+    path: "{{ letsencrypt_key_path }}"
+    mode: "{{ letsencrypt_key_mode }}"
+    owner: "{{ letsencrypt_key_owner }}"
+
+- name: Copy account key to destination
+  copy:
+    dest: "{{ letsencrypt_account_key_path }}"
+    content: "{{ letsencrypt_account_key_content }}"
+    mode: "{{ letsencrypt_account_key_mode }}"
+    owner: "{{ letsencrypt_account_key_owner }}"
+  when: letsencrypt_account_key_content is defined
+
+- name: set account key properties
+  file:
+    path: "{{ letsencrypt_account_key_path }}"
+    mode: "{{ letsencrypt_account_key_mode }}"
+    owner: "{{ letsencrypt_account_key_owner }}"
+  when: letsencrypt_account_key_content is not defined
+
+- name: Download certificate chain
+  get_url:
+    url: "{{ letsencrypt_chain_url }}"
+    dest: "{{ letsencrypt_chain_path }}"
+    owner: "{{ letsencrypt_chain_owner }}"
+    mode: "{{ letsencrypt_chain_mode }}"
+
+- name: Check for letsencrypt changes
+  letsencrypt:
+    account_email: "{{ letsencrypt_email }}"
+    account_key: "{{ letsencrypt_account_key_path }}"
+    acme_directory: "{{ letsencrypt_acme_directory }}"
+    challenge: "http-01"
+    csr: "{{ letsencrypt_csr_path }}"
+    dest: "{{ letsencrypt_cert_path }}"
+    remaining_days: "{{ letsencrypt_remaining_days }}"
+  register: letsencrypt_challenge_response
+
+- name: Install letsencrypt challenges
+  copy:
+    dest: "{{ letsencrypt_webroot }}/{{ item.value['http-01']['resource'] }}"
+    content: "{{ item.value['http-01']['resource_value'] }}"
+  with_dict: "{{ letsencrypt_challenge_response['challenge_data'] | default({}) }}"
+  when: letsencrypt_challenge_response.changed
+
+- name: Update letsencrypt certificates
+  letsencrypt:
+    account_email: "{{ letsencrypt_email }}"
+    account_key: "{{ letsencrypt_account_key_path }}"
+    acme_directory: "{{ letsencrypt_acme_directory }}"
+    challenge: "http-01"
+    csr: "{{ letsencrypt_csr_path }}"
+    data: "{{ letsencrypt_challenge_response }}"
+    dest: "{{ letsencrypt_cert_path }}"
+    remaining_days: "{{ letsencrypt_remaining_days }}"
+  notify: restart apache
+  when: letsencrypt_challenge_response.changed
+
+- name: Cleanup letsencrypt challenges
+  file:
+    path: "{{ letsencrypt_webroot }}/{{ item.value['http-01']['resource'] }}"
+    state: absent
+  with_dict: "{{ letsencrypt_challenge_response['challenge_data'] | default({}) }}"
+  when: letsencrypt_challenge_response.changed

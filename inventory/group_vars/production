@@ -5,6 +5,8 @@ bonnyci_logs_apache_server_name: logs.bonnyci.com
 bonnyci_zuul_webapp_apache_server_name: zuul.bonnyci.portbleu.com
 bonnyci_zuul_merger_apache_server_name: merger01.bonnyci-internal.portbleu.com
 
+letsencrypt_production: yes
+
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730

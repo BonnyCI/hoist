@@ -12,8 +12,8 @@ matrix:
 
 env:
   - TEST_RUN="ansible-playbook -i herp, bastion.yml install-ci.yml provision.yml tests/validate-ci.yml --syntax-check"
-  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,no-docker"
-  - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,no-docker"
+  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,no-docker,letsencrypt"
+  - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,no-docker,letsencrypt"
 
 before_install:
 - docker pull ubuntu:xenial

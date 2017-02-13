@@ -1,2 +1,3 @@
 ---
-dd_zuul_status_url: http://localhost:8001/status.json
+dd_zuul_status_port: 8001
+dd_zuul_status_url: "http://localhost:{{ dd_zuul_status_port }}/status.json"

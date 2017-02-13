@@ -3,12 +3,21 @@ bonnyci_zuul_webapp_apache_mods_enabled:
   - proxy_http.load
   - rewrite.load
 
+letsencrypt_key_path: /etc/apache2/cert/ansible.key
+letsencrypt_cert_path: /etc/apache2/cert/ansible.crt
+letsencrypt_chain_path: /etc/letsencrypt/chain.pem
+
 bonnyci_zuul_webapp_apache_vhosts:
   - name: status
     delete: true
+
   - name: webapp
     server_name: "{{ bonnyci_zuul_webapp_apache_server_name | default('zuul') }}"
     document_root: /opt/source/zuul/etc/status/public_html/
+    ssl: "{{ bonnyci_zuul_webapp_ssl | default(False) }}"
+    certificate_file: "{{ letsencrypt_cert_path | default('') }}"
+    certificate_key_file: "{{ letsencrypt_key_path | default('') }}"
+    certificate_chain_file: "{{ letsencrypt_chain_path | default('') }}"
     vhost_extra: |
       RewriteEngine on
       RewriteRule ^/status.json$ http://127.0.0.1:8001/status.json [P]
@@ -18,4 +27,3 @@ bonnyci_zuul_webapp_apache_vhosts:
 zuul_components:
   - zuul-launcher
   - zuul-server
-
