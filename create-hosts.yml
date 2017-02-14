@@ -33,6 +33,8 @@
       servers:
         - name: zuul
           public_address: 169.45.113.36
+          security_groups:
+            - https
         - name: nodepool
         - name: logs
           public_address: 169.45.113.51
