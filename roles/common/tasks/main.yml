@@ -14,4 +14,4 @@
     dest: /etc/hosts
     regexp: '^127\.0\.0\.1'
     line: '127.0.0.1 {{ ansible_hostname }} localhost'
-  tags: ['no-docker']
+  tags: ['not-on-docker']
