@@ -93,7 +93,9 @@
     - zuul-merger
     - zuul-server
   register: stop_zuul
-  failed_when: "stop_zuul.rc != 0 and not 'service not loaded' in stop_zuul.stderr"
+  failed_when:
+    - stop_zuul|failed
+    - "'Could not find the requested service' not in stop_zuul.msg"
 
 - meta: flush_handlers
 
