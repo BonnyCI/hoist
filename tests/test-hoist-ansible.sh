@@ -1,7 +1,5 @@
 #!/bin/bash -ex
 
-source /opt/venvs/ansible/bin/activate
-
 echo "Running hoist ansible syntax test"
 ansible-playbook -i /dev/null --syntax-check $(find . tests -maxdepth 1 -type f -name \*.yml -not -name .travis.yml)
 
