@@ -35,7 +35,9 @@
   when: elasticsearch_index_settings is defined
   uri:
     method: PUT
-    url: http://localhost:9200/_settings
+    url: http://localhost:9200/_template/all
     body_format: json  # This will convert yaml data to a json string
     body:
-      index: "{{ elasticsearch_index_settings }}"
+      template: '*'
+      order: 0
+      settings: "{{ elasticsearch_index_settings }}"
