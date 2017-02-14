@@ -98,7 +98,7 @@ projects:
     gate_github:
       - tox_py27
 
-  - name: SpamapS/giftwrap
+  - name: BonnyCI/giftwrap
     check_github:
       - tox_py27
     gate_github:
