@@ -1,0 +1,14 @@
+---
+logstash_listen_port_beats: 5044
+
+logstash_elasticsearch_hosts:
+  - http://localhost:9200
+
+logstash_ssl_dir: /etc/pki/logstash
+logstash_ssl_certificate_file: ""
+logstash_ssl_key_file: ""
+
+logstash_enabled_on_boot: yes
+
+logstash_install_plugins:
+  - logstash-input-beats

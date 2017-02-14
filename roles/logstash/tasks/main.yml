@@ -1,0 +1,17 @@
+---
+- name: Install Packages.
+  apt:
+    name: logstash
+    state: present
+
+- include: config.yml
+- include: ssl.yml
+- include: plugins.yml
+
+- meta: flush_handlers
+
+- name: Ensure Logstash is started and enabled on boot.
+  service:
+    name: logstash
+    state: started
+    enabled: yes

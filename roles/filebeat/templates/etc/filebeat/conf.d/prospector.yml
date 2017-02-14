@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+filebeat.prospectors:
+{{ item.prospectors | mandatory | to_nice_yaml(indent=2) }}

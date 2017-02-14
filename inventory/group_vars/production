@@ -7,6 +7,12 @@ bonnyci_zuul_merger_apache_server_name: merger01.bonnyci-internal.portbleu.com
 
 letsencrypt_production: yes
 
+filebeat_output_logstash_hosts:
+  - logs.bonnyci-internal.portbleu.com:5044
+
+logstash_elasticsearch_hosts:
+  - "http://localhost:9200"
+
 nodepool_gearman_servers:
   - host: zuul.bonnyci-internal.portbleu.com
     port: 4730
