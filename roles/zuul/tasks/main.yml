@@ -82,6 +82,21 @@
   include: merger.yml
   when: "'zuul-merger' in zuul_components"
 
+- name: Stop unwanted zuul services
+  service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+  when: "item not in zuul_components"
+  with_items:
+    - zuul-launcher
+    - zuul-merger
+    - zuul-server
+  register: stop_zuul
+  failed_when:
+    - stop_zuul|failed
+    - "'Could not find the requested service' not in stop_zuul.msg"
+
 - meta: flush_handlers
 
 - name: Enable zuul services

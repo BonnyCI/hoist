@@ -1,7 +1,8 @@
 bastion_clouds:
   - bastioncloud
 
-bonnyci_zuul_apache_server_name: merger.vagrant
+bonnyci_zuul_merger_apache_server_name: merger.vagrant
+bonnyci_zuul_webapp_apache_server_name: zuul.vagrant
 
 datadog_enabled: no
 
@@ -27,7 +28,4 @@ nodepool_gearman_servers:
     port: 4730
 
 zuul_statsd_enable: no
-zuul_connections:
-  github:
-    driver: github
 zuul_gearman_server: zuul.vagrant

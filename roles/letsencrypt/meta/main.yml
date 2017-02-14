@@ -1,0 +1,21 @@
+dependencies:
+  - role: apache
+    ssl: no
+
+    apache_mods_enabled:
+      - rewrite.load
+
+    apache_vhosts:
+      - name: letsencrypt
+        document_root: "{{ letsencrypt_webroot }}"
+        port: 80
+        admin: "{{ letsencrypt_email }}"
+
+        vhost_extra: |
+          {{ letsencrypt_vhost_extra }}
+          {% if letsencrypt_configure_redirect %}
+          RewriteEngine On
+          RewriteCond %{HTTPS} off
+          RewriteCond %{REQUEST_URI} !^/.well-known/
+          RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L,QSA]
+          {% endif %}

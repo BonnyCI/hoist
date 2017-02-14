@@ -14,11 +14,25 @@
     owner: root
     group: root
 
+- name: create datadog-builder group
+  group:
+    name: datadog-builder
+    state: present
+
 - name: create datadog-builder user
   user:
     name: datadog-builder
+    group: datadog-builder
     home: /var/lib/datadog-builder
     state: present
+
+- name: Create log file
+  file:
+    path: /var/log/datadog-builder
+    state: directory
+    mode: 0755
+    owner: datadog-builder
+    group: datadog-builder
 
 - name: Create datadog-builder secrets
   copy:
@@ -43,3 +57,4 @@
       /opt/venvs/datadog-builder/bin/datadog-builder
       --config /etc/datadog-builder/datadog-secrets.yml
       update {{ datadog_builder_monitor_dir }}/{{ datadog_builder_monitor_file }}
+      &>> /var/log/datadog-builder/datadog-builder.log

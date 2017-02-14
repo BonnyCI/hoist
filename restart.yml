@@ -1,0 +1,57 @@
+---
+- name: Restart zuul services
+  hosts: zuul
+  become: yes
+  tags:
+    - zuul
+    - zuul-server
+    - zuul-launcher
+  tasks:
+    - name: restart zuul-server
+      service:
+        name: zuul-server
+        state: restarted
+
+    - name: wait for zuul to start (check for gearman)
+      wait_for:
+        port: "{{ zuul_gearman_port | default(4730) }}"
+        timeout: 300
+        delay: 2
+
+    - name: restart zuul-launcher
+      service:
+        name: zuul-launcher
+        state: restarted
+
+- name: Restart zuul mergers
+  hosts: mergers
+  tags:
+    - zuul
+    - zuul-merger
+  tasks:
+    - name: restart zuul-merger
+      service:
+        name: zuul-merger
+        state: restarted
+      with_items:
+        - zuul-merger
+
+- name: Restart nodepool services
+  hosts: nodepool
+  become: yes
+  tags:
+    - nodepool
+  tasks:
+    - name: Restart nodepoold
+      service:
+        name: nodepoold
+        state: restarted
+
+    - name: Restart other nodepool services
+      service:
+        name: "{{ item }}"
+        state: restarted
+      with_items:
+        - nodepool-builder
+        - nodepool-deleter
+        - nodepool-launcher

@@ -5,10 +5,17 @@
   tags: ['common']
   roles:
     - role: common
+
     - role: dd-agent
       tags:
         - monitoring
 
+    - role: letsencrypt
+      tags:
+        - letsencrypt
+      when:
+        - letsencrypt_csr_cn | default(False)
+        
 - name: Install ELK
   hosts: monitoring
   become: yes
@@ -60,6 +67,14 @@
     - role: zuul
 
     - role: dd-zuul
+      tags:
+        - monitoring
+
+    - role: apache
+      apache_mods_enabled: "{{ bonnyci_zuul_webapp_apache_mods_enabled }}"
+      apache_vhosts: "{{ bonnyci_zuul_webapp_apache_vhosts }}"
+
+    - role: dd-apache
       tags:
         - monitoring
 

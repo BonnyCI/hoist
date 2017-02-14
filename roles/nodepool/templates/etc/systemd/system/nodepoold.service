@@ -1,5 +1,5 @@
 [Unit]
-Description=nodepool-builder Service
+Description=nodepoold Service
 After=syslog.target network.target
 
 [Service]
@@ -7,7 +7,7 @@ Type=simple
 User=nodepool
 Group=nodepool
 EnvironmentFile=-/etc/default/nodepool
-ExecStart=/bin/sh -c "${PREFIX}/bin/nodepool-builder -d -l /etc/nodepool/nodepool-builder_logging.conf"
+ExecStart={{ nodepool_venv_path }}/bin/nodepoold -d --no-deletes --no-launches -l /etc/nodepool/nodepoold_logging.conf
 
 [Install]
 WantedBy=multi-user.target

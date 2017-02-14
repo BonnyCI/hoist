@@ -1,4 +1,15 @@
+apache_ssl_use_stapling: yes
+
 hoist_repo: https://github.com/BonnyCI/hoist.git
+
+letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"
+letsencrypt_csr_dn:
+  C: AU
+  ST: NSW
+  L: Australia
+  O: BonnyCI
+letsencrypt_configure_redirect: yes
+letsencrypt_email: jamielennox@gmail.com
 
 zuul_gearman_server_listen_address: 0.0.0.0
 zuul_gearman_server_start: true

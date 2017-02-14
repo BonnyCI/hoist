@@ -1,0 +1,47 @@
+---
+letsencrypt_webroot: /var/www/html/letsencrypt
+
+letsencrypt_production: no
+letsencrypt_acme_directory: "{{ letsencrypt_production | ternary(letsencrypt_production_api, letsencrypt_staging_api) }}"
+letsencrypt_email:
+letsencrypt_remaining_days: 10
+
+letsencrypt_name: ansible
+letsencrypt_data_dir: /etc/apache2/cert
+
+letsencrypt_cert_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}.crt"
+
+letsencrypt_chain_path: "/etc/letsencrypt/chain.pem"
+letsencrypt_chain_url: "https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem"
+letsencrypt_chain_owner: root
+letsencrypt_chain_mode: 0644
+
+letsencrypt_csr_config_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}-openssl.conf"
+letsencrypt_csr_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}.csr"
+letsencrypt_csr_owner: root
+letsencrypt_csr_mode: 0644
+
+letsencrypt_key_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}.key"
+letsencrypt_key_owner: www-data
+letsencrypt_key_mode: 0600
+
+letsencrypt_configure_redirect: no
+
+letsencrypt_account_key_path: /etc/letsencrypt/account.key
+letsencrypt_account_key_owner: root
+letsencrypt_account_key_mode: 0400
+
+letsencrypt_csr_key_bits: 2048
+letsencrypt_csr_dn:
+  C: AU
+  ST: NSW
+  L: Australia
+
+letsencrypt_csr_country_code: AU
+letsencrypt_csr_state_code: NSW
+letsencrypt_csr_alt_names: {}
+
+letsencrypt_csr_key_usage: nonRepudiation, digitalSignature, keyEncipherment
+letsencrypt_csr_extended_key_usage: serverAuth
+
+letsencrypt_vhost_extra: ""

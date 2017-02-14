@@ -1,0 +1,4 @@
+These tests are executed from the root of the source tree via run-parts.  Only
+executable files that are prefaced with ``test-`` will be run.  Note that they
+are executed in lexical sort order, so any dependencies between individual test
+files need to be handled accordingly.

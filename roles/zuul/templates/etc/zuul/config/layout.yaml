@@ -38,7 +38,7 @@ pipelines:
         - event: status
           status: "anne-bonny:check_github:success"
         - event: pr-review
-          state: 'approve'
+          state: 'approved'
         - event: pr-comment
           comment: (?i)^\s*gate-recheck\s*$
     require:
@@ -69,19 +69,17 @@ jobs:
     parameter-function: set_node_options
 
 projects:
+  - name: BonnyCI/bonnyci.org
+    check_github:
+      - bonnyci-run-check
+    gate_github:
+      - bonnyci-run-gate
+
   - name: BonnyCI/hoist
     check_github:
-      - ubuntu-hoist
-      - ansible-syntax
-      - hoist-checks
+      - bonnyci-run-check-multinode
     gate_github:
-      - ubuntu-hoist
-
-  - name: BonnyCI/lore
-    check_github:
-      - lore
-    gate_github:
-      - lore
+      - bonnyci-run-gate-multinode
 
   - name: BonnyCI/sandbox
     check_github:

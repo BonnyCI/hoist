@@ -13,7 +13,6 @@ nodepool_providers:
         min-ram: 2048
         diskimage: ubuntu-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
-zuul_connections: {}
 
 bastion_clouds:
   - cicloud
