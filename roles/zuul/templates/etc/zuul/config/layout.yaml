@@ -97,3 +97,9 @@ projects:
       - tox_py27
     gate_github:
       - tox_py27
+
+  - name: SpamapS/giftwrap
+    check_github:
+      - tox_py27
+    gate_github:
+      - tox_py27
