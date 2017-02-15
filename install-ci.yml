@@ -37,6 +37,9 @@
       tags: ['logstash']
     - role: kibana
       tags: ['kibana']
+    - role: apache
+      apache_mods_enabled: "{{ bonnyci_kibana_apache_mods_enabled }}"
+      apache_vhosts: "{{ bonnyci_kibana_apache_vhosts }}"
 
 - name: Install mysql
   hosts: mysql

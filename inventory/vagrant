@@ -20,7 +20,7 @@ zuul.vagrant
 logs.vagrant
 
 [monitoring]
-logs.vagrant
+elk.vagrant
 
 [vagrant]
 bastion.vagrant
@@ -28,3 +28,4 @@ nodepool.vagrant
 zuul.vagrant
 merger.vagrant
 logs.vagrant
+elk.vagrant
