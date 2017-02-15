@@ -143,3 +143,5 @@
   with_items:
     - zuul
     - nodepool
+    - logs
+    - merger01
