@@ -33,7 +33,7 @@ nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
 nodepool_providers:
   - name: cicloud
     cloud: contra-sjc
-    max-servers: 10
+    max-servers: 20
     networks:
       - name: 'sl-private-network-01'
         public: True
