@@ -25,6 +25,7 @@
 
 - name: Restart zuul mergers
   hosts: mergers
+  become: yes
   tags:
     - zuul
     - zuul-merger
