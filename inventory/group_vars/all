@@ -1,5 +1,7 @@
 apache_ssl_use_stapling: yes
 
+filebeat_output_logstash_enabled: true
+
 hoist_repo: https://github.com/BonnyCI/hoist.git
 
 letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"
