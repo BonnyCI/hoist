@@ -1,3 +1,1 @@
 elasticsearch_cluster_name: bonnyci
-
-filebeat_output_logstash_enabled: true
