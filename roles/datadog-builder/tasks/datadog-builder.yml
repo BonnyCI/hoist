@@ -57,4 +57,4 @@
       /opt/venvs/datadog-builder/bin/datadog-builder
       --config /etc/datadog-builder/datadog-secrets.yml
       update {{ datadog_builder_monitor_dir }}/{{ datadog_builder_monitor_file }}
-      2>&1 >> /var/log/datadog-builder/datadog-builder.log
+      >> /var/log/datadog-builder/datadog-builder.log 2>&1
