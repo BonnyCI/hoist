@@ -23,6 +23,7 @@ zuul_git_user_name: user@domain.io
 zuul_git_user_email: My Name
 
 zuul_connections: {}
+zuul_use_datadog_logging: False
 
 zuul_sites:
   bonnyci-scp:

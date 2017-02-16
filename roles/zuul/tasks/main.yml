@@ -54,6 +54,13 @@
     owner: zuul
   notify: Restart zuul
 
+- name: Install datadog logging library
+  pip:
+    name: git+https://github.com/BonnyCI/datadog-logging.git#egg=datadog-logging
+    state: latest
+    virtualenv: "{{ zuul_venv_path }}"
+  when: zuul_use_datadog_logging
+
 - name: Install service environment configs
   template:
     src: etc/default/zuul

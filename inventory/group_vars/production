@@ -45,7 +45,9 @@ nodepool_providers:
         user-home: /home/bonnyci
         username: bonnyci
 nodepool_statsd_enable: yes
+nodepool_use_datadog_logging: yes
 nodepool_zmq_publishers:
   - tcp://zuul.bonnyci-internal.portbleu.com:8888
 
 zuul_gearman_server: zuul.bonnyci-internal.portbleu.com
+zuul_use_datadog_logging: yes

@@ -107,6 +107,13 @@
   notify:
     - Restart nodepool builder
 
+- name: Install datadog logging library
+  pip:
+    name: git+https://github.com/BonnyCI/datadog-logging.git#egg=datadog-logging
+    state: latest
+    virtualenv: "{{ nodepool_venv_path }}"
+  when: nodepool_use_datadog_logging
+
 - name: Write logging config
   template:
     src: "etc/nodepool/logging.conf"

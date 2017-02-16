@@ -33,6 +33,7 @@
     name: "{{ item.name }}"
     version: "{{ item.version | default(omit) }}"
     virtualenv: "{{ python_app_venv_path }}/{{ name }}"
+    state: "{{ item.state | default(omit) }}"
   with_items: "{{ python_app_pipdeps }}"
 
 - name: Install application
