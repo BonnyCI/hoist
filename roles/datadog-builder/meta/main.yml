@@ -1,7 +1,7 @@
 ---
 dependencies:
   - role: python-app
-    name: datdog-builder
+    name: datadog-builder
     python_app_git_repo: "{{ datadog_builder_git_repo_url }}"
     python_app_git_update: "{{ datadog_builder_git_update }}"
     python_app_git_version: "{{ datadog_builder_git_branch }}"
