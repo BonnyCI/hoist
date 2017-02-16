@@ -47,6 +47,15 @@
     group: zuul
     mode: 0644
 
+- name: Install zuul integration key
+  copy:
+    dest: /etc/zuul/integration.key
+    content: "{{ secrets.zuul_github_integration_key_content }}"
+    owner: zuul
+    group: zuul
+    mode: 0400
+  when: secrets.zuul_github_integration_key_content is defined
+
 - name: Install zuul config
   template:
     src: etc/zuul/zuul.conf
