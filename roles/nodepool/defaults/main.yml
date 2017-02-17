@@ -23,6 +23,8 @@ nodepool_gearman_servers:
 nodepool_zmq_publishers:
   - tcp://localhost:8888
 
+nodepool_use_datadog_logging: no
+
 nodepool_diskimages: []
 
 nodepool_labels: []
