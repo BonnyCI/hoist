@@ -9,6 +9,8 @@ zuul_gearman_server_start: true
 zuul_gearman_server_log_config: /etc/zuul/gearman-logging.conf
 zuul_gearman_server_listen_address: 127.0.0.1
 
+zuul_logs_url: http://{{ ansible_fqdn }}
+
 zuul_statsd_enable: no
 zuul_statsd_host: 127.0.0.1
 zuul_statsd_port: 8125
