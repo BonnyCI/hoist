@@ -1,0 +1,39 @@
+---
+- name: ensure projects
+  os_project:
+    cloud: "{{ os_cloud }}"
+    name: "{{ item.username }}"
+  with_items: "{{ users }}"
+
+- name: ensure accounts
+  os_user:
+    cloud: "{{ os_cloud }}"
+    name: "{{ item.username }}"
+    email: "{{ item.email }}"
+    default_project: "{{ item.username }}"
+    password: "{{ default_password }}"
+    update_password: on_create
+  with_items: "{{ users }}"
+
+- name: grant roles
+  os_user_role:
+    cloud: "{{ os_cloud }}"
+    project: "{{ item.username }}"
+    user: "{{ item.username }}"
+    role: "{{ project_role }}"
+  with_items: "{{ users }}"
+
+- name: ensure prod group membership
+  os_user_group:
+    cloud: "{{ os_cloud }}"
+    group: "{{ prod_group }}"
+    user: "{{ item.username }}"
+  with_items: "{{ users }}"
+
+- name: ensure prod admin group membership
+  os_user_group:
+    cloud: "{{ os_cloud }}"
+    group: "{{ prod_admin_group }}"
+    user: "{{ item.username }}"
+  with_items: "{{ users }}"
+  when: "{{ item.isadmin | default('False') | bool }}"

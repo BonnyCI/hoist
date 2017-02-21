@@ -1,0 +1,6 @@
+---
+users: []
+default_password: CHANGEME1234
+project_role: _member_
+prod_group: bonnyci
+prod_admin_group: bonnyci-admin
