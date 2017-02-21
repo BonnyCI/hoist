@@ -1,0 +1,11 @@
+---
+- name: Create users and projects
+  hosts: localhost
+  roles:
+    - role: users-projects
+      tags: ['create-hosts']
+      os_cloud: opentech-sjc
+      users:
+        - username: jkeating
+          email: "{{ username + '@us.ibm.com' }}"
+          isadmin: True
