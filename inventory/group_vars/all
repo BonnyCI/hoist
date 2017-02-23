@@ -4,6 +4,8 @@ filebeat_output_logstash_enabled: true
 
 hoist_repo: https://github.com/BonnyCI/hoist.git
 
+filebeat_output_logstash_enabled: true
+
 letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"
 letsencrypt_csr_dn:
   C: AU
