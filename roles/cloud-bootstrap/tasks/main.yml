@@ -1,0 +1,5 @@
+---
+- name: Provision network resources
+  include: network.yml
+  tags:
+    - network

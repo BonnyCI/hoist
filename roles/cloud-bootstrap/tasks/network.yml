@@ -1,0 +1,53 @@
+---
+- name: Create control-plane network
+  os_network:
+    cloud: "{{ cloud }}"
+    name: control-plane
+
+- name: Create control-plane subnet
+  os_subnet:
+    cloud: "{{ cloud }}"
+    name: control-plane-subnet
+    network_name: control-plane
+    cidr: "{{ controlplane_network_cidr }}"
+
+- name: Create nodepool network
+  os_network:
+    cloud: "{{ cloud }}"
+    name: nodepool
+    shared: true
+
+- name: Create nodepool subnet
+  os_subnet:
+    cloud: "{{ cloud }}"
+    name: nodepool-subnet
+    network_name: nodepool
+    cidr: "{{ nodepool_network_cidr }}"
+
+- name: Create router
+  os_router:
+    cloud: "{{ cloud }}"
+    name: bonnyci-router
+    network: "{{ external_network_name }}"
+    interfaces:
+        - control-plane-subnet
+        - nodepool-subnet
+
+- name: Create security groups
+  os_security_group:
+    cloud: "{{ cloud }}"
+    name: "{{ item.name }}"
+  with_items: "{{ security_group_rules }}"
+
+- name: Create security group rules
+  os_security_group_rule:
+    cloud: "{{ cloud }}"
+    security_group: "{{ item.0.name }}"
+    protocol:  "{{ item.1.protocol | default('tcp') }}"
+    port_range_min: "{{ item.1.port_min | default(item.1.port)  }}"
+    port_range_max: "{{ item.1.port_max | default(item.1.port) }}"
+    remote_ip_prefix: "{{ item.1.remote_cidr | default(omit) }}"
+    remote_group: "{{ item.1.remote_group | default(omit) }}"
+  with_subelements:
+    - "{{ security_group_rules }}"
+    -  "rules"
