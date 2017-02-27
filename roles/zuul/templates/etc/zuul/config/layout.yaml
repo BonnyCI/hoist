@@ -21,7 +21,7 @@ pipelines:
     success:
       github:
         status: true
-        status_url: &log_link http://logs.bonnyci.com/{pipeline.name}/{change.project.name}/{change.number}/{item.enqueue_time}/
+        status_url: &log_link "{{ zuul_logs_url }}/{pipeline.name}/{change.project.name}/{change.number}/{item.enqueue_time}/"
         comment: false
     failure:
       github:

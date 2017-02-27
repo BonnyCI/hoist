@@ -29,3 +29,4 @@ nodepool_gearman_servers:
 
 zuul_statsd_enable: no
 zuul_gearman_server: zuul.vagrant
+zuul_logs_url: http://logs.vagrant
