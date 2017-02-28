@@ -1,0 +1,91 @@
+---
+- name: Ensure shared projects
+  os_project:
+    cloud: "{{ cloud }}"
+    name: "{{ item }}"
+  with_items:
+    - "{{ prod_project }}"
+    - "{{ nodepool_project }}"
+
+- name: Ensure user projects
+  os_project:
+    cloud: "{{ cloud }}"
+    name: "{{ item.username }}"
+  with_items: "{{ users }}"
+
+- name: Ensure groups
+  os_group:
+    cloud: "{{ cloud }}"
+    name: "{{ item }}"
+  with_items:
+    - "{{ prod_group }}"
+    - "{{ prod_admin_group }}"
+
+- name: Ensure users
+  os_user:
+    cloud: "{{ cloud }}"
+    name: "{{ item.username }}"
+    email: "{{ item.email }}"
+    password: "{{ default_password }}"
+    update_password: on_create
+    default_project: "{{ item.username }}"
+  with_items: "{{ users }}"
+
+- name: Grant roles
+  os_user_role:
+    cloud: "{{ cloud }}"
+    project: "{{ item.username }}"
+    user: "{{ item.username }}"
+    role: "{{ prod_member_role }}"
+  with_items: "{{ users }}"
+
+- name: Add all users to prod group
+  os_user_group:
+    cloud: "{{ cloud }}"
+    group: "{{ prod_group }}"
+    user: "{{ item.username }}"
+  with_items: "{{ users }}"
+
+- name: Add prod group to prod project
+  os_user_role:
+    cloud: "{{ cloud }}"
+    role: "{{ member_role }}"
+    group: "{{ prod_group }}"
+    project: "{{ prod_project }}"
+
+- name: Add admins to prod_admin group
+  os_user_group:
+    cloud: "{{ cloud }}"
+    group: "{{ prod_admin_group }}"
+    user: "{{ item.username }}"
+  with_items: "{{ users }}"
+  when: "{{ item.isadmin | default('False') | bool }}"
+
+- name: Grant prod_admin group admin role on prod project
+  os_user_role:
+    cloud: "{{ cloud }}"
+    role: "{{ prod_admin_role }}"
+    group: "{{ prod_admin_group }}"
+    project: "{{ prod_project }}"
+
+- name: Create nodepool user
+  os_user:
+    cloud: "{{ cloud }}"
+    name:  "{{ prod_nodepool_user }}"
+    password: "{{ secrets.nodepool.db_password }}"
+    update_password: always
+    default_project: "{{ prod_nodepool_project }}"
+
+- name: Assign member role to nodepool user
+  os_user_role:
+    cloud: "{{ cloud }}"
+    user: "{{ prod_nodepool_user }}"
+    role: "{{ prod_member_role }}"
+    project: "{{ prod_nodepool_project }}"
+
+- name: Assign member role to prod group
+  os_user_role:
+    cloud: "{{ cloud }}"
+    role: "{{ prod_member_role }}"
+    group: "{{ prod_group }}"
+    project: "{{ prod_nodepool_project }}"

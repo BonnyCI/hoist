@@ -21,3 +21,13 @@ security_group_rules:
         port: 80
       - remote_cidr: 0.0.0.0/0
         port: 443
+
+users: []
+default_password: CHANGEME1234
+prod_project: bonnyci
+prod_group: bonnyci
+prod_admin_group: bonnyci-admin
+prod_member_role: _member_
+prod_admin_role: cloud_admin
+prod_nodepool_user: nodepool
+prod_nodepool_project: nodepool

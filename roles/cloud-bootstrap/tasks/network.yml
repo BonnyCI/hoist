@@ -3,6 +3,8 @@
   os_network:
     cloud: "{{ cloud }}"
     name: control-plane
+    auth:
+      project_name: "{{ prod_project }}"
 
 - name: Create control-plane subnet
   os_subnet:
@@ -10,12 +12,16 @@
     name: control-plane-subnet
     network_name: control-plane
     cidr: "{{ controlplane_network_cidr }}"
+    auth:
+      project_name: "{{ prod_project }}"
 
 - name: Create nodepool network
   os_network:
     cloud: "{{ cloud }}"
     name: nodepool
     shared: true
+    auth:
+      project_name: "{{ prod_nodepool_project }}"
 
 - name: Create nodepool subnet
   os_subnet:
@@ -23,6 +29,8 @@
     name: nodepool-subnet
     network_name: nodepool
     cidr: "{{ nodepool_network_cidr }}"
+    auth:
+      project_name: "{{ prod_nodepool_project }}"
 
 - name: Create router
   os_router:
@@ -32,11 +40,15 @@
     interfaces:
         - control-plane-subnet
         - nodepool-subnet
+    auth:
+      project_name: "{{ prod_project }}"
 
 - name: Create security groups
   os_security_group:
     cloud: "{{ cloud }}"
     name: "{{ item.name }}"
+    auth:
+      project_name: "{{ prod_project }}"
   with_items: "{{ security_group_rules }}"
 
 - name: Create security group rules
@@ -48,6 +60,8 @@
     port_range_max: "{{ item.1.port_max | default(item.1.port) }}"
     remote_ip_prefix: "{{ item.1.remote_cidr | default(omit) }}"
     remote_group: "{{ item.1.remote_group | default(omit) }}"
+    auth:
+      project_name: "{{ prod_project }}"
   with_subelements:
     - "{{ security_group_rules }}"
     -  "rules"

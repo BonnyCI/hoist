@@ -1,4 +1,9 @@
 ---
+- name: Provision users and projects
+  include: accounts.yml
+  tags:
+    - accounts
+
 - name: Provision network resources
   include: network.yml
   tags:
