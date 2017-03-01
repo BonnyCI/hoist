@@ -1,5 +1,6 @@
 ---
-dd_apache_status_url: http://localhost/server-status?auto
+dd_apache_status_url: "http://localhost:{{ dd_apache_status_port }}/server-status?auto"
+dd_apache_status_port: 9971
 dd_apache_disable_ssl_validation: false
 dd_apache_connect_timeout: 5
 dd_apache_receive_timeout: 15

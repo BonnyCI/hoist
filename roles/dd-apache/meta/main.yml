@@ -1,7 +1,29 @@
 ---
 dependencies:
-  - role: dd-checks
+  - role: apache
+    apache_mods_enabled:
+      - status.load
+    apache_mods_disabled:
+      - status.conf
+    apache_vhosts:
+      - name: status
+        host: "127.0.0.1"
+        listen_host: "127.0.0.1"
+        port: "{{ dd_apache_status_port }}"
+        global_vhost_settings: |
+          ExtendedStatus On
 
+        vhost_extra: |
+          <Location /server-status>
+            SetHandler server-status
+            Require local
+          </Location>
+
+          <IfModule mod_proxy.c>
+            ProxyStatus On
+          </IfModule>
+
+  - role: dd-checks
     datadog_checks:
       apache:
         instances:
