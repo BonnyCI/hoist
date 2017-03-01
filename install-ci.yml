@@ -90,17 +90,22 @@
             - notifempty
 
     - role: filebeat
-      tags: test1
       filebeat_prospectors:
         - name: zuul-server
           prospectors:
             - input_type: log
+              document_type: python-logging
               tags:
-                - python-logging
                 - zuul
+                - zuul-launcher
+                - zuul-server
               paths:
                 - /var/log/zuul/launcher.log
                 - /var/log/zuul/server.log
+              multiline:
+                match: after
+                negate: true
+                pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
 - name: Install zuul mergers
   hosts: mergers
@@ -136,12 +141,16 @@
         - name: zuul-merger
           prospectors:
             - input_type: log
+              document_type: python-logging
               tags:
-                - python-logging
                 - zuul
                 - zuul-merger
               paths:
                 - /var/log/zuul/merger.log
+              multiline:
+                match: after
+                negate: true
+                pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
 - name: Install nodepool
   hosts: nodepool
@@ -173,14 +182,18 @@
         - name: nodepool
           prospectors:
             - input_type: log
+              document_type: python-logging
               tags:
-                - python-logging
                 - nodepool
               paths:
                 - /var/log/nodepool/nodepool-builder.log
                 - /var/log/nodepool/nodepool-deleter.log
                 - /var/log/nodepool/nodepool-launcher.log
                 - /var/log/nodepool/nodepoold.log
+              multiline:
+                match: after
+                negate: true
+                pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
 - name: Install logging
   hosts: log
