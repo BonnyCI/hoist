@@ -15,7 +15,7 @@
         - letsencrypt
       when:
         - letsencrypt_csr_cn | default(False)
-        
+
 - name: Install ELK
   hosts: monitoring
   become: yes
@@ -25,6 +25,11 @@
       tags: ['elasticsearch']
       elasticsearch_index_settings:
         number_of_replicas: 0
+
+    - role: dd-elasticsearch
+      tags:
+        - monitoring
+
     - role: logstash
       tags: ['logstash']
     - role: kibana

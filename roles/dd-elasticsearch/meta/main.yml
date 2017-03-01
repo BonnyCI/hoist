@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: dd-checks
+    datadog_checks:
+      elastic:
+        instances:
+          - url: "{{ dd_elasticsearch_url }}"
