@@ -1,0 +1,32 @@
+---
+- block:
+  - name: wait for new host to respond to ssh
+    wait_for:
+      port: 22
+      host: "{{ item.private_v4 }}"
+      search_regex: OpenSSH
+
+  - name: scan the ssh key of the new host via private address
+    command: "{{ 'ssh-keyscan -t rsa ' +  item.private_v4 }}"
+    register: keyscan_private_v4
+
+  - name: scan the ssh key of the new host via internal dns address
+    ignore_errors: yes
+    command: "{{ 'ssh-keyscan -t rsa ' +  item.name }}"
+    register: keyscan_internal_dns
+
+  - name: ensure new servers private_v4 are in known_hosts
+    become: true
+    known_hosts:
+      path: /etc/ssh/ssh_known_hosts
+      name: "{{ item.private_v4 }}"
+      key: "{{ keyscan_private_v4.stdout }}"
+
+  - name: ensure new servers public_v4/dns are in known_hosts
+    become: true
+    known_hosts:
+      path: /etc/ssh/ssh_known_hosts
+      name: "{{ item.name }}"
+      key: "{{ keyscan_internal_dns.stdout }}"
+    ignore_errors: yes
+    when: keyscan_internal_dns

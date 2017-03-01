@@ -4,6 +4,9 @@
   roles:
     - role: cloud-bootstrap
       cloud: opentech-sjc
+      dns_subdomain: internal.opentechsjc.bonnyci.org
+      default_ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSpmsWVIxgSe3yUBSmuDRgMZbK/vmzxMxhaMwD7vy3/voGUvx9ozxJNonY2TKF4eyWP9t2I+HFnVgSn+4LjC2t2UlUWbHB01uVtkz5avwzUaHMYuEHh25jFOoy8/mxrop11WMZleW1Hn1txRZl68H22n6IuTySKSY1HgjHyHlP3seKwZHIMAuIg1MN5LYGlyLvJ8Ew7r0B5sU/vQs6kCUnnV2NsevtaSH1k9UPLfvO8HN7pYrY057eBLEQ9r51wj2O9nL8wvso5nXWHIhuEJiZL+573Jy9PabTMt+QaQ9t2ISedyUX/dVR3H8SKmjOkvxNjmuVyMnFkotjlqEOOTGLCDsuSlg22NbF5aXuHe12ucCcwE8I/UXecZMkSfrnhoBi3y6MFcQxgwlK06V6bTOOy9LITjvMVD7COlzITSYF/y6nhkeGKGsQ8jRfWyyXoZACNwGX3DYSSZC/X3CDcJIuhJab3jfcYap/ue2GEX2p/6MN+NbZknHTX0KZU4qNf2UVnLBH8GWbcFYqG1WwERk5ClzYIvCjn2JY21Ztqvig4vQ0NKwAIBjgOk01C5c63MTRFdBAybE8AjzCr9Zp6ADcsHXRIB9olEHfSdIKCE5ynYutw9yTO7zTpRYA2gOBNlapUFxux2DNauSeNaCkA328UU94CKYr8Rh4mDM4z4seEw== cideploy@bonnyci
+      image_uuid: f4611a28-112d-4383-ad3c-b8792572c5f0
       users:
         - username: adam_g
           email: adam.gandelman@ibm.com
@@ -20,3 +23,38 @@
         - username: mctaylor
           email: mctaylor@us.ibm.com
           isadmin: False
+      servers:
+        - name: bastion
+          floating_ip_address: 169.44.171.83
+          security_groups:
+            - sg-control-plane
+            - sg-http-https
+            - sg-ssh
+        - name: elk
+          floating_ip_address: 169.44.171.88
+          flavor: m1.xlarge
+          security_groups:
+            - sg-control-plane
+            - sg-http-https
+          key_name: "{{ deploy_ssh_key_name }}"
+        - name: logs
+          floating_ip_address: 169.44.171.84
+          security_groups:
+            - sg-control-plane
+            - sg-http-https
+          key_name: "{{ deploy_ssh_key_name }}"
+        - name: nodepool
+          security_groups:
+            - sg-control-plane
+          key_name: "{{ deploy_ssh_key_name }}"
+        - name: merger01
+          security_groups:
+            - sg-control-plane
+            - sg-zuul-merger
+          key_name: "{{ deploy_ssh_key_name }}"
+        - name: zuul
+          floating_ip_address: 169.44.171.85
+          security_groups:
+            - sg-control-plane
+            - sg-http-https
+          key_name: "{{ deploy_ssh_key_name }}"

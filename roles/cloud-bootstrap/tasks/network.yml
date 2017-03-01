@@ -23,7 +23,7 @@
   os_network:
     cloud: "{{ cloud }}"
     name: nodepool
-    shared: true
+    shared: "{{ split_tenants }}"
     project: "{{ prod_project }}"
     auth:
       project_name: "{{ prod_project }}"
