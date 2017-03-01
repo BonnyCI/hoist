@@ -5,9 +5,31 @@
     - role: cloud-bootstrap
       cloud: opentech-sjc
       users:
+        - username: adam_g
+          email: adam.gandelman@ibm.com
+          isadmin: True
+        - username: auggy
+          email: augustina.ragwitz@ibm.com
+        - username: clint
+          email: cbyrum@us.ibm.com
+        - username: bradonk
+          email: bradon.kanyid@ibm.com
+        - username: jamielennox
+          email: jlennox@au1.ibm.com
+          isadmin: True
+        - username: jason_clark
+          email: jason.clark@ibm.com
+        - username: jesusaur
+          email: jonathan.harker@ibm.com
         - username: jkeating
           email: "{{ username + '@us.ibm.com' }}"
           isadmin: True
         - username: mctaylor
           email: "{{ username + '@us.ibm.com' }}"
           isadmin: False
+        - username: mlangbe
+          email: mlangbe@us.ibm.com
+        - username: olaph
+          email: mwagone@us.ibm.com
+        - username: pschwartz
+          email: pschwar@us.ibm.com
