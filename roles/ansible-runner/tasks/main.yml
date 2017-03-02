@@ -27,20 +27,27 @@
   file:
     path: "{{ ansible_runner_virtualenv }}/plugins/callback"
     state: directory
-    owner: "{{ ansible_runner_user }}"
+    mode: 0755
+    owner: root
+    group: root
 
 - block:
   - name: Install datadog callback plugin
     get_url:
       url: "{{ datadog_callback_url }}"
       dest: "{{ ansible_runner_virtualenv }}/plugins/callback/datadog_callback.py"
-      owner: "{{ ansible_runner_user }}"
+      mode: 0755
+      owner: root
+      group: root
 
   - name: Install datadog callback configuration
     copy:
       dest: "{{ ansible_runner_virtualenv }}/plugins/callback/datadog_callback.yml"
       content: "api_key: {{ secrets.datadog.api_key }}"
-      owner: "{{ ansible_runner_user }}"
+      mode: 0644
+      owner: root
+      group: root
+
   when: datadog_enabled | default(True) | bool
   tags:
     - datadog
@@ -73,13 +80,6 @@
     repo: "{{ ansible_runner_repo }}"
     dest: "/opt/source/{{ ansible_runner_job }}"
     update: true
-
-- name: Set source directory owner
-  file:
-    state: directory
-    path: "/opt/source/{{ ansible_runner_job }}"
-    recurse: yes
-    owner: "{{ ansible_runner_user }}"
 
 - name: Ensure cron log path
   file:
