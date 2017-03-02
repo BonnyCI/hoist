@@ -8,6 +8,9 @@
         - username: adam_g
           email: adam.gandelman@ibm.com
           isadmin: True
+        - username: jamielennox
+          email: "jlennox@au1.ibm.com"
+          isadmin: True
         - username: jkeating
           email: "{{ username + '@us.ibm.com' }}"
           isadmin: True
