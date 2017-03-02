@@ -9,11 +9,11 @@
           email: adam.gandelman@ibm.com
           isadmin: True
         - username: jamielennox
-          email: "jlennox@au1.ibm.com"
+          email: jlennox@au1.ibm.com
           isadmin: True
         - username: jkeating
-          email: "{{ username + '@us.ibm.com' }}"
+          email: omgjlk@us.ibm.com
           isadmin: True
         - username: mctaylor
-          email: "{{ username + '@us.ibm.com' }}"
+          email: mctaylor@us.ibm.com
           isadmin: False
