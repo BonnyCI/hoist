@@ -11,6 +11,9 @@
         - username: jamielennox
           email: jlennox@au1.ibm.com
           isadmin: True
+        - username: jesusaur
+          email: jonathan.harker@ibm.com
+          isadmin: True
         - username: jkeating
           email: omgjlk@us.ibm.com
           isadmin: True
