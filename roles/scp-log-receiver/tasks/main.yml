@@ -1,0 +1,27 @@
+---
+- name: Create a group that user can belong to
+  group:
+    name: "{{ scp_log_receiver_group }}"
+    state: present
+
+- name: Create a user logs can be uploaded as
+  user:
+    name: "{{ scp_log_receiver_user | mandatory }}"
+    home: "{{ scp_log_receiver_home }}"
+    groups: "{{ scp_log_receiver_group }}"
+    append: "{{ scp_log_receiver_group_append }}"
+
+- name: Add authorized key to logs user
+  authorized_key:
+    user: "{{ scp_log_receiver_user }}"
+    exclusive: "{{ scp_log_receiver_exclusive_authorized_key }}"
+    key: "{{ scp_log_receiver_authorized_key }}"
+  when: "scp_log_receiver_authorized_key | default(False)"
+
+- name: Create receiver directory
+  file:
+    name: "{{ scp_log_receiver_path | mandatory }}"
+    state: directory
+    group: "{{ scp_log_receiver_group }}"
+    mode: "2775"
+    recurse: yes

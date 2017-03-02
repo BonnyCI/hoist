@@ -27,3 +27,9 @@ bonnyci_zuul_webapp_apache_vhosts:
 zuul_components:
   - zuul-launcher
   - zuul-server
+
+zuul_sites:
+  bonnyci-scp:
+    host: "{{ bonnyci_logs_scp_host }}"
+    user: "{{ bonnyci_logs_scp_user }}"
+    root: "{{ bonnyci_logs_root_dir }}"
