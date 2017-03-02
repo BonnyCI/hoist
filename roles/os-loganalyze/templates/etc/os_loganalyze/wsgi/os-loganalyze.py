@@ -1,4 +1,4 @@
-#!{{ os_loganalyze_venv_dir }}/bin/python
+#!{{ os_loganalyze_venv_path }}/bin/python
 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may
 # not use this file except in compliance with the License. You may obtain
@@ -12,7 +12,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-activate_this_file = "{{ os_loganalyze_venv_dir }}/bin/activate_this.py"
+activate_this_file = "{{ os_loganalyze_venv_path }}/bin/activate_this.py"
 execfile(activate_this_file, dict(__file__=activate_this_file))
 
 import threading
