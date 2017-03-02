@@ -21,7 +21,7 @@
     name: nodepool
     shared: true
     auth:
-      project_name: "{{ prod_nodepool_project }}"
+      project_name: "{{ prod_project }}"
 
 - name: Create nodepool subnet
   os_subnet:
@@ -30,7 +30,7 @@
     network_name: nodepool
     cidr: "{{ nodepool_network_cidr }}"
     auth:
-      project_name: "{{ prod_nodepool_project }}"
+      project_name: "{{ prod_project }}"
 
 - name: Create router
   os_router:

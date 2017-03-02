@@ -3,14 +3,16 @@
   os_project:
     cloud: "{{ cloud }}"
     name: "{{ item }}"
+    domain: 'default'
   with_items:
     - "{{ prod_project }}"
-    - "{{ nodepool_project }}"
+    - "{{ prod_nodepool_project }}"
 
 - name: Ensure user projects
   os_project:
     cloud: "{{ cloud }}"
     name: "{{ item.username }}"
+    domain: 'default'
   with_items: "{{ users }}"
 
 - name: Ensure groups
@@ -29,6 +31,7 @@
     password: "{{ default_password }}"
     update_password: on_create
     default_project: "{{ item.username }}"
+    domain: 'default'
   with_items: "{{ users }}"
 
 - name: Grant roles
@@ -49,7 +52,7 @@
 - name: Add prod group to prod project
   os_user_role:
     cloud: "{{ cloud }}"
-    role: "{{ member_role }}"
+    role: "{{ prod_member_role }}"
     group: "{{ prod_group }}"
     project: "{{ prod_project }}"
 
@@ -75,6 +78,7 @@
     password: "{{ secrets.nodepool.db_password }}"
     update_password: always
     default_project: "{{ prod_nodepool_project }}"
+    domain: 'default'
 
 - name: Assign member role to nodepool user
   os_user_role:
