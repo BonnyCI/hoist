@@ -15,7 +15,7 @@
         - letsencrypt
       when:
         - letsencrypt_csr_cn | default(False)
-        
+
 - name: Install ELK
   hosts: monitoring
   become: yes
@@ -199,6 +199,19 @@
   hosts: log
   become: yes
   tags: ['logs']
+
+  pre_tasks:
+    - name: Create a user logs can be uploaded as
+      user:
+        name: zuul
+        home: /var/lib/zuul
+
+    - name: Add authorized key to logs user
+      authorized_key:
+        user: zuul
+        exclusive: yes
+        key: "{{ secrets.ssh_keys.zuul.public }}"
+
   roles:
     - role: os-loganalyze
       os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}"
