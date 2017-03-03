@@ -104,3 +104,9 @@ projects:
       - tox_py27
     gate_github:
       - tox_py27
+
+  - name: rust-unofficial/too-many-lists
+    check_github:
+      - bonnyci-run-check
+    gate_github:
+      - bonnyci-run-gate
