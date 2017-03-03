@@ -1,0 +1,15 @@
+---
+# Quartermaster installer playbook
+# 
+# Install with 'ansible-playbook quartermaster.yml -e @/etc/secrets.yml'
+#
+# Should be run on the host you want to install on (localhost)
+- name: Install quartermaster
+  hosts: localhost
+  become: true
+
+  roles:
+    - role: quartermaster
+      quartermaster_channels: "#BonnyCI"
+      quartermaster_nick: "quartermaster"
+      quartermaster_install_tag: "0.2.0-DEV"

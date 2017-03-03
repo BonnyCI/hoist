@@ -1,0 +1,12 @@
+[Unit]
+Description=Quartermaster Service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=quartermaster
+Group=quartermaster
+ExecStart=/opt/quartermaster/quartermaster bot --config /etc/quartermaster/config.yaml --loglevel debug
+
+[Install]
+WantedBy=multi-user.target
