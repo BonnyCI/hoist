@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+
+Channels: "{{ quartermaster_channels }}"
+Nick: "{{ quartermaster_nick }}"
+Debug: {{ quartermaster_debug }}
+Database: "{{ quartermaster_database_path }}"
+Loglevel: "{{ quartermaster_loglevel }}"
+
+{{ {'Data': secrets.quartermaster.defaults } | to_nice_yaml }}

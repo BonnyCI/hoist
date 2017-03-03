@@ -1,0 +1,11 @@
+---
+quartermaster_channels: ""
+quartermaster_nick: "quartermaster"
+quartermaster_debug: "true"
+quartermaster_database_path: "/var/lib/quartermaster/quartermaster.db"
+quartermaster_loglevel: "DEBUG"
+
+quartermaster_install_base_url: "https://github.com/BonnyCI/quartermaster/releases/download/"
+quartermaster_install_tag: "0.2.0-DEV"
+quartermaster_install_zip_filename: "quartermaster-{{ quartermaster_install_tag }}.zip"
+quartermaster_install_url: "{{ quartermaster_install_base_url }}/v{{ quartermaster_install_tag }}/{{ quartermaster_install_zip_filename }}"

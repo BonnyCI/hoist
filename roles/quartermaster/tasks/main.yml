@@ -1,0 +1,85 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - unzip
+
+- name: Create the quartermaster group
+  group:
+    name: quartermaster
+    state: present
+
+- name: Create quartermaster user
+  user:
+    name: quartermaster
+    group: quartermaster
+    home: /var/lib/quartermaster
+    system: yes
+    state: present
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: quartermaster
+    group: quartermaster
+  with_items:
+    - /etc/quartermaster
+    - /var/log/quartermaster
+    - /opt/quartermaster
+
+- name: Download quartermaster binary
+  get_url:
+    url: "{{ quartermaster_install_url }}"
+    dest: /tmp
+
+- name: Install quartermaster binary
+  unarchive:
+    src: "/tmp/{{ quartermaster_install_zip_filename }}"
+    dest: /opt/quartermaster
+    remote_src: True
+
+- name: Install quartermaster config
+  template:
+    src: etc/quartermaster/config.yaml
+    dest: /etc/quartermaster/config.yaml
+    owner: quartermaster
+    mode: 0600
+  notify: Restart quartermaster
+
+- name: Check for quartermaster database
+  stat:
+    path: "{{ quartermaster_database_path }}"
+  register: qm_database
+
+- name: Init database if missing
+  shell: /opt/quartermaster/quartermaster init --config /etc/quartermaster/config.yaml --loglevel debug
+  args:
+    executable: /bin/bash
+  become: yes
+  become_user: quartermaster
+  when: qm_database.stat.exists is defined and qm_database.stat.exists == False
+
+- name: Install systemd unit files
+  template:
+    src: "etc/systemd/system/{{ item }}.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - quartermaster
+  notify:
+    - Reload systemd units
+    - Restart quartermaster
+
+- meta: flush_handlers
+
+- name: Enable and start systemd service
+  service:
+    enabled: yes
+    state: started
+    service: quartermaster
