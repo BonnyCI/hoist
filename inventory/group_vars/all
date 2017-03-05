@@ -31,3 +31,4 @@ zuul_connections:
     api_token: "{{ secrets.zuul_github_api_key | default('') }}"
     integration_id: "{{ secrets.zuul_github_integration_id | default('') }}"
     integration_key: "{{ zuul_github_integration_key_file }}"
+    webhook_token: "{{ secrets.zuul_github_webhook_token | default('') }}"
