@@ -64,7 +64,7 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "/vagrant/bastion.yml"
       ansible.raw_arguments = [ "--skip-tags 'monitoring'",
                                 "-e @/etc/secrets.yml",
-                                "-vv" ]
+                                "-v" ]
       ansible.sudo = true
     end
   end

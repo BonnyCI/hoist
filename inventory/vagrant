@@ -2,28 +2,29 @@
 localhost ansible_connection=local
 
 [nodepool]
-nodepool.vagrant ansible_user=ubuntu
+nodepool.vagrant
+
+[zookeeper]
+nodepool.vagrant
 
 [zuul]
-zuul.vagrant ansible_user=ubuntu
+zuul.vagrant
 
 [mergers]
-merger.vagrant ansible_user=ubuntu
+merger.vagrant
 
 [mysql]
-zuul.vagrant ansible_user=ubuntu
+zuul.vagrant
 
 [log]
-logs.vagrant ansible_user=ubuntu
+logs.vagrant
 
 [monitoring]
-logs.vagrant ansible_user=ubuntu
+logs.vagrant
 
-[vagrant:children]
-bastion
-log
-mergers
-monitoring
-mysql
-nodepool
-zuul
+[vagrant]
+localhost
+nodepool.vagrant
+zuul.vagrant
+merger.vagrant
+logs.vagrant
