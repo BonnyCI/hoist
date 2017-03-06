@@ -1,0 +1,15 @@
+- name: Ensure admin_user exists
+  user:
+    name: "{{ admin_user }}"
+
+- name: Force cideploy SSH key as first key
+  authorized_key:
+    exclusive: yes
+    key: "{{ secrets.ssh_keys.cideploy.public }}"
+    user: "{{ admin_user }}"
+
+- name: Add old key to allow for rotation
+  when: secrets.ssh_keys.cideploy.old_public is defined
+  authorized_key:
+    key: "{{ secrets.ssh_keys.cideploy.old_public }}"
+    user: "{{ admin_user }}"
