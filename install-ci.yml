@@ -4,6 +4,7 @@
   become: yes
   tags: ['common']
   roles:
+    - role: admin-user
     - role: common
 
     - role: dd-agent
