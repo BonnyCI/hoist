@@ -1,3 +1,5 @@
+bonnyci_logs_scp_host: localhost
+
 elasticsearch_jvm_heap_size: 250m
 
 nodepool_mysql_host: localhost

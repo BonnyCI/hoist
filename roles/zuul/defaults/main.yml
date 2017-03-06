@@ -27,8 +27,4 @@ zuul_git_user_email: My Name
 zuul_connections: {}
 zuul_use_datadog_logging: False
 
-zuul_sites:
-  bonnyci-scp:
-    host: logs.bonnyci.com
-    user: zuul
-    root: /var/www/bonny-logs
+zuul_sites: {}

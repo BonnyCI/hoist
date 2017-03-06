@@ -1,6 +1,7 @@
 bastion_clouds:
   - bastioncloud
 
+bonnyci_logs_scp_host: logs.vagrant
 bonnyci_zuul_merger_apache_server_name: merger.vagrant
 bonnyci_zuul_webapp_apache_server_name: zuul.vagrant
 

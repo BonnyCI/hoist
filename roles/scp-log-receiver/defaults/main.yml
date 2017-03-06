@@ -1,0 +1,6 @@
+---
+scp_log_receiver_home: "/var/lib/{{ scp_log_receiver_user }}"
+scp_log_receiver_group: "scp-log-receiver"
+scp_log_receiver_group_append: yes
+
+scp_log_receiver_exclusive_authorized_key: yes

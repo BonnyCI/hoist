@@ -205,22 +205,14 @@
   hosts: log
   become: yes
   tags: ['logs']
-
-  pre_tasks:
-    - name: Create a user logs can be uploaded as
-      user:
-        name: zuul
-        home: /var/lib/zuul
-
-    - name: Add authorized key to logs user
-      authorized_key:
-        user: zuul
-        exclusive: yes
-        key: "{{ secrets.ssh_keys.zuul.public }}"
-
   roles:
+    - role: scp-log-receiver
+      scp_log_receiver_user: "{{ bonnyci_logs_scp_user }}"
+      scp_log_receiver_path:  "{{ bonnyci_logs_root_dir }}/logs"
+      scp_log_receiver_authorized_key: "{{ secrets.ssh_keys.zuul.public | default(omit) }}"
+
     - role: os-loganalyze
-      os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}"
+      os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}/logs"
       os_loganalyze_file_conditions: "{{ bonnyci_logs_loganalyze_file_conditions }}"
 
     - role: apache
