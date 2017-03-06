@@ -1,0 +1,2 @@
+[bastion]
+bastion.opentechsjc.bonnyci.org ansible_ssh_user=ubuntu
