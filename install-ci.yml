@@ -5,6 +5,8 @@
   tags: ['common']
   roles:
     - role: admin-user
+      when: bonnyci_lockdown_ssh | default(False)
+
     - role: common
 
     - role: dd-agent
