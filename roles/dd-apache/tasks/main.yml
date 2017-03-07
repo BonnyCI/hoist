@@ -1,4 +1,0 @@
-- name: enable mod_status
-  apache2_module:
-    state: present
-    name: status
