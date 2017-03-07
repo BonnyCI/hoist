@@ -1,6 +1,7 @@
 bastion_clouds:
   - contra-sjc
 
+bonnyci_lockdown_ssh: yes
 bonnyci_logs_apache_server_name: logs.bonnyci.com
 bonnyci_logs_scp_host: logs.bonnyci.com
 bonnyci_zuul_webapp_apache_server_name: zuul.bonnyci.portbleu.com
