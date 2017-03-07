@@ -1,5 +1,7 @@
 bonnyci_logs_scp_host: localhost
 
+ci_inventory: allinone
+
 elasticsearch_jvm_heap_size: 250m
 
 nodepool_mysql_host: localhost

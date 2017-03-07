@@ -1,23 +1,6 @@
-bastion_clouds:
-  - contra-sjc
-
 bonnyci_lockdown_ssh: yes
-bonnyci_logs_apache_server_name: logs.bonnyci.com
-bonnyci_logs_scp_host: logs.bonnyci.com
-bonnyci_zuul_webapp_apache_server_name: zuul.bonnyci.portbleu.com
-bonnyci_zuul_merger_apache_server_name: merger01.bonnyci-internal.portbleu.com
-
 letsencrypt_production: yes
 
-filebeat_output_logstash_hosts:
-  - logs.bonnyci-internal.portbleu.com:5044
-
-logstash_elasticsearch_hosts:
-  - "http://localhost:9200"
-
-nodepool_gearman_servers:
-  - host: zuul.bonnyci-internal.portbleu.com
-    port: 4730
 nodepool_labels:
   - name: ubuntu-xenial
     image: ubuntu-xenial
@@ -31,26 +14,8 @@ nodepool_labels:
     ready-script: subnode-ssh.sh
     providers:
       - name: cicloud
-nodepool_mysql_host: zuul.bonnyci-internal.portbleu.com
-nodepool_providers:
-  - name: cicloud
-    cloud: contra-sjc
-    max-servers: 20
-    networks:
-      - name: 'sl-private-network-01'
-        public: True
-    images:
-      - name: ubuntu-xenial
-        min-ram: 2048
-        diskimage: ubuntu-xenial
-        private-key: /var/lib/nodepool/.ssh/id_rsa
-        user-home: /home/bonnyci
-        username: bonnyci
+
 nodepool_statsd_enable: yes
 nodepool_use_datadog_logging: yes
-nodepool_zmq_publishers:
-  - tcp://zuul.bonnyci-internal.portbleu.com:8888
 
-zuul_gearman_server: zuul.bonnyci-internal.portbleu.com
-zuul_logs_url: http://logs.bonnyci.com
 zuul_use_datadog_logging: yes

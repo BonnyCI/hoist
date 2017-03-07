@@ -25,3 +25,10 @@ zuul.internal.opentechsjc.bonnyci.org
 merger01.internal.opentechsjc.bonnyci.org
 logs.internal.opentechsjc.bonnyci.org
 elk.internal.opentechsjc.bonnyci.org
+
+[opentech-sjc]
+nodepool.internal.opentechsjc.bonnyci.org
+zuul.internal.opentechsjc.bonnyci.org
+merger01.internal.opentechsjc.bonnyci.org
+logs.internal.opentechsjc.bonnyci.org
+elk.internal.opentechsjc.bonnyci.org
