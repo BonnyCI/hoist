@@ -4,9 +4,13 @@
     cloud: "{{ cloud }}"
     name: default
     public_key: "{{ default_ssh_key }}"
+    auth:
+        project_name: "{{ prod_project }}"
 
 - name: Create cideploy key pair
   os_keypair:
     cloud: "{{ cloud }}"
     name: "{{ deploy_ssh_key_name }}"
     public_key: "{{ secrets.ssh_keys.cideploy.public }}"
+    auth:
+        project_name: "{{ prod_project }}"

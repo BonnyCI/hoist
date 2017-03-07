@@ -2,10 +2,6 @@
 # to the instances internal address on the control-plane network.
 dns_subdomain: bonnyci.local
 
-controlplane_network_cidr: 192.168.10.0/24
-nodepool_network_cidr: 10.0.0.0/8
-external_network_name: external
-
 # In production, we will split the control-plane services and nodepool slaves
 # across tenants.  In development environments, this can be set to false to
 # enable everything running in one project.
@@ -33,6 +29,13 @@ prod_member_role: _member_
 prod_admin_role: cloud_admin
 prod_nodepool_user: nodepool
 prod_nodepool_project: nodepool
+
+controlplane_network_name: "control-plane"
+nodepool_network_name: "nodepool"
+controlplane_network_cidr: 192.168.10.0/24
+router_name: "bonnyci-router"
+nodepool_network_cidr: 10.0.0.0/8
+external_network_name: external
 
 security_group_rules:
   - name: sg-control-plane
