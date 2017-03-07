@@ -39,9 +39,7 @@ Vagrant.configure(2) do |config|
     bastion.vm.provision "shell", path: "tools/install-pip.sh"
     bastion.vm.provision "shell", inline: <<-SHELL
       # Install some dependencies
-      apt-get update
-      apt-get -y install build-essential python python-dev libffi-dev libssl-dev
-      pip install ansible
+      /vagrant/tools/install-ansible.sh
 
       # If there's no secrets.yml in the working directory, use the example file
       if ! test -f /vagrant/secrets.yml ; then
