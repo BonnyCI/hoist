@@ -40,4 +40,9 @@ nodepool_zmq_publishers:
 
 zuul_merger_url: "http://{{ zuul_ip }}:{{ zuul_merger_apache_port }}/p"
 zuul_logs_url: "http://{{ logs_ip }}"
+zuul_sites:
+  bonnyci-scp:
+    host: "{{ logs_ip }}"
+    user: zuul
+    root: /var/www/bonny-logs
 zuul_statsd_enable: no

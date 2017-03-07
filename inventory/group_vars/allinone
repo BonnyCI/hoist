@@ -19,6 +19,12 @@ nodepool_providers:
 bastion_clouds:
   - cicloud
 
+zuul_sites:
+  bonnyci-scp:
+    host: localhost
+    user: zuul
+    root: /var/www/bonny-logs
+
 # commented out variable to show what one could point to with a -e argument
 # if they wanted to make use of an ssh-config file at execution time.
 # ansible_ssh_common_args: -F inventory/allinone-ssh-config

@@ -53,4 +53,9 @@ nodepool_zmq_publishers:
 
 zuul_gearman_server: zuul.bonnyci-internal.portbleu.com
 zuul_logs_url: http://logs.bonnyci.com
+zuul_sites:
+  bonnyci-scp:
+    host: logs.bonnyci.com
+    user: zuul
+    root: /var/www/bonny-logs
 zuul_use_datadog_logging: yes
