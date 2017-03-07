@@ -8,3 +8,13 @@
   include: network.yml
   tags:
     - network
+
+- name: Create ssh key pairs
+  include: keys.yml
+  tags:
+    - keys
+
+- name: Create hosts
+  include: hosts.yml
+  tags:
+    - hosts

@@ -1,0 +1,6 @@
+---
+- name: Create cloud resources and accounts
+  hosts: all
+  roles:
+    - role: cloud-ready
+      cloud: opentech-sjc

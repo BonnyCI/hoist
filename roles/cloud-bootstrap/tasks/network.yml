@@ -2,7 +2,7 @@
 - name: Create control-plane network
   os_network:
     cloud: "{{ cloud }}"
-    name: control-plane
+    name: "{{ controlplane_network_name }}"
     project: "{{ prod_project }}"
     auth:
       project_name: "{{ prod_project }}"
@@ -11,7 +11,7 @@
 - name: Create control-plane subnet
   os_subnet:
     cloud: "{{ cloud }}"
-    name: control-plane-subnet
+    name: "{{ controlplane_network_name }}-subnet"
     network_name: "{{ control_plane_network.network.id }}"
     cidr: "{{ controlplane_network_cidr }}"
     project: "{{ prod_project }}"
@@ -22,8 +22,8 @@
 - name: Create nodepool network
   os_network:
     cloud: "{{ cloud }}"
-    name: nodepool
-    shared: true
+    name: "{{ nodepool_network_name }}"
+    shared: "{{ split_tenants }}"
     project: "{{ prod_project }}"
     auth:
       project_name: "{{ prod_project }}"
@@ -32,7 +32,7 @@
 - name: Create nodepool subnet
   os_subnet:
     cloud: "{{ cloud }}"
-    name: nodepool-subnet
+    name: "{{ nodepool_network_name }}subnet"
     network_name: "{{ nodepool_network.network.id }}"
     cidr: "{{ nodepool_network_cidr }}"
     project: "{{ prod_project }}"
@@ -43,7 +43,7 @@
 - name: Create router
   os_router:
     cloud: "{{ cloud }}"
-    name: bonnyci-router
+    name: "{{ router_name }}"
     network: "{{ external_network_name }}"
     interfaces:
         - "{{ control_plane_subnet.subnet.id }}"
@@ -85,5 +85,3 @@
     remote_ip_prefix: "{{ controlplane_network_cidr }}"
     auth:
       project_name: "{{ prod_nodepool_project }}"
-
-

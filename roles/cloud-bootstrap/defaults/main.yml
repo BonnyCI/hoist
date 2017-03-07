@@ -1,6 +1,42 @@
+# Production environments expect hostnames on this domain to be resolvable
+# to the instances internal address on the control-plane network.
+dns_subdomain: bonnyci.local
+
+# In production, we will split the control-plane services and nodepool slaves
+# across tenants.  In development environments, this can be set to false to
+# enable everything running in one project.
+split_tenants: true
+
+# The existing glance image to use for service VMs.
+image_uuid: d21400df-005a-41e5-af20-70c153948218
+
+# A nova keypair will be created with this name, using the public key
+# found in secrets['ssh_keys']['cideploy']['public']
+deploy_ssh_key_name: cideploy
+
+# A default nova keypair will be created using this key and will be used
+# when booting the bastion host
+default_ssh_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDoitDW0TOltJtxOLZWlT6SP/5dAtsewCqvAugyOGLsNBnWCqtw4LWWWKgch4ugPsLYTowEtW5mn/6e4A+OjCDB/zsunXJxxLhySRldChXWwrjnwfAvhgt7KIPG35SuKXjkb4DX0NhI8qytRwz+tq9Xf5hTUKb8o5t6PS56vqiBkQ== testing
+
+default_flavor: m1.medium
+
+users: []
+default_password: CHANGEME1234
+prod_project: bonnyci
+prod_group: bonnyci
+prod_admin_group: bonnyci-admin
+prod_member_role: _member_
+prod_admin_role: cloud_admin
+prod_nodepool_user: nodepool
+prod_nodepool_project: nodepool
+
+controlplane_network_name: "control-plane"
+nodepool_network_name: "nodepool"
 controlplane_network_cidr: 192.168.10.0/24
+router_name: "bonnyci-router"
 nodepool_network_cidr: 10.0.0.0/8
 external_network_name: external
+
 security_group_rules:
   - name: sg-control-plane
     rules:
@@ -22,12 +58,37 @@ security_group_rules:
       - remote_cidr: 0.0.0.0/0
         port: 443
 
-users: []
-default_password: CHANGEME1234
-prod_project: bonnyci
-prod_group: bonnyci
-prod_admin_group: bonnyci-admin
-prod_member_role: _member_
-prod_admin_role: cloud_admin
-prod_nodepool_user: nodepool
-prod_nodepool_project: nodepool
+servers:
+  - name: bastion
+    floating_ip_network: "{{ external_network_name }}"
+    security_groups:
+      - sg-control-plane
+      - sg-http-https
+      - sg-ssh
+  - name: elk
+    floating_ip_network: "{{ external_network_name }}"
+    security_groups:
+      - sg-control-plane
+      - sg-http-https
+    key_name: "{{ deploy_ssh_key_name }}"
+  - name: logs
+    floating_ip_network: "{{ external_network_name }}"
+    security_groups:
+      - sg-control-plane
+      - sg-http-https
+    key_name: "{{ deploy_ssh_key_name }}"
+  - name: nodepool
+    security_groups:
+      - sg-control-plane
+    key_name: "{{ deploy_ssh_key_name }}"
+  - name: merger01
+    security_groups:
+      - sg-control-plane
+      - sg-zuul-merger
+    key_name: "{{ deploy_ssh_key_name }}"
+  - name: zuul
+    floating_ip_network: "{{ external_network_name }}"
+    security_groups:
+      - sg-control-plane
+      - sg-http-https
+    key_name: "{{ deploy_ssh_key_name }}"

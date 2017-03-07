@@ -1,0 +1,12 @@
+---
+- name: Gather instance facts
+  run_once: true
+  delegate_to: localhost
+  os_server_facts:
+    cloud: "{{ cloud }}"
+
+- name: Add ssh host keys to bastion known hosts
+  run_once: true
+  delegate_to: "{{ groups.bastion[0] }}"
+  include: known_hosts.yml
+  with_items: "{{ openstack_servers }}"
