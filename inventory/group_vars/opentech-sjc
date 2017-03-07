@@ -1,0 +1,39 @@
+bastion_clouds:
+  - opentech-sjc
+
+bonnyci_logs_apache_server_name: logs.opentechsjc.bonnyci.org
+bonnyci_logs_scp_host: logs.opentechsjc.bonnyci.org
+bonnyci_zuul_webapp_apache_server_name: zuul.opentechsjc.bonnyci.org
+bonnyci_zuul_merger_apache_server_name: merger01.internal.opentechsjc.bonnyci.org
+
+ci_inventory: opentech-sjc
+
+filebeat_output_logstash_hosts:
+  - elk.internal.opentechsjc.bonnyci.org:5044
+
+logstash_elasticsearch_hosts:
+  - "http://localhost:9200"
+
+nodepool_gearman_servers:
+  - host: zuul.internal.opentechsjc.bonnyci.org
+    port: 4730
+nodepool_mysql_host: zuul.internal.opentechsjc.bonnyci.org
+nodepool_providers:
+  - name: cicloud
+    cloud: opentech-sjc
+    max-servers: 20
+    networks:
+      - name: 'nodepool'
+        public: True
+    images:
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+        user-home: /home/bonnyci
+        username: bonnyci
+nodepool_zmq_publishers:
+  - tcp://zuul.internal.opentechsjc.bonnyci.org:8888
+
+zuul_gearman_server: zuul.internal.opentechsjc.bonnyci.org
+zuul_logs_url: http://logs.opentechsjc.bonnyci.org
