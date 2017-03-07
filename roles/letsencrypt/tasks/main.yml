@@ -50,6 +50,19 @@
         (not letsencrypt_stat.results.1.stat.exists) or
         (letsencrypt_create_csr.changed | default(False))
 
+- name: Backup old cert when requesting a new one
+  copy:
+    remote_src: True
+    src: "{{ letsencrypt_cert_path }}"
+    dest: "{{ letsencrypt_cert_path }}.bak"
+  when: letsencrypt_create_csr_command.changed | default(False)
+
+- name: Remove old cert when requesting a new one
+  file:
+    dest: "{{ letsencrypt_cert_path }}"
+    state: absent
+  when: letsencrypt_create_csr_command.changed | default(False)
+
 - name: set key owner
   file:
     path: "{{ letsencrypt_key_path }}"
