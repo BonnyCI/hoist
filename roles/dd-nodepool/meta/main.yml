@@ -3,6 +3,7 @@ dependencies:
   - role: dd-checks
 
     datadog_checks:
-      nodepool_server: 
+      nodepool_server:
         instances:
           - status_url: "{{ dd_nodepool_status_url }}"
+          - images_url: "{{ dd_nodepool_images_url }}"
