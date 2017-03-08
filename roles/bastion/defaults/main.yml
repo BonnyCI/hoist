@@ -7,7 +7,6 @@ bastion_users:
   - jason_clark
   - nibz
   - olaph
-  - pschwartz
   - rmoe
   - bradonk
   - doc
@@ -16,5 +15,6 @@ bastion_users:
   - jesusaur
   - eggshell
 bastion_sudo_users: "{{ bastion_users }}"
-bastion_remove_users: []
+bastion_remove_users:
+  - pschwartz
 bastion_clouds: []
