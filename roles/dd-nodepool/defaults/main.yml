@@ -1,2 +1,3 @@
 ---
 dd_nodepool_status_url:  http://locahost:8005/image-list
+dd_nodepool_images_url:  http://locahost:8005/dib-image-list.json

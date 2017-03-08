@@ -20,24 +20,40 @@ from checks import AgentCheck
 class NodepoolCheck(AgentCheck):
 
     SERVICE_CHECK_NAME = 'nodepool_server.got_status'
+    IMAGES_CHECK_NAME = 'nodepool_server.got_images'
 
     def check(self, instance):
-        if 'status_url' not in instance:
-            self.log.info("Skipping instance, no url found.")
-            return
-
-        status_url = instance['status_url']
         default_timeout = self.init_config.get('default_timeout', 5)
         timeout = float(instance.get('timeout', default_timeout))
         service_check_tags = ['url:%s' % status_url]
-        
-        try:
-            self.get_nodepool_status(status_url, timeout, service_check_tags)
-        except Exception as e:
-            self.service_check(self.SERVICE_CHECK_NAME,
-                               AgentCheck.CRITICAL,
-                               message=str(e),
-                               tags=service_check_tags)
+        images_check_tags = ['url:%s' % images_url]
+
+        status_url = instance.get('status_url')
+        image_url = instance.get('image_url')
+
+        if status_url:
+            try:
+                self.get_nodepool_status(status_url, timeout,
+                                         service_check_tags)
+            except Exception as e:
+                self.service_check(self.SERVICE_CHECK_NAME,
+                                   AgentCheck.CRITICAL,
+                                   message=str(e),
+                                   tags=service_check_tags)
+        else
+            self.log.info("Skipping instance, no status url found.")
+
+        if images_url:
+            try:
+                self.get_nodepool_images(images_url, timeout,
+                                         images_check_tags)
+            except Exception as e:
+                self.service_check(self.IMAGES_CHECK_NAME,
+                                   AgentCheck.CRITICAL,
+                                   message=str(e),
+                                   tags=images_check_tags)
+        else
+            self.log.info("Skipping instance, no images url found.")
 
     def get_nodepool_status(self, status_url, timeout, service_check_tags):
         r = requests.get(status_url, timeout=timeout)
@@ -55,3 +71,10 @@ class NodepoolCheck(AgentCheck):
                            AgentCheck.OK,
                            message='Received status from %s' % status_url,
                            tags=service_check_tags)
+
+    def get_nodepool_images(self, images_url, timeout, images_check_tags):
+        r = requests.get(images_url, timeout=timeout)
+        currentTime = int(time.time())
+
+        for image in r.json():
+            self.gauge('nodepool.image.%s.age' % image['name'], currentTime - image['age'])
