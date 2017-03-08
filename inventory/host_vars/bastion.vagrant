@@ -1,2 +1,4 @@
 bastion_clouds:
   - cicloud
+
+ci_inventory: vagrant

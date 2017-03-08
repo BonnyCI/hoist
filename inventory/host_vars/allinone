@@ -1,3 +1,5 @@
+ci_inventory: allinone
+
 zookeeper_myid: 1
 
 zuul_components:

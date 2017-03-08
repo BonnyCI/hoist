@@ -1,3 +1,6 @@
+[bastion]
+contrasjc-bastion.portbleu.com connection=local
+
 [nodepool]
 nodepool.bonnyci-internal.portbleu.com
 

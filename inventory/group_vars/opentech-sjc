@@ -6,8 +6,6 @@ bonnyci_logs_scp_host: logs.opentechsjc.bonnyci.org
 bonnyci_zuul_webapp_apache_server_name: zuul.opentechsjc.bonnyci.org
 bonnyci_zuul_merger_apache_server_name: merger01.internal.opentechsjc.bonnyci.org
 
-ci_inventory: opentech-sjc
-
 filebeat_output_logstash_hosts:
   - elk.internal.opentechsjc.bonnyci.org:5044
 

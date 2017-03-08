@@ -1,3 +1,6 @@
+[bastion]
+bastion.opentechsjc.bonnyci.org connection=local
+
 [nodepool]
 nodepool.internal.opentechsjc.bonnyci.org
 
