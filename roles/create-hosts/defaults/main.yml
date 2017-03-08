@@ -1,4 +1,0 @@
-create_hosts_default_image: ubuntu-16.04-py27
-create_hosts_default_key_name: ci-deploy-contrasjc-bastion
-create_hosts_default_nics: [{'net-name': 'sl-private-network-01'}]
-create_hosts_default_security_groups: default
