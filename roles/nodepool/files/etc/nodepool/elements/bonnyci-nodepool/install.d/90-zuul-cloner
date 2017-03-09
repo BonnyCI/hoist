@@ -23,4 +23,9 @@ set -e
 
 # Our use requires zuul be installed so that we can call zuul-cloner
 # The source is put in place by the source-repositories element.
+
+# We must install Github3.py manually for now, see
+# https://github.com/BonnyCI/zuul/pull/32 and
+# https://github.com/BonnyCI/zuul/pull/33
+pip2 install git+https://github.com/sigmavirus24/github3.py.git@8e9ca0056b8fed956b66dafb5398757cd8d8bed9#egg=Github3.
 pip2 install /opt/zuul/
