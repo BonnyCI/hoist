@@ -1,8 +1,0 @@
-[zuul]
-zuul
-
-[nodepool]
-nodepool
-
-[mysql]
-mysql
