@@ -11,7 +11,7 @@ matrix:
   fast_finish: true
 
 env:
-  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,not-on-docker,letsencrypt"
+  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,not-on-docker,letsencrypt"
   - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,not-on-docker,letsencrypt"
 
 before_install:
