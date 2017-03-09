@@ -217,6 +217,21 @@
       os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}/logs"
       os_loganalyze_file_conditions: "{{ bonnyci_logs_loganalyze_file_conditions }}"
 
+    - role: uwsgi
+      uwsgi_apt_plugins:
+        - uwsgi-plugin-python
+      uwsgi_vassals:
+        - name: os-loganalyze
+          state: present
+          config:
+            uid: www-data
+            gid: www-data
+            wsgi-file: /etc/os_loganalyze/wsgi/os-loganalyze.py
+            virtualenv: "{{ os_loganalyze_venv_path }}"
+            plugin: python
+            socket: localhost:3310
+            lazy-apps: true
+
     - role: apache
       apache_apt_install: "{{ bonnyci_logs_apache_apt_install }}"
       apache_mods_enabled: "{{ bonnyci_logs_apache_mods_install }}"
