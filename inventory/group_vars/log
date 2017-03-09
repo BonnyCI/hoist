@@ -1,8 +1,10 @@
 bonnyci_logs_apache_apt_install:
-  - libapache2-mod-wsgi
+  - libapache2-mod-proxy-uwsgi
 
 bonnyci_logs_apache_mods_install:
   - rewrite.load
+  - proxy.load
+  - proxy_uwsgi.load
 
 bonnyci_logs_apache_vhosts:
   - name: logs
@@ -62,9 +64,7 @@ bonnyci_logs_apache_vhosts:
       RewriteCond %{REQUEST_FILENAME} !^/icon
       RewriteRule ^/(.*)$ /htmlify/$1 [QSA,L,PT,NS]
 
-      WSGIDaemonProcess os-loganalyze processes=5 threads=1 display-name=%{GROUP}
-      WSGIScriptAlias /htmlify /etc/os_loganalyze/wsgi/os-loganalyze.py
-      WSGIApplicationGroup %{GLOBAL}
+      ProxyPass /htmlify/ uwsgi://localhost:3310/
 
       ServerSignature Off
 
