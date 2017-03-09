@@ -6,7 +6,10 @@ dependencies:
     tailon_relative_root: /cron-logs/live/
     tailon_files:
       - "/var/www/html/cron-logs/**/*_current.log"
+  - role: ara
   - role: apache
+    apache_apt_install:
+      - libapache2-mod-wsgi
     apache_mods_enabled:
       - proxy.conf
       - proxy.load
@@ -19,4 +22,23 @@ dependencies:
           AddType text/plain .log
           Redirect permanent /cron-logs/live /cron-logs/live/
           ProxyPass "/cron-logs/live/" http://localhost:{{ tailon_port }}/cron-logs/live/
+      - name: ara
+        vhost_extra: |
+          # Replace ServerName by your hostname
+          ServerName ara.domain.tld
+
+          ErrorLog /var/log/apache2/ara-error.log
+          LogLevel warn
+          CustomLog /var/log/apache2/ara-access.log combined
+
+          WSGIDaemonProcess ara user=www-data group=www-data processes=4 threads=1
+          WSGIScriptAlias / /var/www/ara/ara-wsgi
+
+          SetEnv ANSIBLE_CONFIG /var/www/ara/ansible.cfg
+
+          <Directory /var/www/ara>
+            WSGIProcessGroup ara
+            WSGIApplicationGroup %{GLOBAL}
+            Require all granted
+          </Directory>
 
