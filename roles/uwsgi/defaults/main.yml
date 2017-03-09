@@ -1,0 +1,3 @@
+---
+uwsgi_apt_plugins: []
+uwsgi_vassals: []
