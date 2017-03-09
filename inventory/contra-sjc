@@ -1,5 +1,5 @@
 [bastion]
-contrasjc-bastion.portbleu.com connection=local
+contrasjc-bastion.portbleu.com ansible_connection=local
 
 [nodepool]
 nodepool.bonnyci-internal.portbleu.com
