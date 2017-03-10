@@ -1,6 +1,6 @@
 - name: Install logging config
   template:
-    src: "etc/zuul/logging.conf"
+    src: "etc/zuul/{{ item }}-logging.conf"
     dest: "/etc/zuul/{{ item }}-logging.conf"
     owner: zuul
   with_items:
