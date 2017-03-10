@@ -18,16 +18,6 @@
     - libssl-dev
     - python-dev
 
-- name: Checkout source
-  git:
-    dest: "{{ python_app_source_path }}/{{ name | mandatory }}"
-    repo: "{{ python_app_git_repo }}"
-    version: "{{ python_app_git_version | default(omit) }}"
-    update: "{{ python_app_git_update | default(omit) }}"
-    force: "{{ python_app_git_force | default(omit) }}"
-  register: python_app_git_checkout
-  notify: "{{ python_app_notify }}"
-
 - name: Install pip dependencies
   pip:
     name: "{{ item.name }}"
@@ -36,14 +26,29 @@
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ python_app_pipdeps }}"
 
-- name: Install application
-  pip:
-    extra_args: -U
-    name: "{{ python_app_source_path }}/{{ name }}"
-    virtualenv: "{{ python_app_venv_path }}/{{ name }}"
-  when: python_app_git_checkout.changed
-
-- name: Set python-app facts
+- name: Set python-app venv fact
   set_fact: >
     {{ name | replace('-', '_') }}_venv_path={{ python_app_venv_path }}/{{ name }}
-    {{ name | replace('-', '_') }}_source_path={{ python_app_source_path }}/{{ name }}
+
+- when: "{{ python_app_git_repo | length > 0 }}"
+  block:
+    - name: Checkout source
+      git:
+        dest: "{{ python_app_source_path }}/{{ name | mandatory }}"
+        repo: "{{ python_app_git_repo }}"
+        version: "{{ python_app_git_version | default(omit) }}"
+        update: "{{ python_app_git_update | default(omit) }}"
+        force: "{{ python_app_git_force | default(omit) }}"
+      register: python_app_git_checkout
+      notify: "{{ python_app_notify }}"
+
+    - name: Install application
+      pip:
+        extra_args: -U
+        name: "{{ python_app_source_path }}/{{ name }}"
+        virtualenv: "{{ python_app_venv_path }}/{{ name }}"
+      when: python_app_git_checkout.changed
+
+    - name: Set python-app source facts
+      set_fact: >
+        {{ name | replace('-', '_') }}_source_path={{ python_app_source_path }}/{{ name }}
