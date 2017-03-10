@@ -2,5 +2,6 @@
 python_app_venv_path: /opt/venvs
 python_app_source_path: /opt/source
 
+python_app_git_repo: ""
 python_app_pipdeps: []
 python_app_notify: []
