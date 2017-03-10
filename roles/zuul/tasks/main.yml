@@ -54,7 +54,7 @@
     owner: zuul
     group: zuul
     mode: 0400
-  when: secrets.zuul_github_integration_key_content is defined
+  when: secrets.zuul_github_integration_key_content | default(False)
 
 - name: Install zuul config
   template:
