@@ -28,7 +28,8 @@ Bastion
 
 To create a new bastion in a cloud for automating things follow these steps:
 
-1. Setup your local (to your development enviroment) clouds.yml with access to the new cloud.
+1. Setup your local (to your development enviroment) clouds.yml with access to
+   the new cloud.
 
 2. Add new bastion to provision.yml, adding a tag for the new cloud.
 
@@ -50,19 +51,24 @@ To create a new bastion in a cloud for automating things follow these steps:
 
    $ ansible-playbook -i inventory/bastions bastion.yml -e @secrets.yml
 
-After that the bastion should self-manage, and logs should be visible at http://<<bastion>>/cron-logs/
+After that the bastion should self-manage, and logs should be visible at
+http://<<bastion>>/cron-logs/
 
 Updating Secrets
 ================
-As we add or adjust secrets, we'll need to update the secrets file that lives on bastion hosts. As always, if introducing a new secret, update our example secrets file in this repo first. Then update the running bastion.
+As we add or adjust secrets, we'll need to update the secrets file that lives on
+bastion hosts. As always, if introducing a new secret, update our example
+secrets file in this repo first. Then update the running bastion.
 
 
 Testing with Vagrant
 ====================
 
-See `our documentation on testing with vagrant <http://bonnyci.org/lore/developers#virtual-machines>`_.
+See `our documentation on testing with vagrant
+<http://bonnyci.org/lore/developers#virtual-machines>`_.
 
 Contributing
 ============
 
-See `our documentation on contributing <http://bonnyci.org/lore/developers/contributing>`_.
+See `our documentation on contributing
+<http://bonnyci.org/lore/developers/contributing>`_.
