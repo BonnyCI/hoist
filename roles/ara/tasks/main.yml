@@ -12,27 +12,38 @@
     name: "{{ item }}"
     state: installed
   with_items:
-    - gcc 
-    - libffi-dev 
+    - gcc
+    - libffi-dev
     - python-dev
     - libssl-dev
 
 - name: Install ara
   pip:
     name: ara
-    virtualenv: /opt/ansible
+    virtualenv: "{{ ara_venv_path }}"
 
-- name: Ensure ara directory
+- name: Ensure ara directories
   file:
-    path: /var/www/ara/
+    path: "/var/www/{{ item }}"
     state: directory
     mode: 0755
+    owner: www-data
+    group: www-data
+  with_items:
+    - ara
+    - ara/.ansible
+
+- name: Ensure ara database directory is world-writable
+  file:
+    path: "/var/www/ara/.ara"
+    state: directory
+    mode: 0777
     owner: www-data
     group: www-data
 
 - name: Copy ARA wsgi script into place
   copy:
-    src: /opt/ansible/bin/ara-wsgi
+    src: "{{ ara_venv_path }}/bin/ara-wsgi"
     dest: /var/www/ara/
     remote_src: True
 
@@ -40,6 +51,17 @@
   copy:
     src: var/www/ara/ansible.cfg
     dest: /var/www/ara/ansible.cfg
+
+- name: Ensure important ARA files have right permissions
+  file:
+    path: "/var/www/ara/.ara/{{ item }}"
+    state: touch
+    owner: www-data
+    group: www-data
+    mode: 0666
+  with_items:
+    - ansible.sqlite
+    - ara.log
 
 - name: Make sure apache can read everything
   file:
