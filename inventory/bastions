@@ -1,4 +1,0 @@
-contrasjc-bastion ansible_ssh_host=169.45.113.62 ansible_ssh_user=ubuntu
-
-[bastion]
-contrasjc-bastion
