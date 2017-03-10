@@ -81,6 +81,17 @@
     dest: "/opt/source/{{ ansible_runner_job }}"
     update: true
 
+- name: Check for playbook deps
+  stat:
+    path: "/opt/source/{{ ansible_runner_job }}/requirements.txt"
+  register: requirements_txt
+
+- name: Install playbook deps
+  pip:
+    virtualenv: "{{ ansible_runner_virtualenv }}"
+    requirements: "/opt/source/{{ ansible_runner_job }}/requirements.txt"
+  when: requirements_txt.stat.exists
+
 - name: Ensure cron log path
   file:
     state: directory

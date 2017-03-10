@@ -2,5 +2,5 @@
 
 export ANSIBLE_CONFIG=/vagrant/ansible.cfg
 export ANSIBLE_INVENTORY=/vagrant/inventory/vagrant
-ansible-playbook -v -e @/vagrant/secrets.yml -e ansible_user=ubuntu --skip-tags monitoring /vagrant/install-ci.yml "$@"
-ansible-playbook -v -e @/vagrant/secrets.yml -e ansible_user=ubuntu --skip-tags monitoring /vagrant/tests/validate-ci.yml "$@"
+/opt/ansible/bin/ansible-playbook -v -e @/vagrant/secrets.yml -e ansible_user=ubuntu --skip-tags monitoring /vagrant/install-ci.yml "$@"
+/opt/ansible/bin/ansible-playbook -v -e @/vagrant/secrets.yml -e ansible_user=ubuntu --skip-tags monitoring /vagrant/tests/validate-ci.yml "$@"
