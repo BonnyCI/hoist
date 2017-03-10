@@ -30,7 +30,7 @@ trap "cp $logfile $dst_logfile; rm -f /var/www/html/cron-logs/$env/ansible_${pla
 
 date 2>&1 | tee $logfile
 basename "$logfile" 2>&1 | tee -a $logfile
-cd /opt/source/$env 2>&1 | tee -a $logfile
+cd /opt/source/$env
 git pull 2>&1 | tee -a $logfile
 sudo /opt/ansible/bin/pip install -U -r requirements.txt 2>&1 | tee -a $logfile
 
