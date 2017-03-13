@@ -35,3 +35,5 @@ nodepool_zmq_publishers:
 
 zuul_gearman_server: zuul.bonnyci-internal.portbleu.com
 zuul_logs_url: http://logs.bonnyci.com
+
+dns_subdomain: bonnyci-internal.portbleu.com
