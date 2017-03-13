@@ -2,8 +2,6 @@ dependencies:
   - role: python-app
     name: zuul
     python_app_pipdeps:
-      - name: jenkins-job-builder
-        version: '1.6.1'
       - name: pyzmq
       - name: ansible
       - name: statsd
