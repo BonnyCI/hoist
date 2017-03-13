@@ -1,0 +1,72 @@
+---
+ ### Update apt cache, but don't mark changed
+ # Works around Ansible 2.2 bug
+ # TODO: Remove with Ansible 2.3
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  changed_when: False
+
+- name: Install deps
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - gcc
+    - libffi-dev
+    - python-dev
+    - libssl-dev
+
+- name: Install ara
+  pip:
+    name: ara
+    virtualenv: "{{ ara_venv_path }}"
+
+- name: Ensure ara directories
+  file:
+    path: "/var/www/{{ item }}"
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+  with_items:
+    - ara
+    - ara/.ansible
+
+- name: Ensure ara database directory is world-writable
+  file:
+    path: "/var/www/ara/.ara"
+    state: directory
+    mode: 0777
+    owner: www-data
+    group: www-data
+
+- name: Copy ARA wsgi script into place
+  copy:
+    src: "{{ ara_venv_path }}/bin/ara-wsgi"
+    dest: /var/www/ara/
+    remote_src: True
+
+- name: Install ARA configuration
+  copy:
+    src: var/www/ara/ansible.cfg
+    dest: /var/www/ara/ansible.cfg
+
+- name: Ensure important ARA files have right permissions
+  file:
+    path: "/var/www/ara/.ara/{{ item }}"
+    state: touch
+    owner: www-data
+    group: www-data
+    mode: 0666
+  with_items:
+    - ansible.sqlite
+    - ara.log
+
+- name: Make sure apache can read everything
+  file:
+    path: /var/www/ara
+    owner: www-data
+    group: www-data
+    recurse: yes
+
