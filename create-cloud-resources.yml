@@ -26,6 +26,9 @@
         - username: mctaylor
           email: mctaylor@us.ibm.com
           isadmin: False
+        - username: jasontclark
+          email: jtclark@linux.vnet.ibm.com
+          isadmin: False
       servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
