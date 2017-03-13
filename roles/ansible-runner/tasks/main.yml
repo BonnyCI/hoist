@@ -81,6 +81,12 @@
     dest: "/opt/source/{{ ansible_runner_job }}"
     update: true
 
+- name: Ensure source ownership
+  file:
+    dest: "/opt/source/{{ ansible_runner_job }}"
+    owner: "{{ ansible_runner_user }}"
+    recurse: yes
+
 - name: Check for playbook deps
   stat:
     path: "/opt/source/{{ ansible_runner_job }}/requirements.txt"
