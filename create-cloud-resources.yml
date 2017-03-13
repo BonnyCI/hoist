@@ -23,6 +23,9 @@
         - username: mctaylor
           email: mctaylor@us.ibm.com
           isadmin: False
+        - username: rattboi
+          email: bradon.kanyid@ibm.com
+          isadmin: False
       servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
