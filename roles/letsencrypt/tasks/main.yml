@@ -50,12 +50,18 @@
         (not letsencrypt_stat.results.1.stat.exists) or
         (letsencrypt_create_csr.changed | default(False))
 
+- name: Check for existing cert
+  stat:
+    path: "{{ letsencrypt_cert_path }}"
+  register: existing_cert
+
 - name: Backup old cert when requesting a new one
   copy:
     remote_src: True
     src: "{{ letsencrypt_cert_path }}"
     dest: "{{ letsencrypt_cert_path }}.bak"
-  when: letsencrypt_create_csr_command.changed | default(False)
+  when: (letsencrypt_create_csr_command.changed | default(False)) and
+        (existing_cert.stat.exists == True)
 
 - name: Remove old cert when requesting a new one
   file:
