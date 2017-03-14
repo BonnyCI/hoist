@@ -1,0 +1,9 @@
+---
+- name: Write a test file
+  hosts: localhost
+  tasks:
+    - copy:
+        dest: %%TEST_FILE_PATH%%
+        content: %%TEST_FILE_CONTENT%%
+    - debug:
+        msg: %%TEST_LOG_STRING%%
