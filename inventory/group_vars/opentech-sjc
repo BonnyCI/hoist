@@ -5,6 +5,8 @@ bonnyci_kibana_apache_server_name: elk.opentechsjc.bonnyci.org
 bonnyci_kibana_apache_server_aliases:
   - elk.bonnyci.org
 bonnyci_logs_apache_server_name: logs.opentechsjc.bonnyci.org
+bonnyci_logs_apache_server_aliases:
+  - logs.bonnyci.org
 bonnyci_logs_scp_host: logs.internal.opentechsjc.bonnyci.org
 bonnyci_zuul_webapp_apache_server_name: zuul.opentechsjc.bonnyci.org
 bonnyci_zuul_merger_apache_server_name: merger01.internal.opentechsjc.bonnyci.org
@@ -37,6 +39,6 @@ nodepool_zmq_publishers:
   - tcp://zuul.internal.opentechsjc.bonnyci.org:8888
 
 zuul_gearman_server: zuul.internal.opentechsjc.bonnyci.org
-zuul_logs_url: http://logs.opentechsjc.bonnyci.org
+zuul_logs_url: http://logs.bonnyci.org
 
 dns_subdomain: internal.opentechsjc.bonnyci.org
