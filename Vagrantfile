@@ -172,7 +172,7 @@ Vagrant.configure(2) do |config|
 
     elk.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@elk.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit log'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit monitoring'"
     end
 
     elk.trigger.after :destroy do
