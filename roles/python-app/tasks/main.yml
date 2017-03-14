@@ -35,6 +35,7 @@
     virtualenv: "{{ python_app_venv_path }}/{{ name }}"
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ python_app_pipdeps }}"
+  when: "{{ item.when | default(True) }}"
 
 - name: Install application
   pip:
