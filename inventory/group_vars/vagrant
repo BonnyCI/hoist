@@ -1,6 +1,7 @@
 bastion_clouds:
   - bastioncloud
 
+bonnyci_kibana_apache_server_name: elk.vagrant
 bonnyci_logs_scp_host: logs.vagrant
 bonnyci_zuul_merger_apache_server_name: merger.vagrant
 bonnyci_zuul_webapp_apache_server_name: zuul.vagrant
@@ -10,7 +11,7 @@ datadog_enabled: no
 elasticsearch_jvm_heap_size: 250m
 
 filebeat_output_logstash_hosts:
-  - logs.vagrant:5044
+  - elk.vagrant:5044
 
 hoist_repo: /vagrant/.git
 

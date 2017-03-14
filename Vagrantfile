@@ -119,7 +119,7 @@ Vagrant.configure(2) do |config|
     logs.vm.network "private_network", ip: "10.0.0.102"
 
     logs.vm.provider "virtualbox" do |v|
-      v.memory = '2048'
+      v.memory = '512'
     end
 
     logs.vm.provision "shell", path: "tools/install-pip.sh"
@@ -141,7 +141,7 @@ Vagrant.configure(2) do |config|
     merger.vm.network "private_network", ip: "10.0.0.103"
 
     merger.vm.provider "virtualbox" do |v|
-      v.memory = '1024'
+      v.memory = '512'
     end
 
     merger.vm.provision "shell", path: "tools/install-pip.sh"
@@ -155,6 +155,29 @@ Vagrant.configure(2) do |config|
     merger.trigger.after :destroy do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R merger.vagrant'"
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.103'"
+    end
+  end
+
+  config.vm.define :elk do |elk|
+    elk.vm.hostname = 'elk.vagrant'
+    elk.vm.network "private_network", ip: "10.0.0.104"
+    elk.vm.network "forwarded_port", guest: 80, host: 8084
+
+    elk.vm.provider "virtualbox" do |v|
+      v.memory = '2048'
+    end
+
+    elk.vm.provision "shell", path: "tools/install-pip.sh"
+    elk.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
+
+    elk.trigger.after [:up, :provision] do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@elk.vagrant true'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit log'"
+    end
+
+    elk.trigger.after :destroy do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R elk.vagrant'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.104'"
     end
   end
 
