@@ -3,15 +3,15 @@
 set -eu
 
 env=$1
-envs_root=${ANSIBLE_RUNNER_ENV_ROOT:-/opt/source}
-ansible_venv=${ANSIBLE_RUNNER_VENV:-/opt/ansible}
-log_dir=${ANSIBLE_RUNNER_LOG_DIR:-/var/www/html/cron-logs/$env/}
-ssh_user=${ANSIBLE_SSH_USER:-""}
-
 
 if [ -f /etc/default/$env ]; then
   . /etc/default/$env
 fi
+
+envs_root=${ANSIBLE_RUNNER_ENV_ROOT:-/opt/source}
+ansible_venv=${ANSIBLE_RUNNER_VENV:-/opt/ansible}
+log_dir=${ANSIBLE_RUNNER_LOG_DIR:-/var/www/html/cron-logs/$env/}
+ssh_user=${ANSIBLE_SSH_USER:-""}
 
 if ! ([ -n "$ANSIBLE_PLAYBOOK" ] && [ -n "$ANSIBLE_INVENTORY" ]); then
   echo "Missing all required environment variables: ANSIBLE_PLAYBOOK, ANSIBLE_INVENTORY"
