@@ -1,1 +1,2 @@
 ci_inventory: opentech-sjc
+dns_subdomain: internal.opentechsjc.bonnyci.org
