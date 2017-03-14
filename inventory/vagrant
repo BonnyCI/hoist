@@ -23,6 +23,7 @@ logs.vagrant
 logs.vagrant
 
 [vagrant]
+bastion.vagrant
 nodepool.vagrant
 zuul.vagrant
 merger.vagrant
