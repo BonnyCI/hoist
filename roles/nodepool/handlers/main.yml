@@ -3,6 +3,7 @@
   command: systemctl daemon-reload
 
 - name: Restart nodepool
+  when: not nodepool_zuul_v3
   service:
     name: "{{ item }}"
     state: restarted
@@ -10,6 +11,15 @@
     - nodepool-builder
     - nodepool-deleter
     - nodepool-launcher
+    - nodepoold
+
+- name: Restart nodepool
+  when: nodepool_zuul_v3
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - nodepool-builder
     - nodepoold
 
 - name: Restart nodepool builder
