@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 # This tests the JJB syntax of our job definitions, and generates a
-# job-list.txt for use in the layout-checks.py test.
+# job-list.txt for use in the check-layout.py test.
 
 temp_dir=$(mktemp -d)
 trap 'rm -rf $temp_dir' EXIT
