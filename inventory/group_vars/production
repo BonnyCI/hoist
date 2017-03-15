@@ -4,12 +4,12 @@ letsencrypt_production: yes
 nodepool_labels:
   - name: ubuntu-xenial
     image: ubuntu-xenial
-    min-ready: 2
+    min-ready: 4
     providers:
       - name: cicloud
   - name: ubuntu-hoist
     image: ubuntu-xenial
-    min-ready: 1
+    min-ready: 3
     subnodes: 3
     ready-script: subnode-ssh.sh
     providers:
