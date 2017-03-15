@@ -4,6 +4,9 @@ sudo apt-get install -y shellcheck
 
 echo -n "Testing shell linter..."
 
-find . -name '*.sh' -print0 | xargs -n1 -0 shellcheck -s bash -e SC2046
+if ! find . -name '*.sh' -print0 | xargs -n1 -0 shellcheck -s bash; then
+    echo "ERROR! :("
+    exit 1
+fi
 
 echo "OK! :)"
