@@ -19,4 +19,12 @@ if test -r requirements.yml; then
     ansible-galaxy install -r install -r requirements.yml
 fi
 
-run-parts --verbose --exit-on-error --regex '^test.*$' tests/
+if ! run-parts --verbose --exit-on-error --regex '^test.*$' tests/; then
+  rc=1
+else
+  rc=0
+fi
+
+./tests/debug_failure.py
+
+exit $?
