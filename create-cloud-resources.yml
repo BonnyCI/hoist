@@ -64,3 +64,10 @@
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
+        - name: bot
+          floating_ip_address: 169.44.171.92
+          flavor: m1.tiny
+          security_groups:
+            - sg-control-plane
+            - sg-http-https
+          key_name: "{{ deploy_ssh_key_name }}"
