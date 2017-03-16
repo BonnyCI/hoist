@@ -4,6 +4,7 @@ venv_dir=$(mktemp -d)
 trap 'rm -rf $venv_dir' EXIT
 
 virtualenv "$venv_dir"
+# shellcheck disable=1090
 source "$venv_dir"/bin/activate
 
 # Install all requirements for tests to run
