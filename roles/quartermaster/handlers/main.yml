@@ -1,13 +1,5 @@
 ---
-- name: Reload systemd units
-  command: systemctl daemon-reload
-
 - name: Restart quartermaster
   service:
-    name: quartermaster
+    name: quartermaster@{{ quartermaster_name }}
     state: restarted
-
-- name: Init database
-  shell: /opt/quartermaster/quartermaster init --config /etc/quartermaster/quartermaster.yaml --loglevel debug
-  args:
-    executable: /bin/bash

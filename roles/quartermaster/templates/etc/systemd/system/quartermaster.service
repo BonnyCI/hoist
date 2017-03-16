@@ -1,12 +1,13 @@
 [Unit]
-Description=Quartermaster Service
+Description=Quartermaster %i Service
 After=syslog.target network.target
 
 [Service]
 Type=simple
-User=quartermaster
-Group=quartermaster
-ExecStart=/opt/quartermaster/quartermaster bot --config /etc/quartermaster/config.yaml --loglevel debug
+User={{ quartermaster_user }}
+Group={{ quartermaster_group }}
+ExecStart={{ quartermaster_venv_dir }}/bin/errbot -c {{ quartermaster_config_dir }}/config.py
 
 [Install]
+DefaultInstance=quartermaster
 WantedBy=multi-user.target

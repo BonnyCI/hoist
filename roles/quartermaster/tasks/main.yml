@@ -1,21 +1,33 @@
 ---
-- name: install dependencies
+ ### Update apt cache, but don't mark changed
+ # Works around Ansible 2.2 bug
+ # TODO: Remove with Ansible 2.3
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  changed_when: False
+
+- name: Install deps
   apt:
     name: "{{ item }}"
-    state: present
+    state: installed
   with_items:
-    - unzip
+    - gcc
+    - libffi-dev
+    - python3-dev
+    - python-dev
+    - libssl-dev
 
-- name: Create the quartermaster group
+- name: Create group
   group:
-    name: quartermaster
+    name: "{{ quartermaster_group }}"
     state: present
 
-- name: Create quartermaster user
+- name: Create user
   user:
-    name: quartermaster
-    group: quartermaster
-    home: /var/lib/quartermaster
+    name: "{{ quartermaster_user }}"
+    group: "{{ quartermaster_group }}"
+    home: "{{ quartermaster_home_dir }}"
     system: yes
     state: present
 
@@ -24,62 +36,49 @@
     path: "{{ item }}"
     state: directory
     mode: 0755
-    owner: quartermaster
-    group: quartermaster
+    owner: "{{ quartermaster_user }}"
+    group: "{{ quartermaster_group }}"
   with_items:
-    - /etc/quartermaster
-    - /var/log/quartermaster
-    - /opt/quartermaster
+    - "{{ quartermaster_home_dir }}"
+    - "{{ quartermaster_log_dir }}"
+    - "{{ quartermaster_venv_dir }}"
+    - "{{ quartermaster_config_dir }}"
 
-- name: Download quartermaster binary
-  get_url:
-    url: "{{ quartermaster_install_url }}"
-    dest: /tmp
-
-- name: Install quartermaster binary
-  unarchive:
-    src: "/tmp/{{ quartermaster_install_zip_filename }}"
-    dest: /opt/quartermaster
-    remote_src: True
+- block:
+    ### This is hacky, but seems necessary to seed a venv w/ py3,
+    #   then use that venv's pip...
+  - name: Seed quartermaster py3 venv
+    pip:
+      name: pip
+      virtualenv: "{{ quartermaster_venv_dir }}"
+      virtualenv_python: "/usr/bin/python3"
+  - name: Install errbot python package
+    pip:
+      name: errbot
+      executable: "{{ quartermaster_venv_dir }}/bin/pip"
+   
+- name: Install errbot python deps
+  pip:
+    name: irc
+    executable: "{{ quartermaster_venv_dir }}/bin/pip"
 
 - name: Install quartermaster config
   template:
-    src: etc/quartermaster/config.yaml
-    dest: /etc/quartermaster/config.yaml
+    src: config.py
+    dest: "{{ quartermaster_config_dir }}/config.py"
     owner: quartermaster
     mode: 0600
-  notify: Restart quartermaster
 
-- name: Check for quartermaster database
-  stat:
-    path: "{{ quartermaster_database_path }}"
-  register: qm_database
-
-- name: Init database if missing
-  shell: /opt/quartermaster/quartermaster init --config /etc/quartermaster/config.yaml --loglevel debug
-  args:
-    executable: /bin/bash
-  become: yes
-  become_user: quartermaster
-  when: qm_database.stat.exists is defined and qm_database.stat.exists == False
-
-- name: Install systemd unit files
+- name: Install quartermaster init
   template:
-    src: "etc/systemd/system/{{ item }}.service"
-    dest: "/etc/systemd/system/{{ item }}.service"
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - quartermaster
-  notify:
-    - Reload systemd units
-    - Restart quartermaster
+    src: etc/systemd/system/quartermaster.service
+    dest: /etc/systemd/system/quartermaster@.service
+  notify: Restart quartermaster
+  register: quartermaster_init_file
 
-- meta: flush_handlers
-
-- name: Enable and start systemd service
-  service:
-    enabled: yes
-    state: started
-    service: quartermaster
+- name: Enable quartermaster service
+  systemd:
+    name: "quartermaster@{{ quartermaster_name }}"
+    state: "{{ quartermaster_service_state }}"
+    enabled: "{{ quartermaster_service_enabled }}"
+    daemon_reload: "{{ quartermaster_init_file.changed }}"
