@@ -83,7 +83,6 @@ Vagrant.configure(2) do |config|
 
     zuul.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@zuul.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit zuul'"
     end
 
     zuul.trigger.after :destroy do
@@ -105,7 +104,6 @@ Vagrant.configure(2) do |config|
 
     nodepool.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@nodepool.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit nodepool'"
     end
 
     nodepool.trigger.after :destroy do
@@ -127,7 +125,6 @@ Vagrant.configure(2) do |config|
 
     logs.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@logs.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit log'"
     end
 
     logs.trigger.after :destroy do
@@ -149,7 +146,6 @@ Vagrant.configure(2) do |config|
 
     merger.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@merger.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit mergers'"
     end
 
     merger.trigger.after :destroy do
@@ -172,7 +168,6 @@ Vagrant.configure(2) do |config|
 
     elk.trigger.after [:up, :provision] do
       run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@elk.vagrant true'"
-      run "vagrant ssh bastion -c 'sudo -i -u cideploy /vagrant/tools/vagrant-run-ansible.sh --limit monitoring'"
     end
 
     elk.trigger.after :destroy do
