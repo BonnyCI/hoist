@@ -23,14 +23,14 @@
         - username: jkeating
           email: omgjlk@us.ibm.com
           isadmin: True
+        - username: jtclark
+          email: jtclark@linux.vnet.ibm.com
+          isadmin: False
         - username: mctaylor
           email: mctaylor@us.ibm.com
           isadmin: False
         - username: rattboi
           email: bradon.kanyid@ibm.com
-          isadmin: False
-        - username: jtclark
-          email: jtclark@linux.vnet.ibm.com
           isadmin: False
       servers:
         - name: bastion
