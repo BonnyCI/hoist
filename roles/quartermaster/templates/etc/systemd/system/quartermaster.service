@@ -7,6 +7,7 @@ Type=simple
 User={{ quartermaster_user }}
 Group={{ quartermaster_group }}
 ExecStart={{ quartermaster_venv_dir }}/bin/errbot -c {{ quartermaster_config_dir }}/config.py
+WorkingDirectory={{ quartermaster_home_dir }}
 
 [Install]
 DefaultInstance=quartermaster
