@@ -5,11 +5,15 @@
 #
 # Should be run on the host you want to install on (localhost)
 - name: Install quartermaster
-  hosts: localhost
+  hosts: bot
   become: true
-
+  tags: ['common']
   roles:
+    - role: admin-user
+      when: bonnyci_lockdown_ssh | default(False)
+
+    - role: common
     - role: quartermaster
-      quartermaster_channels: "#BonnyCI"
-      quartermaster_nick: "quartermaster"
-      quartermaster_install_tag: "0.2.0-DEV"
+      quartermaster_default_channel: "#BonnyCI"
+      quartermaster_name: "quartermaster"
+
