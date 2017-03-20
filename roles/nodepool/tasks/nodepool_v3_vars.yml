@@ -1,0 +1,3 @@
+nodepool_services:
+  - nodepool-builder
+  - nodepoold
