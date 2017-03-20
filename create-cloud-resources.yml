@@ -32,11 +32,11 @@
         - username: mlangbehn
           email: mlangbe@us.ibm.com
           isadmin: False
-        - username: rattboi
-          email: bradon.kanyid@ibm.com
-          isadmin: False
         - username: olaph
           email: mwagone@us.ibm.com
+          isadmin: False
+        - username: rattboi
+          email: bradon.kanyid@ibm.com
           isadmin: False
       servers:
         - name: bastion
