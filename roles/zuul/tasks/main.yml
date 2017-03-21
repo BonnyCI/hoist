@@ -90,9 +90,17 @@
   include: server.yml
   when: "'zuul-server' in zuul_components"
 
+- name: Configure zuul-scheduler
+  include: scheduler.yml
+  when: "'zuul-scheduler' in zuul_components"
+
 - name: Configure zuul-launcher
   include: launcher.yml
   when: "'zuul-launcher' in zuul_components"
+
+- name: Configure zuul-executor
+  include: executor.yml
+  when: "'zuul-executor' in zuul_components"
 
 - name: Configure zuul-merger
   include: merger.yml
@@ -105,6 +113,7 @@
     enabled: no
   when: "item not in zuul_components"
   with_items:
+    - zuul-scheduler
     - zuul-launcher
     - zuul-merger
     - zuul-server
