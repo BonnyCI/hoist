@@ -8,6 +8,13 @@
     - scheduler
   notify: Restart zuul
 
+- name: Install tenant.yaml
+  template:
+    src: etc/zuul/tenant.yaml
+    dest: /etc/zuul/tenant.yaml
+    owner: zuul
+  notify: Reload zuul-server
+
 - name: Create zuul status lib dir
   file:
     path: /opt/source/zuul/etc/status/public_html/lib

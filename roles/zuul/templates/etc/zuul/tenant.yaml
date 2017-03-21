@@ -1,0 +1,5 @@
+{% for tenant in zuul_tenants %}
+- tenant:
+{{ tenant | to_nice_yaml(indent=2) | indent(4, indentfirst=True) }}
+
+{% endfor %}
