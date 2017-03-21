@@ -6,9 +6,6 @@ images-dir: /opt/nodepool/images
 zookeeper-servers:
 {{ nodepool_zookeeper_servers | to_nice_yaml(indent=2) | indent(2, True) }}
 
-gearman-servers:
-{{ nodepool_gearman_servers | to_nice_yaml(indent=2) | indent(2, True) }}
-
 diskimages:
 {{ nodepool_diskimages | to_nice_yaml(indent=2) | indent(2, True) }}
 
@@ -18,9 +15,14 @@ labels:
 providers:
 {{ nodepool_providers | to_nice_yaml(indent=2) | indent(2, True) }}
 
+{% if nodepool_zuul_v3 %}
+gearman-servers:
+{{ nodepool_gearman_servers | to_nice_yaml(indent=2) | indent(2, True) }}
+
 zmq-publishers:
 {{ nodepool_zmq_publishers | to_nice_yaml(indent=2) | indent(2, True) }}
 
 targets:
   - name: zuul
     assign-via-gearman: True
+{% endif %}

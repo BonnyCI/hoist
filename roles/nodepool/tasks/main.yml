@@ -114,19 +114,6 @@
     virtualenv: "{{ nodepool_venv_path }}"
   when: nodepool_use_datadog_logging
 
-- name: Write logging config
-  template:
-    src: "etc/nodepool/logging.conf"
-    dest: "/etc/nodepool/{{ item }}_logging.conf"
-    owner: root
-    group: nodepool
-    mode: 0640
-  with_items:
-    - nodepool-builder
-    - nodepool-deleter
-    - nodepool-launcher
-    - nodepoold
-
 - name: Install init config
   template:
     src: etc/default/nodepool
@@ -137,31 +124,8 @@
   notify:
     - Restart nodepool
 
-- name: Install systemd unit files
-  template:
-    src: "etc/systemd/system/{{ item }}.service"
-    dest: "/etc/systemd/system/{{ item }}.service"
-    owner: root
-    group: root
-    mode: 0644
-  with_items:
-    - nodepool-builder
-    - nodepool-deleter
-    - nodepool-launcher
-    - nodepoold
-  notify:
-    - Reload systemd units
-    - Restart nodepool
+- include: nodepool_v2.yml
+  when: "{{ not nodepool_zuul_v3 }}"
 
-- meta: flush_handlers
-
-- name: Enable and start systemd service
-  service:
-    enabled: yes
-    state: running
-    service: "{{ item }}"
-  with_items:
-    - nodepool-builder
-    - nodepool-deleter
-    - nodepool-launcher
-    - nodepoold
+- include: nodepool_v3.yml
+  when: "{{ nodepool_zuul_v3 }}"
