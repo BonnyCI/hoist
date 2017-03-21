@@ -28,3 +28,7 @@ zuul_connections: {}
 zuul_use_datadog_logging: False
 
 zuul_sites: {}
+
+zuul_zuul_v3: False
+
+zuul_zookeeper_hosts: "127.0.0.1:2181"
