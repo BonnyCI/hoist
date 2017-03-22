@@ -31,5 +31,3 @@ nodepool_diskimages: []
 nodepool_labels: []
 
 nodepool_providers: []
-
-nodepool_zuul_v3: False
