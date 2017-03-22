@@ -15,7 +15,7 @@ labels:
 providers:
 {{ nodepool_providers | to_nice_yaml(indent=2) | indent(2, True) }}
 
-{% if nodepool_zuul_v3 %}
+{% if not nodepool_zuul_v3 %}
 gearman-servers:
 {{ nodepool_gearman_servers | to_nice_yaml(indent=2) | indent(2, True) }}
 
