@@ -15,6 +15,8 @@ zuul_statsd_enable: no
 zuul_statsd_host: 127.0.0.1
 zuul_statsd_port: 8125
 
+zuul_tenants: []
+
 zuul_webapp_listen_address: 127.0.0.1
 zuul_webapp_port: 8001
 
@@ -28,3 +30,7 @@ zuul_connections: {}
 zuul_use_datadog_logging: False
 
 zuul_sites: {}
+
+zuul_zuul_v3: False
+
+zuul_zookeeper_hosts: "127.0.0.1:2181"

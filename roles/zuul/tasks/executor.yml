@@ -1,0 +1,8 @@
+- name: Install logging config
+  template:
+    src: "etc/zuul/logging.conf"
+    dest: "/etc/zuul/{{ item }}-logging.conf"
+    owner: zuul
+  with_items:
+    - executor
+  notify: Restart zuul
