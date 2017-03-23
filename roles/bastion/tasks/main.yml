@@ -41,6 +41,7 @@
 - name: Remove bastion_remove_users
   user:
     name: "{{ item }}"
+    remove: yes
     state: absent
   with_items: "{{ bastion_remove_users }}"
 
