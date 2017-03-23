@@ -42,6 +42,14 @@
     role: "{{ prod_member_role }}"
   with_items: "{{ users }}"
 
+- name: Grant prod_admin_user role on user project
+  os_user_role:
+    cloud: "{{ cloud }}"
+    project: "{{ item.username }}"
+    user: "{{ prod_admin_user }}"
+    role: "{{ prod_admin_role }}"
+  with_items: "{{ users }}"
+
 - name: Add all users to prod group
   os_user_group:
     cloud: "{{ cloud }}"
