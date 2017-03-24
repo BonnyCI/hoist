@@ -1,56 +1,29 @@
 ---
-- name: Create control-plane network
+- name: Create network
   os_network:
     cloud: "{{ cloud }}"
-    name: "{{ controlplane_network_name }}"
-    project: "{{ prod_project }}"
-    auth:
-      project_name: "{{ prod_project }}"
-  register: control_plane_network
+    name: "{{ item.name }}"
+    project: "{{ item.project }}"
+    shared: "{{ item.shared | default(omit) }}"
+  with_items: "{{ networks }}"
 
-- name: Create control-plane subnet
+- name: Create subnet
   os_subnet:
     cloud: "{{ cloud }}"
-    name: "{{ controlplane_network_name }}-subnet"
-    network_name: "{{ control_plane_network.network.id }}"
-    cidr: "{{ controlplane_network_cidr }}"
-    project: "{{ prod_project }}"
-    auth:
-      project_name: "{{ prod_project }}"
-  register: control_plane_subnet
+    name: "{{ item.name }}-subnet"
+    network_name: "{{ item.name }}"
+    cidr: "{{ item.cidr }}"
+    project: "{{ item.project }}"
+  with_items: "{{ networks }}"
 
-- name: Create nodepool network
-  os_network:
-    cloud: "{{ cloud }}"
-    name: "{{ nodepool_network_name }}"
-    shared: "{{ split_tenants }}"
-    project: "{{ prod_project }}"
-    auth:
-      project_name: "{{ prod_project }}"
-  register: nodepool_network
-
-- name: Create nodepool subnet
-  os_subnet:
-    cloud: "{{ cloud }}"
-    name: "{{ nodepool_network_name }}-subnet"
-    network_name: "{{ nodepool_network.network.id }}"
-    cidr: "{{ nodepool_network_cidr }}"
-    project: "{{ prod_project }}"
-    auth:
-      project_name: "{{ prod_project }}"
-  register: nodepool_subnet
-
-- name: Create router
+- name: Create routers
   os_router:
     cloud: "{{ cloud }}"
-    name: "{{ router_name }}"
-    network: "{{ external_network_name }}"
-    interfaces:
-        - "{{ control_plane_subnet.subnet.id }}"
-        - "{{ nodepool_subnet.subnet.id }}"
-    project: "{{ prod_project }}"
-    auth:
-      project_name: "{{ prod_project }}"
+    name: "{{ item.name }}"
+    network: "{{ item.network | default(omit) }}"
+    interfaces: "{{ item.interfaces | default(omit) }}"
+    project: "{{ item.project }}"
+  with_items: "{{ routers }}"
 
 - name: Create security groups
   os_security_group:

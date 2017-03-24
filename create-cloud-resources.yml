@@ -38,6 +38,21 @@
         - username: rattboi
           email: bradon.kanyid@ibm.com
           isadmin: False
+      networks:
+        - name: control-plane
+          cidr: 192.168.10.0/24
+          project: bonnyci
+        - name: nodepool
+          shared: True
+          project: bonnyci
+          cidr: 10.0.0.0/8
+      routers:
+        - name: bonnyci-router
+          network: external
+          project: bonnyci
+          interfaces:
+            - control-plane-subnet
+            - nodepool-subnet
       servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
