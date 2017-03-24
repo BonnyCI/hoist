@@ -2,6 +2,7 @@ dns_subdomain: bonnyci.local
 
 bastion_users:
   - adam_g
+  - bradonk
   - cideploy
   - jesusaur
 bastion_sudo_users: "{{ bastion_users }}"
@@ -14,7 +15,6 @@ bastion_remove_users:
   - nibz
   - olaph
   - rmoe
-  - bradonk
   - doc
   - jkeating
   - eggshell
