@@ -5,6 +5,7 @@ bastion_users:
   - bradonk
   - cideploy
   - jesusaur
+  - olaph
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users:
   - clint
@@ -13,7 +14,6 @@ bastion_remove_users:
   - jamie
   - jason_clark
   - nibz
-  - olaph
   - rmoe
   - doc
   - jkeating
