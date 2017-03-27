@@ -6,13 +6,13 @@ bastion_users:
   - cideploy
   - jesusaur
   - olaph
+  - jason_clark
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users:
   - clint
   - auggy
   - greghaynes
   - jamie
-  - jason_clark
   - nibz
   - rmoe
   - doc
