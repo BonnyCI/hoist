@@ -7,6 +7,7 @@ bastion_users:
   - jason_clark
   - jesusaur
   - olaph
+  - jason_clark
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users:
   - clint
