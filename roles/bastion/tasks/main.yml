@@ -69,7 +69,7 @@
     owner: "{{ item }}"
     group: "{{ item }}"
     mode: 0600
-  when: secrets.ssh_keys.{{ item }}.private is defined
+  when: item in secrets.ssh_keys and 'private' in secrets.ssh_keys[item]
   with_items: "{{ bastion_users }}"
 
 - name: Install SSH public key to ~/.ssh/id_rsa.pub
@@ -79,7 +79,7 @@
     owner: "{{ item }}"
     group: "{{ item }}"
     mode: 0644
-  when: secrets.ssh_keys.{{ item }}.public is defined
+  when: item in secrets.ssh_keys and 'public' in secrets.ssh_keys[item]
   with_items: "{{ bastion_users }}"
 
 - name: Copy cideploy's private ssh key to /root/.ssh for GHE access
