@@ -4,6 +4,7 @@ bastion_users:
   - adam_g
   - bradonk
   - cideploy
+  - jamie
   - jason_clark
   - jesusaur
   - olaph
@@ -12,7 +13,6 @@ bastion_remove_users:
   - clint
   - auggy
   - greghaynes
-  - jamie
   - nibz
   - rmoe
   - doc
