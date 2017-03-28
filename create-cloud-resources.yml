@@ -76,6 +76,7 @@
       servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-http-https
@@ -83,32 +84,38 @@
         - name: elk
           floating_ip_address: 169.44.171.88
           flavor: m1.xlarge
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: logs
           floating_ip_address: 169.44.171.84
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: nodepool
+          network: control-plane
           security_groups:
             - sg-control-plane
           key_name: "{{ deploy_ssh_key_name }}"
         - name: merger01
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-zuul-merger
           key_name: "{{ deploy_ssh_key_name }}"
         - name: zuul
+          network: control-plane
           floating_ip_address: 169.44.171.85
           security_groups:
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: bot
+          network: control-plane
           floating_ip_address: 169.44.171.92
           flavor: m1.tiny
           security_groups:
