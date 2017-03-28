@@ -38,9 +38,45 @@
         - username: rattboi
           email: bradon.kanyid@ibm.com
           isadmin: False
+      networks:
+        - name: control-plane
+          cidr: 192.168.10.0/24
+          project: bonnyci
+        - name: nodepool
+          shared: True
+          project: bonnyci
+          cidr: 10.0.0.0/8
+      routers:
+        - name: bonnyci-router
+          network: external
+          project: bonnyci
+          interfaces:
+            - control-plane-subnet
+            - nodepool-subnet
+      security_groups:
+        - name: sg-control-plane
+          rules:
+            - remote_group: sg-control-plane
+              port_min: 1
+              port_max: 65535
+        - name: sg-zuul-merger
+          rules:
+            - remote_cidr: 10.0.0.0/8
+              port: 8858
+        - name: sg-ssh
+          rules:
+            - remote_cidr: 0.0.0.0/0
+              port: 22
+        - name: sg-http-https
+          rules:
+            - remote_cidr: 0.0.0.0/0
+              port: 80
+            - remote_cidr: 0.0.0.0/0
+              port: 443
       servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-http-https
@@ -48,32 +84,38 @@
         - name: elk
           floating_ip_address: 169.44.171.88
           flavor: m1.xlarge
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: logs
           floating_ip_address: 169.44.171.84
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: nodepool
+          network: control-plane
           security_groups:
             - sg-control-plane
           key_name: "{{ deploy_ssh_key_name }}"
         - name: merger01
+          network: control-plane
           security_groups:
             - sg-control-plane
             - sg-zuul-merger
           key_name: "{{ deploy_ssh_key_name }}"
         - name: zuul
+          network: control-plane
           floating_ip_address: 169.44.171.85
           security_groups:
             - sg-control-plane
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: bot
+          network: control-plane
           floating_ip_address: 169.44.171.92
           flavor: m1.tiny
           security_groups:

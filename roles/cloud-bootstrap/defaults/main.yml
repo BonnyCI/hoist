@@ -2,11 +2,6 @@
 # to the instances internal address on the control-plane network.
 dns_subdomain: bonnyci.local
 
-# In production, we will split the control-plane services and nodepool slaves
-# across tenants.  In development environments, this can be set to false to
-# enable everything running in one project.
-split_tenants: true
-
 # The existing glance image to use for service VMs.
 image_uuid: d21400df-005a-41e5-af20-70c153948218
 
@@ -30,65 +25,11 @@ prod_admin_role: cloud_admin
 prod_nodepool_user: nodepool
 prod_nodepool_project: nodepool
 
+networks: []
+routers: []
+security_groups: []
+servers: []
+
 controlplane_network_name: "control-plane"
-nodepool_network_name: "nodepool"
-controlplane_network_cidr: 192.168.10.0/24
 router_name: "bonnyci-router"
-nodepool_network_cidr: 10.0.0.0/8
 external_network_name: external
-
-security_group_rules:
-  - name: sg-control-plane
-    rules:
-      - remote_group: sg-control-plane
-        port_min: 1
-        port_max: 65535
-  - name: sg-zuul-merger
-    rules:
-      - remote_cidr: "{{ nodepool_network_cidr }}"
-        port: 8858
-  - name: sg-ssh
-    rules:
-      - remote_cidr: 0.0.0.0/0
-        port: 22
-  - name: sg-http-https
-    rules:
-      - remote_cidr: 0.0.0.0/0
-        port: 80
-      - remote_cidr: 0.0.0.0/0
-        port: 443
-
-servers:
-  - name: bastion
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-      - sg-ssh
-  - name: elk
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: logs
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: nodepool
-    security_groups:
-      - sg-control-plane
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: merger01
-    security_groups:
-      - sg-control-plane
-      - sg-zuul-merger
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: zuul
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-    key_name: "{{ deploy_ssh_key_name }}"
