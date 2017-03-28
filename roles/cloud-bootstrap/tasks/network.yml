@@ -31,7 +31,7 @@
     name: "{{ item.name }}"
     auth:
       project_name: "{{ prod_project }}"
-  with_items: "{{ security_group_rules }}"
+  with_items: "{{ security_groups }}"
 
 - name: Create security group rules
   os_security_group_rule:
@@ -45,7 +45,7 @@
     auth:
       project_name: "{{ prod_project }}"
   with_subelements:
-    - "{{ security_group_rules }}"
+    - "{{ security_groups }}"
     -  "rules"
 
 - name: Ensure nodepool default security group is permissive

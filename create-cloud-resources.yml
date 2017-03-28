@@ -53,6 +53,26 @@
           interfaces:
             - control-plane-subnet
             - nodepool-subnet
+      security_groups:
+        - name: sg-control-plane
+          rules:
+            - remote_group: sg-control-plane
+              port_min: 1
+              port_max: 65535
+        - name: sg-zuul-merger
+          rules:
+            - remote_cidr: 10.0.0.0/8
+              port: 8858
+        - name: sg-ssh
+          rules:
+            - remote_cidr: 0.0.0.0/0
+              port: 22
+        - name: sg-http-https
+          rules:
+            - remote_cidr: 0.0.0.0/0
+              port: 80
+            - remote_cidr: 0.0.0.0/0
+              port: 443
       servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
