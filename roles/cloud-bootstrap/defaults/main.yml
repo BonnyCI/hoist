@@ -27,6 +27,7 @@ prod_nodepool_project: nodepool
 
 networks: []
 routers: []
+servers: []
 
 controlplane_network_name: "control-plane"
 router_name: "bonnyci-router"
@@ -53,38 +54,3 @@ security_group_rules:
         port: 80
       - remote_cidr: 0.0.0.0/0
         port: 443
-
-servers:
-  - name: bastion
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-      - sg-ssh
-  - name: elk
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: logs
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: nodepool
-    security_groups:
-      - sg-control-plane
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: merger01
-    security_groups:
-      - sg-control-plane
-      - sg-zuul-merger
-    key_name: "{{ deploy_ssh_key_name }}"
-  - name: zuul
-    floating_ip_network: "{{ external_network_name }}"
-    security_groups:
-      - sg-control-plane
-      - sg-http-https
-    key_name: "{{ deploy_ssh_key_name }}"
