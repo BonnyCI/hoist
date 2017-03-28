@@ -1,25 +1,28 @@
----
-- name: Create common hosts
+- set_fact:
+   outer_item: "{{ item }}"
+   default_dns_subdomain: "{{ item.name }}.{{ dns_subdomain }}"
+
+- set_fact:
+   subdomain: "{{ item.dns_subdomain | default(default_dns_subdomain) }}"
+
+- name: Create per-env hosts
   os_server:
     cloud: "{{ cloud }}"
-    name: "{{ item.name }}.{{ dns_subdomain }}"
+    name: "{{ item.name }}.{{ subdomain }}"
     flavor: "{{ item.flavor | default(default_flavor) }}"
     image: "{{ image_uuid }}"
     key_name: "{{ item.key_name | default('default') }}"
-    network: "{{ common_network_name }}"
+    network: "{{ outer_item.controlplane_network_name }}"
     auto_ip: false
     security_groups: "{{ item.security_groups }}"
-  with_items: "{{ common_servers }}"
+  with_items: "{{ outer_item.servers }}"
 
-- name: Associate floating IPs
+- name: Associate per-env floating IPs
   os_floating_ip:
     cloud: "{{ cloud }}"
-    server: "{{ item.name }}.{{ dns_subdomain }}"
+    server: "{{ item.name }}.{{ subdomain }}"
     network: "{{ item.floating_ip_network | default(omit) }}"
     floating_ip_address: "{{ item.floating_ip_address | default(omit) }}"
-  with_items: "{{ common_servers }}"
+  with_items: "{{ outer_item.servers}}"
   when: item.floating_ip_address is defined or item.floating_ip_network is defined
 
-- Name: Create per-env hosts
-  include: env_hosts.yml
-  with_items: "{{ environments }}"
