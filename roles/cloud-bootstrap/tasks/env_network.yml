@@ -1,0 +1,96 @@
+- set_fact:
+   outer_item: "{{ item }}"
+   default_controlplane_network_name: "control-plane-{{ item.name }}"
+   default_nodepool_network_name: "nodepool-{{ item.name }}"
+   default_secgroup_control_plane_name: "sg-control-plane-{{ item.name }}"
+   default_secgroup_merger_name: "sg-zuul-merger-{{ item.name }}"
+
+- set_fact:
+   cp_network_name: "{{ item.controlplane_network_name | default(default_controlplane_network_name) }}"
+   np_network_name: "{{ item.nodepool_network_name | default(default_nodepool_network_name) }}"
+   cp_secgroup_name: "{{ item.controlplane_secgroup_name | default(default_secgroup_control_plane_name) }}"
+   zm_secgroup_name: "{{ item.zuulmerger_secgroup_name | default(default_secgroup_merger_name) }}"
+
+- name: Create per-env control-plane network
+  os_network :
+    cloud: "{{ cloud }}"
+    name: "{{ cp_network_name }}"
+    project:  "{{ prod_project }}"
+    auth:
+      project_name: "{{ prod_project }}"
+  register:  control_plane_network
+
+- name: Create per-env control-plane subnet
+  os_subnet:
+    cloud: "{{ cloud }}"
+    name: "{{ cp_network_name }}-subnet"
+    network_name: "{{ control_plane_network.network.id }}"
+    cidr: "{{ outer_item.controlplane_cidr }}"
+    project: "{{ prod_project }}"
+    auth:
+      project_name: "{{ prod_project }}"
+  register: control_plane_subnet
+
+- name: Create per-env nodepool network
+  os_network :
+    cloud: "{{ cloud }}"
+    name: "{{ np_network_name }}"
+    project:  "{{ prod_project }}"
+    shared: "{{ split_tenants }}"
+    auth:
+      project_name: "{{ prod_project }}"
+  register: nodepool_network
+
+- name: Create per-env nodepool subnet
+  os_subnet:
+    cloud: "{{ cloud }}"
+    name: "{{ np_network_name }}-subnet"
+    network_name: "{{ nodepool_network.network.id }}"
+    cidr: "{{ outer_item.nodepool_cidr }}"
+    project: "{{ prod_project }}"
+    auth:
+      project_name: "{{ prod_project }}"
+  register: nodepool_subnet
+
+- name: Create per-env control-plane secgroup
+  os_security_group:
+    cloud: "{{ cloud }}"
+    name: "{{ cp_secgroup_name }}"
+    auth:
+       project_name: "{{ prod_project }}"
+
+- name: Create per-env merger secgroup
+  os_security_group:
+    cloud: "{{ cloud }}"
+    name: "{{ zm_secgroup_name }}"
+    auth:
+       project_name: "{{ prod_project }}"
+
+- name: Create per-env secgroup rules
+  os_security_group_rule:
+    cloud: "{{ cloud }}"
+    security_group: "{{ item.group }}"
+    protocol: tcp
+    port_range_min: "{{ item.port_min }}"
+    port_range_max: "{{ item.port_max }}"
+    remote_group: "{{ item.remote_group | default(omit) }}"
+    remote_ip_prefix: "{{ item.remote_ip_prefix | default(omit) }}"
+    auth:
+       project_name: "{{ prod_project }}"
+  with_items:
+     - group: "{{ cp_secgroup_name }}"
+       port_min: 1
+       port_max: 65535
+       remote_group: "{{ cp_secgroup_name }}"
+     - group: "{{ cp_secgroup_name }}"
+       port_min: 22
+       port_max: 22
+       remote_group: "sg-common"
+     - group: "{{ cp_secgroup_name }}"
+       port_min: 1
+       port_max: 65535
+       remote_group: "{{ cp_secgroup_name }}"
+     - group: "{{ zm_secgroup_name }}"
+       port_min: 8858
+       port_max: 8858
+       remote_ip_prefix: "{{ outer_item.nodepool_cidr }}"
