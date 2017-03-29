@@ -1,0 +1,5 @@
+nodepool_services:
+  - nodepool-builder
+  - nodepool-deleter
+  - nodepool-launcher
+  - nodepoold

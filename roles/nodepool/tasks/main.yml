@@ -1,3 +1,11 @@
+- name: Include nodepool v2 variables
+  include_vars: nodepool_v2_vars.yml
+  when: not nodepool_zuul_v3
+
+- name: Include nodepool v3 variables
+  include_vars: nodepool_v3_vars.yml
+  when: nodepool_zuul_v3
+
 - name: install required packages
   apt:
     name: "{{ item }}"
@@ -124,8 +132,32 @@
   notify:
     - Restart nodepool
 
-- include: nodepool_v2.yml
-  when: "{{ not nodepool_zuul_v3 }}"
+- name: Write logging config
+  template:
+    src: "etc/nodepool/logging.conf"
+    dest: "/etc/nodepool/{{ item }}_logging.conf"
+    owner: root
+    group: nodepool
+    mode: 0640
+  with_items: "{{ nodepool_services | list }}"
 
-- include: nodepool_v3.yml
-  when: "{{ nodepool_zuul_v3 }}"
+- name: Install systemd unit files
+  template:
+    src: "etc/systemd/system/{{ item }}.service"
+    dest: "/etc/systemd/system/{{ item }}.service"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ nodepool_services | list }}"
+  notify:
+    - Reload systemd units
+    - Restart nodepool
+
+- meta: flush_handlers
+
+- name: Enable and start systemd service
+  service:
+    enabled: yes
+    state: running
+    service: "{{ item }}"
+  with_items: "{{ nodepool_services | list }}"
