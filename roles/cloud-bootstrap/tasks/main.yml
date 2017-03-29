@@ -4,6 +4,11 @@
   tags:
     - accounts
 
+- name: Set quotas
+  include: quotas.yml
+  tags:
+    - quotas
+
 - name: Provision network resources
   include: network.yml
   tags:
