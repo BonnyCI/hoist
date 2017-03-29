@@ -1,6 +1,9 @@
 [bastion]
 bastion.opentechsjc.bonnyci.org ansible_connection=local
 
+[dd-builder]
+bastion.opentechsjc.bonnyci.org
+
 [nodepool]
 nodepool.internal.opentechsjc.bonnyci.org
 

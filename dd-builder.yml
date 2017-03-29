@@ -1,0 +1,19 @@
+- name: Configure datadog-builder
+  hosts: bastion
+  become: true
+
+  roles:
+    - role: datadog-builder
+      datadog_builder_secrets:
+        api_key: "{{ secrets.datadog.api_key }}"
+        app_key: "{{ secrets.datadog.ansible_app_key }}"
+    - role: logrotate
+      logrotate_configs:
+        - name: datadog-builder
+          path: /var/log/datadog-builder/*log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
