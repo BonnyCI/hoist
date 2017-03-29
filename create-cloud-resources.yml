@@ -38,45 +38,77 @@
         - username: rattboi
           email: bradon.kanyid@ibm.com
           isadmin: False
-      servers:
+      common_servers:
         - name: bastion
           floating_ip_address: 169.44.171.83
           security_groups:
-            - sg-control-plane
+            - sg-common
             - sg-http-https
             - sg-ssh
         - name: elk
           floating_ip_address: 169.44.171.88
           flavor: m1.xlarge
           security_groups:
-            - sg-control-plane
+            - sg-common
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: logs
           floating_ip_address: 169.44.171.84
           security_groups:
-            - sg-control-plane
-            - sg-http-https
-          key_name: "{{ deploy_ssh_key_name }}"
-        - name: nodepool
-          security_groups:
-            - sg-control-plane
-          key_name: "{{ deploy_ssh_key_name }}"
-        - name: merger01
-          security_groups:
-            - sg-control-plane
-            - sg-zuul-merger
-          key_name: "{{ deploy_ssh_key_name }}"
-        - name: zuul
-          floating_ip_address: 169.44.171.85
-          security_groups:
-            - sg-control-plane
+            - sg-common
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
         - name: bot
           floating_ip_address: 169.44.171.92
           flavor: m1.tiny
           security_groups:
-            - sg-control-plane
+            - sg-common
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
+      environments:
+        - name: v2
+          dns_subdomain: internal.opentechsjc.bonnyci.org
+          controlplane_network_name: control-plane
+          controlplane_cidr: 192.168.10.0/24
+          controlplane_secgroup_name: sg-control-plane
+          zuulmerger_secgroup_name: sg-zuul-merger
+          nodepool_network_name: nodepool
+          nodepool_cidr: 10.0.0.0/8
+          servers:
+          - name: nodepool
+            security_groups:
+              - sg-control-plane
+            key_name: "{{ deploy_ssh_key_name }}"
+          - name: merger01
+            security_groups:
+              - sg-control-plane
+              - sg-zuul-merger
+            key_name: "{{ deploy_ssh_key_name }}"
+          - name: zuul
+            floating_ip_address: 169.44.171.85
+            security_groups:
+              - sg-control-plane
+              - sg-http-https
+            key_name: "{{ deploy_ssh_key_name }}"
+        - name: v3
+          dns_subdomain: internal.v3.opentechsjc.bonnyci.org
+          controlplane_network_name: control-plane-v3
+          controlplane_cidr: 192.168.30.0/24
+          nodepool_network_name: nodepool-v3
+          nodepool_cidr: 172.16.30.0/24
+          servers:
+          - name: nodepool
+            security_groups:
+              - sg-control-plane-v3
+            key_name: "{{ deploy_ssh_key_name }}"
+          - name: merger01
+            security_groups:
+              - sg-control-plane-v3
+              - sg-zuul-merger-v3
+            key_name: "{{ deploy_ssh_key_name }}"
+          - name: zuul
+            floating_ip_address: 169.44.161.47
+            security_groups:
+              - sg-control-plane-v3
+              - sg-http-https
+            key_name: "{{ deploy_ssh_key_name }}"
