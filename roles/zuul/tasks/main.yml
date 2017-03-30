@@ -1,4 +1,12 @@
 ---
+- name: Include Zuul v2.5 variables
+  include_vars: v2.yml
+  when: not zuul_zuul_v3
+
+- name: Include Zuul v3 variables
+  include_vars: v3.yml
+  when: zuul_zuul_v3
+
 - name: Create the zuul group
   group:
     name: zuul
@@ -58,7 +66,7 @@
 
 - name: Install zuul config
   template:
-    src: etc/zuul/zuul.conf
+    src:  "{{ zuul_conf_template_src }}"
     dest: /etc/zuul/zuul.conf
     owner: zuul
   notify: Restart zuul

@@ -1,4 +1,4 @@
-- name: Install logging config
+- name: Install zuul-executor logging config
   template:
     src: "etc/zuul/logging.conf"
     dest: "/etc/zuul/{{ item }}-logging.conf"
