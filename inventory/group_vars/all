@@ -5,8 +5,6 @@ bonnyci_logs_scp_user: zuul
 
 filebeat_output_logstash_enabled: true
 
-hoist_repo: https://github.com/BonnyCI/hoist.git
-
 letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"
 letsencrypt_csr_dn:
   C: AU

@@ -1,2 +1,14 @@
-ci_inventory: opentech-sjc
+ansible_runner_tasks:
+    - name: system-ansible
+      playbook: bastion.yml
+      inventory: opentech-sjc
+      repo: http://github.com/BonnyCI/hoist.git
+      user: root
+
+    - name: cideploy
+      playbook: install-ci.yml
+      inventory: opentech-sjc
+      repo: http://github.com/BonnyCI/hoist.git
+      user: cideploy
+
 dns_subdomain: internal.opentechsjc.bonnyci.org
