@@ -1,4 +1,15 @@
 bastion_clouds:
   - cicloud
 
-ci_inventory: vagrant
+ansible_runner_tasks:
+    - name: system-ansible
+      playbook: bastion.yml
+      inventory: vagrant
+      repo: /vagrant/.git
+      user: root
+
+    - name: cideploy-v2
+      playbook: install-ci.yml
+      inventory: vagrant
+      repo: /vagrant/.git
+      user: cideploy
