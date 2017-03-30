@@ -1,0 +1,3 @@
+---
+letsencrypt_csr_cn: zuul.v3.bonnyci.org
+bonnyci_zuul_webapp_ssl: yes

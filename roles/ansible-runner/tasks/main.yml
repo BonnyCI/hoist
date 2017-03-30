@@ -52,13 +52,6 @@
   tags:
     - datadog
 
-- name: Install config file
-  template:
-    src: ansible-runner-config
-    dest: /etc/default/{{ ansible_runner_job }}
-    mode: 0600
-    owner: "{{ ansible_runner_user }}"
-
 - name: Install ansible-runner
   copy:
     src: usr/local/bin/ansible-runner
@@ -75,45 +68,13 @@
     owner: root
     group: root
 
-- name: Download source
-  git:
-    repo: "{{ ansible_runner_repo }}"
-    dest: "/opt/source/{{ ansible_runner_job }}"
-    update: true
-
-- name: Ensure source ownership
+- name: Ensure source dir
   file:
-    dest: "/opt/source/{{ ansible_runner_job }}"
-    owner: "{{ ansible_runner_user }}"
-    recurse: yes
-
-- name: Check for playbook deps
-  stat:
-    path: "/opt/source/{{ ansible_runner_job }}/requirements.txt"
-  register: requirements_txt
-
-- name: Install playbook deps
-  pip:
-    virtualenv: "{{ ansible_runner_virtualenv }}"
-    requirements: "/opt/source/{{ ansible_runner_job }}/requirements.txt"
-  when: requirements_txt.stat.exists
-
-- name: Ensure cron log path
-  file:
+    path: /opt/source
     state: directory
-    path: "/var/www/html/cron-logs/{{ ansible_runner_job }}"
     mode: 0755
-    owner: "{{ ansible_runner_user }}"
-    group: www-data
+    owner: root
+    group: root
 
-- include: secret-file.yml
-  secret_file_type: secrets
-  secret_file_path: "{{ ansible_runner_secrets_path }}"
-  secret_file_user: "{{ ansible_runner_user }}"
-
-- name: Add ansible-runner cron job
-  cron:
-    name: "ansible-runner deploy {{ ansible_runner_job }}"
-    minute: "{{ ansible_runner_minute | default(omit) }}"
-    user: "{{ ansible_runner_user }}"
-    job: "/usr/local/bin/ansible-runner {{ ansible_runner_job }} -e @{{ ansible_runner_secrets_path }}"
+- include: runner.yml
+  with_items: "{{ ansible_runner_tasks }}"

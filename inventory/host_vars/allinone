@@ -1,8 +1,19 @@
-ci_inventory: allinone
-
 zookeeper_myid: 1
 
 zuul_components:
   - zuul-launcher
   - zuul-merger
   - zuul-server
+
+ansible_runner_tasks:
+    - name: system-ansible
+      playbook: bastion.yml
+      inventory: allinone
+      repo: http://github.com/BonnyCI/hoist.git
+      user: root
+
+    - name: cideploy
+      playbook: install-ci.yml
+      inventory: allinone
+      repo: http://github.com/BonnyCI/hoist.git
+      user: cideploy

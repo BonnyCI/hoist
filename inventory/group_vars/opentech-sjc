@@ -41,4 +41,8 @@ nodepool_zmq_publishers:
 zuul_gearman_server: zuul.internal.opentechsjc.bonnyci.org
 zuul_logs_url: http://logs.bonnyci.org
 
+zuul_components:
+  - zuul-launcher
+  - zuul-server
+
 dns_subdomain: internal.opentechsjc.bonnyci.org
