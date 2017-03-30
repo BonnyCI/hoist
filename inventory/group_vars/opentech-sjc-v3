@@ -1,0 +1,71 @@
+nodepool_zuul_v3: true
+zuul_zuul_v3: True
+
+nodepool_git_repo_url: https://github.com/jamielennox/nodepool
+nodepool_git_version: nodepool-split
+
+zuul_git_repo_url: https://github.com/openstack-infra/zuul
+zuul_git_branch: feature/zuulv3
+
+bonnyci_kibana_apache_server_name: elk.opentechsjc.bonnyci.org
+bonnyci_kibana_apache_server_aliases:
+  - elk.bonnyci.org
+bonnyci_logs_apache_server_name: logs.opentechsjc.bonnyci.org
+bonnyci_logs_apache_server_aliases:
+  - logs.bonnyci.org
+bonnyci_logs_scp_host: logs.internal.opentechsjc.bonnyci.org
+bonnyci_zuul_webapp_apache_server_name: zuul.v3.opentechsjc.bonnyci.org
+bonnyci_zuul_merger_apache_server_name: merger01.internal.v3.opentechsjc.bonnyci.org
+
+filebeat_output_logstash_hosts:
+  - elk.internal.v3.opentechsjc.bonnyci.org:5044
+
+logstash_elasticsearch_hosts:
+  - "http://localhost:9200"
+
+nodepool_gearman_servers:
+  - host: zuul.internal.v3.opentechsjc.bonnyci.org
+    port: 4730
+nodepool_mysql_host: zuul.internal.v3.opentechsjc.bonnyci.org
+nodepool_providers:
+  - name: cicloud
+    cloud: opentech-sjc-v3
+    max-servers: 20
+    networks:
+      - name: 'nodepool-v3'
+        public: True
+    images:
+      - name: ubuntu-xenial
+        min-ram: 2048
+        diskimage: ubuntu-xenial
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+        user-home: /home/bonnyci
+        username: bonnyci
+nodepool_zmq_publishers:
+  - tcp://zuul.internal.v3.opentechsjc.bonnyci.org:8888
+
+zuul_gearman_server: zuul.internal.v3.opentechsjc.bonnyci.org
+zuul_logs_url: http://logs.bonnyci.org
+
+zuul_components:
+  - zuul-executor
+  - zuul-merger
+  - zuul-scheduler
+
+zuul_connections:
+  gerrithub:
+    driver: gerrit
+    user: bonnyci
+    server: review.gerrithub.io
+    sshkey: /var/lib/zuul/.ssh/id_rsa
+
+zuul_tenants:
+  - name: BonnyV3
+    source:
+      gerrithub:
+        config-repos:
+          - bonnyci/project-config
+        project-repos:
+          - bonnyci/sandbox
+
+dns_subdomain: internal.v3.opentechsjc.bonnyci.org

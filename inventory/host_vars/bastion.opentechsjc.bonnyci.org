@@ -5,9 +5,21 @@ ansible_runner_tasks:
       repo: http://github.com/BonnyCI/hoist.git
       user: root
 
-    - name: cideploy
+    - name: cideploy-common
+      playbook: install-ci.yml
+      inventory: opentech-sjc-common
+      repo: http://github.com/BonnyCI/hoist.git
+      user: cideploy
+
+    - name: cideploy-v2
       playbook: install-ci.yml
       inventory: opentech-sjc
+      repo: http://github.com/BonnyCI/hoist.git
+      user: cideploy
+
+    - name: cideploy-v3
+      playbook: install-ci.yml
+      inventory: opentech-sjc-v3
       repo: http://github.com/BonnyCI/hoist.git
       user: cideploy
 
