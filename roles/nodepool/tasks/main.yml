@@ -125,7 +125,7 @@
     - Restart nodepool
 
 - include: nodepool_v2.yml
-  when: "{{ not nodepool_zuul_v3 }}"
+  when: not (nodepool_zuul_v3 | bool)
 
 - include: nodepool_v3.yml
-  when: "{{ nodepool_zuul_v3 }}"
+  when: nodepool_zuul_v3 | bool
