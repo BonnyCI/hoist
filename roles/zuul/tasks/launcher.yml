@@ -1,9 +1,11 @@
-- name: Install logging config
+- name: Install zuul-launcher logging config
   template:
-    src: "etc/zuul/launcher-logging.conf"
-    dest: "/etc/zuul/launcher-logging.conf"
+    src: "etc/zuul/logging.conf"
+    dest: "/etc/zuul/{{ item }}-logging.conf"
     owner: zuul
   notify: Restart zuul
+  with_items:
+    - launcher
 
 - name: Install job definitions
   synchronize:
