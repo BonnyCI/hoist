@@ -1,3 +1,3 @@
 ANSIBLE_PLAYBOOK={{ item.playbook }}
 ANSIBLE_INVENTORY=/opt/source/{{ item.name }}/inventory/{{ item.inventory }}
-ANSIBLE_SSH_USER={{ item.user | default('') }}
+ANSIBLE_SSH_USER={{ item.ansible_remote_user | default('') }}

@@ -13,3 +13,4 @@ ansible_runner_tasks:
       inventory: vagrant
       repo: /vagrant/.git
       user: cideploy
+      ansible_remote_user: ubuntu
