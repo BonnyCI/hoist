@@ -11,4 +11,10 @@ ansible_runner_tasks:
       repo: http://github.com/BonnyCI/hoist.git
       user: cideploy
 
+    - name: cideploy
+      playbook: install-ci.yml
+      inventory: opentech-sjc-v3
+      repo: http://github.com/BonnyCI/hoist.git
+      user: cideploy
+
 dns_subdomain: internal.opentechsjc.bonnyci.org
