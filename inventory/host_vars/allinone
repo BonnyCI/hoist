@@ -17,3 +17,4 @@ ansible_runner_tasks:
       inventory: allinone
       repo: http://github.com/BonnyCI/hoist.git
       user: cideploy
+      ansible_remote_user: cideploy
