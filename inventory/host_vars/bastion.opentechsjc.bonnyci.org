@@ -7,7 +7,7 @@ ansible_runner_tasks:
 
     - name: cideploy-common
       playbook: install-ci.yml
-      inventory: opentech-sjc
+      inventory: opentech-sjc-common
       repo: http://github.com/BonnyCI/hoist.git
       user: cideploy
       ansible_remote_user: ubuntu
