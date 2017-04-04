@@ -1,0 +1,30 @@
+---
+- name: Set quota for prod_project
+  os_quota:
+    cloud: "{{ cloud }}"
+    name: "{{ prod_project }}"
+    cores: "{{ prod_quota.cores | default(omit) }}"
+    fixed_ips: "{{ prod_quota.fixed_ips | default(omit) }}"
+    floating_ips: "{{ prod_quota.floating_ips | default(omit) }}"
+    gigabytes: "{{ prod_quota.gigabytes | default(omit) }}"
+    instances: "{{ prod_quota.instances | default(omit) }}"
+    ram: "{{ prod_quota.ram | default(omit) }}"
+    security_group: "{{ prod_quota.security_group | default(omit) }}"
+    security_group_rule: "{{ prod_quota.security_group_rule | default(omit) }}"
+    security_group_rule: "{{ prod_quota.security_group_rule | default(omit) }}"
+  when: prod_quota
+
+- name: Set quota for nodepool project(s)
+  os_quota:
+    cloud: "{{ cloud }}"
+    name: "{{ item.name }}"
+    cores: "{{ item.quota.cores | default(omit) }}"
+    fixed_ips: "{{ item.quota.fixed_ips | default(omit) }}"
+    floating_ips: "{{ item.quota.floating_ips | default(omit) }}"
+    gigabytes: "{{ item.quota.gigabytes | default(omit) }}"
+    instances: "{{ item.quota.instances | default(omit) }}"
+    ram: "{{ item.quota.ram | default(omit) }}"
+    security_groups: "{{ item.quota.security_groups | default(omit) }}"
+    security_group_rule: "{{ item.quota.security_group_rule | default(omit) }}"
+  when: item.quota is defined
+  with_items: "{{ prod_nodepool_projects }}"

@@ -27,8 +27,41 @@ prod_group: bonnyci
 prod_admin_group: bonnyci-admin
 prod_member_role: _member_
 prod_admin_role: cloud_admin
-prod_nodepool_user: nodepool
-prod_nodepool_project: nodepool
+prod_admin_user: cloud_admin
+
+# This is the quota for the prod_project, which hosts all control-plane
+# services
+prod_quota:
+    cores: -1
+    fixed_ips: -1
+    floating_ips: -1
+    gigabyte: -1
+    instances: -1
+    ram: -1
+    security_group: -1
+    security_group_rule: -1
+
+# The following projects will be created for nodepool use, with specified
+# quota.
+prod_nodepool_projects:
+    - name: nodepool
+      user: nodepool
+      quota:
+        cores: -1
+        fixed_ips: -1
+        floating_ips: -1
+        gigabyte: -1
+        instances: -1
+        ram: -1
+    - name: nodepool_v3
+      user: nodepool_v3
+      quota:
+        cores: -1
+        fixed_ips: -1
+        floating_ips: -1
+        gigabyte: -1
+        instances: -1
+        ram: -1
 
 common_network_name: "ci-common"
 common_network_cidr: 192.168.5.0/24
@@ -67,7 +100,7 @@ environment_security_group_rules:
       - remote_cidr: "{{ nodepool_network_cidr }}"
         port: 8858
 
-ommon_servers:
+common_servers:
   - name: bastion
     floating_ip_network: external
     security_groups:

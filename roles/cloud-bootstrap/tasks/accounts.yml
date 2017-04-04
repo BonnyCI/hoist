@@ -1,12 +1,16 @@
 ---
-- name: Ensure shared projects
+- name: Ensure production project
   os_project:
     cloud: "{{ cloud }}"
-    name: "{{ item }}"
+    name: "{{ prod_project }}"
     domain: 'default'
-  with_items:
-    - "{{ prod_project }}"
-    - "{{ prod_nodepool_project }}"
+
+- name: Ensure nodepool project(s)
+  os_project:
+    cloud: "{{ cloud }}"
+    name: "{{ item.name }}"
+    domain: 'default'
+  with_items: "{{ prod_nodepool_projects }}"
 
 - name: Ensure user projects
   os_project:
@@ -79,25 +83,28 @@
     group: "{{ prod_admin_group }}"
     project: "{{ prod_project }}"
 
-- name: Create nodepool user
+- name: Create nodepool user(s)
   os_user:
     cloud: "{{ cloud }}"
-    name:  "{{ prod_nodepool_user }}"
+    name:  "{{ item.user }}"
     password: "{{ secrets.nodepool.db_password }}"
     update_password: always
-    default_project: "{{ prod_nodepool_project }}"
+    default_project: "{{ item.name }}"
     domain: 'default'
+  with_items: "{{ prod_nodepool_projects }}"
 
-- name: Assign member role to nodepool user
+- name: Assign member role to nodepool user(s)
   os_user_role:
     cloud: "{{ cloud }}"
-    user: "{{ prod_nodepool_user }}"
+    user: "{{ item.user }}"
     role: "{{ prod_member_role }}"
-    project: "{{ prod_nodepool_project }}"
+    project: "{{ item.name }}"
+  with_items: "{{ prod_nodepool_projects }}"
 
-- name: Assign member role to prod group
+- name: Assign member role to prod group(s)
   os_user_role:
     cloud: "{{ cloud }}"
     role: "{{ prod_member_role }}"
     group: "{{ prod_group }}"
-    project: "{{ prod_nodepool_project }}"
+    project: "{{ item.name }}"
+  with_items: "{{ prod_nodepool_projects }}"
