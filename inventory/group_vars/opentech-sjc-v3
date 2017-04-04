@@ -69,7 +69,7 @@ zuul_tenants:
         config-repos:
           - bonnyci/project-config
         project-repos:
-          - bonnyci/sandbox
+          - bonnyci/sandbox-v3
 
 dns_subdomain: internal.v3.opentechsjc.bonnyci.org
 zuul_zookeeper_hosts:
