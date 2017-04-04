@@ -1,5 +1,5 @@
 ---
-letsencrypt_csr_cn: zuul.v3.bonnyci.org
+letsencrypt_csr_cn: zuul.v3.opentechsjc.bonnyci.org
 bonnyci_zuul_webapp_ssl: yes
 
 zuul_components:
