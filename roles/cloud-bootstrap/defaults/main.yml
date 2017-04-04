@@ -85,6 +85,10 @@ common_security_group_rules:
         port: 80
       - remote_cidr: 0.0.0.0/0
         port: 443
+  - name: sg-logstash
+    rules:
+      - remote_group: sg-control-plane
+        port: 5044
 
 
 environment_security_group_rules:
@@ -112,6 +116,7 @@ common_servers:
     security_groups:
       - sg-common
       - sg-http-https
+      - sg-logstash
     key_name: "{{ deploy_ssh_key_name }}"
   - name: logs
     floating_ip_network: external
