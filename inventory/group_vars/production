@@ -1,20 +1,6 @@
 bonnyci_lockdown_ssh: yes
 letsencrypt_production: yes
 
-nodepool_labels:
-  - name: ubuntu-xenial
-    image: ubuntu-xenial
-    min-ready: 4
-    providers:
-      - name: cicloud
-  - name: ubuntu-hoist
-    image: ubuntu-xenial
-    min-ready: 3
-    subnodes: 3
-    ready-script: subnode-ssh.sh
-    providers:
-      - name: cicloud
-
 nodepool_statsd_enable: yes
 nodepool_use_datadog_logging: yes
 

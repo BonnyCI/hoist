@@ -28,7 +28,7 @@ nodepool_gearman_servers:
     port: 4730
 nodepool_mysql_host: zuul.internal.v3.opentechsjc.bonnyci.org
 nodepool_providers:
-  - name: cicloud
+  - name: cicloud-v3
     cloud: opentech-sjc-v3
     max-servers: 20
     networks:
@@ -36,11 +36,19 @@ nodepool_providers:
         public: True
     images:
       - name: ubuntu-xenial
-        min-ram: 2048
+        min-ram: 1026
         diskimage: ubuntu-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
         user-home: /home/bonnyci
         username: bonnyci
+
+nodepool_labels:
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud-v3
+
 nodepool_zmq_publishers:
   - tcp://zuul.internal.v3.opentechsjc.bonnyci.org:8888
 
