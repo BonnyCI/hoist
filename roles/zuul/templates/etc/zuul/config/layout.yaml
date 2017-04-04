@@ -95,9 +95,9 @@ projects:
 
   - name: BonnyCI/zuul
     check_github:
-      - tox_py27
+      - bonnyci-run-check
     gate_github:
-      - tox_py27
+      - bonnyci-run-gate
 
   - name: gearman/gearmand
     check_github:
