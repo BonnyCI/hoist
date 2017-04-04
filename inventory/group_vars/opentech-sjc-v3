@@ -64,3 +64,5 @@ zuul_tenants:
           - bonnyci/sandbox
 
 dns_subdomain: internal.v3.opentechsjc.bonnyci.org
+zuul_zookeeper_hosts:
+  - zuul.internal.v3.opentechsjc.bonnyci.org:2181
