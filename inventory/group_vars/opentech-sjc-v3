@@ -73,3 +73,7 @@ zuul_tenants:
 dns_subdomain: internal.v3.opentechsjc.bonnyci.org
 zuul_zookeeper_hosts:
   - nodepool.internal.v3.opentechsjc.bonnyci.org:2181
+
+zuul_ssh_known_hosts:
+  - host: "[review.gerrithub.io]:29418"
+    key: "[review.gerrithub.io]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtcxtihbxvcTxe/wP2CfaVP7DeCZkEvuW/LFWWfUChCknnlAbem64BlMdsEAvgm2VzIQNWxqI8iyJxoOasR9o42DDsH68YIM+5/o2rHw1emhiSQ3RNmdSGBDqNqg15WHqyR0QVl+lX423MWgXAKmGPuZo9t4ZJ+DdHfO5BVewPPOiEtHUs/IaYDLl8EEFwVZj6wkEUehpq/gFD3WmasPDb4CTZqPH3Z+K5QC8j297laHKPvqa+tE/UGjpWMFXMZTmPd7zNVUoLsSbkqkpE3TUWzLS4OMTtnJdqKlAIRV0pRVYxLp4WXQfg9+NKOqR49pgBGFCIUxtVWLdh23JgVmpnQ=="

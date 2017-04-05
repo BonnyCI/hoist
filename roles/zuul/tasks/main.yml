@@ -55,6 +55,21 @@
     group: zuul
     mode: 0644
 
+- name: Install any ssh known host keys
+  known_hosts:
+    path: /var/lib/zuul/.ssh/known_hosts
+    key: "{{ item.key }}"
+    host: "{{ item.host }}"
+  with_items: "{{ zuul_ssh_known_hosts }}"
+  when: zuul_ssh_known_hosts is defined
+
+- name: Ensure zuul ssh known_hosts ownership
+  file:
+    path: /var/lib/zuul/.ssh/known_hosts
+    owner: zuul
+    group: zuul
+  when: zuul_ssh_known_hosts is defined
+
 - name: Install zuul integration key
   copy:
     dest: /etc/zuul/integration.key
