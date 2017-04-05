@@ -1,3 +1,5 @@
+environment_name: opentech-sjc
+
 bastion_clouds:
   - opentech-sjc
 
