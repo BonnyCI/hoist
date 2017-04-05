@@ -9,7 +9,7 @@ bonnyci_logs_apache_mods_install:
 bonnyci_logs_apache_vhosts:
   - name: logs
     server_name: "{{ bonnyci_logs_apache_server_name | default('logs') }}"
-    aliases: "{{ bonnyci_logs_apache_server_aliases | default(omit) }}"
+    aliases: "{{ bonnyci_logs_apache_server_aliases | default('kibana') }}"
     document_root: "{{ bonnyci_logs_root_dir }}/logs"
     document_root_allow_override: None
     document_root_options: "+Indexes +FollowSymLinks"

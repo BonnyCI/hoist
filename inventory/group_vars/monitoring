@@ -5,7 +5,7 @@ bonnyci_kibana_apache_mods_enabled:
 bonnyci_kibana_apache_vhosts:
   - name: kibana
     server_name: "{{ bonnyci_logs_kibana_server_name | default('elk') }}"
-    aliases: "{{ bonnyci_logs_kibana_server_aliases | default(omit) }}"
+    aliases: "{{ bonnyci_logs_kibana_server_aliases | default('kibana') }}"
     vhost_extra: |
       ProxyPreserveHost On
       ProxyRequests On
