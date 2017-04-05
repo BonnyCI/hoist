@@ -24,7 +24,7 @@ nodepool_mysql_host: zuul.internal.opentechsjc.bonnyci.org
 nodepool_providers:
   - name: cicloud
     cloud: opentech-sjc
-    max-servers: 20
+    max-servers: 10
     networks:
       - name: 'nodepool'
         public: True
