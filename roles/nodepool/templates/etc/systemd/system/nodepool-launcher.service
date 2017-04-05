@@ -7,7 +7,11 @@ Type=simple
 User=nodepool
 Group=nodepool
 EnvironmentFile=-/etc/default/nodepool
+{% if nodepool_zuul_v3 %}
+ExecStart={{ nodepool_venv_path }}/bin/nodepool-launcher -d -l /etc/nodepool/nodepool-launcher_logging.conf
+{% else %}
 ExecStart={{ nodepool_venv_path }}/bin/nodepoold -d --no-deletes --no-webapp -l /etc/nodepool/nodepool-launcher_logging.conf
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target
