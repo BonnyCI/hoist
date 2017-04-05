@@ -51,6 +51,7 @@
           security_groups:
             - sg-common
             - sg-http-https
+            - sg-logstash
           key_name: "{{ deploy_ssh_key_name }}"
         - name: logs
           floating_ip_address: 169.44.171.84
