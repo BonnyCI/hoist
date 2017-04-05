@@ -15,3 +15,9 @@
     regexp: '^127\.0\.0\.1'
     line: '127.0.0.1 {{ ansible_hostname }} localhost'
   tags: ['not-on-docker']
+
+- name: Set custom bash prompt for per-environment nodes
+  template:
+    dest: /etc/profile.d/bash_prompt.sh
+    src: etc/profile.d/bash_prompt.sh
+  when: environment_name is defined
