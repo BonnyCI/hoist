@@ -8,7 +8,6 @@ bonnyci_kibana_apache_vhosts:
     aliases: "{{ bonnyci_kibana_apache_server_aliases | default([]) }}"
     vhost_extra: |
       ProxyPreserveHost On
-      ProxyRequests On
       ProxyPass / http://127.0.0.1:5601/
       ProxyPassReverse / http://127.0.0.1:5601/
 
