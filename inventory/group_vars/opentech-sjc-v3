@@ -1,8 +1,8 @@
 nodepool_zuul_v3: true
 zuul_zuul_v3: True
 
-nodepool_git_repo_url: https://github.com/jamielennox/nodepool
-nodepool_git_version: nodepool-split
+nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
+nodepool_git_version: feature/zuulv3
 
 zuul_git_repo_url: https://github.com/openstack-infra/zuul
 zuul_git_branch: feature/zuulv3
