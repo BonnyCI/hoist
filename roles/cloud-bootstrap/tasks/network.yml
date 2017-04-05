@@ -60,7 +60,8 @@
     protocol: "tcp"
     port_range_min: "1"
     port_range_max: "65535"
-    remote_ip_prefix: "{{ controlplane_network_cidr }}"
+    remote_ip_prefix: "{{ item.controlplane_network_cidr }}"
     auth:
-      project_name: "{{ prod_nodepool_project }}"
+      project_name: "{{ item.name }}"
   when: "{{ split_tenants | bool }}"
+  with_items: "{{ prod_nodepool_projects }}"
