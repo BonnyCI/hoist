@@ -2,7 +2,16 @@ bonnyci_kibana_apache_mods_enabled:
   - proxy.load
   - proxy_http.load
 
+
 bonnyci_kibana_apache_vhosts:
+  - name: default_deny
+    server_name: default.only
+    vhost_extra: |
+      <Location />
+        Order allow,deny
+        Deny from all
+      </Location>
+
   - name: kibana
     server_name: "{{ bonnyci_kibana_apache_server_name | default('elk') }}"
     aliases: "{{ bonnyci_kibana_apache_server_aliases | default([]) }}"
