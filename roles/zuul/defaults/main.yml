@@ -31,6 +31,8 @@ zuul_use_datadog_logging: False
 
 zuul_sites: {}
 
+zuul_url_pattern: "{{ zuul_logs_url }}/{build.parameters[LOG_PATH]}"
+
 zuul_zuul_v3: False
 
 zuul_zookeeper_hosts:
