@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/bin/bash -eu
 # Runs system wide ansible configured in /etc
-set -eu
 
 env=$1
 
-if [ -f /etc/default/$env ]; then
-  . /etc/default/$env
+if [ -f /etc/default/"$env" ]; then
+  . /etc/default/"$env"
 fi
 
 envs_root=${ANSIBLE_RUNNER_ENV_ROOT:-/opt/source}
@@ -18,44 +17,44 @@ if ! ([ -n "$ANSIBLE_PLAYBOOK" ] && [ -n "$ANSIBLE_INVENTORY" ]); then
   exit 1
 fi
 
-if [ -f /etc/disable-ansible-runner-$env ]; then
+if [ -f /etc/disable-ansible-runner-"$env" ]; then
     echo "Environment $env is disabled by file."
     exit 1
 fi
 
 if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
     export ANSIBLE_SERIALIZED=1
-    exec run-one $0 "$@"
+    exec run-one "$0" "$@"
 fi
 
 shift
 
 set +u
-. $ansible_venv/bin/activate
+. "$ansible_venv"/bin/activate
 set -u
 
-playbook=$(basename $ANSIBLE_PLAYBOOK)
+playbook=$(basename "$ANSIBLE_PLAYBOOK")
 timestamp=$(date +%Y%m%d%H%M%S)
 logfile="$log_dir/ansible_${playbook}_current.log"
 dst_logfile="$log_dir/ansible_${playbook}_${timestamp}.log"
 
-trap "cp $logfile $dst_logfile; rm -f $log_dir/ansible_${playbook}_latest.log; ln -s $dst_logfile $log_dir/ansible_${playbook}_latest.log; deactivate" EXIT
+trap 'cp $logfile $dst_logfile; rm -f $log_dir/ansible_${playbook}_latest.log; ln -s $dst_logfile $log_dir/ansible_${playbook}_latest.log; deactivate' EXIT
 
-date 2>&1 | tee $logfile
-basename "$logfile" 2>&1 | tee -a $logfile
-cd $envs_root/$env
-git pull 2>&1 | tee -a $logfile
+date 2>&1 | tee "$logfile"
+basename "$logfile" 2>&1 | tee -a "$logfile"
+cd "$envs_root/$env"
+git pull 2>&1 | tee -a "$logfile"
 
 if [ -f requirements.txt ]; then
-  sudo $ansible_venv/bin/pip install -U -r requirements.txt 2>&1 | tee -a $logfile
+  sudo "$ansible_venv"/bin/pip install -U -r requirements.txt 2>&1 | tee -a "$logfile"
 fi
 
-args="$@"
+args="$*"
 if [ -n "$ssh_user" ]; then
     args="$args -e ansible_ssh_user=$ssh_user"
 fi
-$ansible_venv/bin/ansible-playbook -vv -i $ANSIBLE_INVENTORY $args $ANSIBLE_PLAYBOOK 2>&1 | tee -a $logfile
-date 2>&1 | tee -a $logfile
+"$ansible_venv"/bin/ansible-playbook -vv -i "$ANSIBLE_INVENTORY" $args "$ANSIBLE_PLAYBOOK" 2>&1 | tee -a "$logfile"
+date 2>&1 | tee -a "$logfile"
 
 # Remove > 10 days old
-find $log_dir -type f -name '*.log' -mtime 10 -exec rm -f {} \;
+find "$log_dir" -type f -name '*.log' -mtime 10 -exec rm -f {} \;
