@@ -21,3 +21,8 @@ bonnyci_kibana_apache_vhosts:
       ProxyPassReverse / http://127.0.0.1:5601/
 
 elasticsearch_cluster_name: bonnyci
+
+fail2ban_jails:
+  - apache-auth
+  - apache-badbots
+  - apache-shellshock

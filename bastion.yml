@@ -33,3 +33,4 @@
       when: secrets is defined
     - role: ansible-runner
       ansible_runner_minute: "*/15"
+    - role: fail2ban  # This should be last

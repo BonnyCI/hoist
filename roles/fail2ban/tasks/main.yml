@@ -1,0 +1,13 @@
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+
+- name: Enable fail2ban jails
+  template:
+    src: etc/fail2ban/jail.d/enable.jail.j2
+    dest: /etc/fail2ban/jail.d/{{ item }}.local
+  vars:
+    jail: '{{ item }}'
+  with_items: '{{ fail2ban_jails }}'
+  notify: 'restart fail2ban'

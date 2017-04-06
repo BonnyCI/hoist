@@ -247,3 +247,12 @@
     - role: dd-apache
       tags:
         - monitoring
+
+# This task needs to be done last because fail2ban will fail to start
+# if the configured log files to scan do not exist yet.
+- name: Enable fail2ban on all hosts
+  hosts: all
+  become: yes
+  tags: ['common']
+  roles:
+    - role: fail2ban
