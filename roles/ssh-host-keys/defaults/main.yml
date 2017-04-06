@@ -1,0 +1,2 @@
+---
+ssh_host_keys_path: /etc/ssh/ssh_known_hosts

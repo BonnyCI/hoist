@@ -85,6 +85,9 @@
       tags:
         - monitoring
 
+    - role: ssh-host-keys
+      ssh_host_keys_hostnames: log
+
     - role: apache
       apache_mods_enabled: "{{ bonnyci_zuul_webapp_apache_mods_enabled }}"
       apache_vhosts: "{{ bonnyci_zuul_webapp_apache_vhosts }}"
