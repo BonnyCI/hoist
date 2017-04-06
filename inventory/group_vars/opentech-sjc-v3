@@ -60,7 +60,7 @@ zuul_tenants:
     source:
       gerrithub:
         config-repos:
-          - bonnyci/project-config
+          - bonnyci/project-config-v3
         project-repos:
           - bonnyci/sandbox-v3
 
