@@ -60,9 +60,9 @@ zuul_tenants:
     source:
       gerrithub:
         config-repos:
-          - bonnyci/project-config-v3
+          - BonnyCI/project-config-v3
         project-repos:
-          - bonnyci/sandbox-v3
+          - BonnyCI/sandbox-v3
 
 dns_subdomain: internal.v3.opentechsjc.bonnyci.org
 zuul_zookeeper_hosts:
