@@ -42,6 +42,28 @@ nodepool_labels:
   - name: ubuntu-xenial
     min-ready: 1
 
+nodepool_diskimages:
+  - name: ubuntu-xenial
+    elements:
+      - ubuntu-minimal
+      - vm
+      - simple-init
+      - growroot
+      - openssh-server
+      - devuser
+      - haveged
+      - pip-and-virtualenv
+      - nodepool
+      - bonnyci-nodepool
+    release: xenial
+    env-vars:
+      DIB_DEV_USER_USERNAME: zuul
+      DIB_DEV_USER_AUTHORIZED_KEYS: /etc/nodepool/slave-authorized-keys
+      DIB_DEV_USER_PWDLESS_SUDO: 'Yes'
+      DIB_DEV_USER_SHELL: /bin/bash
+      DIB_NODEPOOL_SCRIPT_DIR: /etc/nodepool/scripts
+      DIB_PYTHON_VERSION: '2'
+
 nodepool_zmq_publishers:
   - tcp://zuul.internal.v3.opentechsjc.bonnyci.org:8888
 
