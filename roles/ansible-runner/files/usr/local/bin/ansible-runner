@@ -17,9 +17,14 @@ if ! ([ -n "$ANSIBLE_PLAYBOOK" ] && [ -n "$ANSIBLE_INVENTORY" ]); then
   exit 1
 fi
 
-if [ -f /etc/disable-ansible-runner-"$env" ]; then
-    echo "Environment $env is disabled by file."
-    exit 1
+if [[ "$*" == *"--force"* && "$*" != *"--force-"* ]]; then
+    echo "--force detected, ignoring /etc/disable-ansible-runner-$env..."
+else
+    if [ -f /etc/disable-ansible-runner-"$env" ]; then
+        echo "Environment $env is disabled by file."
+        echo "If you want to run $0 anyway, use \"--force\"."
+        exit 1
+    fi
 fi
 
 if [[ -z "${ANSIBLE_SERIALIZED:-}" ]] ; then
