@@ -19,8 +19,6 @@ mkdir "$test_log_dir"
 
 virtualenv "$test_venv"
 
-sudo apt-get -y install run-one
-
 function run_runner() {
   echo "Running ansible-runner, expecting to run playbook:"
   cat "$repo_playbook"

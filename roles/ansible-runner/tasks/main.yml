@@ -14,7 +14,6 @@
   with_items:
     - python-dev
     - libssl-dev
-    - run-one
     - git
     - cron
 
