@@ -40,7 +40,7 @@ class NodepoolCheck(AgentCheck):
                                    AgentCheck.CRITICAL,
                                    message=str(e),
                                    tags=service_check_tags)
-        else
+        else:
             self.log.info("Skipping instance, no status url found.")
 
         if images_url:
@@ -52,7 +52,7 @@ class NodepoolCheck(AgentCheck):
                                    AgentCheck.CRITICAL,
                                    message=str(e),
                                    tags=images_check_tags)
-        else
+        else:
             self.log.info("Skipping instance, no images url found.")
 
     def get_nodepool_status(self, status_url, timeout, service_check_tags):
