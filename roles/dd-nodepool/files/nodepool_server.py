@@ -25,11 +25,12 @@ class NodepoolCheck(AgentCheck):
     def check(self, instance):
         default_timeout = self.init_config.get('default_timeout', 5)
         timeout = float(instance.get('timeout', default_timeout))
-        service_check_tags = ['url:%s' % status_url]
-        images_check_tags = ['url:%s' % images_url]
 
         status_url = instance.get('status_url')
-        image_url = instance.get('image_url')
+        images_url = instance.get('image_url')
+
+        service_check_tags = ['url:%s' % status_url]
+        images_check_tags = ['url:%s' % images_url]
 
         if status_url:
             try:
