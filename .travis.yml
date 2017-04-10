@@ -11,7 +11,7 @@ matrix:
   fast_finish: true
 
 env:
-  - TEST_RUN="ansible-playbook -i inventory/allinone bastion.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,not-on-docker,letsencrypt"
+  - TEST_RUN="ansible-playbook -i inventory/allinone-bastion bastion.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,not-on-docker,letsencrypt"
   - TEST_RUN="ansible-playbook -i inventory/allinone install-ci.yml tests/files/validate-ci.yml -c docker -vv -e @secrets.yml.example --skip-tags monitoring,not-on-docker,letsencrypt"
 
 before_install:
@@ -19,8 +19,12 @@ before_install:
 - docker run -d --name allinone --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro ubuntu:xenial systemd
 - docker exec -i allinone apt-get update
 - docker exec -i allinone apt-get install -y python-apt ca-certificates apt-transport-https sudo ssh
+- docker exec -i allinone touch /var/log/auth.log  # fail2ban fails to start without this file in place
 
 install:
   - pip install ansible
 
 script: "$TEST_RUN"
+
+after_failure:
+  - docker exec -i allinone journalctl -xe

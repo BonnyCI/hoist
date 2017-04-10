@@ -79,3 +79,8 @@ bonnyci_logs_loganalyze_file_conditions:
   - filename_pattern: ^.*$
     filter: NoFilter
     view: PassthroughView
+
+fail2ban_jails:
+  - apache-auth
+  - apache-badbots
+  - apache-shellshock
