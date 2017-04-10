@@ -1,0 +1,2 @@
+---
+letsencrypt_csr_cn: logs.bonnyci.org
