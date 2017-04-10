@@ -75,6 +75,12 @@ projects:
     gate_github:
       - bonnyci-run-gate
 
+  - name: BonnyCI/datadog-monitors
+    check_github:
+      - bonnyci-run-check
+    gate_github:
+      - bonnyci-run-gate
+
   - name: BonnyCI/giftwrap
     check_github:
       - tox_py27
