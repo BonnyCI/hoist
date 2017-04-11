@@ -14,6 +14,11 @@ bonnyci_logs_apache_vhosts:
     document_root_allow_override: None
     document_root_options: "+Indexes +FollowSymLinks"
 
+    ssl: "{{ bonnyci_logs_ssl | default(False) }}"
+    certificate_file: "{{ letsencrypt_cert_path | default('') }}"
+    certificate_key_file: "{{ letsencrypt_key_path | default('') }}"
+    certificate_chain_file: "{{ letsencrypt_chain_path | default('') }}"
+
     vhost_extra: |
       <Directory /etc/os_loganalyze/wsgi>
         Require all granted
