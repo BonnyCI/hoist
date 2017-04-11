@@ -31,25 +31,25 @@ dependencies:
       - proxy_http.load
       - proxy_uwsgi.load
     apache_vhosts:
-      - name: tailon
+      - name: bastion
         document_root: /var/www/html/
         document_root_options: +FollowSymLinks
         vhost_extra: |
           AddType text/plain .log
-          Redirect permanent /cron-logs/live /cron-logs/live/
-          ProxyPass "/cron-logs/live/" http://localhost:{{ tailon_port }}/cron-logs/live/
-      - name: ara
-        vhost_extra: |
-          ErrorLog /var/log/apache2/ara-error.log
-          LogLevel warn
-          CustomLog /var/log/apache2/ara-access.log combined
 
+          Redirect permanent /ara /ara/
+          Redirect permanent /cron-logs/live /cron-logs/live/
+
+          ProxyPass "/cron-logs/live/" http://localhost:{{ tailon_port }}/cron-logs/live/
           ProxyPass "/ara/" uwsgi://localhost:3311/
 
           SetEnv ANSIBLE_CONFIG /var/www/ara/ansible.cfg
-          Redirect permanent /ara /ara/
 
           <Directory /var/www/ara>
             Require all granted
           </Directory>
 
+      - name: tailon
+        delete: yes
+      - name: ara
+        delete: yes
