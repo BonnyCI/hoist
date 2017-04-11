@@ -6,6 +6,8 @@ bonnyci_logs_scp_user: zuul
 filebeat_output_logstash_enabled: true
 
 letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"
+letsencrypt_cert_path: /etc/apache2/cert/ansible.crt
+letsencrypt_chain_path: /etc/letsencrypt/chain.pem
 letsencrypt_csr_dn:
   C: AU
   ST: NSW
@@ -13,6 +15,7 @@ letsencrypt_csr_dn:
   O: BonnyCI
 letsencrypt_configure_redirect: yes
 letsencrypt_email: jamielennox@gmail.com
+letsencrypt_key_path: /etc/apache2/cert/ansible.key
 
 zuul_gearman_server_listen_address: 0.0.0.0
 zuul_gearman_server_start: true
