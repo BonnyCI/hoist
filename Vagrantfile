@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
       if test -f /etc/secrets.yml ; then
         rm /etc/secrets.yml
       fi
-      ln -s /vagrant/secrets.yml /etc/secrets.yml
+      cp /vagrant/secrets.yml /etc/secrets.yml
 
       # disable cron runs, run ansible manually while testing
       touch /etc/disable-ansible-runner-cideploy
