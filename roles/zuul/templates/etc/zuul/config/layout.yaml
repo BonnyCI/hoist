@@ -7,6 +7,7 @@ pipelines:
   - name: check_github
     manager: IndependentPipelineManager
     source: github
+    merge-failure-message: "{{ zuul_merge_failure_message }}"
     trigger:
       github:
         - event:
@@ -33,6 +34,7 @@ pipelines:
     manager: DependentPipelineManager
     precedence: high
     source: github
+    merge-failure-message: "{{ zuul_merge_failure_message }}"
     trigger:
       github:
         - event: status
