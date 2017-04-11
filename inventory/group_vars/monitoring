@@ -23,6 +23,12 @@ bonnyci_kibana_apache_vhosts:
 elasticsearch_cluster_name: bonnyci
 
 fail2ban_jails:
-  - apache-auth
-  - apache-badbots
-  - apache-shellshock
+  - name: apache-auth
+    enabled: true
+    bantime: 86400
+  - name: apache-badbots
+    enabled: true
+    bantime: 86400
+  - name: apache-shellshock
+    enabled: true
+    bantime: 86400

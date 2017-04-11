@@ -5,8 +5,8 @@
 
 - name: Enable fail2ban jails
   template:
-    src: etc/fail2ban/jail.d/enable.jail.j2
-    dest: /etc/fail2ban/jail.d/{{ item }}.local
+    src: etc/fail2ban/jail.d/jail.local.j2
+    dest: /etc/fail2ban/jail.d/{{ item.name }}.local
   vars:
     jail: '{{ item }}'
   with_items: '{{ fail2ban_jails }}'
