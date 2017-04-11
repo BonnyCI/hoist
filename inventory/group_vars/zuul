@@ -3,10 +3,6 @@ bonnyci_zuul_webapp_apache_mods_enabled:
   - proxy_http.load
   - rewrite.load
 
-letsencrypt_key_path: /etc/apache2/cert/ansible.key
-letsencrypt_cert_path: /etc/apache2/cert/ansible.crt
-letsencrypt_chain_path: /etc/letsencrypt/chain.pem
-
 bonnyci_zuul_webapp_apache_vhosts:
   - name: status
     delete: true
