@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+[{{ jail.name }}]
+{% for opt, val in jail.iteritems() -%}
+{% if opt != 'name' -%}
+{{ opt }} = {{ val }}
+{% endif -%}
+{% endfor -%}
