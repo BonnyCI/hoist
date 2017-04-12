@@ -7,11 +7,16 @@ logs.opentechsjc.bonnyci.org
 [monitoring]
 elk.opentechsjc.bonnyci.org
 
+[backups]
+backups.opentechsjc.bonnyci.org
+
 [production]
 bastion.opentechsjc.bonnyci.org
 logs.opentechsjc.bonnyci.org
 elk.opentechsjc.bonnyci.org
+backups.opentechsjc.bonnyci.org
 
 [opentech-sjc-common]
 logs.opentechsjc.bonnyci.org
 elk.opentechsjc.bonnyci.org
+backups.opentechsjc.bonnyci.org

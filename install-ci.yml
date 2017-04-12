@@ -20,6 +20,8 @@
       when:
         - letsencrypt_csr_cn | default(False)
 
+    - role: backup-client
+
 - name: Install ELK
   hosts: monitoring
   become: yes
@@ -269,6 +271,13 @@
               document_type: apache
               paths:
                 - /var/log/apache/*.log
+
+- name: Install backups
+  hosts: backups
+  become: yes
+  tags: ['backups']
+  roles:
+    - role: backup-server
 
 # This task needs to be done last because fail2ban will fail to start
 # if the configured log files to scan do not exist yet.

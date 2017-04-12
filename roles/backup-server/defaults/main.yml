@@ -1,0 +1,6 @@
+backup_user: backup
+backup_home: /var/lib/backups
+backup_sources:
+  example.com:
+    - /var/log/auth.log
+    - /root

@@ -176,4 +176,26 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define :backups do |backups|
+    backups.vm.hostname = 'backups.vagrant'
+    backups.vm.network "private_network", ip: "10.0.0.105"
+    backups.vm.network "forwarded_port", guest: 80, host: 8085
+
+    backups.vm.provider "virtualbox" do |v|
+      v.memory = '512'
+    end
+
+    backups.vm.provision "shell", path: "tools/install-pip.sh"
+    backups.vm.provision "shell", path: "tools/vagrant-inject-pubkey.sh"
+
+    backups.trigger.after [:up, :provision] do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh -o StrictHostKeyChecking=no ubuntu@backups.vagrant true'"
+    end
+
+    backups.trigger.after :destroy do
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R backups.vagrant'"
+      run "vagrant ssh bastion -c 'sudo -i -u cideploy ssh-keygen -f /home/cideploy/.ssh/known_hosts -R 10.0.0.105'"
+    end
+  end
+
 end

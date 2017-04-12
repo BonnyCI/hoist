@@ -66,6 +66,10 @@
             - sg-common
             - sg-http-https
           key_name: "{{ deploy_ssh_key_name }}"
+        - name: backups
+          security_groups:
+            - sg-common
+            - sg-backups
       environments:
         - name: v2
           dns_subdomain: internal.opentechsjc.bonnyci.org

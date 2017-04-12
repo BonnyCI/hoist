@@ -1,0 +1,48 @@
+- name: Create backup group.
+  group:
+    name: backup
+
+- name: Create backup user.
+  user:
+    createhome: yes
+    group: backup
+    home: "{{ backup_home }}"
+    name: "{{ backup_user }}"
+    shell: /bin/bash
+
+- name: Create backup user's ~/.ssh
+  file:
+    owner: "{{ backup_user }}"
+    group: backup
+    state: directory
+    path: "{{ backup_home }}/.ssh/"
+    mode: 0700
+
+- name: Install backup private ssh key
+  copy:
+    dest: "{{ backup_home }}/.ssh/id_rsa"
+    content: "{{ secrets.ssh_keys.backup.private }}"
+    owner: "{{ backup_user }}"
+    group: backup
+    mode: 0600
+
+- name: Install backup public ssh key
+  copy:
+    dest: "{{ backup_home }}/.ssh/id_rsa.pub"
+    content: "{{ secrets.ssh_keys.backup.public }}"
+    owner: "{{ backup_user }}"
+    group: backup
+    mode: 0644
+
+- name: Install backup script
+  template:
+    src: usr/local/bin/run-backups.sh
+    dest: /usr/local/bin/run-backups.sh
+    mode: 0755
+
+- name: Set permissions on log directory
+  file:
+    path: /var/log/backups
+    state: directory
+    owner: "{{ backup_user }}"
+    group: root

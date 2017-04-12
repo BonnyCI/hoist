@@ -1,0 +1,4 @@
+- name: Let backup user ssh to root
+  authorized_key:
+    key: "{{ secrets.ssh_keys.backup.public }}"
+    user: root
