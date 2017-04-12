@@ -1,5 +1,8 @@
 #!/bin/bash -xe
 
+dpkg -l | grep virtualenv
+which virtualenv
+
 venv_dir=$(mktemp -d)
 trap 'rm -rf $venv_dir' EXIT
 
