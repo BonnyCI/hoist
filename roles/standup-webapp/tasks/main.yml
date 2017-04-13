@@ -1,0 +1,23 @@
+---
+
+- name: Create log directory
+  file:
+    path: /var/log/standup-webapp
+    state: directory
+    mode: 0755
+    owner: www-data
+    group: www-data
+
+- name: Create config directory
+  file:
+    path: /etc/standup
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Create config file
+  template:
+    src: etc/standup/standup.cfg
+    dest: /etc/standup/standup.cfg
+    owner: www-data
