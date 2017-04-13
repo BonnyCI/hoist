@@ -75,5 +75,11 @@
     owner: root
     group: root
 
+- name: Ensure cron log live path
+  file:
+    state: directory
+    path: /var/www/html/cron-logs/live
+    mode: 0755
+
 - include: runner.yml
   with_items: "{{ ansible_runner_tasks }}"
