@@ -16,4 +16,42 @@
     - role: quartermaster
       quartermaster_default_channel: "#BonnyCI"
       quartermaster_name: "quartermaster"
+    - role: standup-webapp
+      standup_database_path: /var/lib/quartermaster/plugins/standup.sqlite
+    - role: uwsgi
+      uwsgi_apt_plugins:
+        - uwsgi-plugin-python
+      uwsgi_vassals:
+        - name: standup 
+          state: present
+          config:
+            uid: www-data
+            gid: www-data
+            wsgi-file: "/opt/source/standup-webapp/wsgi.py"
+            virtualenv: "/opt/venvs/standup-webapp"
+            plugin: python
+            socket: localhost:3312
+            lazy-apps: true
+    - role: apache
+      apache_apt_install:
+        - libapache2-mod-proxy-uwsgi
+      apache_mods_enabled:
+        - proxy.conf
+        - proxy.load
+        - proxy_http.load
+        - proxy_uwsgi.load
+      apache_vhosts:
+      - name: standup
+        vhost_extra: |
+          ErrorLog /var/log/apache2/standup-error.log
+          LogLevel warn
+          CustomLog /var/log/apache2/standup-access.log combined
+
+          ProxyPass "/standups/" uwsgi://localhost:3312/
+
+          Redirect permanent /standups /standups/
+
+          <Directory /var/www/standup>
+            Require all granted
+          </Directory>
 

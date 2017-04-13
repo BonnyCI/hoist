@@ -1,0 +1,9 @@
+---
+dependencies:
+  - role: python-app
+    name: standup-webapp
+    python_app_pipdeps:
+      - name: Flask
+    python_app_git_repo: "{{ standup_git_repo_url }}"
+    python_app_git_update: "{{ standup_git_update }}"
+    python_app_git_version: "{{ standup_git_branch }}"
