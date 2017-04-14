@@ -1,3 +1,11 @@
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - sshfs
+    - borgbackup
+
 - name: Create backup group.
   group:
     name: backup
@@ -46,3 +54,10 @@
     state: directory
     owner: "{{ backup_user }}"
     group: root
+
+- name: Create sshfs mount dir
+  file:
+    owner: "{{ backup_user }}"
+    group: backup
+    state: directory
+    path: "{{ sshfs_base }}"

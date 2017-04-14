@@ -1,6 +1,11 @@
 bastion_clouds:
   - bastioncloud
 
+backup_sources:
+  logs.vagrant:
+    - /var/log
+    - /var/www
+
 bonnyci_kibana_apache_server_name: elk.vagrant
 bonnyci_logs_scp_host: logs.vagrant
 bonnyci_zuul_merger_apache_server_name: merger.vagrant
