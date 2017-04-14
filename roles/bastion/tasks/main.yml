@@ -1,7 +1,7 @@
 - name: Add sudo group
   group:
     name: sudo
-  when: "{{ bastion_sudo_users }}"
+  when: bastion_sudo_users
 
 - name: Ensure /etc/sudoers.d/ is included in /etc/sudoers
   lineinfile:
@@ -9,7 +9,7 @@
     line: '#includedir /etc/sudoers.d'
     state: present
     validate: 'visudo -cf %s'
-  when: "{{ bastion_users }}"
+  when: bastion_users
 
 - name: Ensure sudo group has NOPASSWD sudo privileges
   lineinfile:
@@ -17,7 +17,7 @@
     regexp: '^%sudo'
     line: '%sudo  ALL=(ALL:ALL) NOPASSWD:ALL'
     validate: 'visudo -cf %s'
-  when: "{{ bastion_sudo_users }}"
+  when: bastion_sudo_users
 
 - name: Create bastion_users
   user:

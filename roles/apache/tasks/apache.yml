@@ -44,7 +44,7 @@
 
 - name: set-up ssl if any vhosts require it
   include: ssl.yml
-  when:  "{{ apache_vhosts | selectattr('ssl', 'defined') | map(attribute='ssl') | sum }}"
+  when: apache_vhosts | selectattr('ssl', 'defined') | map(attribute='ssl') | sum
 
 - name: set-up apache vhosts
   include: vhosts.yml
