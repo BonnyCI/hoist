@@ -1,1 +1,1 @@
-{{ secrets.quartermaster.standup_settings }}
+{{ secrets.quartermaster.standup_settings | to_nice_yaml(indent=2) }}
