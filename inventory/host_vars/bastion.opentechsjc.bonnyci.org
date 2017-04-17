@@ -27,3 +27,6 @@ ansible_runner_tasks:
       ansible_remote_user: ubuntu
 
 dns_subdomain: internal.opentechsjc.bonnyci.org
+
+filebeat_output_logstash_hosts:
+  - elk.internal.opentechsjc.bonnyci.org:5044
