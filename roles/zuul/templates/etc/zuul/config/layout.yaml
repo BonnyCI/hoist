@@ -38,13 +38,13 @@ pipelines:
     trigger:
       github:
         - event: status
-          status: "anne-bonny:check_github:success"
+          status: "bonnyci[bot]:check_github:success"
         - event: pr-review
           state: 'approved'
         - event: pr-comment
           comment: (?i)^\s*gate-recheck\s*$
     require:
-      status: "anne-bonny:check_github:success"
+      status: "bonnyci[bot]:check_github:success"
       approval:
         - review: 2
     reject:
