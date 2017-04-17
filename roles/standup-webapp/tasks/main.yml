@@ -16,8 +16,16 @@
     owner: root
     group: root
 
-- name: Create config file
+- name: Create old config file
   template:
     src: etc/standup/standup.cfg
     dest: /etc/standup/standup.cfg
     owner: www-data
+  when: secrets.quartermaster.standup_settings is defined
+
+- name: Create new config file
+  template:
+    src: etc/standup/config.yaml
+    dest: /etc/standup/config.yaml
+    owner: www-data
+  when: secrets.quartermaster.standup_settings is defined
