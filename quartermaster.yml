@@ -14,10 +14,7 @@
 
     - role: common
     - role: quartermaster
-      quartermaster_default_channel: "#BonnyCI"
-      quartermaster_name: "quartermaster"
     - role: standup-webapp
-      standup_database_path: /var/lib/quartermaster/plugins/standup.sqlite
     - role: uwsgi
       uwsgi_apt_plugins:
         - uwsgi-plugin-python
@@ -54,4 +51,3 @@
           <Directory /var/www/standup>
             Require all granted
           </Directory>
-

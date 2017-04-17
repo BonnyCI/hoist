@@ -19,7 +19,7 @@ BOT_ADMINS = ('{{ secrets.quartermaster.admins }}', )
 # !! Don't leave that as "CHANGE ME" if you connect your bot to a chat system!
 
 BOT_IDENTITY = {
-    'nickname': '{{ quartermaster_name }}',
+    'nickname': '{{ secrets.quartermaster.nickname }}',
     # 'username' : 'err-chatbot',    # opt, defaults to nickname if omitted
     # 'password' : None,             # optional
     'server': 'irc.freenode.net',
@@ -35,7 +35,7 @@ BOT_IDENTITY = {
     # 'bind_address': ('localhost', 0),
 }
 
-CHATROOM_PRESENCE = ('{{ quartermaster_default_channel }}', )
+CHATROOM_PRESENCE = ('{{ secrets.quartermaster.default_channel }}', )
 
 IRC_CHANNEL_RATE = 1
 IRC_PRIVATE_RATE = 1
