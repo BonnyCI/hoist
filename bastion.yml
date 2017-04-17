@@ -33,4 +33,12 @@
       when: secrets is defined
     - role: ansible-runner
       ansible_runner_minute: "*/15"
+    - role: filebeat
+      filebeat_prospectors:
+        - name: apache
+          prospectors:
+            - input_type: log
+              document_type: apache
+              paths:
+                - /var/log/apache/*.log
     - role: fail2ban  # This should be last
