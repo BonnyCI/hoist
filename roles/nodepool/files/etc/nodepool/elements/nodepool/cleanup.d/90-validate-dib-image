@@ -1,0 +1,54 @@
+#!/bin/bash
+
+function reporter () {
+  message="$1"
+  shift
+  echo
+  echo "$message"
+  for (( i=0; i<${#message}; i++ )); do
+    echo -n '-'
+  done
+  echo
+}
+
+function build_failure () {
+  reporter "Error encountered! Exiting build."
+  reporter "$1" >&2
+  exit 1
+}
+
+function check_python () {
+  reporter "Validating python installation."
+  py_ver=$(python --version 2>&1)
+  if [[ ! "$py_ver" == *"Python 2.7"* && ! "$py_ver" == *"Python 3"* ]]; then
+    build_failure "Python not found!"
+  fi
+}
+
+function check_virtualenv () {
+  reporter "Validating virtualenv installation and use."
+  if [[ ! $(which virtualenv) ]]; then
+    build_failure "virtualenv not found!"
+  fi
+
+  if [[ ! $(mkdir /tmp/test-venv && virtualenv /tmp/test-venv) ]]; then
+    build failure "virtualenv not functional!"
+  else
+    rm -rf /tmp/test-venv
+  fi
+}
+
+function check_zuul_cloner () {
+  reporter "Validating zuul-cloner installation."
+  if [[ ! $(zuul-cloner -h) ]]; then
+    build_failure "zuul-cloner not found or not functional!"
+  fi
+}
+
+function main () {
+  check_python
+  check_virtualenv
+  check_zuul_cloner
+}
+
+main "$@"
