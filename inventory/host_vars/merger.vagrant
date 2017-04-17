@@ -1,0 +1,2 @@
+zuul_components:
+  - zuul-merger
