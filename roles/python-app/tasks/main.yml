@@ -25,13 +25,13 @@
     virtualenv: "{{ python_app_venv_path }}/{{ name }}"
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ python_app_pipdeps }}"
-  when: "{{ item.when | default(True) }}"
+  when: item.when | default(True)
 
 - name: Set python-app venv fact
   set_fact: >
     {{ name | replace('-', '_') }}_venv_path={{ python_app_venv_path }}/{{ name }}
 
-- when: "{{ python_app_git_repo | length > 0 }}"
+- when: python_app_git_repo | length > 0
   block:
     - name: Checkout source
       git:

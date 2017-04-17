@@ -74,7 +74,7 @@
     group: "{{ prod_admin_group }}"
     user: "{{ item.username }}"
   with_items: "{{ users }}"
-  when: "{{ item.isadmin | default('False') | bool }}"
+  when: item.isadmin | default('False') | bool
 
 - name: Grant prod_admin group admin role on prod project
   os_user_role:

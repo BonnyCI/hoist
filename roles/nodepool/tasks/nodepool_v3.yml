@@ -29,7 +29,7 @@
 - name: Enable and start systemd service
   service:
     enabled: yes
-    state: running
+    state: started
     service: "{{ item }}"
   with_items:
     - nodepool-builder

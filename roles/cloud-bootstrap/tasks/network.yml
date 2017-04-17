@@ -63,5 +63,5 @@
     remote_ip_prefix: "{{ item.controlplane_network_cidr }}"
     auth:
       project_name: "{{ item.name }}"
-  when: "{{ split_tenants | bool }}"
+  when: split_tenants | bool
   with_items: "{{ prod_nodepool_projects }}"
