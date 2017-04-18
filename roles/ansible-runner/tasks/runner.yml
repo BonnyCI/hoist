@@ -33,6 +33,12 @@
   secret_file_path: "{{ ansible_runner_secrets_path }}"
   secret_file_user: "{{ item.user }}"
 
+- name: Disable cron job
+  copy:
+    content: ""
+    dest: "/etc/disable-ansible-runner-{{ item.name }}"
+  when: item.disabled | default(ansible_runner_disabled)
+
 - name: Ensure cron log path
   file:
     state: directory
