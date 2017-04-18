@@ -13,6 +13,17 @@ elasticsearch_jvm_heap_size: 250m
 filebeat_output_logstash_hosts:
   - elk.vagrant:5044
 
+nodepool_labels:
+  - name: ubuntu-xenial
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud
+  - name: ubuntu-xenial-alt
+    image: ubuntu-xenial
+    min-ready: 1
+    providers:
+      - name: cicloud
 nodepool_providers:
   - name: cicloud
     cloud: cicloud
