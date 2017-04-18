@@ -56,3 +56,7 @@
         - nodepool-builder
         - nodepool-deleter
         - nodepool-launcher
+
+    - name: Rebuild nodepool images
+      command: "/opt/venvs/nodepool/bin/nodepool image-build {{ item }}"
+      with_items: "{{ nodepool_labels | map(attribute='image') | list | unique }}"
