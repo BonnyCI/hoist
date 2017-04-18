@@ -69,6 +69,8 @@ jobs:
   # every job invokes the set_node_options file in bonnyci_functions.py
   - name: ^.*$
     parameter-function: set_node_options
+  - name: dib-build
+    files: roles/nodepool/files/etc/nodepool/elements/*
 
 projects:
   - name: BonnyCI/bonnyci.org
@@ -92,8 +94,10 @@ projects:
   - name: BonnyCI/hoist
     check_github:
       - bonnyci-run-check-multinode
+      - dib-build
     gate_github:
       - bonnyci-run-gate-multinode
+      - dib-build
 
   - name: BonnyCI/sandbox
     check_github:
