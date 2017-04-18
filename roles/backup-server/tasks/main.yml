@@ -42,12 +42,6 @@
     group: backup
     mode: 0644
 
-- name: Install backup script
-  template:
-    src: usr/local/bin/run-backups.sh
-    dest: /usr/local/bin/run-backups.sh
-    mode: 0755
-
 - name: Set permissions on log directory
   file:
     path: /var/log/backups
@@ -61,3 +55,34 @@
     group: backup
     state: directory
     path: "{{ sshfs_base }}"
+
+- name: Install hourly backup script
+  template:
+    src: usr/local/bin/run-backups.sh.j2
+    dest: /usr/local/bin/run-backups-hourly.sh
+    mode: 0755
+  vars:
+    backup_sources: "{{ backup_sources_hourly }}"
+    format: hours
+
+- name: Install hourly backup cron
+  cron:
+    user: "{{ backup_user }}"
+    minute: 5
+    job: /usr/local/bin/run-backups-hourly.sh
+
+- name: Install daily backup script
+  template:
+    src: usr/local/bin/run-backups.sh.j2
+    dest: /usr/local/bin/run-backups-daily.sh
+    mode: 0755
+  vars:
+    backup_sources: "{{ backup_sources_daily }}"
+    format: date
+
+- name: Install daily backup cron
+  cron:
+    user: "{{ backup_user }}"
+    minute: 0
+    hour: 0
+    job: /usr/local/bin/run-backups-daily.sh

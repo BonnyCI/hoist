@@ -1,0 +1,48 @@
+#!/bin/bash -e
+
+# {{ ansible_managed }}
+
+# Copy stdout and stderr to log file
+exec >> >(tee -a /var/log/backups/backup.log) 2>&1
+
+report() {
+  # Timestamp all our messages
+  echo "$(date -Iseconds) $@"
+}
+
+TODAY=$(date -I{{ format }})
+report "Starting backup run for ${TODAY}"
+
+{# unroll this for loop in jinja because it makes the data easier to work with #}
+{% for item in backup_sources %}
+
+HOST={{ item.host }}
+REPO={{ backup_home }}/{{ item.host }}
+SSHFS={{ sshfs_base }}/{{ item.host }}
+
+if ! test -d ${REPO}
+then
+    report "Creating borg repo for host ${HOST}"
+    borg init --encryption=none ${REPO}  # TODO: enable encryption
+fi
+
+if ! test -d ${SSHFS}
+then
+    report "Creating sshfs mount-point ${SSHFS}"
+    mkdir -p ${SSHFS}
+fi
+
+set +e  # We always want to get to the unmount
+
+report "Mounting ${HOST}:/ at ${SSHFS}"
+sshfs root@${HOST}:/ ${SSHFS}
+
+report "Creating backup ${REPO}::${TODAY}"
+borg create --verbose --stats --compression zlib,4 ${REPO}::${TODAY} {% for path in item.paths %}${SSHFS}/{{ path }} {% endfor %}
+
+report "Unmounting ${SSHFS}"
+fusermount -u ${SSHFS}
+
+set -e
+
+{% endfor %}

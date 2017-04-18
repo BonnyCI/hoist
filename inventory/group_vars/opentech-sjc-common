@@ -1,3 +1,28 @@
+backup_sources_hourly:
+  - host: elk.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/log/
+  - host: logs.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/log/
+  - host: merger01.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/log/
+  - host: nodepool.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/log/
+  - host: zuul.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/log/
+
+backup_sources_daily:
+  - host: logs.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/www/
+  - host: merger01.internal.opentechsjc.bonnyci.org
+    paths:
+      - /var/lib/zuul/git/
+
 bonnyci_kibana_apache_server_name: elk.opentechsjc.bonnyci.org
 bonnyci_kibana_apache_server_aliases:
   - elk.bonnyci.org

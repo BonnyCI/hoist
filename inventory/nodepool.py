@@ -72,6 +72,7 @@ def get_inventory(subnodes):
     output['mysql'] = {'hosts': ['zuul.multinode']}
     output['log'] = {'hosts': ['logs.multinode']}
     output['monitoring'] = {'hosts': ['logs.multinode']}
+    output['backups'] = {'hosts': ['logs.multinode']}
     output['multinode'] = {'hosts': ['nodepool.multinode',
                                      'zuul.multinode',
                                      'logs.multinode',
