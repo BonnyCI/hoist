@@ -57,6 +57,13 @@
         - nodepool-deleter
         - nodepool-launcher
 
+- name: Build new nodepool images
+  hosts: nodepool
+  become: yes
+  become_user: nodepool
+  tags:
+    - nodepool
+  tasks:
     - name: Rebuild nodepool images
       command: "/opt/venvs/nodepool/bin/nodepool image-build {{ item }}"
       with_items: "{{ nodepool_labels | map(attribute='image') | list | unique }}"
