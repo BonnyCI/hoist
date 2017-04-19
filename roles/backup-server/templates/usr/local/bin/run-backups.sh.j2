@@ -10,8 +10,18 @@ report() {
   echo "$(date -Iseconds) $@"
 }
 
-TODAY=$(date -I{{ format }})
-report "Starting backup run for ${TODAY}"
+{% if mode == 'hourly' %}
+TIME=$(date -Ihours)
+PREFIX=hourly
+{% elif mode == 'daily' %}
+TIME=$(date -Idate)
+PREFIX=daily
+{% else %}
+report "Unrecognized or unset mode, exiting"
+exit 1
+{% endif %}
+
+report "Starting backup run for ${PREFIX}-${TIME}"
 
 {# unroll this for loop in jinja because it makes the data easier to work with #}
 {% for item in backup_sources %}
@@ -19,6 +29,11 @@ report "Starting backup run for ${TODAY}"
 HOST={{ item.host }}
 REPO={{ backup_home }}/{{ item.host }}
 SSHFS={{ sshfs_base }}/{{ item.host }}
+{% if 'keep' in item %}
+KEEP='{{ item.keep }}'
+{% else %}
+KEEP='--keep-monthly=1 --keep-weekly=4 --keep-daily=7 --keep-hourly=24'
+{% endif %}
 
 if ! test -d ${REPO}
 then
@@ -37,8 +52,11 @@ set +e  # We always want to get to the unmount
 report "Mounting ${HOST}:/ at ${SSHFS}"
 sshfs root@${HOST}:/ ${SSHFS}
 
-report "Creating backup ${REPO}::${TODAY}"
-borg create --verbose --stats --compression zlib,4 ${REPO}::${TODAY} {% for path in item.paths %}${SSHFS}/{{ path }} {% endfor %}
+report "Creating backup ${REPO}::${PREFIX}-${TIME}"
+borg create --verbose --stats --compression zlib,4 ${REPO}::${PREFIX}-${TIME} {% for path in item.paths %}${SSHFS}/{{ path }} {% endfor %}
+
+report "Pruning old ${PREFIX} backups"
+borg prune --verbose --list --prefix=${PREFIX} ${KEEP} ${REPO}
 
 report "Unmounting ${SSHFS}"
 fusermount -u ${SSHFS}

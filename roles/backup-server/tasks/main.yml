@@ -63,10 +63,11 @@
     mode: 0755
   vars:
     backup_sources: "{{ backup_sources_hourly }}"
-    format: hours
+    mode: hourly
 
 - name: Install hourly backup cron
   cron:
+    name: "Hourly backups"
     user: "{{ backup_user }}"
     minute: 5
     job: /usr/local/bin/run-backups-hourly.sh
@@ -78,10 +79,11 @@
     mode: 0755
   vars:
     backup_sources: "{{ backup_sources_daily }}"
-    format: date
+    mode: daily
 
 - name: Install daily backup cron
   cron:
+    name: "Daily backups"
     user: "{{ backup_user }}"
     minute: 0
     hour: 0

@@ -6,6 +6,7 @@ backup_sources_daily:
     paths:
       - /var/www
   - host: merger.vagrant
+    keep: '--keep-daily=14'
     paths:
       - /var/lib/zuul/git
 

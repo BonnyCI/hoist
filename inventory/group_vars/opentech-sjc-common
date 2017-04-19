@@ -20,6 +20,7 @@ backup_sources_daily:
     paths:
       - /var/www/
   - host: merger01.internal.opentechsjc.bonnyci.org
+    keep: '--keep-daily=14'
     paths:
       - /var/lib/zuul/git/
 
