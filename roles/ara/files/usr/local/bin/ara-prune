@@ -1,0 +1,32 @@
+#!/bin/bash -eu
+
+if [[ -z ${1+x} ]]; then
+  echo "ERROR: Must supply argument for # of days to keep"
+  exit 1
+else
+  days_to_keep="$1"
+fi
+
+ara_venv=${ANSIBLE_RUNNER_VENV:-/opt/ansible}
+
+set +u
+. "$ara_venv"/bin/activate
+set -u
+
+# Get all the playbooks IDs and dates in csv format, no surrounding quotes, skip the header
+playbooks=$(ara playbook list -c "ID" -c "Time Start" -f "csv" --quote "none" | tail -n +2) 
+
+# Get a week ago in seconds from epoch
+date_to_prune=$(date --date="$days_to_keep days ago" +%s)
+
+printf '%s\n' "$playbooks" | while IFS= read -r line; 
+do
+  id=$(echo "$line" | cut -f1 -d,)
+  # Convert the date from ARA into an epoch date for comparison
+  line_date=$(echo "$line" | cut -f2 -d,) 
+  date_in_secs=$(date -d "$line_date" +%s)
+  if [ "$date_in_secs" -le "$date_to_prune" ]; then
+    # Remove old playbooks
+    ara playbook delete "$id"
+  fi
+done
