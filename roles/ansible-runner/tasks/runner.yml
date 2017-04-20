@@ -41,6 +41,12 @@
     owner: "{{ item.user }}"
     group: www-data
 
+- name: Add default PATH to cron file
+  cron:
+    name: PATH
+    env: yes
+    value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 - name: Add ansible-runner cron job
   cron:
     name: "ansible-runner deploy {{ item.name}}"
