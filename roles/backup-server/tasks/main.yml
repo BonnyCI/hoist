@@ -5,6 +5,7 @@
   with_items:
     - sshfs
     - borgbackup
+    - cron
 
 - name: Create backup group.
   group:
