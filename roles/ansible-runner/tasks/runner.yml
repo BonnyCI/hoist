@@ -45,6 +45,7 @@
   cron:
     name: PATH
     env: yes
+    user: "{{ item.user }}"
     value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 - name: Add ansible-runner cron job
