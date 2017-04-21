@@ -1,0 +1,12 @@
+logging_proxy_port: 3000
+logging_proxy_host: "0.0.0.0"
+
+logging_proxy_nodejs_path: /usr/bin/nodejs
+
+logging_proxy_git_repo: https://github.com/BonnyCI/logging-proxy.git
+logging_proxy_git_version: master
+logging_proxy_git_force: no
+logging_proxy_git_update: no
+
+logging_proxy_service_enabled: yes
+logging_proxy_service_restart: always

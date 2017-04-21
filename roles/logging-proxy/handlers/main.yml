@@ -1,0 +1,12 @@
+- name: Reload systemd unit files
+  command: systemctl daemon-reload
+
+- name: Restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+
+- name: Restart logging-proxy
+  service:
+    name: logging-proxy
+    state: restarted

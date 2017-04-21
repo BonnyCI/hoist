@@ -5,6 +5,8 @@ bonnyci_logs_apache_mods_install:
   - rewrite.load
   - proxy.load
   - proxy_uwsgi.load
+  - proxy_http.load
+  - proxy_wstunnel.load
 
 bonnyci_logs_apache_vhosts:
   - name: logs
@@ -73,6 +75,15 @@ bonnyci_logs_apache_vhosts:
       ProxyPass /htmlify/ uwsgi://localhost:3310/
 
       ServerSignature Off
+
+  - name: logging-proxy
+    port: 3001
+    server_name: "{{ bonnyci_logs_apache_server_name | default('logs') }}"
+    aliases: "{{ bonnyci_logs_apache_server_aliases | default([]) }}"
+
+    vhost_extra: |
+      ProxyPass /sock ws://localhost:3000/sock
+      ProxyPass / http://localhost:3000/
 
 bonnyci_logs_loganalyze_file_conditions:
   - filename_pattern: ^.*\.txt(\.gz)?$

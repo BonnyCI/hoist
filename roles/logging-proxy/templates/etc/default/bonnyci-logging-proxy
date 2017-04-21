@@ -1,0 +1,2 @@
+NODE_PORT = {{ logging_proxy_port }}
+NODE_HOST = {{ logging_proxy_host }}
