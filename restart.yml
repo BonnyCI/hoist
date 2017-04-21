@@ -57,6 +57,17 @@
         - nodepool-deleter
         - nodepool-launcher
 
-    - name: Rebuild nodepool images
-      command: "/opt/venvs/nodepool/bin/nodepool image-build {{ item }}"
-      with_items: "{{ nodepool_labels | map(attribute='image') | list | unique }}"
+- name: Purge old nodepool nodes
+  hosts: nodepool
+  become: yes
+  become_user: nodepool
+  tags:
+    - nodepool
+  tasks:
+    - name: Get nodepool nodes
+      shell: '/opt/venvs/nodepool/bin/nodepool list | grep -v used | cut -d\| -f2 | grep -v + | tail -n +2'
+      register: nodepool_id_list
+
+    - name: Delete old nodepool nodes
+      shell: '/opt/venvs/nodepool/bin/nodepool delete {{ item }}'
+      with_items: "{{ nodepool_id_list.stdout_lines }}"
