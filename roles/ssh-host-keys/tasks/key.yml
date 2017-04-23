@@ -1,0 +1,16 @@
+- name: Install ssh-rsa key
+  known_hosts:
+    name: "{{ item }}-rsa"
+    key: "{{ item }}-rsa,{{ item }},{{ hostvars[item].ansible_default_ipv4.address }} ssh-rsa {{ hostvars[item].ansible_ssh_host_key_rsa_public }}"
+    path: "{{ ssh_host_keys_path }}"
+    state: present
+  when: '"ansible_ssh_host_key_rsa_public" in hostvars[item]'
+
+# dsa key validation fails for some reason - we probably don't want it anyway
+# - name: Install ssh-dsa key
+#   known_hosts:
+#     name: "{{ item }}-dsa"
+#     key: "{{ item }}-dsa,{{ item }},{{ hostvars[item].ansible_default_ipv4.address }} ssh-dsa {{ hostvars[item].ansible_ssh_host_key_dsa_public }}"
+#     path: "{{ ssh_host_keys_path }}"
+#     state: present
+#   when: '"ansible_ssh_host_key_dsa_public" in hostvars[item]'

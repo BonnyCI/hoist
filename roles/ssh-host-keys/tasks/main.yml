@@ -1,0 +1,18 @@
+---
+- include: key.yml
+  when: item in hostvars
+  with_inventory_hostnames: "{{ ssh_host_keys_hostnames | mandatory }}"
+
+# Just in case nothing happened above we can't user/group an empty file
+- name: Test host key file exists
+  stat:
+    path: "{{ ssh_host_keys_path }}"
+  register: ssh_host_key_stat
+
+- name: Ensure host key file
+  file:
+    name: "{{ ssh_host_keys_path }}"
+    owner: "{{ ssh_host_keys_user | default(omit) }}"
+    group: "{{ ssh_host_keys_group | default(omit) }}"
+    state: file
+  when: ssh_host_key_stat.stat.exists
