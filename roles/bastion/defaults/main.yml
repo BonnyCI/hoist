@@ -4,13 +4,13 @@ bastion_users:
   - adam_g
   - bradonk
   - cideploy
+  - clint
   - jamie
   - jason_clark
   - jesusaur
   - olaph
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users:
-  - clint
   - auggy
   - greghaynes
   - nibz
