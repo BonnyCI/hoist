@@ -1,0 +1,11 @@
+---
+- name: Fetch and install
+  docker_container:
+    name: logging-proxy
+    image: "quay.io/bonnyci/logging-proxy:{{ logging_proxy_tag }}"
+    ports:
+      - "{{ logging_proxy_host }}:{{ logging_proxy_port }}:3000"
+    state: started
+    pull: yes
+    restart_policy: always
+    network_mode: bridge

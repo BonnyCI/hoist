@@ -1,0 +1,41 @@
+# The ansible version of https://docs.docker.com/engine/installation/linux/ubuntu/
+---
+- name: Remove older package names
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-engine
+
+- name: Install requirements
+  apt:
+    name: linux-image-extra-virtual
+    state: present
+
+- name: Install apt key
+  apt_key:
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker
+    update_cache: yes
+
+- name: Install docker
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker-ce
+    - python-docker
+
+- name: Start docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
