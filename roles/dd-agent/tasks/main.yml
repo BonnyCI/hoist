@@ -23,14 +23,6 @@
   notify:
     - restart dd-agent
 
-# This is required to call datadog_monitor with ansible and later to use the
-# datadog callback for more integration into ansible runs
-# within datadog.
-- name: install datadog pip
-  pip:
-    name: datadog
-    virtualenv: /opt/datadog
-
 - name: Ensure config directories
   file:
     state: directory
