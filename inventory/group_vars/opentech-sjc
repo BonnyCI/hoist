@@ -35,12 +35,12 @@ nodepool_providers:
 nodepool_labels:
   - name: ubuntu-xenial
     image: ubuntu-xenial
-    min-ready: 3
+    min-ready: 1
     providers:
       - name: cicloud
   - name: ubuntu-hoist
     image: ubuntu-xenial
-    min-ready: 2
+    min-ready: 1
     subnodes: 3
     ready-script: subnode-ssh.sh
     providers:
