@@ -1,0 +1,5 @@
+- name: install ansible-runner check
+  copy:
+    src: ansible_runner.py
+    dest: "{{ datadog_file_dir }}/ansible_runner.py"
+  notify: restart dd-agent

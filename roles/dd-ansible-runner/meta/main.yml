@@ -1,0 +1,9 @@
+---
+dependencies:
+  - role: dd-checks
+
+    datadog_checks:
+      ansible_runner:
+        instances:
+          - failing_dir: "{{ dd_ansible_runner_failing_dir }}"
+
