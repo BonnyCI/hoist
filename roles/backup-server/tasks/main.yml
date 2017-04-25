@@ -43,6 +43,10 @@
     group: backup
     mode: 0644
 
+- name: Add client hostkeys to backup server
+  include: hostkeys.yml
+  with_items: "{{ backup_sources_hourly |union(backup_sources_daily) |json_query('[*].host') }}"
+
 - name: Set permissions on log directory
   file:
     path: /var/log/backups

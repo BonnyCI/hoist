@@ -2,3 +2,5 @@
 datadog
 # for ansible vault
 cryptography
+# for json_query filter
+jmespath
