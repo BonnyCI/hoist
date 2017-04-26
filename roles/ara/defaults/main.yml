@@ -1,0 +1,4 @@
+# Keep 7 days worth of ARA data
+ara_prune_days: 7
+#Run offset from ansible-runner :07,:22,:37,:52
+ara_prune_cron_schedule: 7,22,37,52

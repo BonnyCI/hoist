@@ -16,6 +16,7 @@
     - libffi-dev
     - python-dev
     - libssl-dev
+    - cron
 
 - name: Install ara
   pip:
@@ -70,3 +71,17 @@
     group: www-data
     recurse: yes
 
+- name: Copy ara-prune script into place
+  copy:
+    src: usr/local/bin/ara-prune
+    dest: /usr/local/bin/ara-prune
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Add ara-prune cron job
+  cron:
+    name: "ara-prune"
+    minute: "{{ ara_prune_cron_schedule | default(omit) }}"
+    user: root
+    job: "/usr/local/bin/ara-prune {{ ara_prune_days }}"
