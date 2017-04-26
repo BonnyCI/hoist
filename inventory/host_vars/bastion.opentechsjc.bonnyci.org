@@ -28,6 +28,7 @@ ansible_runner_tasks:
 
 dns_subdomain: internal.opentechsjc.bonnyci.org
 
+bonnyci_bastion_ssl: true
 letsencrypt_csr_cn: bastion.opentechsjc.bonnyci.org
 
 filebeat_output_logstash_hosts:

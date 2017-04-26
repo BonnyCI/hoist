@@ -77,7 +77,7 @@
         - name: bastion
           document_root: /var/www/html/
           document_root_options: +FollowSymLinks
-          ssl: "{{ letsencrypt_csr_cn | default(False) | bool }}"
+          ssl: "{{ bonnyci_bastion_ssl | default(False) }}"
           certificate_file: "{{ letsencrypt_cert_path | default('') }}"
           certificate_key_file: "{{ letsencrypt_key_path | default('') }}"
           certificate_chain_file: "{{ letsencrypt_chain_path | default('') }}"
