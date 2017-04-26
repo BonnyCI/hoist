@@ -10,10 +10,13 @@
 
   roles:
     - common
+
     - role: dd-agent
+      datadog_hostname: "{{ datadog_hostname | default(ansible_hostname) }}"
       tags:
         - monitoring
       when: secrets is defined
+
     - role: letsencrypt
       tags:
         - letsencrypt
