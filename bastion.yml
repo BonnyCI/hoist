@@ -111,5 +111,11 @@
               document_type: apache
               paths:
                 - /var/log/apache/*.log
+        - name: ansible_runner
+          prospectors:
+            - input_type: log
+              document_type: ansible_runner
+              paths:
+                - "/var/www/html/cron-logs/$env/*.log"
 
     - role: fail2ban  # This should be last
