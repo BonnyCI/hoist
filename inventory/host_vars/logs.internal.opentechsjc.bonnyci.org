@@ -1,3 +1,4 @@
 ---
 letsencrypt_csr_cn: logs.bonnyci.org
 bonnyci_logs_ssl: yes
+datadog_hostname: logs.internal.opentechsjc.bonnyci.org
