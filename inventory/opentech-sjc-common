@@ -8,6 +8,7 @@ logs.internal.opentechsjc.bonnyci.org
 elk.internal.opentechsjc.bonnyci.org
 
 [production]
+bastion.opentechsjc.bonnyci.org
 logs.internal.opentechsjc.bonnyci.org
 elk.internal.opentechsjc.bonnyci.org
 
