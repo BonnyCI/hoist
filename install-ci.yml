@@ -10,7 +10,7 @@
     - role: common
 
     - role: dd-agent
-      datadog_hostname: "{{ ansible_hostname }}"
+      datadog_hostname: "{{ inventory_hostname }}"
       tags:
         - monitoring
 
