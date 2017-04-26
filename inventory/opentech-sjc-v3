@@ -1,19 +1,19 @@
 [nodepool]
-nodepool.internal.v3.opentechsjc.bonnyci.org
+nodepool.v3.opentechsjc.bonnyci.org
 
 [zuul]
-zuul.internal.v3.opentechsjc.bonnyci.org
+zuul.v3.opentechsjc.bonnyci.org
 
 [mysql]
-zuul.internal.v3.opentechsjc.bonnyci.org
+zuul.v3.opentechsjc.bonnyci.org
 
 [zookeeper]
-nodepool.internal.v3.opentechsjc.bonnyci.org
+nodepool.v3.opentechsjc.bonnyci.org
 
 [production]
-nodepool.internal.v3.opentechsjc.bonnyci.org
-zuul.internal.v3.opentechsjc.bonnyci.org
+nodepool.v3.opentechsjc.bonnyci.org
+zuul.v3.opentechsjc.bonnyci.org
 
 [opentech-sjc-v3]
-nodepool.internal.v3.opentechsjc.bonnyci.org
-zuul.internal.v3.opentechsjc.bonnyci.org
+nodepool.v3.opentechsjc.bonnyci.org
+zuul.v3.opentechsjc.bonnyci.org

@@ -8,9 +8,9 @@
       when: bonnyci_lockdown_ssh | default(False)
 
     - role: common
+      common_hostname: "{{ bonnyci_hostname | default('') }}"
 
     - role: dd-agent
-      datadog_hostname: "{{ ansible_hostname }}"
       tags:
         - monitoring
 

@@ -9,10 +9,10 @@
         mode: 0700
 
   roles:
-    - common
+    - role: common
+      common_hostname: "{{ bonnyci_hostname | default('') }}"
 
     - role: dd-agent
-      datadog_hostname: "{{ ansible_hostname }}"
       tags:
         - monitoring
       when: secrets is defined

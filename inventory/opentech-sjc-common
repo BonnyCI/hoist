@@ -2,16 +2,16 @@
 bastion.opentechsjc.bonnyci.org ansible_connection=local
 
 [log]
-logs.internal.opentechsjc.bonnyci.org
+logs.opentechsjc.bonnyci.org
 
 [monitoring]
-elk.internal.opentechsjc.bonnyci.org
+elk.opentechsjc.bonnyci.org
 
 [production]
 bastion.opentechsjc.bonnyci.org
-logs.internal.opentechsjc.bonnyci.org
-elk.internal.opentechsjc.bonnyci.org
+logs.opentechsjc.bonnyci.org
+elk.opentechsjc.bonnyci.org
 
 [opentech-sjc-common]
-logs.internal.opentechsjc.bonnyci.org
-elk.internal.opentechsjc.bonnyci.org
+logs.opentechsjc.bonnyci.org
+elk.opentechsjc.bonnyci.org

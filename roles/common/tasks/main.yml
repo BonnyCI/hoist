@@ -9,11 +9,17 @@
     - netcat
     - net-tools
 
+- name: set hostname
+  hostname:
+    name: "{{ common_hostname }}"
+  when: common_hostname | string | length > 0
+  tags: ['not-on-docker']
+
 - name: Put hostname in /etc/hosts
   lineinfile:
     dest: /etc/hosts
     regexp: '^127\.0\.0\.1'
-    line: '127.0.0.1 {{ ansible_hostname }} localhost'
+    line: '127.0.0.1 {{ common_hostname }} {{ ansible_hostname }} localhost'
   tags: ['not-on-docker']
 
 - name: Set custom bash prompt for per-environment nodes

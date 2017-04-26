@@ -1,4 +1,6 @@
 bonnyci_lockdown_ssh: yes
+bonnyci_hostname: "{{ inventory_hostname }}"  # in production we use inventory_hostname carefully
+
 letsencrypt_production: yes
 
 nodepool_statsd_enable: yes

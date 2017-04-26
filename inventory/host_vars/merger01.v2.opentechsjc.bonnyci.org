@@ -1,0 +1,6 @@
+---
+ansible_host: merger01.internal.opentechsjc.bonnyci.org
+ansible_user: ubuntu
+
+zuul_components:
+  - zuul-merger
