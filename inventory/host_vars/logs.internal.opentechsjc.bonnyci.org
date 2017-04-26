@@ -1,3 +1,0 @@
----
-letsencrypt_csr_cn: logs.bonnyci.org
-bonnyci_logs_ssl: yes
