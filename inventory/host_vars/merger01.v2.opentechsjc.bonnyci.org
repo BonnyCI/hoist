@@ -2,5 +2,10 @@
 ansible_host: merger01.internal.opentechsjc.bonnyci.org
 ansible_user: ubuntu
 
+datadog_tags:
+  - environ:v2
+  - role:zuul
+  - deploy:production
+
 zuul_components:
   - zuul-merger

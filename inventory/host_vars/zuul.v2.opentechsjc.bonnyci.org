@@ -2,6 +2,11 @@
 ansible_host: zuul.internal.opentechsjc.bonnyci.org
 ansible_user: ubuntu
 
+datadog_tags:
+  - environ:v2
+  - role:zuul
+  - deploy:production
+
 letsencrypt_csr_cn: zuul.bonnyci.org
 bonnyci_zuul_webapp_ssl: yes
 
