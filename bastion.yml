@@ -116,6 +116,7 @@
             - input_type: log
               document_type: ansible_runner
               paths:
-                - "/var/www/html/cron-logs/$env/*.log"
+                - "/var/www/html/cron-logs/*/current.log"
+                - "/var/www/html/cron-logs/*/latest.log"
 
     - role: fail2ban  # This should be last
