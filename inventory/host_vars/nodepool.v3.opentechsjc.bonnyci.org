@@ -2,4 +2,9 @@
 ansible_host: nodepool.internal.v3.opentechsjc.bonnyci.org
 ansible_user: ubuntu
 
+datadog_tags:
+  - environ:v3
+  - role:nodepool
+  - deploy:production
+
 zookeeper_myid: 1
