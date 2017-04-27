@@ -15,6 +15,12 @@ bonnyci_kibana_apache_vhosts:
   - name: kibana
     server_name: "{{ bonnyci_kibana_apache_server_name | default('elk') }}"
     aliases: "{{ bonnyci_kibana_apache_server_aliases | default([]) }}"
+
+    ssl: "{{ bonnyci_elk_ssl | default(False) }}"
+    certificate_file: "{{ letsencrypt_cert_path | default('') }}"
+    certificate_key_file: "{{ letsencrypt_key_path | default('') }}"
+    certificate_chain_file: "{{ letsencrypt_chain_path | default('') }}"
+
     vhost_extra: |
       ProxyPreserveHost On
       ProxyPass / http://127.0.0.1:5601/
