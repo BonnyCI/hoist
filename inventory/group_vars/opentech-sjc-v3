@@ -81,9 +81,9 @@ zuul_tenants:
   - name: BonnyV3
     source:
       gerrithub:
-        config-repos:
+        config-projects:
           - BonnyCI/project-config-v3
-        project-repos:
+        untrusted-projects:
           - BonnyCI/sandbox-v3
 
 dns_subdomain: internal.v3.opentechsjc.bonnyci.org
