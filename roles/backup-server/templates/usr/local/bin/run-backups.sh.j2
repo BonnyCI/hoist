@@ -13,13 +13,24 @@ report() {
 {% if mode == 'hourly' %}
 TIME=$(date -Ihours)
 PREFIX=hourly
+LOCK=/var/lock/hourly-backups
 {% elif mode == 'daily' %}
 TIME=$(date -Idate)
 PREFIX=daily
+LOCK=/var/lock/daily-backups
 {% else %}
 report "Unrecognized or unset mode, exiting"
 exit 1
 {% endif %}
+
+if test -e ${LOCK}
+then
+    report "Lock file ${LOCK} already exists, exiting"
+    exit 1
+fi
+
+touch ${LOCK}
+trap 'rm ${LOCK}' EXIT
 
 report "Starting backup run for ${PREFIX}-${TIME}"
 
