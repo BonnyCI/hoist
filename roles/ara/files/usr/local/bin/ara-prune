@@ -8,10 +8,14 @@ else
 fi
 
 ara_venv=${ANSIBLE_RUNNER_VENV:-/opt/ansible}
+env_source="/opt/source/system-ansible"
 
 set +u
 . "$ara_venv"/bin/activate
 set -u
+
+# Need to be in the same directory as ansible.cfg for ARA to know where to find the database
+cd "$env_source"
 
 # Get all the playbooks IDs and dates in csv format, no surrounding quotes, skip the header
 playbooks=$(ara playbook list -c "ID" -c "Time Start" -f "csv" --quote "none" | tail -n +2) 
