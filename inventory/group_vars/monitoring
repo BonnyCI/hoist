@@ -5,12 +5,7 @@ bonnyci_kibana_apache_mods_enabled:
 
 bonnyci_kibana_apache_vhosts:
   - name: default_deny
-    server_name: default.only
-    vhost_extra: |
-      <Location />
-        Order allow,deny
-        Deny from all
-      </Location>
+    delete: yes
 
   - name: kibana
     server_name: "{{ bonnyci_kibana_apache_server_name | default('elk') }}"
