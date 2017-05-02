@@ -6,8 +6,8 @@ zuul_zuul_v3: True
 nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
 nodepool_git_version: feature/zuulv3
 
-zuul_git_repo_url: https://github.com/openstack-infra/zuul
-zuul_git_branch: feature/zuulv3
+zuul_git_repo_url: https://github.com/BonnyCI/zuul
+zuul_git_branch: zuul-v3-github
 
 bonnyci_logs_scp_host: logs.internal.opentechsjc.bonnyci.org
 bonnyci_zuul_webapp_apache_server_name: zuul.v3.opentechsjc.bonnyci.org
@@ -76,6 +76,13 @@ zuul_connections:
     user: anne-bonny
     server: review.gerrithub.io
     sshkey: /var/lib/zuul/.ssh/id_rsa
+
+  github:
+    driver: github
+    api_token: "{{ secrets.zuul_github_api_key | default('') }}"
+    integration_id: "{{ secrets.zuul_github_v3_integration_id | default('') }}"
+    integration_key: "{{ secrets.zuul_github_v3_integration_key_content | default(False) | ternary(zuul_github_integration_key_file, '') }}"
+    webhook_token: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
 
 zuul_tenants:
   - name: BonnyV3
