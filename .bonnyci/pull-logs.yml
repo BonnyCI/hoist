@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  become: no
+  tasks:
+    - name: create local log directories
+      file:
+        state: directory
+        path: "{{ log_dest }}{{ item }}"
+      with_items:
+        - /var/log/
+
+- hosts: nodepool
+  become: no
+  tasks:
+    - name: copy nodepool logs
+      synchronize:
+        mode: pull
+        recursive: yes
+        src: /var/log/nodepool
+        dest: "{{ log_dest }}/var/log"
+
+- hosts: zuul
+  become: no
+  tasks:
+    - name: copy zuul logs
+      synchronize:
+        mode: pull
+        recursive: yes
+        src: /var/log/zuul
+        dest: "{{ log_dest }}/var/log"

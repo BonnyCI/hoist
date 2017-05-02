@@ -14,6 +14,10 @@ ansible-playbook -vvvv -i inventory/nodepool.py tests/files/validate-ci.yml
 
 echo "Running hoist ansible deployment test again, and check for expected number of changes"
 ansible-playbook -i inventory/nodepool.py install-ci.yml --skip-tags monitoring,letsencrypt -e @secrets.yml.example | tee second_run.out
+
+echo "Copying logs from tests"
+ansible-playbook -i inventory/nodepool.py .bonnyci/pull-logs.yml -e "log_dest=$BONNYCI_TEST_LOG_DIR"
+
 # shellcheck disable=SC2016
 ACTUAL_CHANGE_NUMBER=$(grep "changed=" second_run.out | awk '{ print $1" "$4 }' |  sed -n -e 'H;${x;s/\n/, /g;s/^, //;p;}')
 if ! [[ "$ACTUAL_CHANGE_NUMBER" == "$EXPECTED_CHANGE_NUMBER" ]]; then
