@@ -71,6 +71,12 @@ jobs:
     parameter-function: set_node_options
 
 projects:
+  - name: BonnyCI/bonnyci-test-suite
+    check_github:
+      - bonnyci-run-check
+    gate_github:
+      - bonnyci-run-gate
+
   - name: BonnyCI/bonnyci.org
     check_github:
       - bonnyci-run-check
@@ -96,6 +102,12 @@ projects:
       - bonnyci-run-gate-multinode
 
   - name: BonnyCI/sandbox
+    check_github:
+      - bonnyci-run-check
+    gate_github:
+      - bonnyci-run-gate
+
+  - name: BonnyCI/testing-repo
     check_github:
       - bonnyci-run-check
     gate_github:
