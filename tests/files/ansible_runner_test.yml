@@ -1,7 +1,9 @@
 ---
-- name: Write a test file
+- name: A test playbook
   hosts: localhost
   tasks:
+    - fail:
+      when: fail_test_playbook is defined
     - copy:
         dest: %%TEST_FILE_PATH%%
         content: %%TEST_FILE_CONTENT%%

@@ -7,6 +7,7 @@ export test_env="runner_test"
 runner_path="roles/ansible-runner/files/usr/local/bin/ansible-runner"
 test_file="$tmpdir/ansible_runner_test_file"
 test_log_dir="$tmpdir/logs"
+fail_file_dir="$tmpdir/failing"
 repo="$tmpdir/ansible_runner_env_repo"
 repo_playbook="$repo/ansible_runner_test.yml"
 repo_checkout="$tmpdir/runner_test"
@@ -26,9 +27,10 @@ function run_runner() {
   ANSIBLE_RUNNER_ENV_ROOT="$tmpdir" \
   ANSIBLE_RUNNER_VENV="$test_venv" \
   ANSIBLE_RUNNER_LOG_DIR="$test_log_dir" \
+  ANSIBLE_RUNNER_FAILING_DIR="$fail_file_dir" \
   ANSIBLE_PLAYBOOK=$(basename "$repo_playbook") \
   ANSIBLE_INVENTORY=/dev/null \
-  "$runner_path" runner_test
+  "$runner_path" runner_test "$@"
 }
 
 function commit_requirement() {
@@ -99,6 +101,15 @@ function assert_contents_and_logging() {
     echo "OK"
 }
 
+function assert_fail_file() {
+    if [[ -e "$fail_file_dir"/runner_test ]]; then
+        echo "Fail file exists at $fail_file_dir/runner_test"
+        return 0
+    else
+        echo "Fail file not found at $fail_file_dir/runner_test"
+        return 1
+    fi
+}
 
 # Initialize the upstream environment repo from which ansible-runner will pull
 # and run
@@ -126,7 +137,16 @@ assert_contents_and_logging "$test_file" "bar" "$test_log_dir" "Long Live Anne B
 
 # Add another requirement to the upstream requirements
 commit_requirement "$repo"/requirements.txt iso8601
-
 run_runner
-
+# Ensure requirement has been successfully installed in venv
 assert_requirement iso8601 "$test_venv"
+
+# Run the playbook with the fail option
+run_runner "-e fail_test_playbook=true"
+# Ensure ansible-runner created a flag file for the failing env
+assert_fail_file
+
+# Run the playbook once more without fail option
+run_runner
+# Ensure the flag file is cleaned up
+! assert_fail_file

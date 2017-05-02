@@ -1,6 +1,8 @@
 #!/bin/bash -eu
 # Runs system wide ansible configured in /etc
 
+set -o pipefail
+
 env=$1
 shift
 if [ -f /etc/default/"$env" ]; then
@@ -10,6 +12,7 @@ fi
 envs_root=${ANSIBLE_RUNNER_ENV_ROOT:-/opt/source}
 ansible_venv=${ANSIBLE_RUNNER_VENV:-/opt/ansible}
 log_dir=${ANSIBLE_RUNNER_LOG_DIR:-/var/www/html/cron-logs/$env/}
+failing_dir=${ANSIBLE_RUNNER_FAILING_DIR:-/var/www/html/cron-logs/failing/}
 ssh_user=${ANSIBLE_SSH_USER:-""}
 force_runner=false
 ansible_options=""
@@ -60,7 +63,14 @@ fi
 if [ -n "$ssh_user" ]; then
     ansible_options="$ansible_options -e ansible_ssh_user=$ssh_user"
 fi
-"$ansible_venv"/bin/ansible-playbook -vv -i "$ANSIBLE_INVENTORY" $ansible_options "$ANSIBLE_PLAYBOOK" 2>&1 | tee -a "$logfile"
+
+if ! "$ansible_venv"/bin/ansible-playbook -vv -i "$ANSIBLE_INVENTORY" $ansible_options "$ANSIBLE_PLAYBOOK" 2>&1 | tee -a "$logfile"; then
+  mkdir -p "$failing_dir"
+  touch "${failing_dir}/${env}"
+else
+  rm -rf "${failing_dir}/${env}"
+fi
+
 date 2>&1 | tee -a "$logfile"
 
 # Remove > 10 days old
