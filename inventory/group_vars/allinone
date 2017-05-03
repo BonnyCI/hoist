@@ -1,4 +1,7 @@
 bonnyci_logs_scp_host: localhost
+bonnyci_ara_db_host: localhost
+bonnyci_ara_db_clients: 
+  - localhost
 
 elasticsearch_jvm_heap_size: 250m
 

@@ -42,6 +42,11 @@
     - role: ansible-runner
       ansible_runner_minute: "*/15"
       ansible_runner_virtualenv: /opt/ansible
+      ara_enabled: true
+      ara_db_username: "{{ secrets.ara.username }}"
+      ara_db_password: "{{ secrets.ara.password }}"
+      ara_db_host: "{{ bonnyci_ara_db_host }}"
+      when: secrets is defined
 
     - role: tailon
       tailon_ip: 127.0.0.1
@@ -50,32 +55,11 @@
       tailon_files:
         - "/var/www/html/cron-logs/**/*_current.log"
 
-    - role: ara
-      ara_venv_path: /opt/ansible
-
-    - role: uwsgi
-      uwsgi_apt_plugins:
-        - uwsgi-plugin-python
-      uwsgi_vassals:
-        - name: ara
-          state: present
-          config:
-            uid: www-data
-            gid: www-data
-            wsgi-file: "/var/www/ara/ara-wsgi"
-            virtualenv: /opt/ansible
-            plugin: python
-            socket: localhost:3311
-            lazy-apps: true
-
     - role: apache
-      apache_apt_install:
-        - libapache2-mod-proxy-uwsgi
       apache_mods_enabled:
         - proxy.conf
         - proxy.load
         - proxy_http.load
-        - proxy_uwsgi.load
       apache_vhosts:
         - name: bastion
           document_root: /var/www/html/
@@ -87,17 +71,9 @@
           vhost_extra: |
             AddType text/plain .log
 
-            Redirect permanent /ara /ara/
             Redirect permanent /cron-logs/live /cron-logs/live/
 
             ProxyPass "/cron-logs/live/" http://localhost:8080/cron-logs/live/
-            ProxyPass "/ara/" uwsgi://localhost:3311/
-
-            SetEnv ANSIBLE_CONFIG /var/www/ara/ansible.cfg
-
-            <Directory /var/www/ara>
-              Require all granted
-            </Directory>
         - name: tailon
           delete: yes
         - name: ara

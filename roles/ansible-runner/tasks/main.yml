@@ -1,11 +1,6 @@
- ### Update apt cache, but don't mark changed
- # Works around Ansible 2.2 bug
- # TODO: Remove with Ansible 2.3
 - name: Update apt cache
   apt:
     update_cache: yes
-  register: apt_cache
-  changed_when: False
 
 - name: Install deps
   apt:
@@ -67,14 +62,6 @@
     owner: root
     group: root
 
-- name: Ensure source dir
-  file:
-    path: /opt/source
-    state: directory
-    mode: 0755
-    owner: root
-    group: root
-
 - name: Ensure cron log live path
   file:
     state: directory
@@ -83,3 +70,6 @@
 
 - include: runner.yml
   with_items: "{{ ansible_runner_tasks }}"
+
+- include: ara.yml
+  when: ara_enabled | default(False) | bool

@@ -6,6 +6,8 @@ bastion_clouds:
 
 bonnyci_logs_apache_server_name: logs.multinode
 bonnyci_logs_scp_host: "{{ logs_ip }}"
+bonnyci_ara_db_host: "{{ logs_ip }}"
+bonnyci_ara_db_clients: "{{ logs_ip }}"
 bonnyci_zuul_webapp_apache_server_name: zuul.multinode
 
 datadog_enabled: no
