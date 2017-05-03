@@ -114,9 +114,12 @@
         - name: ansible_runner
           prospectors:
             - input_type: log
-              document_type: ansible_runner
+              document_type: ansible-runner
               paths:
-                - "/var/www/html/cron-logs/*/current.log"
-                - "/var/www/html/cron-logs/*/latest.log"
+                - "/var/www/html/cron-logs/*/*current.log"
+              multiline:
+                pattern: '^$'
+                negate: true
+                match: before
 
     - role: fail2ban  # This should be last
