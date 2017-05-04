@@ -38,4 +38,4 @@ zuul_zuul_v3: False
 zuul_zookeeper_hosts:
   - "127.0.0.1:2181"
 
-zuul_merge_failure_message: "Merge Failed! Help can be found at https://bonnyci.org/lore/end_users/use/#handling-merge-failures"
+zuul_merge_failure_message: "Merge Failed! Help can be found at http://bonnyci.org/lore/end_users/use/#handling-merge-failures"
