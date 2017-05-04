@@ -1,0 +1,44 @@
+- name: Create the test suite user
+  user:
+    name: "{{ test_suite_user }}"
+    home: "{{ test_suite_homedir }}"
+    system: yes
+    state: present
+
+- name: Create test suite user ssh directory
+  file:
+    path: "{{ test_suite_homedir }}/.ssh"
+    state: directory
+    owner: "{{ test_suite_user }}"
+    group: "{{ test_suite_user }}"
+    mode: 0700
+
+- name: Write out test suite user ssh private key
+  copy:
+    dest: "{{ test_suite_homedir }}/.ssh/id_rsa"
+    content: "{{ secrets.ssh_keys.test_suite.private }}"
+    owner: "{{ test_suite_user }}"
+    group: "{{ test_suite_user }}"
+    mode: 0600
+
+- name: Write out test suite user known_hosts
+  copy:
+    dest: "{{ test_suite_homedir }}/.ssh/known_hosts"
+    src: "github_known_hosts"
+    owner: "{{ test_suite_user }}"
+    group: "{{ test_suite_user }}"
+
+- name: Write out test suite secrets + config
+  template:
+    dest: "{{ test_suite_homedir }}/test_config.yml"
+    src: test_config.yml
+    owner: "{{ test_suite_user }}"
+    group: "{{ test_suite_user }}"
+    mode: 0600
+
+- name: give sudo access to user to update venv
+  copy:
+    dest: /etc/sudoers.d/99_bonnyci-test-suite
+    mode: 0400
+    owner: root
+    content: "bonnyci-test-suite ALL=(ALL) NOPASSWD:ALL"

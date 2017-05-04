@@ -9,6 +9,7 @@
   git:
     repo: "{{ item.repo }}"
     dest: "/opt/source/{{ item.name }}"
+    version: "{{ item.branch | default(omit) }}"
     update: true
 
 - name: Ensure source ownership
@@ -30,7 +31,7 @@
 
 - include: secret-file.yml
   secret_file_type: secrets
-  secret_file_path: "{{ ansible_runner_secrets_path }}"
+  secret_file_path: "{{ item.secrets_path | default(ansible_runner_secrets_path) }}"
   secret_file_user: "{{ item.user }}"
 
 - name: Ensure cron log path
@@ -51,6 +52,6 @@
 - name: Add ansible-runner cron job
   cron:
     name: "ansible-runner deploy {{ item.name}}"
-    minute: "{{ ansible_runner_minute | default(omit) }}"
+    minute: "{{ item.schedule | default(ansible_runner_minute) }}"
     user: "{{ item.user }}"
-    job: "/usr/local/bin/ansible-runner {{ item.name }} -e @{{ ansible_runner_secrets_path }}"
+    job: "/usr/local/bin/ansible-runner {{ item.name }} -e @{{ item.secrets_path | default(ansible_runner_secrets_path) }}"

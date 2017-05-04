@@ -1,0 +1,15 @@
+test_suite_user: bonnyci-test-suite
+test_suite_homedir: /var/lib/bonnyci-test-suite
+bonnyci_test_suite:
+  check_job: bonnyci-run-check
+  gate_job: bonnyci-run-gate
+  bot_name: "bonnyci[bot]"
+  check_context: check_github
+  gate_context: gate_github
+  upstream_org: BonnyCI
+  upstream_repo: testing-repo
+  downstream_org: BobbyBoatswain
+  downstream_repo: testing-repo
+
+# Additionally, the secrets dictshould contain a 'bonnyci_secrtion' key
+# that contains both 'upstream_api_token' and 'downstream_api_token'k
