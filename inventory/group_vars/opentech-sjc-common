@@ -30,3 +30,8 @@ bonnyci_kibana_apache_server_aliases:
 bonnyci_logs_apache_server_name: logs.opentechsjc.bonnyci.org
 bonnyci_logs_apache_server_aliases:
   - logs.bonnyci.org
+
+bonnyci_ara_db_host: logs.internal.opentechsjc.bonnyci.org
+bonnyci_ara_db_clients:
+  - bastion.internal.opentechsjc.bonnyci.org
+  - logs.internal.opentechsjc.bonnyci.org
