@@ -17,6 +17,7 @@ elk.opentechsjc.bonnyci.org
 backups.opentechsjc.bonnyci.org
 
 [opentech-sjc-common]
+bastion.opentechsjc.bonnyci.org ansible_connection=local
 logs.opentechsjc.bonnyci.org
 elk.opentechsjc.bonnyci.org
 backups.opentechsjc.bonnyci.org
