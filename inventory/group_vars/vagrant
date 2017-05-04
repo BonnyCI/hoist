@@ -1,6 +1,23 @@
 bastion_clouds:
   - bastioncloud
 
+backup_sources_daily:
+  - host: logs.vagrant
+    paths:
+      - /var/www
+  - host: merger.vagrant
+    keep: '--keep-daily=14'
+    paths:
+      - /var/lib/zuul/git
+
+backup_sources_hourly:
+  - host: logs.vagrant
+    paths:
+      - /var/log
+  - host: merger.vagrant
+    paths:
+      - /var/log
+
 bonnyci_kibana_apache_server_name: elk.vagrant
 bonnyci_logs_scp_host: logs.vagrant
 bonnyci_zuul_merger_apache_server_name: merger.vagrant

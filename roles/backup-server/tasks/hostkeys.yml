@@ -1,0 +1,14 @@
+---
+- block:
+  - name: Collect client hostkey
+    command: "{{ 'ssh-keyscan -t rsa ' + item }}"
+    register: clienthostkey
+    changed_when: False
+
+  - name: Add client hostkey to backup server
+    become: true
+    become_user: "{{ backup_user }}"
+    known_hosts:
+      name: "{{ item }}"
+      key: "{{ clienthostkey.stdout }}"
+    when: clienthostkey.stdout != ""

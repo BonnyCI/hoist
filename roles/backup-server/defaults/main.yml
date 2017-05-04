@@ -1,0 +1,5 @@
+backup_user: backup
+backup_home: /var/lib/backups
+backup_sources: []
+
+sshfs_base: /mnt/sshfs

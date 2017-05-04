@@ -1,0 +1,3 @@
+---
+ansible_host: backups.internal.opentechsjc.bonnyci.org
+ansible_user: ubuntu

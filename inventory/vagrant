@@ -22,6 +22,9 @@ logs.vagrant
 [monitoring]
 elk.vagrant
 
+[backups]
+backups.vagrant
+
 [vagrant]
 bastion.vagrant
 nodepool.vagrant
@@ -29,3 +32,4 @@ zuul.vagrant
 merger.vagrant
 logs.vagrant
 elk.vagrant
+backups.vagrant

@@ -4,6 +4,16 @@ zuul_ip: "{{ hostvars['zuul.multinode']['ansible_default_ipv4']['address'] }}"
 bastion_clouds:
   - bastioncloud
 
+backup_sources_daily:
+  - host: "{{ zuul_ip }}"
+    paths:
+      - /var/lib/zuul/git
+
+backup_sources_hourly:
+  - host: "{{ zuul_ip }}"
+    paths:
+      - /var/log
+
 bonnyci_logs_apache_server_name: logs.multinode
 bonnyci_logs_scp_host: "{{ logs_ip }}"
 bonnyci_zuul_webapp_apache_server_name: zuul.multinode

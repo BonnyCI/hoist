@@ -1,3 +1,14 @@
+backup_sources_daily:
+  - host: localhost
+    paths:
+      - /var/www
+      - /var/lib/zuul/git
+
+backup_sources_hourly:
+  - host: localhost
+    paths:
+      - /var/log
+
 bonnyci_logs_scp_host: localhost
 
 elasticsearch_jvm_heap_size: 250m

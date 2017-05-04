@@ -80,6 +80,10 @@ common_security_group_rules:
     rules:
       - remote_cidr: 0.0.0.0/0
         port: 22
+  - name: sg-backups
+    rules:
+      - remote_group: sg-control-plane
+        port: 22
   - name: sg-http-https
     rules:
       - remote_cidr: 0.0.0.0/0

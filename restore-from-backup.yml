@@ -1,0 +1,18 @@
+---
+- name: Restore from backup
+  hosts: backups
+  become: yes
+  become_user: backup
+  tasks:
+    - block:
+        - name: Mount client filesystem
+          shell: "sshfs root@{{ client_host }}:/ /mnt/sshfs/{{ client_host }}"
+
+        - name: Extract backup snapshot
+          shell: "borg extract /var/lib/backups/{{ client_host }}::{{ snapshot }}"
+          args:
+            chdir: /
+
+      always:
+        - name: Unmount client filesystem
+          shell: "fusermount -u /mnt/sshfs/{{ client_host }}"

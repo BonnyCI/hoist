@@ -1,0 +1,95 @@
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - sshfs
+    - borgbackup
+    - cron
+
+- name: Create backup group.
+  group:
+    name: backup
+
+- name: Create backup user.
+  user:
+    createhome: yes
+    group: backup
+    home: "{{ backup_home }}"
+    name: "{{ backup_user }}"
+    shell: /bin/bash
+
+- name: Create backup user's ~/.ssh
+  file:
+    owner: "{{ backup_user }}"
+    group: backup
+    state: directory
+    path: "{{ backup_home }}/.ssh/"
+    mode: 0700
+
+- name: Install backup private ssh key
+  copy:
+    dest: "{{ backup_home }}/.ssh/id_rsa"
+    content: "{{ secrets.ssh_keys.backup.private }}"
+    owner: "{{ backup_user }}"
+    group: backup
+    mode: 0600
+
+- name: Install backup public ssh key
+  copy:
+    dest: "{{ backup_home }}/.ssh/id_rsa.pub"
+    content: "{{ secrets.ssh_keys.backup.public }}"
+    owner: "{{ backup_user }}"
+    group: backup
+    mode: 0644
+
+- name: Add client hostkeys to backup server
+  include: hostkeys.yml
+  with_items: "{{ backup_sources_hourly |union(backup_sources_daily) |json_query('[*].host') }}"
+
+- name: Set permissions on log directory
+  file:
+    path: /var/log/backups
+    state: directory
+    owner: "{{ backup_user }}"
+    group: root
+
+- name: Create sshfs mount dir
+  file:
+    owner: "{{ backup_user }}"
+    group: backup
+    state: directory
+    path: "{{ sshfs_base }}"
+
+- name: Install hourly backup script
+  template:
+    src: usr/local/bin/run-backups.sh.j2
+    dest: /usr/local/bin/run-backups-hourly.sh
+    mode: 0755
+  vars:
+    backup_sources: "{{ backup_sources_hourly }}"
+    mode: hourly
+
+- name: Install hourly backup cron
+  cron:
+    name: "Hourly backups"
+    user: "{{ backup_user }}"
+    minute: 5
+    job: /usr/local/bin/run-backups-hourly.sh
+
+- name: Install daily backup script
+  template:
+    src: usr/local/bin/run-backups.sh.j2
+    dest: /usr/local/bin/run-backups-daily.sh
+    mode: 0755
+  vars:
+    backup_sources: "{{ backup_sources_daily }}"
+    mode: daily
+
+- name: Install daily backup cron
+  cron:
+    name: "Daily backups"
+    user: "{{ backup_user }}"
+    minute: 0
+    hour: 0
+    job: /usr/local/bin/run-backups-daily.sh
