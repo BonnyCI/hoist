@@ -1,0 +1,10 @@
+---
+- name: Install ara
+  pip:
+    name: ara
+    virtualenv: "{{ ansible_runner_virtualenv }}"
+
+- name: Install ara database driver
+  pip:
+    name: pymysql
+    virtualenv: "{{ ansible_runner_virtualenv }}"

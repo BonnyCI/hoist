@@ -1,3 +1,4 @@
 ANSIBLE_PLAYBOOK={{ item.playbook }}
 ANSIBLE_INVENTORY=/opt/source/{{ item.name }}/inventory/{{ item.inventory }}
 ANSIBLE_SSH_USER={{ item.ansible_remote_user | default('') }}
+ARA_DATABASE=mysql+pymysql://{{ ara_db_username }}:{{ ara_db_password }}@{{ ara_db_host }}/ara

@@ -24,3 +24,7 @@ datadog_callback_url: https://raw.githubusercontent.com/DataDog/ansible-datadog-
 #      ansible_remote_user: ubuntu
 
 ansible_runner_tasks: []
+
+ara_db_username: ""
+ara_db_password: ""
+ara_db_host: ""

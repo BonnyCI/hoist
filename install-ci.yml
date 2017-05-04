@@ -230,6 +230,16 @@
   become: yes
   tags: ['logs']
   roles:
+    - role: ara-db
+      ara_db_username: "{{ secrets.ara.username }}"
+      ara_db_password: "{{ secrets.ara.password }}"
+      ara_db_clients: "{{ bonnyci_ara_db_clients }}"
+    - role: ara-web
+      ara_venv_path: /opt/ara
+      ara_db_username: "{{ secrets.ara.username }}"
+      ara_db_password: "{{ secrets.ara.password }}"
+      ara_db_host: "{{ bonnyci_ara_db_host }}"
+
     - role: scp-log-receiver
       scp_log_receiver_user: "{{ bonnyci_logs_scp_user }}"
       scp_log_receiver_path:  "{{ bonnyci_logs_root_dir }}/logs"
@@ -252,6 +262,16 @@
             virtualenv: "{{ os_loganalyze_venv_path }}"
             plugin: python
             socket: localhost:3310
+            lazy-apps: true
+        - name: ara
+          state: present
+          config:
+            uid: www-data
+            gid: www-data
+            wsgi-file: "/var/www/ara/ara-wsgi"
+            virtualenv: /opt/ara
+            plugin: python
+            socket: localhost:3311
             lazy-apps: true
 
     - role: apache
