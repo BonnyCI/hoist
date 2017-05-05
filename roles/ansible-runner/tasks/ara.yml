@@ -1,7 +1,7 @@
 ---
 - name: Install ara
   pip:
-    name: ara
+    name: "ara>=0.13.0"
     virtualenv: "{{ ansible_runner_virtualenv }}"
 
 - name: Install ara database driver
