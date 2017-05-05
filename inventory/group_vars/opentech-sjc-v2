@@ -50,6 +50,6 @@ nodepool_zmq_publishers:
   - tcp://zuul.internal.opentechsjc.bonnyci.org:8888
 
 zuul_gearman_server: zuul.internal.opentechsjc.bonnyci.org
-zuul_logs_url: http://logs.bonnyci.org
+zuul_logs_url: https://logs.bonnyci.org
 
 dns_subdomain: internal.opentechsjc.bonnyci.org
