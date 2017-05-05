@@ -41,16 +41,17 @@ Vagrant.configure(2) do |config|
       # Install some dependencies
       /vagrant/tools/install-ansible.sh
 
-      # If there's no secrets.yml in the working directory, use the example file
-      if ! test -f /vagrant/secrets.yml ; then
-        cp /vagrant/secrets.yml.example /vagrant/secrets.yml
-      fi
-
-      # Create a symlink pointing at the live secrets.yml
-      if test -f /etc/secrets.yml ; then
+      # Remove existing secrets from bastion
+      if [[ -f /etc/secrets.yml ]]; then
         rm /etc/secrets.yml
       fi
-      cp /vagrant/secrets.yml /etc/secrets.yml
+
+      # Add secrets file to bastion
+      if [[ -f /vagrant/secrets.yml ]]; then
+        cp /vagrant/secrets.yml /etc/secrets.yml
+      else
+        cp /vagrant/secrets.yml.example /etc/secrets.yml
+      fi
 
       # disable cron runs, run ansible manually while testing
       touch /etc/disable-ansible-runner-cideploy
