@@ -4,8 +4,8 @@ SCRIPT_NAME=$(basename "$0")
 
 print_help(){
 cat << EOF
-Usage: "$SCRIPT_NAME"
-   or: "$SCRIPT_NAME" [OPTIONS] [ANSIBLE OPTIONS]
+Usage: $SCRIPT_NAME
+   or: $SCRIPT_NAME [OPTIONS] [ANSIBLE OPTIONS]
 Deploy Docker-based development environment.
 
       --with-ansible           run ansible deploy
@@ -13,7 +13,6 @@ Deploy Docker-based development environment.
 
   -h, --help     display this help and exit
 EOF
-exit 0
 }
 
 deploy_ansible(){
@@ -42,6 +41,7 @@ main(){
         case "$arg" in
             -h|--help)
                 print_help
+                exit 0
                 ;;
             --with-ansible)
                 WITH_ANSIBLE=true
