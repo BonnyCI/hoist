@@ -115,7 +115,7 @@ Vagrant.configure(2) do |config|
   config.vm.define :logs do |logs|
     logs.vm.hostname = 'logs.vagrant'
     logs.vm.network "private_network", ip: "10.0.0.102"
-    logs.vm.network "forwarded_port", guest: 80, host: 8085
+    logs.vm.network "forwarded_port", guest: 80, host: 8082
 
     logs.vm.provider "virtualbox" do |v|
       v.memory = '512'
@@ -159,6 +159,7 @@ Vagrant.configure(2) do |config|
     elk.vm.hostname = 'elk.vagrant'
     elk.vm.network "private_network", ip: "10.0.0.104"
     elk.vm.network "forwarded_port", guest: 80, host: 8084
+    elk.vm.network "forwarded_port", guest: 5601, host: 5601
 
     elk.vm.provider "virtualbox" do |v|
       v.memory = '2048'
