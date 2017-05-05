@@ -233,7 +233,6 @@
     - role: ara-db
       ara_db_username: "{{ secrets.ara.username }}"
       ara_db_password: "{{ secrets.ara.password }}"
-      ara_db_clients: "{{ bonnyci_ara_db_clients }}"
     - role: ara-web
       ara_venv_path: /opt/ara
       ara_db_username: "{{ secrets.ara.username }}"

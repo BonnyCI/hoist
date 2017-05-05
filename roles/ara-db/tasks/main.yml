@@ -8,8 +8,7 @@
 - name: Create ARA user 
   mysql_user:
     name: "{{ ara_db_username }}"
-    host: "{{ item }}"
+    host: "%"
     password: "{{ ara_db_password }}"
     priv: "ara.*:ALL"
     state: present
-  with_items: "{{ ara_db_clients | default([]) }}"
