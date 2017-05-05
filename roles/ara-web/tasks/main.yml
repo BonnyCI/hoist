@@ -12,7 +12,7 @@
 
 - name: Install ara
   pip:
-    name: ara
+    name: "ara>=0.13.0"
     virtualenv: "{{ ara_venv_path }}"
 
 - name: Install database dependencies
