@@ -1,0 +1,2 @@
+{{ bonnyci_test_suite | to_nice_yaml(indent=2) }}
+{{ secrets.bonnyci_test_suite | to_nice_yaml(indent=2) }}
