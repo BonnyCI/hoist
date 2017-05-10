@@ -85,11 +85,15 @@ zuul_connections:
     webhook_token: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
 
 zuul_tenants:
-  - name: BonnyV3
+  - name: BonnyCI
     source:
-      gerrithub:
+      github:
         config-projects:
-          - BonnyCI/project-config-v3
+          - BonnyCI/project-config
+        untrusted-projects:
+          - BonnyCI/requests-mock
+
+      gerrithub:
         untrusted-projects:
           - BonnyCI/sandbox-v3
 
