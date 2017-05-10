@@ -81,8 +81,10 @@ zuul_connections:
     driver: github
     api_token: "{{ secrets.zuul_github_api_key | default('') }}"
     integration_id: "{{ secrets.zuul_github_v3_integration_id | default('') }}"
-    integration_key: "{{ secrets.zuul_github_v3_integration_key_content | default(False) | ternary(zuul_github_integration_key_file, '') }}"
+    integration_key: "{{ zuul_github_integration_key_content | default(False) | ternary(zuul_github_integration_key_file, '') }}"
     webhook_token: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
+
+zuul_github_integration_key_content: "{{ secrets.zuul_github_v3_integration_key_content }}"
 
 zuul_tenants:
   - name: BonnyCI

@@ -27,6 +27,7 @@ zuul_git_user_name: Anne Bonny
 zuul_merger_apache_port: 8858
 zuul_merger_url: "http://{{ inventory_hostname }}:{{ zuul_merger_apache_port }}/p"
 
+zuul_github_integration_key_content: ''
 zuul_github_integration_key_file: /etc/zuul/integration.key
 
 zuul_connections:
@@ -34,5 +35,5 @@ zuul_connections:
     driver: github
     api_token: "{{ secrets.zuul_github_api_key | default('') }}"
     integration_id: "{{ secrets.zuul_github_integration_id | default('') }}"
-    integration_key: "{{ secrets.zuul_github_integration_key_content | default(False) | ternary(zuul_github_integration_key_file, '') }}"
+    integration_key: "{{ zuul_github_integration_key_content | default(False) | ternary(zuul_github_integration_key_file, '') }}"
     webhook_token: "{{ secrets.zuul_github_webhook_token | default('') }}"

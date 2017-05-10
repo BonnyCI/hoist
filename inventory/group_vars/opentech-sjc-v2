@@ -49,6 +49,8 @@ nodepool_labels:
 nodepool_zmq_publishers:
   - tcp://zuul.internal.opentechsjc.bonnyci.org:8888
 
+zuul_github_integration_key_content: "{{ secrets.zuul_github_integration_key_content }}"
+
 zuul_gearman_server: zuul.internal.opentechsjc.bonnyci.org
 zuul_logs_url: https://logs.bonnyci.org
 
