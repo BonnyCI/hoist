@@ -118,8 +118,7 @@
                 - zuul-launcher
                 - zuul-server
               paths:
-                - /var/log/zuul/launcher.log
-                - /var/log/zuul/server.log
+                - /var/log/zuul/*debug.log
               multiline:
                 match: after
                 negate: true
@@ -170,7 +169,7 @@
                 - zuul
                 - zuul-merger
               paths:
-                - /var/log/zuul/merger.log
+                - /var/log/zuul/*debug.log
               multiline:
                 match: after
                 negate: true
@@ -216,10 +215,7 @@
               tags:
                 - nodepool
               paths:
-                - /var/log/nodepool/nodepool-builder.log
-                - /var/log/nodepool/nodepool-deleter.log
-                - /var/log/nodepool/nodepool-launcher.log
-                - /var/log/nodepool/nodepoold.log
+                - /var/log/nodepool/*debug.log
               multiline:
                 match: after
                 negate: true
