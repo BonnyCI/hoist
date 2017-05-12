@@ -1,0 +1,4 @@
+---
+logging_proxy_tag: latest
+logging_proxy_host: "0.0.0.0"
+logging_proxy_port: 3000
