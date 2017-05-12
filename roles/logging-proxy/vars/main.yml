@@ -1,0 +1,7 @@
+logging_proxy_user: logging-proxy
+logging_proxy_home: "/var/lib/{{ logging_proxy_user }}"
+logging_proxy_source: "{{ logging_proxy_home }}/logging-proxy"
+logging_proxy_entrypoint: index.js
+
+logging_proxy_syslog_identifier: bonnyci-logging-proxy
+logging_proxy_log_dir: /var/log/logging-proxy

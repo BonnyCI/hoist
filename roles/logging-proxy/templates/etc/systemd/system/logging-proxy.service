@@ -1,0 +1,15 @@
+[Unit]
+Description = BonnyCI Logging Proxy Service
+After = network.target
+
+[Service]
+Type=simple
+User={{ logging_proxy_user }}
+EnvironmentFile=-/etc/default/bonnyci-logging-proxy
+WorkingDirectory={{ logging_proxy_home }}
+ExecStart={{ logging_proxy_nodejs_path }} {{ logging_proxy_source }}/{{ logging_proxy_entrypoint }}
+Restart={{ logging_proxy_service_restart }}
+SyslogIdentifier={{ logging_proxy_syslog_identifier }}
+
+[Install]
+WantedBy=multi-user.target

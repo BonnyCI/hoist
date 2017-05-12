@@ -269,6 +269,20 @@
             socket: localhost:3311
             lazy-apps: true
 
+    - role: logging-proxy
+      logging_proxy_host: 127.0.0.1
+
+    - role: logrotate
+      logrotate_configs:
+        - name: zuul
+          path: /var/log/logging-proxy/*log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
     - role: apache
       apache_apt_install: "{{ bonnyci_logs_apache_apt_install }}"
       apache_mods_enabled: "{{ bonnyci_logs_apache_mods_install }}"

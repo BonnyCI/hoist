@@ -1,0 +1,82 @@
+---
+- name: Nodesource apt key
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+
+- name: Install nodesource repos
+  apt_repository:
+    repo: deb https://deb.nodesource.com/node_6.x xenial main
+    state: present
+    filename: nodesource
+    update_cache: yes
+
+- name: Install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - git
+    - nodejs
+
+- name: Create user
+  user:
+    name: "{{ logging_proxy_user }}"
+    home: "/var/lib/{{ logging_proxy_user }}"
+    createhome: yes
+
+- name: Clone source
+  become: yes
+  become_user: "{{ logging_proxy_user }}"
+  git:
+    dest: "{{ logging_proxy_source }}"
+    repo: "{{ logging_proxy_git_repo }}"
+    version: "{{ logging_proxy_git_version }}"
+    update: "{{ logging_proxy_git_update }}"
+    force: "{{ logging_proxy_git_force }}"
+  register: logging_proxy_source_changed
+  notify: Restart logging-proxy
+
+- name: Install npm dependencies
+  become: yes
+  become_user: "{{ logging_proxy_user }}"
+  npm:
+    global: no
+    production: yes
+    state: latest
+    path: "{{ logging_proxy_source }}"
+  when: logging_proxy_source_changed.changed
+  notify: Restart logging-proxy
+
+- name: Copy defaults file
+  template:
+    src: etc/default/bonnyci-logging-proxy
+    dest: /etc/default/bonnyci-logging-proxy
+  notify: Restart logging-proxy
+
+- name: Copy service unit file
+  template:
+    src: etc/systemd/system/logging-proxy.service
+    dest: /etc/systemd/system/logging-proxy.service
+  notify: Reload systemd unit files
+
+- name: Create logging directory
+  file:
+    state: directory
+    name: "{{ logging_proxy_log_dir }}"
+    group: syslog
+    mode: 0775
+
+- name: Copy rsyslog handling
+  template:
+    src: etc/rsyslog.d/45-logging-proxy.conf
+    dest: /etc/rsyslog.d/45-logging-proxy.conf
+  notify: Restart rsyslog
+
+- meta: flush_handlers
+
+- name: Enable service
+  service:
+    name: logging-proxy
+    state: started
+    enabled: "{{ logging_proxy_service_enabled }}"
