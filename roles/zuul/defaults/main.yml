@@ -13,6 +13,8 @@ zuul_github_integration_key_content: ''
 
 zuul_logs_url: http://{{ ansible_fqdn }}
 
+zuul_python_version: "2"
+
 zuul_statsd_enable: no
 zuul_statsd_host: 127.0.0.1
 zuul_statsd_port: 8125

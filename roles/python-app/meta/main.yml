@@ -1,3 +1,4 @@
 ---
 dependencies:
-  - pip
+  - name: pip
+    pip_python_version: "{{ python_app_python_version }}"
