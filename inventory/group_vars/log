@@ -72,19 +72,20 @@ bonnyci_logs_apache_vhosts:
 
       ProxyPass /htmlify/ uwsgi://localhost:3310/
 
-      ServerSignature Off
-  - name: ara
-    vhost_extra: |
-      <Directory /var/www/ara>
-        Require all granted
-      </Directory>
-
-      ErrorLog /var/log/apache2/ara.log
-      CustomLog /var/log/apache2/ara_access.log combined
-
-      SetEnv ANSIBLE_CONFIG /var/www/ara/ansible.cfg
       Redirect permanent /ara /ara/
       ProxyPass "/ara/" uwsgi://localhost:3311/
+
+      <Location "/ara/">
+        ErrorLog /var/log/apache2/ara.log
+        CustomLog /var/log/apache2/ara_access.log combined
+
+        SetEnv ANSIBLE_CONFIG /var/www/ara/ansible.cfg
+      </Location>
+
+      ServerSignature Off
+
+  - name: ara
+    delete: true
 
 bonnyci_logs_loganalyze_file_conditions:
   - filename_pattern: ^.*\.txt(\.gz)?$
