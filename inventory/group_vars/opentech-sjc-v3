@@ -3,6 +3,9 @@ environment_name: opentech-sjc-v3
 nodepool_zuul_v3: true
 zuul_zuul_v3: True
 
+bonnyci_use_apache: False
+bonnyci_use_nginx: True
+
 nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
 nodepool_git_version: feature/zuulv3
 
