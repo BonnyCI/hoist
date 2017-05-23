@@ -8,7 +8,7 @@ bonnyci_zuul_webapp_apache_vhosts:
     delete: true
 
   - name: webapp
-    server_name: "{{ bonnyci_zuul_webapp_apache_server_name | default('zuul') }}"
+    server_name: "{{ bonnyci_zuul_webapp_server_name | default('zuul') }}"
     document_root: /opt/source/zuul/etc/status/public_html/
     ssl: "{{ bonnyci_zuul_webapp_ssl | default(False) }}"
     certificate_file: "{{ letsencrypt_cert_path | default('') }}"
@@ -19,6 +19,30 @@ bonnyci_zuul_webapp_apache_vhosts:
       RewriteRule ^/status.json$ http://127.0.0.1:8001/status.json [P]
       RewriteRule ^/status/(.*) http://127.0.0.1:8001/status/$1 [P]
       RewriteRule ^/connection/github/payload$ http://127.0.0.1:8001/connection/github/payload [P]
+
+bonnyci_zuul_webapp_nginx_sites:
+  - name: webapp
+    server_name: "{{ bonnyci_zuul_webapp_server_name | default('zuul') }}"
+    ssl: "{{ bonnyci_zuul_webapp_ssl | default(False) }}"
+    certificate_file: "{{ letsencrypt_cert_path | default('') }}"
+    certificate_key_file: "{{ letsencrypt_key_path | default('') }}"
+    certificate_chain_file: "{{ letsencrypt_chain_path | default('') }}"
+    content: |
+        location /status.json {
+          proxy_pass http://127.0.0.1:8001/status.json;
+        }
+
+        location /status/ {
+          proxy_pass http://127.0.0.1:8001/status/;
+        }
+
+        location /connection/ {
+          proxy_pass http://127.0.0.1:8001/connection/;
+        }
+
+        location / {
+          return 404;
+        }
 
 zuul_sites:
   bonnyci-scp:

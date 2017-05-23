@@ -24,10 +24,10 @@ backup_sources_daily:
     paths:
       - /var/lib/zuul/git/
 
-bonnyci_kibana_apache_server_name: elk.opentechsjc.bonnyci.org
+bonnyci_kibana_server_name: elk.opentechsjc.bonnyci.org
 bonnyci_kibana_apache_server_aliases:
   - elk.bonnyci.org
-bonnyci_logs_apache_server_name: logs.opentechsjc.bonnyci.org
+bonnyci_logs_server_name: logs.opentechsjc.bonnyci.org
 bonnyci_logs_apache_server_aliases:
   - logs.bonnyci.org
 

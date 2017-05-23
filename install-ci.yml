@@ -14,11 +14,19 @@
       tags:
         - monitoring
 
-    - role: letsencrypt
+    - role: letsencrypt-apache
       tags:
         - letsencrypt
       when:
         - letsencrypt_csr_cn | default(False)
+        - bonnyci_use_apache
+
+    - role: letsencrypt-nginx
+      tags:
+        - letsencrypt
+      when:
+        - letsencrypt_csr_cn | default(False)
+        - bonnyci_use_nginx
 
     - role: backup-client
 
@@ -40,12 +48,25 @@
       tags: ['logstash']
     - role: kibana
       tags: ['kibana']
+
     - role: apache
       apache_mods_enabled: "{{ bonnyci_kibana_apache_mods_enabled }}"
       apache_vhosts: "{{ bonnyci_kibana_apache_vhosts }}"
+      when: bonnyci_use_apache
+
     - role: dd-apache
       tags:
         - monitoring
+      when: bonnyci_use_apache
+
+    - role: nginx
+      nginx_sites: "{{ bonnyci_kibana_nginx_sites }}"
+      when: bonnyci_use_nginx
+
+    - role: dd-nginx
+      tags:
+        - monitoring
+      when: bonnyci_use_nginx
 
 
 - name: Install mysql
@@ -91,10 +112,21 @@
     - role: apache
       apache_mods_enabled: "{{ bonnyci_zuul_webapp_apache_mods_enabled }}"
       apache_vhosts: "{{ bonnyci_zuul_webapp_apache_vhosts }}"
+      when: bonnyci_use_apache
 
     - role: dd-apache
       tags:
         - monitoring
+      when: bonnyci_use_apache
+
+    - role: nginx
+      nginx_sites: "{{ bonnyci_zuul_webapp_nginx_sites }}"
+      when: bonnyci_use_nginx
+
+    - role: dd-nginx
+      tags:
+        - monitoring
+      when: bonnyci_use_nginx
 
     - role: logrotate
       logrotate_configs:
@@ -123,12 +155,28 @@
                 match: after
                 negate: true
                 pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+
         - name: apache
           prospectors:
             - input_type: log
               document_type: apache
               paths:
                 - /var/log/apache/*.log
+          when: bonnyci_use_apache
+
+        - name: nginx
+          prospectors:
+            - input_type: log
+              document_type: nginx_access
+              paths:
+                - /var/log/nginx/access.log
+
+            - input_type: log
+              document_type: nginx_error
+              paths:
+                - /var/log/nginx/error.log
+          when: bonnyci_use_nginx
+
 
 - name: Install zuul mergers
   hosts: mergers
@@ -143,10 +191,12 @@
     - role: apache
       apache_mods_enabled: "{{ bonnyci_zuul_merger_apache_mods_enabled }}"
       apache_vhosts: "{{ bonnyci_zuul_merger_apache_vhosts }}"
+      when: bonnyci_use_apache
 
     - role: dd-apache
       tags:
         - monitoring
+      when: bonnyci_use_apache
 
     - role: logrotate
       logrotate_configs:
@@ -174,12 +224,14 @@
                 match: after
                 negate: true
                 pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+
         - name: apache
           prospectors:
             - input_type: log
               document_type: apache
               paths:
                 - /var/log/apache/*.log
+          when: bonnyci_use_apache
 
 - name: Install nodepool
   hosts: nodepool
@@ -273,10 +325,12 @@
       apache_apt_install: "{{ bonnyci_logs_apache_apt_install }}"
       apache_mods_enabled: "{{ bonnyci_logs_apache_mods_install }}"
       apache_vhosts: "{{ bonnyci_logs_apache_vhosts }}"
+      when: bonnyci_use_apache
 
     - role: dd-apache
       tags:
         - monitoring
+      when: bonnyci_use_apache
 
     - role: filebeat
       filebeat_prospectors:
@@ -286,6 +340,7 @@
               document_type: apache
               paths:
                 - /var/log/apache/*.log
+          when: bonnyci_use_apache
 
 - name: Install backups
   hosts: backups

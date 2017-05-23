@@ -10,8 +10,8 @@ zuul_git_repo_url: https://github.com/BonnyCI/zuul
 zuul_git_branch: zuul-v3-github
 
 bonnyci_logs_scp_host: logs.internal.opentechsjc.bonnyci.org
-bonnyci_zuul_webapp_apache_server_name: zuul.v3.opentechsjc.bonnyci.org
-bonnyci_zuul_merger_apache_server_name: merger01.internal.v3.opentechsjc.bonnyci.org
+bonnyci_zuul_webapp_server_name: zuul.v3.opentechsjc.bonnyci.org
+bonnyci_zuul_merger_server_name: merger01.internal.v3.opentechsjc.bonnyci.org
 
 filebeat_output_logstash_hosts:
   - elk.internal.v3.opentechsjc.bonnyci.org:5044

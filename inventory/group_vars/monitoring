@@ -2,14 +2,13 @@ bonnyci_kibana_apache_mods_enabled:
   - proxy.load
   - proxy_http.load
 
-
 bonnyci_kibana_apache_vhosts:
   - name: default_deny
     delete: yes
 
   - name: kibana
-    server_name: "{{ bonnyci_kibana_apache_server_name | default('elk') }}"
-    aliases: "{{ bonnyci_kibana_apache_server_aliases | default([]) }}"
+    server_name: "{{ bonnyci_kibana_server_name | default('elk') }}"
+    aliases: "{{ bonnyci_kibana_server_aliases | default([]) }}"
 
     ssl: "{{ bonnyci_elk_ssl | default(False) }}"
     certificate_file: "{{ letsencrypt_cert_path | default('') }}"
@@ -20,6 +19,21 @@ bonnyci_kibana_apache_vhosts:
       ProxyPreserveHost On
       ProxyPass / http://127.0.0.1:5601/
       ProxyPassReverse / http://127.0.0.1:5601/
+
+bonnyci_kibana_nginx_sites:
+  - name: kibana
+    server_name: "{{ bonnyci_kibana_server_name | default('elk') }}"
+    aliases: "{{ bonnyci_kibana_server_aliases | default([]) }}"
+
+    ssl: "{{ bonnyci_elk_ssl | default(False) }}"
+    certificate_file: "{{ letsencrypt_cert_path | default('') }}"
+    certificate_key_file: "{{ letsencrypt_key_path | default('') }}"
+    certificate_chain_file: "{{ letsencrypt_chain_path | default('') }}"
+
+    content: |
+      location / {
+        proxy_pass http://127.0.0.1:5601;
+      }
 
 elasticsearch_cluster_name: bonnyci
 
