@@ -104,6 +104,13 @@
         - monitoring
 
     - role: zuul
+      zuul_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+
+    - role: integration-handler
+      integration_handler_template_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+      when:
+        - zuul_zuul_v3
+        - bonnyci_use_integration
 
     - role: dd-zuul
       tags:

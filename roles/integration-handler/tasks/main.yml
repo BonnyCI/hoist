@@ -1,0 +1,22 @@
+---
+- name: create invoke script
+  template:
+    src: invoke.sh.j2
+    dest: "{{ integration_handler_invoke_path }}"
+    mode: 0755
+    owner: root
+
+- name: create sudoers file
+  template:
+    src: etc/sudoers.d/90-bonnyci-integration-handler
+    dest: /etc/sudoers.d/90-bonnyci-integration-handler
+    mode: 0440
+    owner: root
+    validate: 'visudo -cf %s'
+
+- name: Trigger run if tenant file doesn't exist
+  stat:
+    path: "{{ integration_handler_zuul_tenant_file }}"
+  register: integration_handler_tenant_stat
+  changed_when: not integration_handler_tenant_stat.stat.exists
+  notify: Run integration-handler

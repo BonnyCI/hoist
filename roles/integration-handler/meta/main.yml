@@ -1,0 +1,24 @@
+---
+dependencies:
+  - role: python-app
+    name: integration-handler
+    python_app_git_repo: "{{ integration_handler_git_repo }}"
+    python_app_git_version: "{{ integration_handler_git_version }}"
+    python_app_notify: Reload integration-handler uwsgi
+
+  - role: uwsgi
+    uwsgi_apt_plugins:
+      - uwsgi-plugin-python
+    uwsgi_vassals:
+      - name: integration-handler
+        state: present
+        config:
+          uid: "{{ integration_handler_zuul_user }}"
+          gid: www-data
+          wsgi-file: "{{ integration_handler_venv_path }}/bin/bonnyci-integration-handler-wsgi"
+          virtualenv: "{{ integration_handler_venv_path }}"
+          plugin: python
+          socket: "{{ integration_handler_uwsgi_socket }}"
+          lazy-apps: true
+
+        env: "{{ integration_handler_env }}"
