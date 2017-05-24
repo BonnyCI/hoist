@@ -19,4 +19,4 @@ dependencies:
 
   - role: letsencrypt
     letsencrypt_webroot: /etc/letsencrypt/webroot
-    letsencrypt_reload_handler: reload nginx
+    letsencrypt_reload_handler: Reload nginx
