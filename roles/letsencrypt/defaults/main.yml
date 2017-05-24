@@ -16,6 +16,10 @@ letsencrypt_chain_url: "https://letsencrypt.org/certs/lets-encrypt-x3-cross-sign
 letsencrypt_chain_owner: root
 letsencrypt_chain_mode: 0644
 
+letsencrypt_combined_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}.combined.crt"
+letsencrypt_combined_owner: root
+letsencrypt_combined_mode: 0644
+
 letsencrypt_csr_config_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}-openssl.conf"
 letsencrypt_csr_path: "{{ letsencrypt_data_dir }}/{{ letsencrypt_name }}.csr"
 letsencrypt_csr_owner: root
