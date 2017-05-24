@@ -17,10 +17,11 @@
         - monitoring
       when: secrets is defined
 
-    - role: letsencrypt
+    - role: letsencrypt-apache
       tags:
         - letsencrypt
       when: letsencrypt_csr_cn | default(False)
+
     - bastion
     - role: datadog-builder
       datadog_builder_secrets:

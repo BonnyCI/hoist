@@ -3,6 +3,9 @@ environment_name: opentech-sjc-v3
 nodepool_zuul_v3: true
 zuul_zuul_v3: True
 
+bonnyci_use_apache: False
+bonnyci_use_nginx: True
+
 nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
 nodepool_git_version: feature/zuulv3
 
@@ -10,8 +13,8 @@ zuul_git_repo_url: https://github.com/BonnyCI/zuul
 zuul_git_branch: zuul-v3-github
 
 bonnyci_logs_scp_host: logs.internal.opentechsjc.bonnyci.org
-bonnyci_zuul_webapp_apache_server_name: zuul.v3.opentechsjc.bonnyci.org
-bonnyci_zuul_merger_apache_server_name: merger01.internal.v3.opentechsjc.bonnyci.org
+bonnyci_zuul_webapp_server_name: zuul.v3.opentechsjc.bonnyci.org
+bonnyci_zuul_merger_server_name: merger01.internal.v3.opentechsjc.bonnyci.org
 
 filebeat_output_logstash_hosts:
   - elk.internal.v3.opentechsjc.bonnyci.org:5044

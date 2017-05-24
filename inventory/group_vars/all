@@ -3,6 +3,9 @@ apache_ssl_use_stapling: yes
 bonnyci_logs_root_dir: /var/www/bonny-logs
 bonnyci_logs_scp_user: zuul
 
+bonnyci_use_apache: True
+bonnyci_use_nginx: False
+
 filebeat_output_logstash_enabled: true
 
 letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"

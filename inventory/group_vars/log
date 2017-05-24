@@ -8,7 +8,7 @@ bonnyci_logs_apache_mods_install:
 
 bonnyci_logs_apache_vhosts:
   - name: logs
-    server_name: "{{ bonnyci_logs_apache_server_name | default('logs') }}"
+    server_name: "{{ bonnyci_logs_server_name | default('logs') }}"
     aliases: "{{ bonnyci_logs_apache_server_aliases | default([]) }}"
     document_root: "{{ bonnyci_logs_root_dir }}/logs"
     document_root_allow_override: None
@@ -73,6 +73,7 @@ bonnyci_logs_apache_vhosts:
       ProxyPass /htmlify/ uwsgi://localhost:3310/
 
       ServerSignature Off
+
   - name: ara
     vhost_extra: |
       <Directory /var/www/ara>
@@ -99,11 +100,11 @@ bonnyci_logs_loganalyze_file_conditions:
 
 fail2ban_jails:
   - name: apache-auth
-    enabled: true
+    enabled: "{{ bonnyci_use_apache | bool }}"
     bantime: 86400
   - name: apache-badbots
-    enabled: true
+    enabled: "{{ bonnyci_use_apache | bool }}"
     bantime: 86400
   - name: apache-shellshock
-    enabled: true
+    enabled: "{{ bonnyci_use_apache | bool }}"
     bantime: 86400

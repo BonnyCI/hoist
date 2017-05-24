@@ -27,6 +27,7 @@
     mode: 0644
   notify: restart filebeat
   with_items: "{{ filebeat_prospectors }}"
+  when: item.when | default(True)
 
 - name: Ensure Filebeat SSL key pair directory exists.
   file:

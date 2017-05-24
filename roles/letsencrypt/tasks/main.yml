@@ -125,7 +125,7 @@
     data: "{{ letsencrypt_challenge_response }}"
     dest: "{{ letsencrypt_cert_path }}"
     remaining_days: "{{ letsencrypt_remaining_days }}"
-  notify: restart apache
+  notify: "{{ letsencrypt_reload_handler }}"
   when: letsencrypt_challenge_response.changed
 
 - name: Cleanup letsencrypt challenges

@@ -1,0 +1,24 @@
+dependencies:
+  - role: nginx
+    nginx_sites:
+      - name: datadog
+        state: present
+        listen_host: 127.0.0.1
+        port: "{{ dd_nginx_status_port }}"
+        server_name: localhost
+        ssl: no
+        content: |
+          access_log off;
+
+          allow 127.0.0.1;
+          deny all;
+
+          location /nginx_status {
+            stub_status on;
+          }
+
+  - role: dd-checks
+    datadog_checks:
+      nginx:
+        instances:
+          - nginx_status_url: "http://127.0.0.1:{{ dd_nginx_status_port }}/nginx_status;"
