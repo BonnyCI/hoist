@@ -17,6 +17,7 @@
     - "{{ letsencrypt_key_path | dirname }}"
     - "{{ letsencrypt_cert_path | dirname }}"
     - "{{ letsencrypt_chain_path | dirname }}"
+    - "{{ letsencrypt_combined_path | dirname }}"
 
 - name: Create CSR configuration
   template:
@@ -127,6 +128,25 @@
     remaining_days: "{{ letsencrypt_remaining_days }}"
   notify: "{{ letsencrypt_reload_handler }}"
   when: letsencrypt_challenge_response.changed
+
+- name: Read certificates
+  command: "cat {{ item }}"
+  register: letsencrypt_certificates
+  changed_when: False
+  with_items:
+    - "{{ letsencrypt_cert_path }}"
+    - "{{ letsencrypt_chain_path }}"
+
+- name: Create combined certificate
+  copy:
+    dest: "{{ letsencrypt_combined_path }}"
+    owner: "{{ letsencrypt_combined_owner }}"
+    mode: "{{ letsencrypt_combined_mode }}"
+    content: |
+       {% for cert in letsencrypt_certificates.results %}
+       {{ cert.stdout }}
+       {% endfor %}
+  notify: "{{ letsencrypt_reload_handler }}"
 
 - name: Cleanup letsencrypt challenges
   file:
