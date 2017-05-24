@@ -1,6 +1,6 @@
 environment_name: opentech-sjc-v3
 
-nodepool_zuul_v3: true
+nodepool_zuul_v3: True
 zuul_zuul_v3: True
 
 nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
