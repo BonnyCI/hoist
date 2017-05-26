@@ -1,0 +1,10 @@
+integration_handler_invoke_path: /usr/local/bin/bonnyci-integration-invoke.sh
+integration_handler_invoke: "sudo {{ integration_handler_invoke_path }}"
+
+integration_handler_env:
+  BIH_INTEGRATION_ID: "{{ integration_handler_integration_id }}"
+  BIH_INTEGRATION_KEY: "{{ integration_handler_integration_key }}"
+  BIH_INVOKE: "{{ integration_handler_invoke }}"
+  BIH_OUTPUT_FILE: "{{ integration_handler_output_file }}"
+  BIH_WEBHOOK_KEY: "{{ integration_handler_webhook_key }}"
+  BIH_TEMPLATE: "{{ integration_handler_template_file }}"

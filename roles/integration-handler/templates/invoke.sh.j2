@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cp $1 {{ integration_handler_zuul_tenant_file }}
+chown {{ integration_handler_zuul_user }}: {{ integration_handler_zuul_tenant_file }}
+chmod {{ integration_handler_zuul_tenant_mode }} {{ integration_handler_zuul_tenant_file }}
+systemctl reload zuul-scheduler

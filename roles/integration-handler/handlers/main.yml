@@ -1,0 +1,9 @@
+---
+- name: Reload integration-handler uwsgi
+  file:
+    path: /etc/uwsgi-emperor/vassals/integration-handler.ini
+    state: touch
+
+- name: Run integration-handler
+  command: "{{ integration_handler_venv_path }}/bin/bonnyci-integration-handler-run"
+  environment: "{{ integration_handler_env }}"

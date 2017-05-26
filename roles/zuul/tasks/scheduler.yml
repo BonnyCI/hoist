@@ -8,10 +8,11 @@
     - scheduler
   notify: Restart zuul
 
+# FIXME: need to figure out some way of notify/running integration-handler here
 - name: Install tenant.yaml
   template:
     src: etc/zuul/tenant.yaml
-    dest: /etc/zuul/tenant.yaml
+    dest: "{{ zuul_tenant_file }}"
     owner: zuul
   notify: Reload zuul-server
 

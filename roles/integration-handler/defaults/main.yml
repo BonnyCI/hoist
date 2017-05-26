@@ -1,0 +1,16 @@
+---
+integration_handler_git_repo: https://github.com/BonnyCI/integration-handler.git
+integration_handler_git_version: master
+
+integration_handler_integration_id: ''
+integration_handler_integration_key: ''
+integration_handler_output_file: ''
+integration_handler_webhook_key: ''
+integration_handler_template_file: /etc/zuul/tenant-template.yaml
+
+integration_handler_zuul_tenant_file: /etc/zuul/tenant.yaml
+integration_handler_zuul_tenant_mode: "0644"
+integration_handler_zuul_user: zuul
+
+integration_handler_uwsgi_user: "{{ integration_handler_zuul_user }}"
+integration_handler_uwsgi_socket: /var/uwsgi-sockets/integration-handler.sock

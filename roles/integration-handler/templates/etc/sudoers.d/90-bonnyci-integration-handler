@@ -1,0 +1,1 @@
+{{ integration_handler_uwsgi_user }} ALL=(ALL) NOPASSWD: {{ integration_handler_invoke_path }}

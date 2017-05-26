@@ -18,6 +18,7 @@ zuul_statsd_host: 127.0.0.1
 zuul_statsd_port: 8125
 
 zuul_tenants: []
+zuul_tenant_file: /etc/zuul/tenant.yaml
 
 zuul_webapp_listen_address: 127.0.0.1
 zuul_webapp_port: 8001
