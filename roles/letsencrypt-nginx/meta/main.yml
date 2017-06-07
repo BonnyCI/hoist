@@ -7,7 +7,7 @@ dependencies:
         content: |
           location /.well-known/acme-challenge {
             allow all;
-            root {{ letsencrypt_webroot }}/.well-known/acme-challenge;
+            root {{ letsencrypt_webroot }};
           }
 
           {% if letsencrypt_configure_redirect %}
