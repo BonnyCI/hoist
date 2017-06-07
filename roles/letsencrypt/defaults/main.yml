@@ -1,5 +1,5 @@
 ---
-letsencrypt_webroot: /var/www/html/letsencrypt
+letsencrypt_webroot: /var/www/letsencrypt
 
 letsencrypt_production: no
 letsencrypt_acme_directory: "{{ letsencrypt_production | ternary(letsencrypt_production_api, letsencrypt_staging_api) }}"
