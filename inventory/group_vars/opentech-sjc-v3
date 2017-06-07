@@ -102,8 +102,6 @@ zuul_tenants:
       github:
         config-projects:
           - BonnyCI/project-config
-        untrusted-projects:
-          - BonnyCI/requests-mock
 
       gerrithub:
         untrusted-projects:
