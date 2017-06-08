@@ -2,6 +2,9 @@ zuul_git_repo_url: https://github.com/BonnyCI/zuul
 zuul_git_branch: github-integration
 zuul_allow_restart_services: no
 
+zuul_executor_untrusted_wrapper: bubblewrap
+zuul_executor_finger_port: 79
+
 zuul_gearman_server: 127.0.0.1
 zuul_gearman_port: 4730
 

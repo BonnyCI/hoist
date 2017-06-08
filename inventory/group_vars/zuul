@@ -67,3 +67,5 @@ zuul_sites:
     host: "{{ bonnyci_logs_scp_host }}"
     user: "{{ bonnyci_logs_scp_user }}"
     root: "{{ bonnyci_logs_root_dir }}"
+
+zuul_executor_finger_port: 9099
