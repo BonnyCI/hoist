@@ -36,13 +36,13 @@ bonnyci_zuul_webapp_nginx_sites:
         rewrite ^/connection/github/ /integration/ last;
       }
 
-      location /connection/ {
-        proxy_pass http://127.0.0.1:8001/connection/;
-      }
-
       location /integration/ {
         uwsgi_pass unix://{{ integration_handler_uwsgi_socket }};
         include uwsgi_params;
+      }
+
+      location / {
+        proxy_pass http://127.0.0.1:8001/;
       }
       {% else %}
       location /status.json {
@@ -56,11 +56,11 @@ bonnyci_zuul_webapp_nginx_sites:
       location /connection/ {
         proxy_pass http://127.0.0.1:8001/connection/;
       }
-      {% endif %}
 
       location / {
         return 404;
       }
+      {% endif %}
 
 zuul_sites:
   bonnyci-scp:
