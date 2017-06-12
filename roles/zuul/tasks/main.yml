@@ -88,7 +88,6 @@
 
 - name: Install datadog logging library
   pip:
-    executable: "pip{{ zuul_python_version }}"
     name: git+https://github.com/BonnyCI/datadog-logging.git#egg=datadog-logging
     state: latest
     virtualenv: "{{ zuul_venv_path }}"
