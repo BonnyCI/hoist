@@ -16,7 +16,7 @@
     - git
     - libffi-dev
     - libssl-dev
-    - python-dev
+    - python{{ python_app_python_version }}-dev
 
 - name: Install pip dependencies
   pip:

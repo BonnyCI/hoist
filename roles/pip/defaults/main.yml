@@ -1,3 +1,4 @@
 ---
 pip_cache_dir: /var/cache/pip-installer
 pip_install_url: https://bootstrap.pypa.io/get-pip.py
+pip_python_version: ""
