@@ -10,6 +10,7 @@ filebeat_output_logstash_enabled: true
 
 letsencrypt_account_key_content: "{{ secrets.letsencrypt.account_key }}"
 letsencrypt_cert_path: /etc/letsencrypt/cert/ansible.crt
+letsencrypt_combined_path: /etc/letsencrypt/cert/ansible.combined.crt
 letsencrypt_chain_path: /etc/letsencrypt/chain.pem
 letsencrypt_csr_dn:
   C: AU
