@@ -1,2 +1,2 @@
 zuul_conf_template_src: etc/zuul/zuul_v2.conf
-zuul_python_version: "2"
+zuul_python_version: ""
