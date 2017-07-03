@@ -12,7 +12,7 @@ zuul_gearman_server_start: true
 zuul_gearman_server_log_config: /etc/zuul/gearman-logging.conf
 zuul_gearman_server_listen_address: 127.0.0.1
 
-zuul_github_integration_key_content: ''
+zuul_github_app_key_content: ''
 
 zuul_logs_url: http://{{ ansible_fqdn }}
 
