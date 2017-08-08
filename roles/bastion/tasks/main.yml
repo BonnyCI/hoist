@@ -82,22 +82,6 @@
   when: item in secrets.ssh_keys and 'public' in secrets.ssh_keys[item]
   with_items: "{{ bastion_users }}"
 
-- name: Copy cideploy's private ssh key to /root/.ssh for GHE access
-  copy:
-    content: "{{ secrets.ssh_keys.cideploy.private }}"
-    dest: /root/.ssh/id_rsa
-    owner: root
-    group: root
-    mode: 0600
-
-- name: Copy cideploy's public ssh key to /root/.ssh for GHE access
-  copy:
-    content: "{{ secrets.ssh_keys.cideploy.public }}"
-    dest: /root/.ssh/id_rsa.pub
-    owner: root
-    group: root
-    mode: 0664
-
 - name: Check if cideploy known_hosts exists
   stat:
     path: /home/cideploy/.ssh/known_hosts
