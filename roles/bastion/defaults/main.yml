@@ -9,6 +9,7 @@ bastion_users:
   - jason_clark
   - jesusaur
   - olaph
+  - jkeating
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users:
   - auggy
@@ -16,7 +17,6 @@ bastion_remove_users:
   - nibz
   - rmoe
   - doc
-  - jkeating
   - eggshell
   - pschwartz
 bastion_clouds: []
