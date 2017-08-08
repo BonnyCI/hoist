@@ -1,22 +1,22 @@
 dns_subdomain: bonnyci.local
 
 bastion_users:
-  - adam_g
-  - bradonk
   - cideploy
   - clint
   - jamie
-  - jason_clark
-  - jesusaur
-  - olaph
   - jkeating
 bastion_sudo_users: "{{ bastion_users }}"
 bastion_remove_users:
+  - adam_g
   - auggy
-  - greghaynes
-  - nibz
-  - rmoe
+  - bradonk
   - doc
   - eggshell
+  - greghaynes
+  - jason_clark
+  - jesusaur
+  - nibz
+  - olaph
   - pschwartz
+  - rmoe
 bastion_clouds: []
