@@ -1,9 +1,6 @@
 logs_ip: "{{ hostvars['logs.multinode']['ansible_default_ipv4']['address'] }}"
 zuul_ip: "{{ hostvars['zuul.multinode']['ansible_default_ipv4']['address'] }}"
 
-bastion_clouds:
-  - bastioncloud
-
 backup_sources_daily:
   - host: "{{ zuul_ip }}"
     paths:

@@ -1,8 +1,5 @@
 environment_name: opentech-sjc-v2
 
-bastion_clouds:
-  - opentech-sjc
-
 bonnyci_logs_scp_host: logs.internal.opentechsjc.bonnyci.org
 bonnyci_zuul_webapp_server_name: zuul.opentechsjc.bonnyci.org
 bonnyci_zuul_merger_server_name: merger01.internal.opentechsjc.bonnyci.org
