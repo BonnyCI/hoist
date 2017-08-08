@@ -1,6 +1,3 @@
-bastion_clouds:
-  - bastioncloud
-
 backup_sources_daily:
   - host: logs.vagrant
     paths:

@@ -28,9 +28,6 @@ nodepool_providers:
         diskimage: ubuntu-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
 
-bastion_clouds:
-  - cicloud
-
 # commented out variable to show what one could point to with a -e argument
 # if they wanted to make use of an ssh-config file at execution time.
 # ansible_ssh_common_args: -F inventory/allinone-ssh-config
