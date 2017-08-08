@@ -103,15 +103,6 @@
     state: absent
   notify: restart sshd
 
-- name: install required ubuntu packages
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - libffi-dev
-    - libssl-dev
-    - python-dev
-
 - name: install required python packages
   pip:
     name: "{{ item }}"
