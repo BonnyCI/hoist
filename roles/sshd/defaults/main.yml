@@ -1,0 +1,7 @@
+sshd_listen_addresses: []
+sshd_port: 22
+sshd_permit_root_login: no
+sshd_password_authentication: no
+sshd_x11_forwarding: no
+sshd_use_pam: yes
+sshd_challenge_response_authentication: no
