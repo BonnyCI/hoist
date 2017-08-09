@@ -25,6 +25,7 @@
     group: datadog-builder
     home: /var/lib/datadog-builder
     state: present
+    system: yes
 
 - name: Create log file
   file:
