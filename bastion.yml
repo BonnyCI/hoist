@@ -12,6 +12,10 @@
     - role: common
       common_hostname: "{{ bonnyci_hostname | default('') }}"
 
+    - role: sshd
+      tags:
+        - sshd
+
     - role: dd-agent
       tags:
         - monitoring
