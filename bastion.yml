@@ -44,6 +44,9 @@
             - notifempty
       when: secrets is defined
 
+    - role: dd-ansible-runner
+      tags:
+        - monitoring
     - role: ansible-runner
       ansible_runner_minute: "*/15"
       ansible_runner_virtualenv: /opt/ansible
