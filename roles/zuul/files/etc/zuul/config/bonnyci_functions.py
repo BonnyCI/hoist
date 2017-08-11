@@ -13,8 +13,15 @@ def set_log_path(item, job, params):
     params['LOG_PATH'] = '%s/%s' % (params['BASE_LOG_PATH'], job.name)
 
 
+def set_offline_node_after_use(item, job, params):
+    # This ensures nodes are taken offline and not re-used after a
+    # test has run on them.
+    params['OFFLINE_NODE_WHEN_COMPLETE'] = 1
+
+
 FUNCS = [
     set_log_path,
+    set_offline_node_after_use,
 ]
 
 
