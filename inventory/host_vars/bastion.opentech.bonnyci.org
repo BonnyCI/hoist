@@ -1,0 +1,8 @@
+ansible_runner_tasks:
+    - name: system-ansible
+      playbook: bastion.yml
+      inventory: opentech-sl-bastion
+      repo: http://github.com/BonnyCI/hoist.git
+      user: root
+
+bonnyci_bastion_ssl: false
