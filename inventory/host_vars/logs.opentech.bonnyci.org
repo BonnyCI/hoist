@@ -1,0 +1,6 @@
+---
+ansible_host: logs.internal.opentechsjc.bonnyci.org
+ansible_user: ubuntu
+
+bonnyci_logs_ssl: no
+letsencrypt_csr_cn: logs.bonnyci.org

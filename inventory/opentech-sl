@@ -1,0 +1,13 @@
+[log]
+logs.opentech.bonnyci.org
+
+[monitoring]
+elk.opentech.bonnyci.org
+
+[opentech-sl]
+elk.opentech.bonnyci.org
+logs.opentech.bonnyci.org
+
+[production]
+elk.opentech.bonnyci.org
+logs.opentech.bonnyci.org
