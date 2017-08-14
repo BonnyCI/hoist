@@ -7,6 +7,13 @@
     softlayer_user: ubuntu
     softlayer_authorized_key: "{{ secrets.ssh_keys.cideploy.public | mandatory }}"
   tasks:
+    - name: install sudo
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - sudo
+
     - name: create a group
       group:
         name: "{{ softlayer_user }}"
@@ -22,3 +29,12 @@
         user: "{{ softlayer_user }}"
         exclusive: yes
         key: "{{ softlayer_authorized_key }}"
+
+    - name: add sudo for user
+      template:
+        src: user-sudoers.j2
+        dest: /etc/sudoers.d/softlayer
+        mode: "0440"
+        owner: root
+        group: root
+        validate: '/usr/sbin/visudo -cf %s'
