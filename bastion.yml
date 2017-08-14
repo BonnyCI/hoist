@@ -44,13 +44,22 @@
             - notifempty
       when: secrets is defined
 
+    - role: mysql
+      mysql_root_password: "{{ secrets.db_password }}"
+      tags: ['mysql']
+
+    - role: dd-mysql
+      dd_mysql_password: "{{ secrets.datadog.mysql_password }}"
+      tags:
+        - monitoring
+
     - role: ansible-runner
       ansible_runner_minute: "*/15"
       ansible_runner_virtualenv: /opt/ansible
       ara_enabled: "{{ bonnyci_ara_enabled | default(False) | bool }}"
       ara_db_username: "{{ secrets.ara.username }}"
       ara_db_password: "{{ secrets.ara.password }}"
-      ara_db_host: "{{ bonnyci_ara_db_host | default(omit) }}"
+      ara_db_host: "localhost"
       when: secrets is defined
 
     - role: tailon
