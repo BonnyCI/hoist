@@ -1,0 +1,4 @@
+---
+ara_webroot: /var/www/ara
+ara_file_owner: www-data
+ara_file_group: www-data
