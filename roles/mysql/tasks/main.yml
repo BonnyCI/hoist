@@ -10,7 +10,9 @@
    failed_when: "apt_cache.cache_updated != True"
 
  - name: Install the MySQL packages
-   apt: name={{ item }} state=installed
+   apt:
+     name: "{{ item }}"
+     state: installed
    with_items:
      - mysql-server
      - mysql-client
@@ -32,7 +34,11 @@
      enabled: true
 
  - name: Update MySQL root password for all root accounts
-   mysql_user: name=root host={{ item }} password={{ secrets.db_password }} state=present
+   mysql_user:
+     name: root
+     host: "{{ item }}"
+     password: "{{ mysql_root_password }}"
+     state: present
    with_items:
      - "{{ ansible_hostname }}"
      - 127.0.0.1
@@ -46,7 +52,10 @@
      mode: 0600
 
  - name: Ensure Anonymous user(s) are not in the database
-   mysql_user: name='' host={{ item }} state=absent
+   mysql_user:
+     name: ''
+     host: "{{ item }}"
+     state: absent
    with_items:
      - localhost
      - "{{ ansible_hostname }}"

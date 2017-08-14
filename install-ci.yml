@@ -79,10 +79,13 @@
   tags: ['mysql']
   roles:
     - role: mysql
+      mysql_root_password: "{{ secrets.db_password }}"
+
     - role: dd-mysql
       dd_mysql_password: "{{ secrets.datadog.mysql_password }}"
       tags:
         - monitoring
+
     - role: databases
 
 - name: Install zookeeper
