@@ -9,18 +9,18 @@ datadog_callback_url: https://raw.githubusercontent.com/DataDog/ansible-datadog-
 #    - name: common-ansible
 #      playbook: common.yml
 #      inventory: opentech-sjc-common
-#      repo: http://github.com/BonnyCI/hoist.git
+#      repo: https://github.com/BonnyCI/hoist.git
 #      user: root
 #    - name: cideploy-v2
 #      playbook: install-ci.yml
 #      inventory: opentech-sjc-v2
-#      repo: http://github.com/BonnyCI/hoist.git
+#      repo: https://github.com/BonnyCI/hoist.git
 #      user: cideploy
 #      ansible_remote_user: ubuntu
 #    - name: cideploy-v3
 #      playbook: install-ci.yml
 #      inventory: opentech-sjc-v3
-#      repo: http://github.com/BonnyCI/hoist.git
+#      repo: https://github.com/BonnyCI/hoist.git
 #      user: cideploy
 #      ansible_remote_user: ubuntu
 
