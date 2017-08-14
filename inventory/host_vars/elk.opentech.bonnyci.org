@@ -1,0 +1,6 @@
+---
+ansible_host: elk.internal.opentech.bonnyci.org
+ansible_user: ubuntu
+
+bonnyci_elk_ssl: no
+letsencrypt_csr_cn: elk.bonnyci.org
