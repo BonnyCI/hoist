@@ -1,5 +1,5 @@
 ---
-ansible_host: logs.internal.opentechsjc.bonnyci.org
+ansible_host: logs.internal.opentech.bonnyci.org
 ansible_user: ubuntu
 
 bonnyci_logs_ssl: no
