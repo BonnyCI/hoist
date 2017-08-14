@@ -2,13 +2,13 @@ ansible_runner_tasks:
     - name: system-ansible
       playbook: bastion.yml
       inventory: opentech-sl-bastion
-      repo: http://github.com/BonnyCI/hoist.git
+      repo: https://github.com/BonnyCI/hoist.git
       user: root
 
     - name: cideploy-common
       playbook: install-ci.yml
       inventory: opentech-sl
-      repo: http://github.com/BonnyCI/hoist.git
+      repo: https://github.com/BonnyCI/hoist.git
       user: cideploy
       ansible_remote_user: ubuntu
 
