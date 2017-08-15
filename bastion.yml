@@ -75,7 +75,7 @@
           config:
             uid: www-data
             gid: www-data
-            wsgi-file: "{{ ara_venv_path }}/ara-wsgi"
+            wsgi-file: "{{ ara_venv_path }}/bin/ara-wsgi"
             virtualenv: "{{ ara_venv_path }}"
             chdir: /var/www/ara
             plugin: python
