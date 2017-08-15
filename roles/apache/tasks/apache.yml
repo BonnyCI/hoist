@@ -12,6 +12,7 @@
     name: "{{ item }}"
     state: present
   with_items: "{{ apache_apt_install }}"
+  notify: restart apache
 
 - name: enable apache mods
   file:
