@@ -53,6 +53,35 @@
       tags:
         - monitoring
 
+    - role: ara-db
+      ara_db_username: "{{ secrets.ara.username }}"
+      ara_db_password: "{{ secrets.ara.password }}"
+
+    - role: ara-web
+      ara_db_username: "{{ secrets.ara.username }}"
+      ara_db_password: "{{ secrets.ara.password }}"
+      ara_webroot: /var/www/ara
+      ara_file_owner: www-data
+      ara_file_group: www-data
+      env:
+        ANSIBLE_CONFIG: /var/www/ara/ansible.cfg
+
+    - role: uwsgi
+      uwsgi_apt_plugins:
+        - uwsgi-plugin-python
+      uwsgi_vassals:
+        - name: ara
+          state: present
+          config:
+            uid: www-data
+            gid: www-data
+            wsgi-file: "{{ ara_venv_path }}/ara-wsgi"
+            virtualenv: "{{ ara_venv_path }}"
+            chdir: /var/www/ara
+            plugin: python
+            socket: localhost:3311
+            lazy-apps: true
+
     - role: ansible-runner
       ansible_runner_minute: "*/15"
       ansible_runner_virtualenv: /opt/ansible
@@ -70,10 +99,13 @@
         - "/var/www/html/cron-logs/**/*_current.log"
 
     - role: apache
+      apache_apt_install:
+        - libapache2-mod-proxy-uwsgi
       apache_mods_enabled:
         - proxy.conf
         - proxy.load
         - proxy_http.load
+        - proxy_uwsgi.load
       apache_vhosts:
         - name: bastion
           document_root: /var/www/html/
@@ -88,8 +120,13 @@
             Redirect permanent /cron-logs/live /cron-logs/live/
 
             ProxyPass "/cron-logs/live/" http://localhost:8080/cron-logs/live/
+
+            Redirect permanent /ara /ara/
+            ProxyPass "/ara/" uwsgi://localhost:3311/
+
         - name: tailon
           delete: yes
+
         - name: ara
           delete: yes
 

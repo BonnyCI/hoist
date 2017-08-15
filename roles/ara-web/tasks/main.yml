@@ -1,62 +1,34 @@
 ---
-- name: Install deps
-  apt:
-    name: "{{ item }}"
-    state: installed
-    update_cache: yes
-  with_items:
-    - gcc
-    - libffi-dev
-    - python-dev
-    - libssl-dev
-
-- name: Install ara
-  pip:
-    name: "ara>=0.13.0"
-    virtualenv: "{{ ara_venv_path }}"
-
-- name: Install database dependencies
-  pip:
-    name: pymysql
-    virtualenv: "{{ ara_venv_path }}"
-
 - name: Ensure ara directories
   file:
-    path: "/var/www/{{ item }}"
+    path: "{{ item }}"
     state: directory
     mode: 0755
-    owner: www-data
-    group: www-data
+    owner: "{{ ara_file_owner }}"
+    group: "{{ ara_file_group }}"
   with_items:
-    - ara
-    - ara/.ansible
+    - "{{ ara_webroot }}"
+    - "{{ ara_webroot }}/.ansible"
 
 - name: Ensure ara database directory is world-writable
   file:
-    path: "/var/www/ara/.ara"
+    path: "{{ ara_webroot }}/.ara"
     state: directory
     mode: 0777
-    owner: www-data
-    group: www-data
-
-- name: Copy ARA wsgi script into place
-  copy:
-    src: "{{ ara_venv_path }}/bin/ara-wsgi"
-    dest: /var/www/ara/
-    remote_src: True
-
+    owner: "{{ ara_file_owner }}"
+    group: "{{ ara_file_group }}"
 
 - name: Install ARA configuration
   template:
     src: var/www/ara/ansible.cfg
-    dest: /var/www/ara/ansible.cfg
+    dest: "{{ ara_webroot }}/ansible.cfg"
     mode: 0600
-    owner: www-data
-    group: www-data
+    owner: "{{ ara_file_owner }}"
+    group: "{{ ara_file_group }}"
 
 - name: Make sure apache can read everything
   file:
-    path: /var/www/ara
-    owner: www-data
-    group: www-data
+    path: "{{ ara_webroot }}"
+    owner: "{{ ara_file_owner }}"
+    group: "{{ ara_file_group }}"
     recurse: yes

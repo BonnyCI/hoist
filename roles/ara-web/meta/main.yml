@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: python-app
+    name: ara
+    python_app_pipdeps:
+      - name: "ara>=0.13.0"
+      - name: pymysql
