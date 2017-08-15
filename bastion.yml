@@ -80,8 +80,6 @@
             plugin: python
             socket: localhost:3311
             lazy-apps: true
-          env:
-            ANSIBLE_CONFIG: /var/www/ara/ansible.cfg
 
     - role: ansible-runner
       ansible_runner_minute: "*/15"
@@ -123,7 +121,10 @@
             ProxyPass "/cron-logs/live/" http://localhost:8080/cron-logs/live/
 
             Redirect permanent /ara /ara/
-            ProxyPass "/ara/" uwsgi://localhost:3311/
+            <Location "/ara/">
+              ProxyPass uwsgi://localhost:3311/
+              SetEnv ANSIBLE_CONFIG /var/www/ara/ansible.cfg
+            </Location>
 
         - name: tailon
           delete: yes
