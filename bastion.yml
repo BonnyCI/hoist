@@ -130,6 +130,10 @@
         - name: ara
           delete: yes
 
+    - role: dd-apache
+      tags:
+        - monitoring
+
     - role: filebeat
       filebeat_prospectors:
         - name: apache
