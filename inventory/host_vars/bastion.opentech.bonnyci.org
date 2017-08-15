@@ -12,6 +12,6 @@ ansible_runner_tasks:
       user: cideploy
       ansible_remote_user: ubuntu
 
-bonnyci_bastion_ssl: false
-
+bonnyci_bastion_ssl: true
+letsencrypt_csr_cn: bastion.opentech.bonnyci.org
 dns_subdomain: internal.opentech.bonnyci.org
