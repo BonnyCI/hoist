@@ -63,8 +63,6 @@
       ara_webroot: /var/www/ara
       ara_file_owner: www-data
       ara_file_group: www-data
-      env:
-        ANSIBLE_CONFIG: /var/www/ara/ansible.cfg
 
     - role: uwsgi
       uwsgi_apt_plugins:
@@ -81,6 +79,8 @@
             plugin: python
             socket: localhost:3311
             lazy-apps: true
+          env:
+            ANSIBLE_CONFIG: /var/www/ara/ansible.cfg
 
     - role: ansible-runner
       ansible_runner_minute: "*/15"
