@@ -1,0 +1,5 @@
+---
+ansible_host: nodepool.internal.opentech.bonnyci.org
+ansible_user: ubuntu
+
+zookeeper_myid: 1

@@ -7,7 +7,20 @@ elk.opentech.bonnyci.org
 [opentech-sl]
 elk.opentech.bonnyci.org
 logs.opentech.bonnyci.org
+nodepool.opentech.bonnyci.org
+zuul.opentech.bonnyci.org
 
 [production]
 elk.opentech.bonnyci.org
 logs.opentech.bonnyci.org
+nodepool.opentech.bonnyci.org
+zuul.opentech.bonnyci.org
+
+[nodepool]
+nodepool.opentech.bonnyci.org
+
+[zookeeper]
+nodepool.opentech.bonnyci.org
+
+[zuul]
+zuul.opentech.bonnyci.org
