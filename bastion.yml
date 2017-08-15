@@ -60,6 +60,7 @@
     - role: ara-web
       ara_db_username: "{{ secrets.ara.username }}"
       ara_db_password: "{{ secrets.ara.password }}"
+      ara_db_host: localhost
       ara_webroot: /var/www/ara
       ara_file_owner: www-data
       ara_file_group: www-data
