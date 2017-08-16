@@ -129,3 +129,27 @@
 
 - include: nodepool_v3.yml
   when: nodepool_zuul_v3 | bool
+
+- meta: flush_handlers
+
+- name: Enable and start systemd service
+  when: not (nodepool_zuul_v3 | bool)
+  service:
+    enabled: yes
+    state: started
+    service: "{{ item }}"
+  with_items:
+    - nodepool-builder
+    - nodepool-deleter
+    - nodepool-launcher
+    - nodepoold
+
+- name: Enable and start systemd service
+  when: nodepool_zuul_v3 | bool
+  service:
+    enabled: yes
+    state: started
+    service: "{{ item }}"
+  with_items:
+    - nodepool-builder
+    - nodepool-launcher
