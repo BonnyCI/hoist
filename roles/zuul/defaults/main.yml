@@ -40,7 +40,6 @@ zuul_sites: {}
 zuul_url_pattern: "{{ zuul_logs_url }}/{build.parameters[LOG_PATH]}"
 
 zuul_zuul_v3: False
-zuul_python_version: "{% if zuul_zuul_v3 %}3{% endif %}"
 
 zuul_zookeeper_hosts:
   - "127.0.0.1:2181"

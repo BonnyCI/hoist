@@ -11,7 +11,7 @@
     dest: "{{ pip_cache_dir }}/get-pip.py"
 
 - name: Run get-pip.py to intall Pip
-  command: "python{{ pip_python_version }} {{ pip_cache_dir }}/get-pip.py"
+  command: "{{ pip_python_exec }} {{ pip_cache_dir }}/get-pip.py"
   register: pip_command
   changed_when: "'Requirement already up-to-date: pip' not in pip_command.stdout"
 

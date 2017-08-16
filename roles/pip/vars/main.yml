@@ -1,0 +1,2 @@
+---
+pip_python_exec: "{{ pip_python3 | bool | ternary('python3', 'python') }}"
