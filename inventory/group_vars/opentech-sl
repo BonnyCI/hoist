@@ -102,3 +102,5 @@ zuul_ssh_known_hosts:
   - host: "logs.internal.opentech.bonnyci.org"
     key: "logs.internal.opentech.bonnyci.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHfpgEFggvCUYDKlufgNhKyj+WwItg3WKq5CVSs9hMCRoEQ0EDfJ79IplCm6HCnpXpN6GZ3Liv+ikgj9r7ffYYFWbSpnJwEhTHm0rzpV5A5/cCTGwpJCNQYndU+RyxuXSpbXi8aIaP9D7r+v4YTdtdZ3Ua6GzjkhF3fEWVO68hFZKdFuCCKlF8UR9kiCDxMcwG+L8sRvvTmJ7+atlImNUgVzh2C2MYRzK+GlVGeHugJZ0FcW3HrOYnhGPihTGXc1HhU9bMkYryrIKjR2jebHTz+apWkvR+QgvPMlqYQ5ZJR6zwQLrruSid6IZHm87R2kWiZsot5QfMaWvx3TrgFfuv
 "
+
+bonnyci_ara_enabled: true
