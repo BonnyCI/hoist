@@ -1,1 +1,101 @@
 environment_name: opentech-sl
+dns_subdomain: internal.opentech.bonnyci.org
+
+nodepool_zuul_v3: True
+zuul_zuul_v3: True
+
+bonnyci_use_apache: False
+bonnyci_use_nginx: True
+bonnyci_use_app: True
+
+nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
+nodepool_git_version: feature/zuulv3
+
+zuul_git_repo_url: https://github.com/openstack-infra/zuul
+zuul_git_branch: feature/zuulv3
+
+bonnyci_logs_scp_host: logs.internal.opentech.bonnyci.org
+bonnyci_zuul_webapp_server_name: zuul.opentech.bonnyci.org
+
+logstash_elasticsearch_hosts:
+  - "http://localhost:9200"
+
+nodepool_gearman_servers:
+  - host: zuul.internal.opentech.bonnyci.org
+    port: 4730
+
+nodepool_providers:
+  - name: cicloud-v3
+    cloud: opentech-sjc-v3
+    diskimages:
+      - name: ubuntu-xenial
+    pools:
+      - name: main
+        max-servers: 2
+        networks:
+          - nodepool-v3
+        labels:
+          - name: ubuntu-xenial
+            min-ram: 1026
+            diskimage: ubuntu-xenial
+
+nodepool_labels:
+  - name: ubuntu-xenial
+    min-ready: 1
+
+nodepool_diskimages:
+  - name: ubuntu-xenial
+    elements:
+      - ubuntu-minimal
+      - vm
+      - simple-init
+      - growroot
+      - openssh-server
+      - devuser
+      - haveged
+      - pip-and-virtualenv
+      - nodepool
+      - bonnyci-nodepool
+    release: xenial
+    env-vars:
+      DIB_DEV_USER_USERNAME: zuul
+      DIB_DEV_USER_AUTHORIZED_KEYS: /etc/nodepool/slave-authorized-keys
+      DIB_DEV_USER_PWDLESS_SUDO: 'Yes'
+      DIB_DEV_USER_SHELL: /bin/bash
+      DIB_NODEPOOL_SCRIPT_DIR: /etc/nodepool/scripts
+      DIB_PYTHON_VERSION: '2'
+
+integration_handler_integration_id: "{{ secrets.zuul_github_v3_app_id | default('') }}"
+integration_handler_integration_key: "{{ zuul_github_app_key_content | default(False) | ternary(zuul_github_app_key_file, '') }}"
+integration_handler_webhook_key: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
+
+zuul_gearman_server: zuul.internal.opentech.bonnyci.org
+zuul_logs_url: http://logs.opentech.bonnyci.org
+
+zuul_connections:
+  gerrithub:
+    driver: gerrit
+    user: anne-bonny
+    server: review.gerrithub.io
+    sshkey: /var/lib/zuul/.ssh/id_rsa
+
+  github:
+    driver: github
+    api_token: "{{ secrets.zuul_github_api_key | default('') }}"
+    app_id: "{{ secrets.zuul_github_v3_app_id | default('') }}"
+    app_key: "{{ zuul_github_app_key_content | default(False) | ternary(zuul_github_app_key_file, '') }}"
+    webhook_token: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
+
+zuul_github_app_key_content: "{{ secrets.zuul_github_v3_app_key_content }}"
+
+zuul_zookeeper_hosts:
+  - nodepool.internal.opentech.bonnyci.org:2181
+
+zuul_url_pattern: "https://logs.bonnyci.org/{build.parameters[ZUUL_PIPELINE]}/{build.parameters[ZUUL_PROJECT]}/{build.parameters[ZUUL_CHANGE]}/{build.parameters[ZUUL_UUID]}"
+
+zuul_ssh_known_hosts:
+  - host: "[review.gerrithub.io]:29418"
+    key: "[review.gerrithub.io]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtcxtihbxvcTxe/wP2CfaVP7DeCZkEvuW/LFWWfUChCknnlAbem64BlMdsEAvgm2VzIQNWxqI8iyJxoOasR9o42DDsH68YIM+5/o2rHw1emhiSQ3RNmdSGBDqNqg15WHqyR0QVl+lX423MWgXAKmGPuZo9t4ZJ+DdHfO5BVewPPOiEtHUs/IaYDLl8EEFwVZj6wkEUehpq/gFD3WmasPDb4CTZqPH3Z+K5QC8j297laHKPvqa+tE/UGjpWMFXMZTmPd7zNVUoLsSbkqkpE3TUWzLS4OMTtnJdqKlAIRV0pRVYxLp4WXQfg9+NKOqR49pgBGFCIUxtVWLdh23JgVmpnQ=="
+  - host: "logs.internal.opentech.bonnyci.org"
+    key: "logs.internal.opentech.bonnyci.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHfpgEFggvCUYDKlufgNhKyj+WwItg3WKq5CVSs9hMCRoEQ0EDfJ79IplCm6HCnpXpN6GZ3Liv+ikgj9r7ffYYFWbSpnJwEhTHm0rzpV5A5/cCTGwpJCNQYndU+RyxuXSpbXi8aIaP9D7r+v4YTdtdZ3Ua6GzjkhF3fEWVO68hFZKdFuCCKlF8UR9kiCDxMcwG+L8sRvvTmJ7+atlImNUgVzh2C2MYRzK+GlVGeHugJZ0FcW3HrOYnhGPihTGXc1HhU9bMkYryrIKjR2jebHTz+apWkvR+QgvPMlqYQ5ZJR6zwQLrruSid6IZHm87R2kWiZsot5QfMaWvx3TrgFfuv
+"
