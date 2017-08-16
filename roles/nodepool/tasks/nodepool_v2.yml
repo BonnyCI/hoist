@@ -27,16 +27,3 @@
   notify:
     - Reload systemd units
     - Restart nodepool
-
-- meta: flush_handlers
-
-- name: Enable and start systemd service
-  service:
-    enabled: yes
-    state: started
-    service: "{{ item }}"
-  with_items:
-    - nodepool-builder
-    - nodepool-deleter
-    - nodepool-launcher
-    - nodepoold
