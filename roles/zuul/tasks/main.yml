@@ -70,14 +70,14 @@
     group: zuul
   when: zuul_ssh_known_hosts is defined
 
-- name: Install zuul integration key
+- name: Install zuul app key
   copy:
-    dest: /etc/zuul/integration.key
-    content: "{{ zuul_github_integration_key_content }}"
+    dest: /etc/zuul/app.key
+    content: "{{ zuul_github_app_key_content }}"
     owner: zuul
     group: zuul
     mode: 0400
-  when: zuul_github_integration_key_content | default(False)
+  when: zuul_github_app_key_content | default(False)
 
 - name: Install zuul config
   template:
