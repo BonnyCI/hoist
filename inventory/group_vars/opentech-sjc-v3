@@ -71,9 +71,6 @@ nodepool_diskimages:
       DIB_NODEPOOL_SCRIPT_DIR: /etc/nodepool/scripts
       DIB_PYTHON_VERSION: '2'
 
-nodepool_zmq_publishers:
-  - tcp://zuul.internal.v3.opentechsjc.bonnyci.org:8888
-
 integration_handler_integration_id: "{{ secrets.zuul_github_v3_app_id | default('') }}"
 integration_handler_integration_key: "{{ zuul_github_app_key_content | default(False) | ternary(zuul_github_app_key_file, '') }}"
 integration_handler_webhook_key: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
