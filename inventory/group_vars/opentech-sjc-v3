@@ -1,5 +1,8 @@
 environment_name: opentech-sjc-v3
 
+datadog_tags:
+  - "environ:opentechsjc"
+
 nodepool_zuul_v3: True
 zuul_zuul_v3: True
 

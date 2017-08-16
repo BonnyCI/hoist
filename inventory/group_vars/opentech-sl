@@ -8,6 +8,9 @@ bonnyci_use_apache: False
 bonnyci_use_nginx: True
 bonnyci_use_app: True
 
+datadog_tags:
+  - "environ:opentech"
+
 nodepool_git_repo_url: https://github.com/openstack-infra/nodepool
 nodepool_git_version: feature/zuulv3
 
