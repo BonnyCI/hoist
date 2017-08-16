@@ -52,3 +52,6 @@ zuul_gearman_server: zuul.internal.opentechsjc.bonnyci.org
 zuul_logs_url: https://logs.bonnyci.org
 
 dns_subdomain: internal.opentechsjc.bonnyci.org
+
+datadog_tags:
+  - "environ:opentechsjc"
