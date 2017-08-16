@@ -117,7 +117,7 @@
       integration_handler_template_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
       when:
         - zuul_zuul_v3
-        - bonnyci_use_integration
+        - bonnyci_use_app
 
     - role: dd-zuul
       tags:
