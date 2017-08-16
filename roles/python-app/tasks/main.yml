@@ -16,14 +16,14 @@
     - git
     - libffi-dev
     - libssl-dev
-    - python{{ python_app_python_version }}-dev
+    - "{{ python_app_python_exec }}-dev"
 
 - name: Install pip dependencies
   pip:
     name: "{{ item.name }}"
     version: "{{ item.version | default(omit) }}"
     virtualenv: "{{ python_app_venv_path }}/{{ name }}"
-    virtualenv_python: "python{{ python_app_python_version }}"
+    virtualenv_python: "{{ python_app_python_exec }}"
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ python_app_pipdeps }}"
   when: item.when | default(True)
@@ -49,7 +49,7 @@
         extra_args: -U
         name: "{{ python_app_source_path }}/{{ name }}"
         virtualenv: "{{ python_app_venv_path }}/{{ name }}"
-        virtualenv_python: "python{{ python_app_python_version }}"
+        virtualenv_python: "{{ python_app_python_exec }}"
       when: python_app_git_checkout.changed
 
     - name: Set python-app source facts

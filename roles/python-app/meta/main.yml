@@ -1,4 +1,4 @@
 ---
 dependencies:
   - name: pip
-    pip_python_version: "{{ python_app_python_version }}"
+    pip_python3: "{{ python_app_python3 | bool }}"
