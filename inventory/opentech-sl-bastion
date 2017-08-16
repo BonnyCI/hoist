@@ -1,2 +1,8 @@
 [bastion]
 bastion.opentech.bonnyci.org ansible_connection=local
+
+[production]
+bastion.opentech.bonnyci.org
+
+[opentech-sl]
+bastion.opentech.bonnyci.org
