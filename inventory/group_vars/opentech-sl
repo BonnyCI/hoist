@@ -36,7 +36,7 @@ nodepool_providers:
       - name: main
         max-servers: 2
         networks:
-          - nodepool
+          - nodepool-sl
         labels:
           - name: ubuntu-xenial
             min-ram: 1026
