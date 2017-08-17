@@ -24,7 +24,7 @@
 
 - name: Install playbook deps
   pip:
-    virtualenv: "{{ ansible_runner_virtualenv }}"
+    virtualenv: "{{ ansible_runner_venv_path }}"
     requirements: "/opt/source/{{ item.name }}/requirements.txt"
   when: requirements_txt.stat.exists
 

@@ -1,2 +1,9 @@
 dependencies:
-  - pip
+  - role: python-app
+    name: ansible-runner
+    python_app_pip_deps:
+      - name: ansible
+      - name: "ara>=0.13.0"
+        when: ara_enabled | default(False) | bool
+      - name: pymysql
+        when: ara_enabled | default(False) | bool
