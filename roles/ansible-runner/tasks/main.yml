@@ -7,44 +7,16 @@
     name: "{{ item }}"
     state: installed
   with_items:
-    - python-dev
-    - libssl-dev
     - git
     - cron
 
-- name: Install ansible
-  pip:
-    virtualenv: "{{ ansible_runner_virtualenv }}"
-    name: ansible
-
 - name: Create callback plugins path
   file:
-    path: "{{ ansible_runner_virtualenv }}/plugins/callback"
+    path: "{{ ansible_runner_venv_path }}/plugins/callback"
     state: directory
     mode: 0755
     owner: root
     group: root
-
-- block:
-  - name: Install datadog callback plugin
-    get_url:
-      url: "{{ datadog_callback_url }}"
-      dest: "{{ ansible_runner_virtualenv }}/plugins/callback/datadog_callback.py"
-      mode: 0755
-      owner: root
-      group: root
-
-  - name: Install datadog callback configuration
-    copy:
-      dest: "{{ ansible_runner_virtualenv }}/plugins/callback/datadog_callback.yml"
-      content: "api_key: {{ secrets.datadog.api_key }}"
-      mode: 0644
-      owner: root
-      group: root
-
-  when: datadog_enabled | default(True) | bool
-  tags:
-    - datadog
 
 - name: Install ansible-runner
   copy:
@@ -68,8 +40,10 @@
     path: /var/www/html/cron-logs/live
     mode: 0755
 
+- include: datadog.yml
+  when: datadog_enabled | default(True) | bool
+  tags:
+    - datadog
+
 - include: runner.yml
   with_items: "{{ ansible_runner_tasks }}"
-
-- include: ara.yml
-  when: ara_enabled | default(False) | bool

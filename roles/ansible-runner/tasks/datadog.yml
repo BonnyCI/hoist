@@ -1,0 +1,15 @@
+- name: Install datadog callback plugin
+  get_url:
+    url: "{{ datadog_callback_url }}"
+    dest: "{{ ansible_runner_venv_path }}/plugins/callback/datadog_callback.py"
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Install datadog callback configuration
+  copy:
+    dest: "{{ ansible_runner_venv_path }}/plugins/callback/datadog_callback.yml"
+    content: "api_key: {{ secrets.datadog.api_key }}"
+    mode: 0644
+    owner: root
+    group: root
