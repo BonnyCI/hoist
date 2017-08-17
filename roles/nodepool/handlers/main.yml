@@ -22,6 +22,11 @@
     - nodepool-builder
     - nodepool-launcher
 
+- name: Restart nodepool launcher
+  service:
+    name: nodepool-launcher
+    state: restarted
+
 - name: Restart nodepool builder
   service:
     name: nodepool-builder
