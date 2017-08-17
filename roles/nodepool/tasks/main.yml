@@ -78,6 +78,8 @@
     owner: nodepool
     group: nodepool
     mode: 0600
+  notify:
+    - Restart nodepool launcher
 
 - name: install nodepool sudoers file (for DIB builds)
   copy:
