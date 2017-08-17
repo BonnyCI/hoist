@@ -1,3 +1,46 @@
+- set_fact:
+    venv_dir: "/opt/venvs/{{ item.name }}"
+
+- name: Install ansible
+  pip:
+    virtualenv: "{{ venv_dir }}"
+    name: ansible
+
+- name: Create callback plugins path
+  file:
+    path: "{{ venv_dir }}/plugins/callback"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- block:
+  - name: Install datadog callback plugin
+    get_url:
+      url: "{{ datadog_callback_url }}"
+      dest: "{{ venv_dir }}/plugins/callback/datadog_callback.py"
+      mode: 0755
+      owner: root
+      group: root
+
+  - name: Install datadog callback configuration
+    copy:
+      dest: "{{ venv_dir }}/plugins/callback/datadog_callback.yml"
+      content: "api_key: {{ secrets.datadog.api_key }}"
+      mode: 0644
+      owner: root
+      group: root
+
+  when: datadog_enabled | default(True) | bool
+  tags:
+    - datadog
+
+- name: Ensure virtualenv ownership
+  file:
+    dest: "{{ venv_dir }}"
+    owner: "{{ item.user }}"
+    recurse: yes
+
 - name: Install config file
   template:
     src: ansible-runner-config
@@ -24,7 +67,7 @@
 
 - name: Install playbook deps
   pip:
-    virtualenv: "{{ ansible_runner_virtualenv }}"
+    virtualenv: "{{ venv_dir }}"
     requirements: "/opt/source/{{ item.name }}/requirements.txt"
   when: requirements_txt.stat.exists
 
@@ -60,3 +103,6 @@
     minute: "{{ ansible_runner_minute | default(omit) }}"
     user: "{{ item.user }}"
     job: "/usr/local/bin/ansible-runner {{ item.name }} -e @{{ ansible_runner_secrets_path }}"
+
+- include: ara.yml
+  when: ara_enabled | default(False) | bool

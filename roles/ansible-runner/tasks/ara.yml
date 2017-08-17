@@ -2,9 +2,9 @@
 - name: Install ara
   pip:
     name: "ara>=0.13.0"
-    virtualenv: "{{ ansible_runner_virtualenv }}"
+    virtualenv: "{{ venv_dir }}"
 
 - name: Install ara database driver
   pip:
     name: pymysql
-    virtualenv: "{{ ansible_runner_virtualenv }}"
+    virtualenv: "{{ venv_dir }}"
