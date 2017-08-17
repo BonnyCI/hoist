@@ -28,15 +28,15 @@ nodepool_gearman_servers:
     port: 4730
 
 nodepool_providers:
-  - name: cicloud-v3
-    cloud: opentech-sjc-v3
+  - name: cicloud
+    cloud: opentech-sl
     diskimages:
       - name: ubuntu-xenial
     pools:
       - name: main
         max-servers: 2
         networks:
-          - nodepool-v3
+          - nodepool
         labels:
           - name: ubuntu-xenial
             min-ram: 1026
@@ -100,7 +100,6 @@ zuul_ssh_known_hosts:
   - host: "[review.gerrithub.io]:29418"
     key: "[review.gerrithub.io]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtcxtihbxvcTxe/wP2CfaVP7DeCZkEvuW/LFWWfUChCknnlAbem64BlMdsEAvgm2VzIQNWxqI8iyJxoOasR9o42DDsH68YIM+5/o2rHw1emhiSQ3RNmdSGBDqNqg15WHqyR0QVl+lX423MWgXAKmGPuZo9t4ZJ+DdHfO5BVewPPOiEtHUs/IaYDLl8EEFwVZj6wkEUehpq/gFD3WmasPDb4CTZqPH3Z+K5QC8j297laHKPvqa+tE/UGjpWMFXMZTmPd7zNVUoLsSbkqkpE3TUWzLS4OMTtnJdqKlAIRV0pRVYxLp4WXQfg9+NKOqR49pgBGFCIUxtVWLdh23JgVmpnQ=="
   - host: "logs.internal.opentech.bonnyci.org"
-    key: "logs.internal.opentech.bonnyci.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHfpgEFggvCUYDKlufgNhKyj+WwItg3WKq5CVSs9hMCRoEQ0EDfJ79IplCm6HCnpXpN6GZ3Liv+ikgj9r7ffYYFWbSpnJwEhTHm0rzpV5A5/cCTGwpJCNQYndU+RyxuXSpbXi8aIaP9D7r+v4YTdtdZ3Ua6GzjkhF3fEWVO68hFZKdFuCCKlF8UR9kiCDxMcwG+L8sRvvTmJ7+atlImNUgVzh2C2MYRzK+GlVGeHugJZ0FcW3HrOYnhGPihTGXc1HhU9bMkYryrIKjR2jebHTz+apWkvR+QgvPMlqYQ5ZJR6zwQLrruSid6IZHm87R2kWiZsot5QfMaWvx3TrgFfuv
-"
+    key: "logs.internal.opentech.bonnyci.org ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHfpgEFggvCUYDKlufgNhKyj+WwItg3WKq5CVSs9hMCRoEQ0EDfJ79IplCm6HCnpXpN6GZ3Liv+ikgj9r7ffYYFWbSpnJwEhTHm0rzpV5A5/cCTGwpJCNQYndU+RyxuXSpbXi8aIaP9D7r+v4YTdtdZ3Ua6GzjkhF3fEWVO68hFZKdFuCCKlF8UR9kiCDxMcwG+L8sRvvTmJ7+atlImNUgVzh2C2MYRzK+GlVGeHugJZ0FcW3HrOYnhGPihTGXc1HhU9bMkYryrIKjR2jebHTz+apWkvR+QgvPMlqYQ5ZJR6zwQLrruSid6IZHm87R2kWiZsot5QfMaWvx3TrgFfuv"
 
 bonnyci_ara_enabled: true
