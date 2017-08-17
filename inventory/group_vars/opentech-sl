@@ -91,6 +91,17 @@ zuul_connections:
 
 zuul_github_app_key_content: "{{ secrets.zuul_github_v3_app_key_content }}"
 
+zuul_tenants:
+  - name: BonnyCI
+    source:
+      github:
+        config-projects:
+          - BonnyCI/project-config
+
+      gerrithub:
+        untrusted-projects:
+          - BonnyCI/sandbox-v3
+
 zuul_zookeeper_hosts:
   - nodepool.internal.opentech.bonnyci.org:2181
 
