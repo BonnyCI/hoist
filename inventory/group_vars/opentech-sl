@@ -32,6 +32,7 @@ nodepool_providers:
     cloud: opentech-sl
     diskimages:
       - name: ubuntu-xenial
+        config-drive: true
     pools:
       - name: main
         max-servers: 2
