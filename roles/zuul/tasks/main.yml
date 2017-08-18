@@ -129,6 +129,10 @@
   include: merger.yml
   when: "'zuul-merger' in zuul_components"
 
+- name: Configure zuul-web
+  include: web.yml
+  when: "'zuul-web' in zuul_components"
+
 - name: Stop unwanted zuul services
   service:
     name: "{{ item }}"
@@ -140,6 +144,7 @@
     - zuul-launcher
     - zuul-merger
     - zuul-server
+    - zuul-web
   register: stop_zuul
   failed_when:
     - stop_zuul|failed
