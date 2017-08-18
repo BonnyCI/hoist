@@ -26,6 +26,9 @@ zuul_tenant_file: /etc/zuul/tenant.yaml
 zuul_webapp_listen_address: 127.0.0.1
 zuul_webapp_port: 8001
 
+zuul_web_listen_address: 127.0.0.1
+zuul_web_listen_port: 9000
+
 zuul_merger_url: 127.0.0.1
 zuul_merger_git_dir: /var/lib/zuul/git
 

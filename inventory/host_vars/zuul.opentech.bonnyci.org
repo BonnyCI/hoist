@@ -9,3 +9,4 @@ zuul_components:
   - zuul-executor
   - zuul-merger
   - zuul-scheduler
+  - zuul-web

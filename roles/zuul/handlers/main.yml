@@ -19,6 +19,11 @@
   when: zuul_check_server.rc == 0 and (zuul_allow_restart_services | bool)
   register: zuul_restarted
 
+- name: Restart zuul-web
+  service:
+    name: zuul-web
+    state: restarted
+
 - name: Reload zuul-server
   service:
     name: zuul-server
