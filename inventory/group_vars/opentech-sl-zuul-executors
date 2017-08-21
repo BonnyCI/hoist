@@ -1,0 +1,5 @@
+---
+ansible_user: ubuntu
+
+zuul_components:
+  - zuul-executor
