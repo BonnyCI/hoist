@@ -1,9 +1,18 @@
 # Softlayer machines come with SSH root access and no users set up. This doesn't
 # match how OpenStack and other providers work so create a user with the right
 # ssh key so we don't nee to modify our whole hoist repo to handle softlayer.
+#
+# easiest invoked as:
+# ansible-playbook -i "<NEW-IP>," -e@secrets.yml setup-softlayer.yml
+#
+# FIXME: the only secret in this file is a public key and ansible's
+# authorized_key module can download keys from the internet so it would be
+# great if we published the cideploy public key on the bastion or somewhere
+# public rather than needing to have a secrets file here.
 ---
 - hosts: all
   vars:
+    ansible_user: root
     softlayer_user: ubuntu
     softlayer_authorized_key: "{{ secrets.ssh_keys.cideploy.public | mandatory }}"
   tasks:
