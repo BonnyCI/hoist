@@ -8,6 +8,15 @@
     - scheduler
   notify: Restart zuul
 
+- name: Install zuul app key
+  copy:
+    dest: /etc/zuul/app.key
+    content: "{{ zuul_github_app_key_content }}"
+    owner: zuul
+    group: zuul
+    mode: 0400
+  when: zuul_github_app_key_content | default(False)
+
 # FIXME: need to figure out some way of notify/running integration-handler here
 - name: Install tenant.yaml
   template:
