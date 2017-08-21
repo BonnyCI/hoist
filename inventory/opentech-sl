@@ -9,12 +9,14 @@ elk.opentech.bonnyci.org
 logs.opentech.bonnyci.org
 nodepool.opentech.bonnyci.org
 zuul.opentech.bonnyci.org
+ze01.internal.opentech.bonnyci.org
 
 [production]
 elk.opentech.bonnyci.org
 logs.opentech.bonnyci.org
 nodepool.opentech.bonnyci.org
 zuul.opentech.bonnyci.org
+ze01.internal.opentech.bonnyci.org
 
 [nodepool]
 nodepool.opentech.bonnyci.org
