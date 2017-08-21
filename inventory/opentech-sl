@@ -24,3 +24,9 @@ nodepool.opentech.bonnyci.org
 
 [zuul]
 zuul.opentech.bonnyci.org
+
+[opentech-sl-zuul-exectuors]
+ze01.internal.opentech.bonnyci.org
+
+[zuul:children]
+opentech-sl-zuul-exectuors
