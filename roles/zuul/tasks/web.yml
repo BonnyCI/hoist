@@ -1,9 +1,0 @@
----
-- name: Install zuul-web logging configs
-  template:
-    src: "etc/zuul/logging.conf"
-    dest: "/etc/zuul/{{ item }}-logging.conf"
-    owner: zuul
-  notify: Restart zuul-web
-  with_items:
-    - web

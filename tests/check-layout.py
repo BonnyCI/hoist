@@ -30,7 +30,7 @@ REQUIRED_PIPELINES = [
     'gate_github',
 ]
 
-layout_yaml = 'roles/zuul/templates/etc/zuul/config/layout.yaml'
+layout_yaml = 'roles/zuul-server/templates/etc/zuul/config/layout.yaml'
 layout = yaml.safe_load(open(layout_yaml))
 
 gerrit_yaml = 'gerrit/projects.yaml'

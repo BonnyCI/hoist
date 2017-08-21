@@ -88,6 +88,7 @@
 
     - role: databases
 
+
 - name: Install zookeeper
   hosts: zookeeper
   become: yes
@@ -98,26 +99,19 @@
       tags:
         - monitoring
 
-- name: Install zuul server and launcher
-  hosts: zuul
+
+- name: Install zuul server (v2)
+  hosts: zuul-server
   become: yes
   tags:
     - zuul
     - zuul-server
-    - zuul-launcher
   roles:
+    - role: zuul-server
+
     - role: dd-gearman
       tags:
         - monitoring
-
-    - role: zuul
-      zuul_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
-
-    - role: integration-handler
-      integration_handler_template_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
-      when:
-        - zuul_zuul_v3
-        - bonnyci_use_app
 
     - role: dd-zuul-server
       tags:
@@ -144,8 +138,17 @@
 
     - role: logrotate
       logrotate_configs:
-        - name: zuul
-          path: /var/log/zuul/*log
+        - name: zuul-server
+          path: /var/log/zuul/zuul-server*.log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
+        - name: zuul-gearman
+          path: /var/log/zuul/gearman*.log
           options:
             - compress
             - missingok
@@ -161,45 +164,189 @@
               document_type: python-logging
               tags:
                 - zuul
-                - zuul-launcher
                 - zuul-server
               paths:
-                - /var/log/zuul/*debug.log
+                - /var/log/zuul/zuul-server-debug.log
               multiline:
                 match: after
                 negate: true
                 pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
-        - name: apache
+
+- name: Install zuul launcher (v2)
+  hosts: zuul-launcher
+  become: yes
+  tags:
+    - zuul
+    - zuul-launcher
+  roles:
+    - role: zuul-launcher
+
+    - role: logrotate
+      logrotate_configs:
+        - name: zuul-launcher
+          path: /var/log/zuul/zuul-launcher*.log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
+
+- name: Install zuul scheduler (v3)
+  hosts: zuul-scheduler
+  become: yes
+  tags:
+    - zuul
+    - zuul-scheduler
+  roles:
+    - role: zuul-scheduler
+      zuul_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+
+    - role: integration-handler
+      integration_handler_template_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+      when:
+        - bonnyci_use_app
+
+    - role: apache
+      apache_mods_enabled: "{{ bonnyci_zuul_webapp_apache_mods_enabled }}"
+      apache_vhosts: "{{ bonnyci_zuul_webapp_apache_vhosts }}"
+      when: bonnyci_use_apache
+
+    - role: dd-apache
+      tags:
+        - monitoring
+      when: bonnyci_use_apache
+
+    - role: nginx
+      nginx_sites: "{{ bonnyci_zuul_webapp_nginx_sites }}"
+      when: bonnyci_use_nginx
+
+    - role: dd-nginx
+      tags:
+        - monitoring
+      when: bonnyci_use_nginx
+
+    - role: logrotate
+      logrotate_configs:
+        - name: zuul-scheduler
+          path: /var/log/zuul/zuul-scheduler*.log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
+        - name: zuul-gearman
+          path: /var/log/zuul/gearman*.log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
+    - role: filebeat
+      filebeat_prospectors:
+        - name: zuul-scheduler
           prospectors:
             - input_type: log
-              document_type: apache
+              document_type: python-logging
+              tags:
+                - zuul
+                - zuul-scheduler
               paths:
-                - /var/log/apache/*.log
-          when: bonnyci_use_apache
+                - /var/log/zuul/zuul-scheduler-debug.log
+              multiline:
+                match: after
+                negate: true
+                pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
-        - name: nginx
+
+- name: Install zuul executors (v3)
+  hosts: zuul-executor
+  become: yes
+  tags:
+    - zuul
+    - zuul-executor
+  roles:
+    - role: zuul-executor
+
+    - role: logrotate
+      logrotate_configs:
+        - name: zuul-executor
+          path: /var/log/zuul/zuul-executor*.log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
+    - role: filebeat
+      filebeat_prospectors:
+        - name: zuul-executor
           prospectors:
             - input_type: log
-              document_type: nginx_access
+              document_type: python-logging
+              tags:
+                - zuul
+                - zuul-executor
               paths:
-                - /var/log/nginx/access.log
+                - /var/log/zuul/zuul-executor-debug.log
+              multiline:
+                match: after
+                negate: true
+                pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
+
+- name: Install zuul web (v3)
+  hosts: zuul-web
+  become: yes
+  tags:
+    - zuul
+    - zuul-web
+  roles:
+    - role: zuul-web
+
+    - role: logrotate
+      logrotate_configs:
+        - name: zuul-web
+          path: /var/log/zuul/zuul-web*.log
+          options:
+            - compress
+            - missingok
+            - rotate 30
+            - daily
+            - notifempty
+
+    - role: filebeat
+      filebeat_prospectors:
+        - name: zuul-web
+          prospectors:
             - input_type: log
-              document_type: nginx_error
+              document_type: python-logging
+              tags:
+                - zuul
+                - zuul-web
               paths:
-                - /var/log/nginx/error.log
-          when: bonnyci_use_nginx
+                - /var/log/zuul/zuul-web-debug.log
+              multiline:
+                match: after
+                negate: true
+                pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
 
 - name: Install zuul mergers
-  hosts: mergers
+  hosts: zuul-merger
   become: yes
   tags:
     - zuul
     - zuul-merger
   roles:
-    - role: zuul
+    - role: zuul-merger
       zuul_merger_git_dir: "{{ bonnyci_zuul_merger_git_dir }}"
 
     - role: apache
@@ -214,8 +361,8 @@
 
     - role: logrotate
       logrotate_configs:
-        - name: zuul
-          path: /var/log/zuul/*log
+        - name: zuul-merger
+          path: /var/log/zuul/zuul-merger*.log
           options:
             - compress
             - missingok
@@ -233,19 +380,12 @@
                 - zuul
                 - zuul-merger
               paths:
-                - /var/log/zuul/*debug.log
+                - /var/log/zuul/zuul-merger-debug.log
               multiline:
                 match: after
                 negate: true
                 pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
-        - name: apache
-          prospectors:
-            - input_type: log
-              document_type: apache
-              paths:
-                - /var/log/apache/*.log
-          when: bonnyci_use_apache
 
 - name: Install nodepool
   hosts: nodepool

@@ -1,8 +1,0 @@
-- name: Install zuul-merger logging config
-  template:
-    src: "etc/zuul/logging.conf"
-    dest: "/etc/zuul/{{ item }}-logging.conf"
-    owner: zuul
-  notify: Restart zuul
-  with_items:
-    - merger

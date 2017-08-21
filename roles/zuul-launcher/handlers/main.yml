@@ -1,0 +1,12 @@
+---
+- name: check zuul-launcher is running
+  command: pgrep zuul-launcher
+  register: zuul_check_launcher
+  changed_when: false
+  failed_when: zuul_check_launcher.rc == 127
+  listen:
+    - Reconfigure zuul-launcher
+
+- name: Reconfigure zuul-launcher
+  command: "{{ zuul_venv_path }}/bin/zuul-launcher -c {{ zuul_config_dir }}/zuul-launcher.conf reconfigure"
+  when: zuul_check_launcher.rc == 0

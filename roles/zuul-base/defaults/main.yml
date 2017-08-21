@@ -1,0 +1,23 @@
+---
+zuul_allow_restart_services: no
+
+zuul_gearman_server: 127.0.0.1
+zuul_gearman_port: 4730
+
+zuul_git_repo_url: https://github.com/BonnyCI/zuul
+zuul_git_branch: github-integration
+
+zuul_service_enabled: yes
+zuul_service_start: yes
+
+zuul_statsd_enable: no
+zuul_statsd_host: 127.0.0.1
+zuul_statsd_port: 8125
+
+zuul_template_config: etc/zuul/zuul.conf
+zuul_template_logging: etc/zuul/logging.conf
+zuul_template_service: etc/systemd/system/zuul.service
+
+zuul_use_datadog_logging: False
+
+zuul_zuul_v3: False

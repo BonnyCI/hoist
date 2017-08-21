@@ -1,0 +1,15 @@
+[Unit]
+Description={{ zuul_service_name }} Service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=zuul
+Group=zuul
+LimitNOFILE=8192
+EnvironmentFile=-/etc/default/{{ zuul_service_name }}
+ExecStart={{ zuul_venv_path }}/bin/{{ zuul_service_name }} -c {{ zuul_config_dir }}/{{ zuul_service_name }}.conf -d
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

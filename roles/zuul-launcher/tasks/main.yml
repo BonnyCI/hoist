@@ -1,0 +1,8 @@
+---
+- name: Install job definitions
+  synchronize:
+    src: files/jobs/
+    dest: "{{ zuul_home_dir }}/jobs/"
+    rsync_opts:
+      - "--chown=zuul:zuul"
+  notify: Reconfigure zuul-launcher

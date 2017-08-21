@@ -4,10 +4,13 @@ allinone
 [nodepool]
 allinone
 
-[zuul]
+[zuul-server]
 allinone
 
-[mergers]
+[zuul-launcher]
+allinone
+
+[zuul-merger]
 allinone
 
 [mysql]

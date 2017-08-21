@@ -1,0 +1,59 @@
+---
+- name: Create zuul state dir
+  file:
+    path: "{{ zuul_scheduler_state_dir }}"
+    state: directory
+    owner: zuul
+    group: zuul
+
+- name: Install gearman logging configs
+  template:
+    src: "etc/zuul/gearman-logging.conf"
+    dest: "{{ zuul_config_dir }}/gearman-logging.conf"
+    owner: zuul
+
+- name: Install zuul app key
+  copy:
+    dest: "{{ zuul_config_dir }}/app.key"
+    content: "{{ zuul_github_app_key_content }}"
+    owner: zuul
+    group: zuul
+    mode: 0400
+  when: zuul_github_app_key_content | default(False)
+
+# FIXME: need to figure out some way of notify/running integration-handler here
+- name: Install tenant.yaml
+  template:
+    src: etc/zuul/tenant.yaml
+    dest: "{{ zuul_tenant_file }}"
+    owner: zuul
+  notify: Reload zuul-scheduler
+
+- name: Create zuul status lib dir
+  file:
+    path: /opt/source/zuul/etc/status/public_html/lib
+    state: directory
+
+- name: Install jquery and jquery-visibility
+  get_url:
+    url: "{{ item }}"
+    dest: /opt/source/zuul/etc/status/public_html/lib
+  with_items:
+    - https://code.jquery.com/jquery.min.js
+    - https://raw.githubusercontent.com/mathiasbynens/jquery-visibility/master/jquery-visibility.js
+    - https://raw.githubusercontent.com/prestontimmons/graphitejs/master/jquery.graphite.js
+
+- name: Create bootstrap css dir
+  file:
+    path: /opt/source/zuul/etc/status/public_html/lib/bootstrap/css
+    state: directory
+
+- name: Download bootstrap
+  get_url:
+    url: https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css
+    dest: /opt/source/zuul/etc/status/public_html/lib/bootstrap/css/bootstrap.min.css
+
+- name: Start zuul-server
+  service:
+    name: zuul-server
+    state: started

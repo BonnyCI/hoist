@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: zuul-base
+    zuul_service_name: zuul-launcher

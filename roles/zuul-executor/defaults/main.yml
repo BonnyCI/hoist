@@ -1,0 +1,11 @@
+---
+zuul_executor_default_username: "zuul"
+zuul_executor_disk_limit_per_job: 250
+zuul_executor_finger_port: 79
+zuul_executor_git_dir: "{{ zuul_home_dir }}/executor-git"
+zuul_executor_private_key_file: "~/.ssh/id_rsa"
+zuul_executor_state_dir: "{{ zuul_home_dir }}/executor-state" 
+zuul_executor_untrusted_wrapper: bubblewrap
+
+zuul_git_user_name: user@domain.io
+zuul_git_user_email: My Name

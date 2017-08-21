@@ -1,0 +1,59 @@
+---
+- name: Create the zuul group
+  group:
+    name: zuul
+    state: present
+
+- name: Create zuul user
+  user:
+    name: zuul
+    group: zuul
+    home: "{{ zuul_home_dir }}"
+    system: yes
+    state: present
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: zuul
+    group: zuul
+  with_items:
+    - "{{ zuul_config_dir }}"
+    - "{{ zuul_log_dir }}"
+
+- name: Install zuul config
+  template:
+    src:  "{{ zuul_template_config }}"
+    dest: "{{ zuul_config_dir }}/{{ zuul_service_name }}.conf"
+    owner: zuul
+
+- name: Install service environment configs
+  template:
+    src: etc/default/zuul
+    dest: /etc/default/{{ zuul_service_name }}
+
+- name: Install systemd unit files
+  template:
+    src: "{{ zuul_template_service }}"
+    dest: /etc/systemd/system/{{ zuul_service_name }}.service
+  notify:
+    - Reload systemd units
+
+- name: Install logging config
+  template:
+    src: "{{ zuul_template_logging }}"
+    dest: "/etc/zuul/{{ zuul_service_name }}-logging.conf"
+    owner: zuul
+
+- name: Enable zuul services
+  service:
+    name: "{{ zuul_service_name }}"
+    enabled: "{{ zuul_service_enabled | bool }}"
+
+- name: Start zuul services
+  service:
+    name: "{{ zuul_service_name }}"
+    state: started
+  when: zuul_service_start

@@ -1,0 +1,57 @@
+---
+- name: "Create zuul's ~/.ssh"
+  file:
+    path: "{{ zuul_home_dir }}/.ssh/"
+    state: directory
+    owner: zuul
+    group: zuul
+    mode: 0700
+
+- name: Install zuul private ssh key
+  copy:
+    dest: "{{ zuul_home_dir }}/.ssh/id_rsa"
+    content: "{{ secrets.ssh_keys.zuul.private }}"
+    owner: zuul
+    group: zuul
+    mode: 0600
+
+- name: Install zuul public ssh key
+  copy:
+    dest: "{{ zuul_home_dir }}/.ssh/id_rsa.pub"
+    content: "{{ secrets.ssh_keys.zuul.public }}"
+    owner: zuul
+    group: zuul
+    mode: 0644
+
+- name: Install any ssh known host keys
+  known_hosts:
+    path: "{{ zuul_home_dir }}/.ssh/known_hosts"
+    key: "{{ item.key }}"
+    host: "{{ item.host }}"
+  with_items: "{{ zuul_ssh_known_hosts }}"
+  when: zuul_ssh_known_hosts is defined
+
+- name: Ensure zuul ssh known_hosts ownership
+  file:
+    path: "{{ zuul_home_dir }}/.ssh/known_hosts"
+    owner: zuul
+    group: zuul
+  when: zuul_ssh_known_hosts is defined
+
+- name: Add bubblewrap PPA
+  apt_repository:
+    repo: "ppa:openstack-ci-core/bubblewrap"
+    state: present
+    update_cache: yes
+
+- name: Install bubblewrap
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - bubblewrap
+
+- name: Start zuul-executor
+  service:
+    name: zuul-executor
+    state: started

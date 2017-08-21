@@ -24,11 +24,17 @@ nodepool.opentech.bonnyci.org
 [zookeeper]
 nodepool.opentech.bonnyci.org
 
-[zuul]
+[zuul-scheduler]
 zuul.opentech.bonnyci.org
 
-[opentech-sl-zuul-exectuors]
+[zuul-merger]
+zuul.opentech.bonnyci.org
+
+[zuul-web]
+zuul.opentech.bonnyci.org
+
+[zuul-executor]
 ze01.internal.opentech.bonnyci.org
 
-[zuul:children]
-opentech-sl-zuul-exectuors
+[opentech-sl-zuul-exectuors:children]
+zuul-executor
