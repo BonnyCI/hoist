@@ -119,7 +119,7 @@
         - zuul_zuul_v3
         - bonnyci_use_app
 
-    - role: dd-zuul
+    - role: dd-zuul-server
       tags:
         - monitoring
 
