@@ -1,10 +1,15 @@
 # python isn't installed by default on ubuntu cloud images any more which is a
 # problem for ansible. For us this is most notable that it's not present in the
 # softlayer images and we don't really have the ability to spin up our own.
+#
+# easiest invoked as:
+# ansible-playbook -i "<NEW-IP>," install-python.yml
 ---
 - hosts: all
   gather_facts: False
   become: yes
+  vars:
+    ansible_user: root
   tasks:
     - name: install python 2 if it's not available (ubuntu)
       raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
