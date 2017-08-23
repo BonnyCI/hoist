@@ -19,13 +19,6 @@ ansible_runner_tasks:
       user: cideploy
       ansible_remote_user: ubuntu
 
-    - name: cideploy-v3
-      playbook: install-ci.yml
-      inventory: opentech-sjc-v3
-      repo: https://github.com/BonnyCI/hoist.git
-      user: cideploy
-      ansible_remote_user: ubuntu
-
 dns_subdomain: internal.opentechsjc.bonnyci.org
 
 bonnyci_bastion_ssl: true
