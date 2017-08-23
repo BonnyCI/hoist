@@ -1,0 +1,26 @@
+- job:
+    name: 'dib-build'
+    node: 'ubuntu-xenial'
+    builders:
+      shell: |
+        virtualenv $HOME/dib-build
+        source $HOME/dib-build/bin/activate
+        pip install diskimage-builder
+
+        sudo apt-get install -y debootstrap qemu-utils curl \
+                                uuid-runtime parted kpartx
+
+        sudo git clone https://github.com/BonnyCI/hoist.git /opt/hoist
+        export ELEMENTS_PATH=/opt/hoist/roles/nodepool/files/etc/nodepool/elements/nodepool
+        # NOTE: be sure the list of nodepool elements here stays consistent
+        # with the elements specified in the nodepool role.
+        sudo disk-image-create -x -t qcow2 --checksum --no-tmpfs            \
+                          --qemu-img-options 'compat=0.10'                  \
+                          -o /opt/nodepool/images/ubuntu-xenial             \
+                          ubuntu-minimal vm simple-init growroot            \
+                          openssh-server devuser haveged pip-and-virtualenv \
+                          nodepool bonnyci-nodepool
+
+    publishers:
+      - console-log
+      - bonnyci-logs
