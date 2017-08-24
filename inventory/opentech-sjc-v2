@@ -1,10 +1,13 @@
 [nodepool]
 nodepool.v2.opentechsjc.bonnyci.org
 
-[zuul]
+[zuul-server]
 zuul.v2.opentechsjc.bonnyci.org
 
-[mergers]
+[zuul-launcher]
+zuul.v2.opentechsjc.bonnyci.org
+
+[zuul-merger]
 merger01.v2.opentechsjc.bonnyci.org
 
 [mysql]

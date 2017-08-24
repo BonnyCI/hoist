@@ -7,10 +7,13 @@ nodepool.vagrant
 [zookeeper]
 nodepool.vagrant
 
-[zuul]
+[zuul-server]
 zuul.vagrant
 
-[mergers]
+[zuul-launcher]
+zuul.vagrant
+
+[zuul-merger]
 merger.vagrant
 
 [mysql]

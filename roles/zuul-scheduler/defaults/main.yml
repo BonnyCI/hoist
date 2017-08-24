@@ -1,0 +1,18 @@
+---
+zuul_connections: {}
+
+zuul_gearman_server_listen_address: 127.0.0.1
+zuul_gearman_server_start: true
+
+zuul_logs_url: http://{{ ansible_fqdn }}
+
+zuul_scheduler_state_dir: "{{ zuul_home_dir }}/scheduler-state"
+
+zuul_tenants: []
+zuul_tenant_file: "{{ zuul_config_dir }}/tenant.yml"
+
+zuul_webapp_listen_address: 127.0.0.1
+zuul_webapp_port: 8001
+
+zuul_zookeeper_hosts:
+  - "127.0.0.1:2181"

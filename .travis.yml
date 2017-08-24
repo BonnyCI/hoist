@@ -29,3 +29,11 @@ script: "$TEST_RUN"
 
 after_failure:
   - docker exec -i allinone journalctl -xe
+  - docker exec -i allinone ps aux | grep zuul
+  - docker exec -i allinone journalctl -u zuul-server
+  - docker exec -i allinone cat /var/log/zuul/zuul-server.log
+  - docker exec -i allinone cat /var/log/zuul/zuul-server-debug.log
+  - docker exec -i allinone journalctl -u zuul-launcher
+  - docker exec -i allinone cat /var/log/zuul/zuul-launcher-debug.log
+  - docker exec -i allinone systemctl status zuul-server
+  - docker exec -i allinone journalctl --since -5min

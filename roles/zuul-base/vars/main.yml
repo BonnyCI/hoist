@@ -1,0 +1,4 @@
+---
+zuul_home_dir: /var/lib/zuul
+zuul_log_dir: /var/log/zuul
+zuul_config_dir: /etc/zuul

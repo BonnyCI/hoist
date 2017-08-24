@@ -1,0 +1,8 @@
+---
+zuul_connections: {} 
+
+zuul_git_user_name: user@domain.io
+zuul_git_user_email: My Name
+
+zuul_merger_url: 127.0.0.1
+zuul_merger_git_dir: "{{ zuul_home_dir }}/git"

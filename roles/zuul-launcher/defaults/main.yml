@@ -1,0 +1,3 @@
+---
+zuul_launcher_username: bonnyci
+zuul_launcher_workspace_root: "/home/{{ zuul_launcher_username }}/workspace"

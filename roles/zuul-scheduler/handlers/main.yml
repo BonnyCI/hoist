@@ -1,0 +1,5 @@
+---
+- name: Reload zuul-server
+  service:
+    name: zuul-server
+    state: reloaded

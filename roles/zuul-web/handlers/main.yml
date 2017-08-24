@@ -1,0 +1,5 @@
+---
+- name: Restart zuul-web
+  service:
+    name: zuul-web
+    state: restarted

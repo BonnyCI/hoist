@@ -5,7 +5,7 @@
 temp_dir=$(mktemp -d)
 trap 'rm -rf $temp_dir' EXIT
 
-jobs_dir="roles/zuul/files/jobs/"
+jobs_dir="roles/zuul-launcher/files/jobs/"
 jobs_out="$1"
 if [ -z "$jobs_out" ]; then
     echo "ERROR: Must specify a file for jobs list output"

@@ -1,0 +1,5 @@
+---
+dependencies:
+  - role: zuul-base
+    zuul_service_name: zuul-scheduler
+    zuul_service_start: no

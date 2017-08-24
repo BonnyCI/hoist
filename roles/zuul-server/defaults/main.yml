@@ -1,0 +1,18 @@
+---
+zuul_connections: {}
+
+zuul_gearman_server_listen_address: 127.0.0.1
+zuul_gearman_server_start: true
+
+zuul_logs_url: http://{{ ansible_fqdn }}
+
+zuul_server_state_dir: "{{ zuul_home_dir }}/server-state"
+
+zuul_merge_failure_message: "Merge Failed! Help can be found at http://bonnyci.org/lore/end_users/use/#handling-merge-failures"
+
+zuul_sites: {}
+
+zuul_webapp_listen_address: 127.0.0.1
+zuul_webapp_port: 8001
+
+zuul_url_pattern: "{{ zuul_logs_url }}/{build.parameters[LOG_PATH]}"
