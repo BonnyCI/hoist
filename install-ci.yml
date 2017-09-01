@@ -205,7 +205,8 @@
       zuul_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
 
     - role: integration-handler
-      integration_handler_template_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+      integration_handler_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+      integration_handler_template_file: "{{ bonnyci_zuul_tenant_template_file | default(omit) }}"
       when:
         - bonnyci_use_app
 
