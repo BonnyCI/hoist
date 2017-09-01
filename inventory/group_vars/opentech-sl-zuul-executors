@@ -3,3 +3,7 @@ ansible_user: ubuntu
 
 zuul_components:
   - zuul-executor
+
+zuul_executor_variables:
+  bonnyci_logs_scp: "zuul@logs.opentech.bonnyci.org"
+  bonnyci_logs_dir: /var/www/bonny-logs/logs

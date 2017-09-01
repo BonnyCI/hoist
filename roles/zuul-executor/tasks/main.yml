@@ -38,6 +38,12 @@
     group: zuul
   when: zuul_ssh_known_hosts is defined
 
+- name: Add site variables file
+  template:
+    src: etc/zuul/variables.yml
+    dest: "{{ zuul_executor_variables_file }}"
+    mode: 0644
+
 - name: Add bubblewrap PPA
   apt_repository:
     repo: "ppa:openstack-ci-core/bubblewrap"
