@@ -3,3 +3,4 @@ dependencies:
   - role: zuul-base
     zuul_service_name: zuul-executor
     zuul_service_start: no
+    zuul_service_params: "{% if zuul_executor_keep_jobdir | bool %}--keep-jobdir{% endif %}"

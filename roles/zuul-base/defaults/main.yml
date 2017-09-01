@@ -11,6 +11,7 @@ zuul_git_branch: github-integration
 
 zuul_service_enabled: yes
 zuul_service_start: yes
+zuul_service_params: ""
 
 zuul_statsd_enable: no
 zuul_statsd_host: 127.0.0.1
