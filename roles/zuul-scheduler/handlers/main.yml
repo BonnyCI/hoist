@@ -1,5 +1,5 @@
 ---
-- name: Reload zuul-server
+- name: Reload zuul-scheduler
   service:
-    name: zuul-server
+    name: zuul-scheduler
     state: reloaded
