@@ -1,0 +1,2 @@
+---
+zuul_executor_variables_file: /etc/zuul/variables.yml

@@ -1,0 +1,2 @@
+---
+{{ zuul_executor_variables | to_nice_yaml }}
