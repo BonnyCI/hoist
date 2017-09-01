@@ -25,7 +25,7 @@
 - name: Install tenant.yaml
   template:
     src: etc/zuul/tenant.yaml
-    dest: "{{ zuul_tenant_file }}"
+    dest: "{{ zuul_tenant_src_file }}"
     owner: zuul
   notify: Reload zuul-scheduler
 
