@@ -53,7 +53,7 @@
     url: https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css
     dest: /opt/source/zuul/etc/status/public_html/lib/bootstrap/css/bootstrap.min.css
 
-- name: Start zuul-server
+- name: Start zuul-scheduler
   service:
-    name: zuul-server
+    name: zuul-scheduler
     state: started
