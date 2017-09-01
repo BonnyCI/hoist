@@ -1,6 +1,4 @@
 ---
-zuul_connections: {}
-
 zuul_gearman_server_listen_address: 127.0.0.1
 zuul_gearman_server_start: true
 
