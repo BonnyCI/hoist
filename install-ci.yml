@@ -202,7 +202,8 @@
     - zuul-scheduler
   roles:
     - role: zuul-scheduler
-      zuul_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
+      zuul_tenant_src_file: "{{ bonnyci_zuul_tenant_template_file | default(omit) }}"
+      zuul_tenant_dest_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
 
     - role: integration-handler
       integration_handler_tenant_file: "{{ bonnyci_zuul_tenant_file | default(omit) }}"
