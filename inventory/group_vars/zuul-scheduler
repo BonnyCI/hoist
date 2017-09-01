@@ -4,7 +4,8 @@ bonnyci_zuul_webapp_apache_mods_enabled:
   - rewrite.load
 
 integration_handler_uwsgi_socket: /var/uwsgi-sockets/integration-handler.sock
-bonnyci_zuul_tenant_file: /etc/zuul/tenant-template.yaml
+bonnyci_zuul_tenant_file: /etc/zuul/tenant.yaml
+bonnyci_zuul_tenant_template_file: /etc/zuul/tenant-template.yaml
 
 bonnyci_zuul_webapp_apache_vhosts:
   - name: status
