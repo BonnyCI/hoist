@@ -36,5 +36,5 @@ zuul.opentech.bonnyci.org
 [zuul-executor]
 ze01.internal.opentech.bonnyci.org
 
-[opentech-sl-zuul-exectuors:children]
+[opentech-sl-zuul-executors:children]
 zuul-executor
