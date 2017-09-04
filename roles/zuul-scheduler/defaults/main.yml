@@ -6,9 +6,6 @@ zuul_logs_url: http://{{ ansible_fqdn }}
 
 zuul_scheduler_state_dir: "{{ zuul_home_dir }}/scheduler-state"
 
-zuul_scheduler_secrets: {}
-zuul_scheduler_secrets_dir: "{{ zuul_home_dir }}/secrets"
-
 zuul_tenants: []
 zuul_tenant_src_file: "{{ zuul_config_dir }}/tenant.yml"
 zuul_tenant_dest_file: "{{ zuul_tenant_dest_file }}"

@@ -14,20 +14,32 @@
 
 - name: Create directories
   file:
-    path: "{{ item }}"
+    path: "{{ item.name }}"
     state: directory
-    mode: 0755
+    mode: "{{ item.mode | default('0755') }}"
     owner: zuul
     group: zuul
   with_items:
-    - "{{ zuul_config_dir }}"
-    - "{{ zuul_log_dir }}"
+    - name: "{{ zuul_config_dir }}"
+    - name: "{{ zuul_log_dir }}"
+    - name: "{{ zuul_secrets_dir }}"
+      mode: "0700"
 
 - name: Install zuul config
   template:
     src:  "{{ zuul_template_config }}"
     dest: "{{ zuul_config_dir }}/{{ zuul_service_name }}.conf"
     owner: zuul
+
+- name: Install connection secrets
+  copy:
+    dest: "{{ zuul_secrets_dir }}/{{ item.name }}"
+    src: "{{ item.src | default(omit) }}"
+    content: "{{ item.content | default(omit) }}"
+    mode: "{{ item.mode | default('0600') }}"
+    owner: zuul
+    group: zuul
+  with_items: "{{ zuul_secrets }}"
 
 - name: Install service environment configs
   template:
