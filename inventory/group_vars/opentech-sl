@@ -93,6 +93,19 @@ zuul_connections:
     app_key: "{{ zuul_github_app_key_content | default(False) | ternary(zuul_github_app_key_file, '') }}"
     webhook_token: "{{ secrets.zuul_github_v3_webhook_token | default('') }}"
 
+  openstack:
+    driver: gerrit
+    user: BonnyCI
+    server: review.openstack.org
+    sshkey: /var/lib/zuul/secrets/openstack
+
+zuul_ssh_known_hosts:
+  - name: review.openstack.org
+    key: "[review.openstack.org]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfsIj/jqpI+2CFdjCL6kOiqdORWvxQ2sQbCzSzzmLXic8yVhCCbwarkvEpfUOHG4eyB0vqVZfMffxf0Yy3qjURrsroBCiuJ8GdiAcGdfYwHNfBI0cR6kydBZL537YDasIk0Z3ILzhwf7474LmkVzS7V2tMTb4ZiBS/jUeiHsVp88FZhIBkyhlb/awAGcUxT5U4QBXCAmerYXeB47FPuz9JFOVyF08LzH9JRe9tfXtqaCNhlSdRe/2pPRvn2EIhn5uHWwATACG9MBdrK8xv8LqPOik2w1JkgLWyBj11vDd5I3IjrmREGw8dqImqp0r6MD8rxqADlc1elfDIXYsy+TVH"
+
+zuul_scheduler_secrets:
+  openstack: "{{ secrets.ssh_keys.openstack.private }}"
+
 zuul_github_app_key_content: "{{ secrets.zuul_github_v3_app_key_content }}"
 
 zuul_tenants:

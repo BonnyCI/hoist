@@ -13,6 +13,8 @@ zuul_service_enabled: yes
 zuul_service_start: yes
 zuul_service_params: ""
 
+zuul_ssh_known_hosts: []
+
 zuul_statsd_enable: no
 zuul_statsd_host: 127.0.0.1
 zuul_statsd_port: 8125
