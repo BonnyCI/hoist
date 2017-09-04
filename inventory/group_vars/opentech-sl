@@ -103,10 +103,6 @@ zuul_secrets:
   - name: openstack
     content: "{{ secrets.ssh_keys.openstack.private }}"
 
-zuul_ssh_known_hosts:
-  - name: review.openstack.org
-    key: "[review.openstack.org]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfsIj/jqpI+2CFdjCL6kOiqdORWvxQ2sQbCzSzzmLXic8yVhCCbwarkvEpfUOHG4eyB0vqVZfMffxf0Yy3qjURrsroBCiuJ8GdiAcGdfYwHNfBI0cR6kydBZL537YDasIk0Z3ILzhwf7474LmkVzS7V2tMTb4ZiBS/jUeiHsVp88FZhIBkyhlb/awAGcUxT5U4QBXCAmerYXeB47FPuz9JFOVyF08LzH9JRe9tfXtqaCNhlSdRe/2pPRvn2EIhn5uHWwATACG9MBdrK8xv8LqPOik2w1JkgLWyBj11vDd5I3IjrmREGw8dqImqp0r6MD8rxqADlc1elfDIXYsy+TVH"
-
 zuul_github_app_key_content: "{{ secrets.zuul_github_v3_app_key_content }}"
 
 zuul_tenants:
@@ -130,6 +126,8 @@ zuul_zookeeper_hosts:
 zuul_url_pattern: "https://logs.bonnyci.org/{build.parameters[ZUUL_PIPELINE]}/{build.parameters[ZUUL_PROJECT]}/{build.parameters[ZUUL_CHANGE]}/{build.parameters[ZUUL_UUID]}"
 
 zuul_ssh_known_hosts:
+  - host: "[review.openstack.org]:29418"
+    key: "[review.openstack.org]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfsIj/jqpI+2CFdjCL6kOiqdORWvxQ2sQbCzSzzmLXic8yVhCCbwarkvEpfUOHG4eyB0vqVZfMffxf0Yy3qjURrsroBCiuJ8GdiAcGdfYwHNfBI0cR6kydBZL537YDasIk0Z3ILzhwf7474LmkVzS7V2tMTb4ZiBS/jUeiHsVp88FZhIBkyhlb/awAGcUxT5U4QBXCAmerYXeB47FPuz9JFOVyF08LzH9JRe9tfXtqaCNhlSdRe/2pPRvn2EIhn5uHWwATACG9MBdrK8xv8LqPOik2w1JkgLWyBj11vDd5I3IjrmREGw8dqImqp0r6MD8rxqADlc1elfDIXYsy+TVH"
   - host: "[review.gerrithub.io]:29418"
     key: "[review.gerrithub.io]:29418 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAtcxtihbxvcTxe/wP2CfaVP7DeCZkEvuW/LFWWfUChCknnlAbem64BlMdsEAvgm2VzIQNWxqI8iyJxoOasR9o42DDsH68YIM+5/o2rHw1emhiSQ3RNmdSGBDqNqg15WHqyR0QVl+lX423MWgXAKmGPuZo9t4ZJ+DdHfO5BVewPPOiEtHUs/IaYDLl8EEFwVZj6wkEUehpq/gFD3WmasPDb4CTZqPH3Z+K5QC8j297laHKPvqa+tE/UGjpWMFXMZTmPd7zNVUoLsSbkqkpE3TUWzLS4OMTtnJdqKlAIRV0pRVYxLp4WXQfg9+NKOqR49pgBGFCIUxtVWLdh23JgVmpnQ=="
   - host: "logs.internal.opentech.bonnyci.org"

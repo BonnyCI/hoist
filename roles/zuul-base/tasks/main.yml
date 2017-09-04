@@ -75,4 +75,5 @@
     path: "/etc/ssh/ssh_known_hosts"
     key: "{{ item.key }}"
     host: "{{ item.host }}"
+    state: "{{ item.state | default(omit) }}"
   with_items: "{{ zuul_ssh_known_hosts }}"
