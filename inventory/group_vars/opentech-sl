@@ -113,8 +113,8 @@ zuul_tenants:
           - BonnyCI/project-config
 
       openstack:
-        config-projects:
-          - openstack-infra/project-config
+        untrusted-projects:
+          - openstack-infra/zuul-jobs
 
       gerrithub:
         untrusted-projects:
