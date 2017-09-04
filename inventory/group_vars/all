@@ -2,6 +2,7 @@ apache_ssl_use_stapling: yes
 
 bonnyci_logs_root_dir: /var/www/bonny-logs
 bonnyci_logs_scp_user: zuul
+bonnyci_logs_authorized_key: "{{ secrets.ssh_keys.zuul.public }}"
 
 bonnyci_use_apache: True
 bonnyci_use_nginx: False

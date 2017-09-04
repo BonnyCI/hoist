@@ -437,7 +437,7 @@
     - role: scp-log-receiver
       scp_log_receiver_user: "{{ bonnyci_logs_scp_user }}"
       scp_log_receiver_path:  "{{ bonnyci_logs_root_dir }}/logs"
-      scp_log_receiver_authorized_key: "{{ secrets.ssh_keys.zuul.public | default(omit) }}"
+      scp_log_receiver_authorized_key: "{{ bonnyci_logs_authorized_key }}"
 
     - role: os-loganalyze
       os_loganalyze_root_dir: "{{ bonnyci_logs_root_dir }}/logs"
