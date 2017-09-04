@@ -57,3 +57,10 @@
     name: "{{ zuul_service_name }}"
     state: started
   when: zuul_service_start
+
+- name: Install any ssh known host keys
+  known_hosts:
+    path: "/etc/ssh/ssh_known_hosts"
+    key: "{{ item.key }}"
+    host: "{{ item.host }}"
+  with_items: "{{ zuul_ssh_known_hosts }}"
