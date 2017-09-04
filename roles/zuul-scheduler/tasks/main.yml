@@ -6,14 +6,6 @@
     owner: zuul
     group: zuul
 
-- name: Create zuul secrets dir
-  file:
-    path: "{{ zuul_scheduler_secrets_dir }}"
-    state: directory
-    owner: zuul
-    group: zuul
-    mode: "0700"
-
 - name: Install gearman logging configs
   template:
     src: "etc/zuul/gearman-logging.conf"
@@ -28,15 +20,6 @@
     group: zuul
     mode: 0400
   when: zuul_github_app_key_content | default(False)
-
-- name: Install connection secrets
-  copy:
-    dest: "{{ zuul_scheduler_secrets_dir }}/{{ item.key }}"
-    content: "{{ item.value }}"
-    mode: "0600"
-    owner: zuul
-    group: zuul
-  with_dict: "{{ zuul_scheduler_secrets }}"
 
 # FIXME: need to figure out some way of notify/running integration-handler here
 - name: Install tenant.yaml

@@ -9,6 +9,9 @@ zuul_gearman_port: 4730
 zuul_git_repo_url: https://github.com/BonnyCI/zuul
 zuul_git_branch: github-integration
 
+zuul_secrets: []
+zuul_secrets_dir: "{{ zuul_home_dir }}/secrets"
+
 zuul_service_enabled: yes
 zuul_service_start: yes
 zuul_service_params: ""
