@@ -6,6 +6,8 @@ bonnyci_logs_apache_mods_install:
   - proxy.load
   - proxy_uwsgi.load
 
+bonnyci_use_apache: yes
+
 bonnyci_logs_apache_vhosts:
   - name: logs
     server_name: "{{ bonnyci_logs_server_name | default('logs') }}"
