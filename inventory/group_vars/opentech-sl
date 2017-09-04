@@ -115,6 +115,10 @@ zuul_tenants:
         config-projects:
           - BonnyCI/project-config
 
+      openstack:
+        config-projects:
+          - openstack-infra/project-config
+
       gerrithub:
         untrusted-projects:
           - BonnyCI/sandbox-v3
