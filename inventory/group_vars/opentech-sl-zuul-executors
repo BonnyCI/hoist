@@ -7,5 +7,6 @@ zuul_components:
 zuul_executor_keep_jobdir: yes
 
 zuul_executor_variables:
+  bindep_command: "{{ ansible_local.bonnyci_image.bindep_command | default('') }}"
   bonnyci_logs_scp: "zuul@logs.opentech.bonnyci.org"
   bonnyci_logs_dir: /var/www/bonny-logs/logs
