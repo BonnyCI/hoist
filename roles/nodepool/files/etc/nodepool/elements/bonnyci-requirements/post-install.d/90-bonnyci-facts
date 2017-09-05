@@ -18,3 +18,9 @@ fi
 set -e
 
 sudo mkdir -p /etc/ansible/facts.d
+
+sudo cat << EOF > /etc/ansible/facts.d/bonnyci_image.fact
+{
+    "bindep_command": "$BONNYCI_VENV_PATH/bindep/bin/bindep"
+}
+EOF
