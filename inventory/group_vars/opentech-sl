@@ -63,6 +63,7 @@ nodepool_diskimages:
       - pip-and-virtualenv
       - nodepool
       - bonnyci-nodepool
+      - bonnyci-requirements
     release: xenial
     env-vars:
       DIB_DEV_USER_USERNAME: zuul

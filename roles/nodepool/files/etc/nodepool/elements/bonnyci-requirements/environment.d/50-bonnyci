@@ -1,0 +1,1 @@
+export BONNYCI_VENV_PATH=${BONNYCI_VENV_PATH:-/opt/venvs}
