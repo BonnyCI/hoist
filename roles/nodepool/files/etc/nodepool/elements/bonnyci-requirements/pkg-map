@@ -1,0 +1,20 @@
+{
+  "family": {
+    "gentoo": {
+      "python-dev": "dev-lang/python",
+      "python3-dev": "dev-lang/python"
+    },
+    "suse": {
+      "python-dev": "python-devel",
+      "python3-dev": "python3-devel",
+    },
+    "redhat": {
+      "python-dev": "python2-devel",
+      "python3-dev": "python3-devel"
+    }
+  },
+  "default": {
+    "python-dev": "",
+    "python3-dev": ""
+  }
+}
