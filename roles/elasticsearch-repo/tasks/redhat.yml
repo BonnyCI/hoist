@@ -1,0 +1,17 @@
+- name: Add Elasticsearch rpm key.
+  rpm_key:
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: Add Elasticsearch repository.
+  yum_repository:
+    name: elasticsearch-5.x
+    description: Elasticsearch repository for 5.x packages
+    baseurl: https://artifacts.elastic.co/packages/5.x/yum
+    gpgcheck: yes
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    enabled: yes
+
+- name: Install java
+  yum:
+    name: java-1.8.0-openjdk-headless
+  when: elasticsearch_repo_install_java
