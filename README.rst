@@ -67,6 +67,8 @@ Testing with Vagrant
 See `our documentation on testing with vagrant
 <http://bonnyci.org/lore/developers#virtual-machines>`_.
 
+DON'T MERGE THIS - WE JUST NEED SOMETHING TO CHECK
+
 Contributing
 ============
 
