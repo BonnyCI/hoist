@@ -21,3 +21,6 @@ sudo mkdir -p $BONNYCI_VENV_PATH
 
 sudo -H virtualenv -p `which python3` $BONNYCI_VENV_PATH/bindep
 sudo -H $BONNYCI_VENV_PATH/bindep/bin/pip install bindep
+
+sudo -H virtualenv -p `which python3` $BONNYCI_VENV_PATH/tox
+sudo -H $BONNYCI_VENV_PATH/tox/bin/pip install tox

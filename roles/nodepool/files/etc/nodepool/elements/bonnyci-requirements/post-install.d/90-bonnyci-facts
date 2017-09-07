@@ -21,6 +21,7 @@ sudo mkdir -p /etc/ansible/facts.d
 
 sudo cat << EOF > /etc/ansible/facts.d/bonnyci_image.fact
 {
-    "bindep_command": "$BONNYCI_VENV_PATH/bindep/bin/bindep"
+    "bindep_command": "$BONNYCI_VENV_PATH/bindep/bin/bindep",
+    "tox_executable": "$BONNYCI_VENV_PATH/tox/bin/tox"
 }
 EOF
