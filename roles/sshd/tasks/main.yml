@@ -8,6 +8,6 @@
 
 - name: ensure ssh started
   service:
-    name: ssh
+    name: "{{ 'ssh' if ansible_os_family == 'Debian' else 'sshd' }}"
     state: started
     enabled: yes
