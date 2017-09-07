@@ -143,5 +143,15 @@
               document_type: apache
               paths:
                 - /var/log/apache/*.log
+        - name: ansible_runner
+          prospectors:
+            - input_type: log
+              document_type: ansible-runner
+              paths:
+                - "/var/www/html/cron-logs/*/*current.log"
+              multiline:
+                pattern: '^$'
+                negate: true
+                match: before
 
     - role: fail2ban  # This should be last
