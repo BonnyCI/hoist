@@ -19,23 +19,24 @@
 
 # Here is entries for some specific programs
 # The following values assume you have at least 32M ram
+[client]
+socket		= /var/run/{{ mysql_daemon_name}}/{{ mysql_daemon_name }}.sock
 
 [mysqld_safe]
-socket		= /var/run/mysqld/mysqld.sock
+socket		= /var/run/{{ mysql_daemon_name}}/{{ mysql_daemon_name }}.sock
 nice		= 0
 
 [mysqld]
 #
 # * Basic Settings
 #
-user		= mysql
-pid-file	= /var/run/mysqld/mysqld.pid
-socket		= /var/run/mysqld/mysqld.sock
+user		= {{ mysql_flavor }}
+pid-file	= /var/run/{{ mysql_daemon_name }}/{{ mysql_daemon_name }}.pid
+socket		= /var/run/{{ mysql_daemon_name }}/{{ mysql_daemon_name }}.sock
 port		= 3306
 basedir		= /usr
 datadir		= /var/lib/mysql
 tmpdir		= /tmp
-lc-messages-dir	= /usr/share/mysql
 skip-external-locking
 #
 # Instead of skip-networking the default is now to listen only on
@@ -71,7 +72,7 @@ query_cache_size        = 16M
 #
 # Error log - should be very few entries.
 #
-log_error = /var/log/mysql/error.log
+log_error = /var/log/{{ mysql_flavor }}/error.log
 #
 # Here you can see queries with especially long duration
 #log_slow_queries	= /var/log/mysql/mysql-slow.log

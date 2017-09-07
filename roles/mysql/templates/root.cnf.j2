@@ -1,3 +1,4 @@
 [client]
 user=root
 password={{ secrets.db_password }}
+socket		= /var/run/{{ mysql_daemon_name}}/{{ mysql_daemon_name }}.sock
