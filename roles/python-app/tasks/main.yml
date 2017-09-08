@@ -8,6 +8,7 @@
     - "{{ python_app_source_path }}"
 
 - name: Install basic requirements
+  when: ansible_os_family == 'Debian'
   apt:
     name: "{{ item }}"
     state: installed
@@ -17,6 +18,13 @@
     - libffi-dev
     - libssl-dev
     - "{{ python_app_python_exec }}-dev"
+
+- name: Install basic requirements
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name:
+      - libffi-devel
+      - openssl-devel
 
 - name: Install pip dependencies
   pip:

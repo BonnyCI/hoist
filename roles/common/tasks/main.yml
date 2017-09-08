@@ -11,6 +11,7 @@
     - net-tools
 
 - name: Install common packages
+  when: ansible_os_family == "RedHat"
   yum:
     name:
       - make
