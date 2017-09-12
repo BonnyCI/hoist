@@ -13,8 +13,9 @@
 - name: Run get-pip.py to intall Pip
   command: "{{ pip_python_exec }} {{ pip_cache_dir }}/get-pip.py"
   register: pip_command
-  changed_when: "'Requirement already up-to-date: pip' not in pip_command.stdout"
+  changed_when: "pip_command.stdout is defined and 'Requirement already up-to-date: pip' not in pip_command.stdout"
 
 - name: Install system wide virtualenv
   pip:
     name: virtualenv
+    executable: "{{ pip_exec }}"
