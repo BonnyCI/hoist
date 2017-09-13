@@ -1,8 +1,14 @@
 ---
 - name: Install base package
+  when: ansible_os_family == 'Debian'
   apt:
     name: logrotate
     state: installed
+
+- name: Install base package
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: logrotate
 
 - name: Install config
   template:
