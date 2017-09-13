@@ -1,0 +1,2 @@
+python_tarball_basename: Python-{{ python_version }}.tgz
+python_tarball_url: https://www.python.org/ftp/python/{{ python_version }}/{{ python_tarball_basename }}

@@ -1,0 +1,12 @@
+- name: Install Ubuntu python packages
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version == '16.04'
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - python3-dev
+    - python3
+  register: apt_install
+
+- name: Install Python from Source
+  when: apt_install.results[0].skipped
+  include: altinstall.yaml
