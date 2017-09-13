@@ -1,8 +1,14 @@
 ---
 - name: Install Filebeat.
+  when: ansible_os_family == 'Debian'
   apt:
     name: filebeat
     state: present
+
+- name: Install Fielbeat.
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name: filebeat
 
 - name: Create Filebeat configuration directory
   file:
