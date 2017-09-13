@@ -17,6 +17,7 @@
     - role: dd-agent
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
     - role: letsencrypt-apache
       tags:
@@ -47,6 +48,7 @@
     - role: dd-elasticsearch
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
     - role: logstash
       tags: ['logstash']
@@ -61,7 +63,9 @@
     - role: dd-apache
       tags:
         - monitoring
-      when: bonnyci_use_apache
+      when:
+        - bonnyci_use_apache
+        - bonnyci_use_datadog
 
     - role: nginx
       nginx_sites: "{{ bonnyci_kibana_nginx_sites }}"
@@ -70,7 +74,9 @@
     - role: dd-nginx
       tags:
         - monitoring
-      when: bonnyci_use_nginx
+      when:
+        - bonnyci_use_nginx
+        - bonnyci_use_datadog
 
 
 - name: Install mysql
@@ -85,6 +91,7 @@
       dd_mysql_password: "{{ secrets.datadog.mysql_password }}"
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
     - role: databases
 
@@ -98,6 +105,7 @@
     - role: dd-zookeeper
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
 
 - name: Install zuul server (v2)
@@ -112,10 +120,12 @@
     - role: dd-gearman
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
     - role: dd-zuul-server
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
     - role: apache
       apache_mods_enabled: "{{ bonnyci_zuul_webapp_apache_mods_enabled }}"
@@ -125,7 +135,9 @@
     - role: dd-apache
       tags:
         - monitoring
-      when: bonnyci_use_apache
+      when:
+        - bonnyci_use_apache
+        - bonnyci_use_datadog
 
     - role: nginx
       nginx_sites: "{{ bonnyci_zuul_webapp_nginx_sites }}"
@@ -134,7 +146,9 @@
     - role: dd-nginx
       tags:
         - monitoring
-      when: bonnyci_use_nginx
+      when:
+        - bonnyci_use_nginx
+        - bonnyci_use_datadog
 
     - role: logrotate
       logrotate_configs:
@@ -219,7 +233,9 @@
     - role: dd-apache
       tags:
         - monitoring
-      when: bonnyci_use_apache
+      when:
+        - bonnyci_use_apache
+        - bonnyci_use_datadog
 
     - role: nginx
       nginx_sites: "{{ bonnyci_zuul_webapp_nginx_sites }}"
@@ -228,7 +244,9 @@
     - role: dd-nginx
       tags:
         - monitoring
-      when: bonnyci_use_nginx
+      when:
+        - bonnyci_use_nginx
+        - bonnyci_use_datadog
 
     - role: logrotate
       logrotate_configs:
@@ -359,7 +377,9 @@
     - role: dd-apache
       tags:
         - monitoring
-      when: bonnyci_use_apache
+      when:
+        - bonnyci_use_apache
+        - bonnyci_use_datadog
 
     - role: logrotate
       logrotate_configs:
@@ -401,6 +421,7 @@
     - role: dd-nodepool
       tags:
         - monitoring
+      when: bonnyci_use_datadog
 
     - role: logrotate
       logrotate_configs:
@@ -467,7 +488,9 @@
     - role: dd-apache
       tags:
         - monitoring
-      when: bonnyci_use_apache
+      when:
+        - bonnyci_use_apache
+        - bonnyci_use_datadog
 
     - role: filebeat
       filebeat_prospectors:
