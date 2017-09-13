@@ -30,17 +30,25 @@
     mode: 0644
 
 - name: Add bubblewrap PPA
+  when: ansible_distribution == 'Ubuntu' and ansible_os_version == '16.04'
   apt_repository:
     repo: "ppa:openstack-ci-core/bubblewrap"
     state: present
     update_cache: yes
 
 - name: Install bubblewrap
+  when: ansible_os_family == 'Debian'
   apt:
     name: "{{ item }}"
     state: present
   with_items:
     - bubblewrap
+
+- name: Install bubblewrap
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name:
+      - bubblewrap
 
 - name: Start zuul-executor
   service:
