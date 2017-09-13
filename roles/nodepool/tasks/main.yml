@@ -1,4 +1,5 @@
 - name: install required packages
+  when: ansible_os_family == 'Debian'
   apt:
     name: "{{ item }}"
   with_items:
@@ -8,6 +9,18 @@
     - uuid-runtime
     - parted
     - kpartx
+
+- name: install required packages
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name:
+      - debootstrap
+      - qemu-img
+      - util-linux
+      - policycoreutils-python
+      - parted
+      - kpartx
+      - bzip2
 
 - name: Create group.
   group:
@@ -93,8 +106,22 @@
   synchronize:
     src: files/etc/nodepool/
     dest: /etc/nodepool/
-    rsync_opts:
-      - "--chown=nodepool:nodepool"
+# The option below is amazing, but requires rsync 3.1+
+#    rsync_opts:
+#      - "--chown=nodepool:nodepool"
+#
+# So we need to manually do the same thing after the fact
+
+- name: Get list of files in /etc/nodepool
+  command: find /etc/nodepool -type f \! -name nodepool.yaml -a \! -name secure.conf
+  register: files_in_etc_nodepool
+
+- name: Set nodepool config files to be owned by nodepool user/group
+  file:
+    path: "{{ item }}"
+    owner: nodepool
+    group: nodepool
+  with_items: "{{ files_in_etc_nodepool.stdout_lines }}"
 
 - name: Write config
   template:
