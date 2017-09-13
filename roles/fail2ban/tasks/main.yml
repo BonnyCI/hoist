@@ -1,7 +1,14 @@
 - name: Install fail2ban
+  when: ansible_os_family == 'Debian'
   apt:
     name: fail2ban
     state: present
+
+- name: Install fail2ban
+  when: ansible_os_family == 'RedHat'
+  yum:
+    name:
+      - fail2ban
 
 - name: Enable fail2ban jails
   template:
