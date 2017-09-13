@@ -1,3 +1,4 @@
+apt-transport-https:
 ubuntu-minimal:
 build-essential:
 python-dev:
