@@ -1,7 +1,7 @@
 ---
 - name: Reload integration-handler uwsgi
   file:
-    path: /etc/uwsgi-emperor/vassals/integration-handler.ini
+    path: "{{ '/etc/uwsgi-emperor/vassals' if ansible_os_family == 'Debian' else '/etc/uwsgi.d' }}/integration-handler.ini"
     state: touch
 
 - name: Run integration-handler
