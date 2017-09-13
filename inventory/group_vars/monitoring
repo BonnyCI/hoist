@@ -39,11 +39,11 @@ elasticsearch_cluster_name: bonnyci
 
 fail2ban_jails:
   - name: apache-auth
-    enabled: true
+    enabled: "{{ bonnyci_use_apache | bool }}"
     bantime: 86400
   - name: apache-badbots
-    enabled: true
+    enabled: "{{ bonnyci_use_apache | bool }}"
     bantime: 86400
   - name: apache-shellshock
-    enabled: true
+    enabled: "{{ bonnyci_use_apache | bool }}"
     bantime: 86400
