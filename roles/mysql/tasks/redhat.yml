@@ -1,0 +1,33 @@
+---
+ - name: Install MariaDB packages
+   yum:
+     name:
+       - mariadb
+       - mariadb-server
+       - mariadb-devel
+       - MySQL-python
+
+ - name: Set mysql_flavor
+   set_fact: mysql_flavor=mariadb
+
+ - name: Set mysql_flavor
+   set_fact: mysql_flavor=mariadb
+
+ - name: Set mysql_daemon_name
+   set_fact: mysql_daemon_name=mariadb
+
+ - name: Install mariadb.conf
+   template:
+     src: etc/mysql/mysql.conf.d/mysqld.cnf
+     dest: /etc/my.cnf
+   notify: Restart MySQL
+
+ - meta: flush_handlers
+
+ - name: Start + enable the mariadb service
+   service:
+     name: mariadb
+     state: started
+     enabled: true
+
+ - include: common.yml

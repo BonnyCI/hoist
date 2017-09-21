@@ -1,11 +1,15 @@
 ---
 - name: Install zookeeper packages
+  when: ansible_os_family == 'Debian'
   apt:
     name: "{{ item }}"
     state: present
   with_items:
     - zookeeper
     - zookeeperd
+
+- include: upstream_install.yml
+  when: ansible_os_family != 'Debian'
 
 - name: Deploy configuration files
   template:

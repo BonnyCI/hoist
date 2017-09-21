@@ -1,0 +1,34 @@
+---
+- name: install packages
+  yum:
+    name:
+      - uwsgi
+
+- name: Install emperor config
+  template:
+    src: etc/uwsgi-emperor/emperor.ini
+    dest: /etc/uwsgi.ini
+  notify:
+    - Restart uwsgi
+
+- name: Install vassals
+  template:
+    src: vassal.ini
+    dest: "/etc/uwsgi.d/{{ item.name }}.ini"
+  when: item.state|default('present') == 'present'
+  with_items: "{{ uwsgi_vassals }}"
+
+- name: remove vassals
+  file:
+    path: "/etc/uwsgi.d/{{ item.name }}.ini"
+    state: absent
+  when: item.state|default('present') == 'absent'
+  with_items: "{{ uwsgi_vassals }}"
+
+- meta: flush_handlers
+
+- name: ensure emperor started and enabled
+  service:
+    name: uwsgi
+    state: started
+    enabled: yes

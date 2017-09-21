@@ -7,6 +7,7 @@ zuul_zuul_v3: True
 bonnyci_use_apache: False
 bonnyci_use_nginx: True
 bonnyci_use_app: True
+bonnyci_use_datadog: True
 
 datadog_tags:
   - "environ:opentech"

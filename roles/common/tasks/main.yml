@@ -3,11 +3,24 @@
   apt:
     name: "{{ item }}"
     state: installed
+  when: ansible_os_family == "Debian"
   with_items:
     - build-essential
     - jq
     - netcat
     - net-tools
+
+- name: Install common packages
+  when: ansible_os_family == "RedHat"
+  yum:
+    name:
+      - make
+      - automake
+      - gcc
+      - gcc-c++
+      - kernel-devel
+      - jq
+  when: ansible_os_family == "RedHat"
 
 - name: set hostname
   hostname:

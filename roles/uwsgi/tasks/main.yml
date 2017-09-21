@@ -1,50 +1,5 @@
----
-- name: install packages
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - uwsgi-emperor
+- include: debian.yml
+  when: ansible_os_family == 'Debian'
 
-- name: Setup sockets directory
-  file:
-    path: /var/uwsgi-sockets
-    owner: www-data
-    group: www-data
-    mode: "0775"
-    state: directory
-
-- name: Install apt plugins
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ uwsgi_apt_plugins }}"
-
-- name: Install emperor config
-  template:
-    src: etc/uwsgi-emperor/emperor.ini
-    dest: /etc/uwsgi-emperor/emperor.ini
-  notify:
-    - Restart uwsgi
-
-- name: Install vassals
-  template:
-    src: vassal.ini
-    dest: "/etc/uwsgi-emperor/vassals/{{ item.name }}.ini"
-  when: item.state|default('present') == 'present'
-  with_items: "{{ uwsgi_vassals }}"
-
-- name: remove vassals
-  file:
-    path: "/etc/uwsgi-emperor/vassals/{{ item.name }}.ini"
-    state: absent
-  when: item.state|default('present') == 'absent'
-  with_items: "{{ uwsgi_vassals }}"
-
-- meta: flush_handlers
-
-- name: ensure emperor started and enabled
-  service:
-    name: uwsgi-emperor
-    state: started
-    enabled: yes
+- include: redhat.yml
+  when: ansible_os_family == 'RedHat'

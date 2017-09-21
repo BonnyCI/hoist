@@ -1,0 +1,57 @@
+- name: Create space for ZK Download
+  file:
+    state: directory
+    path: /usr/local/zk
+    mode: 0755
+
+- name: Download Upstream ZK Tarball
+  get_url:
+    dest: /usr/local/zk/zookeeper-3.4.10.tar.gz
+    url: https://apache.org/dist/zookeeper/stable/zookeeper-3.4.10.tar.gz
+
+- name: Untar Zookeeper
+  unarchive:
+    src: /usr/local/zk/zookeeper-3.4.10.tar.gz
+    dest: /usr/local
+    remote_src: yes
+
+- name: Set symlink to this version
+  file:
+    path: /usr/share/zookeeper
+    src: /usr/local/zookeeper-3.4.10
+    state: link
+
+- name: Setup zk systemd unit file
+  copy:
+    src: usr/lib/systemd/system/zookeeper.service
+    dest: /usr/lib/systemd/system/zookeeper.service
+
+- name: Create zk group
+  group:
+    name: zookeeper
+    system: yes
+
+- name: Create zk user
+  user:
+    name: zookeeper
+    system: yes
+    shell: /bin/false
+    group: zookeeper
+    home: /var/lib/zookeeper
+
+- name: Create zk conf dir
+  file:
+    path: /etc/zookeeper/conf
+    state: directory
+    mode: 0750
+    recurse: yes
+    owner: root
+    group: zookeeper
+
+- name: Create zk data dir
+  file:
+    path: /var/lib/zookeeper
+    state: directory
+    mode: 0700
+    owner: zookeeper
+    group: zookeeper

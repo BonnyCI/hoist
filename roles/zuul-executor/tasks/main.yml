@@ -30,17 +30,31 @@
     mode: 0644
 
 - name: Add bubblewrap PPA
+  when: ansible_distribution == 'Ubuntu' and ansible_os_version == '16.04'
   apt_repository:
     repo: "ppa:openstack-ci-core/bubblewrap"
     state: present
     update_cache: yes
 
 - name: Install bubblewrap
+  when: ansible_os_family == 'Debian'
   apt:
     name: "{{ item }}"
     state: present
   with_items:
     - bubblewrap
+
+- when: ansible_os_family == 'RedHat'
+  block:
+    - name: Install bubblewrap
+      yum:
+        name:
+          - ftp://fr2.rpmfind.net/linux/fedora/linux/development/rawhide/Everything/x86_64/os/Packages/b/bubblewrap-0.1.8-3.fc27.x86_64.rpm
+
+    - name: set setuid on bwrap
+      file:
+        path: /usr/bin/bwrap
+        mode: 6755
 
 - name: Start zuul-executor
   service:

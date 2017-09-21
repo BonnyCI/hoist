@@ -6,6 +6,7 @@ bonnyci_logs_authorized_key: "{{ secrets.ssh_keys.zuul.public }}"
 
 bonnyci_use_apache: True
 bonnyci_use_nginx: False
+bonnyci_use_datadog: False
 
 filebeat_output_logstash_enabled: true
 

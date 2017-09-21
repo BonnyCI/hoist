@@ -1,0 +1,28 @@
+---
+- name: install packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - httpd
+
+- name: set-up ssl if any vhosts require it
+  include: ssl_redhat.yml
+  when: apache_vhosts | selectattr('ssl', 'defined') | map(attribute='ssl') | sum
+
+- name: set-up apache vhosts
+  include: vhosts_redhat.yml
+
+- name: Disable default Listen
+  lineinfile:
+    regexp: ^Listen
+    line: "# Listen disabled"
+    path: /etc/httpd/conf/httpd.conf
+
+- meta: flush_handlers
+
+- name: start apache
+  service:
+    name: httpd
+    state: started
+    enabled: yes

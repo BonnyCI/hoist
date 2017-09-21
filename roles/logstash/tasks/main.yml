@@ -1,6 +1,13 @@
 ---
 - name: Install Packages.
+  when: ansible_os_family == 'Debian'
   apt:
+    name: logstash
+    state: present
+
+- name: Install Packages.
+  when: ansible_os_family == 'RedHat'
+  yum:
     name: logstash
     state: present
 

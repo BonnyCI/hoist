@@ -1,0 +1,38 @@
+- name: Get Python tarball
+  get_url:
+    url: "{{ python_tarball_url }}"
+    dest: /var/cache/{{ python_tarball_basename }}
+  register: get_python
+
+- name: Set Build Dir
+  set_fact: python_build_dir=/var/cache/build-{{ python_version }}/Python-{{ python_version }}
+
+- name: Create a build dir
+  file:
+    path: /var/cache/build-{{ python_version }}
+    state: directory
+
+- name: Unarchive Python
+  unarchive:
+    src: /var/cache/{{ python_tarball_basename }}
+    dest: /var/cache/build-{{ python_version }}
+    remote_src: yes
+  when: get_python.changed
+
+- name: Configure Python
+  command: ./configure
+  args:
+    chdir: "{{ python_build_dir }}"
+    creates: "{{ python_build_dir }}/Makefile"
+
+- name: Build Python
+  shell: make -j && touch {{ python_build_dir }}/build/.hoist.build.finished
+  args:
+    chdir: "{{ python_build_dir }}"
+    creates: "{{ python_build_dir }}/build/.hoist.build.finished"
+
+- name: Altinstall Python
+  shell: make altinstall && touch /usr/local/bin/.hoist.installed.{{ python_version }}
+  args:
+    chdir: "{{ python_build_dir }}"
+    creates: /usr/local/bin/.hoist.installed.{{ python_version }}

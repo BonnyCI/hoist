@@ -1,6 +1,13 @@
 ---
 - name: Install elasticsearch
+  when: ansible_os_family == 'Debian'
   apt:
+    name: elasticsearch
+    state: present
+
+- name: Install elasticsearch
+  when: ansible_os_family == 'RedHat'
+  yum:
     name: elasticsearch
     state: present
 

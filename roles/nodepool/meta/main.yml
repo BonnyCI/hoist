@@ -9,3 +9,4 @@ dependencies:
     python_app_git_repo: "{{ nodepool_git_repo_url }}"
     python_app_git_version: "{{ nodepool_git_version }}"
     python_app_notify: Restart nodepool
+    python_app_python3: "{{ zuul_zuul_v3 | bool }}"

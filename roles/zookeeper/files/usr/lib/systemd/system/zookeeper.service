@@ -1,0 +1,15 @@
+[Unit]
+Description=Zookeeper
+After=syslog.target
+
+[Service]
+SyslogIdentifier=zookeeper
+TimeoutStartSec=10min
+User=zookeeper
+Group=zookeeper
+WorkingDirectory=/var/lib/zookeeper
+Environment="ZOOCFGDIR=/etc/zookeeper/conf"
+ExecStart=/usr/share/zookeeper/bin/zkServer.sh start-foreground
+
+[Install]
+WantedBy=multi-user.target
