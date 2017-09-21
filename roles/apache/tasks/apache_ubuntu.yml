@@ -44,11 +44,11 @@
     state: absent
 
 - name: set-up ssl if any vhosts require it
-  include: ssl.yml
+  include: ssl_ubuntu.yml
   when: apache_vhosts | selectattr('ssl', 'defined') | map(attribute='ssl') | sum
 
 - name: set-up apache vhosts
-  include: vhosts.yml
+  include: vhosts_ubuntu.yml
 
 - meta: flush_handlers
 

@@ -1,4 +1,8 @@
 ---
-- include: apache.yml
+- include: apache_ubuntu.yml
+  when: ansible_os_family == "Debian"
   tags:
     - apache
+
+- include: apache_redhat.yml
+  when: ansible_os_family == "RedHat"

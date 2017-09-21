@@ -1,0 +1,9 @@
+---
+- name: set stapling files
+  copy:
+    src: stapling.conf
+    dest: /etc/httpd/conf.d/stapling.conf
+    mode: 0644
+    owner: root
+    group: root
+  notify: restart apache
